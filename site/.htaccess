@@ -1,0 +1,48 @@
+# ملف إعدادات الخادم — موقع ثابت.
+#
+# مهم: هذا الملف يستبدل أي ملف .htaccess قديم من ووردبريس.
+# ووردبريس كان يحوّل كل طلب إلى index.php، وهذا يعطّل الموقع الثابت.
+# لا توجد هنا أي قاعدة تحويل — الخادم يخدم الملفات كما هي.
+
+DirectoryIndex index.html
+
+# ---------- صفحة الخطأ ----------
+ErrorDocument 404 /sv/
+
+# ---------- ضغط النقل ----------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ---------- التخزين المؤقت ----------
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # ملفات باسم مبصوم — لا تتغير أبداً
+  <FilesMatch "\.(css|js|woff2)$">
+    ExpiresDefault "access plus 1 year"
+    Header set Cache-Control "public, immutable"
+  </FilesMatch>
+
+  # صور
+  <FilesMatch "\.(webp|png|jpg|jpeg|svg|ico)$">
+    ExpiresDefault "access plus 30 days"
+  </FilesMatch>
+
+  # صفحات — تُراجَع مع كل زيارة
+  <FilesMatch "\.html$">
+    ExpiresDefault "access plus 0 seconds"
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ---------- حماية أساسية ----------
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# منع عرض محتويات المجلدات
+Options -Indexes
