@@ -1,6 +1,9 @@
 <div align="center">
 
-<img src="brand/logo/eldebosh-logo-horizontal.svg" alt="Eldebosh" width="360">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="brand/logo-png/eldebosh-logo-horizontal-inverse-1200w.png">
+  <img src="brand/logo-png/eldebosh-logo-horizontal-1200w.png" alt="Eldebosh" width="380">
+</picture>
 
 **موقع Eldebosh وهويته البصرية في مستودع واحد**
 
