@@ -4,9 +4,9 @@ Renderas till PNG/PDF av render.mjs."""
 import os, json
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SVG = os.path.join(HERE, 'svg')
-FONTS = os.path.abspath(os.path.join(HERE, '..', 'site', 'fonts'))
-OUT = os.path.join(HERE, 'canvas')
+SVG = os.path.join(HERE, '..', 'logo')
+FONTS = os.path.abspath(os.path.join(HERE, '..', '..', 'site', 'fonts'))
+OUT = os.path.join(HERE, 'build', 'canvas')
 os.makedirs(OUT, exist_ok=True)
 
 def logo(name, width=None, height=None):

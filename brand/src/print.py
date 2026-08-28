@@ -5,7 +5,7 @@ import os
 from assets import logo, FONTS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, 'canvas')
+OUT = os.path.join(HERE, 'build', 'canvas')
 os.makedirs(OUT, exist_ok=True)
 
 CSS = f'''<style>

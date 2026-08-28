@@ -76,6 +76,7 @@
 
     let openViewer = null;
     let lastTrigger = null;
+    let lockedScrollY = 0;
 
     for (const viewer of viewers) {
       // Ut ur kortet: .tile har overflow:hidden och transform vid hover,
@@ -97,6 +98,8 @@
       openViewer.classList.remove('is-open');
       openViewer = null;
       document.body.classList.remove('viewer-open');
+      document.body.style.top = '';
+      window.scrollTo({ top: lockedScrollY, left: 0, behavior: 'instant' });
       if (location.hash.startsWith('#v-')) {
         history.replaceState(null, '', location.pathname + location.search);
       }
@@ -117,6 +120,12 @@
       for (const img of viewer.querySelectorAll('img[loading="lazy"]')) img.loading = 'eager';
 
       viewer.classList.add('is-open');
+
+      // Lås sidan på plats. Enbart overflow:hidden räcker inte: iOS Safari
+      // rullar ändå, och Chrome ignorerar focus({preventScroll}) när fokus
+      // hamnar i en rullbar ruta — sidan hoppade ~300 px vid varje öppning.
+      lockedScrollY = window.scrollY;
+      document.body.style.top = `-${lockedScrollY}px`;
       document.body.classList.add('viewer-open');
 
       const closeBtn = viewer.querySelector('.viewer-close');

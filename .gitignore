@@ -1,0 +1,11 @@
+# beroenden
+node_modules/
+__pycache__/
+*.pyc
+
+# mellanfiler från brand/src (dukarna som renderas till PNG/PDF)
+brand/src/build/
+
+# system
+.DS_Store
+Thumbs.db

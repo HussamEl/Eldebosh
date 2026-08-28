@@ -1,0 +1,19 @@
+{
+  "name": "eldebosh",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Eldebosh — den byggda sajten och den visuella identiteten",
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "serve": "npx --yes http-server site -p 8080 -c-1",
+    "verify": "node tools/verify-site.mjs",
+    "brand:logo": "python3 brand/src/build_logo.py",
+    "brand:canvas": "python3 brand/src/assets.py && python3 brand/src/print.py",
+    "brand:render": "node brand/src/render.mjs && node brand/src/print.mjs",
+    "brand:all": "npm run brand:logo && npm run brand:canvas && npm run brand:render"
+  },
+  "devDependencies": {
+    "playwright": "1.56.1"
+  }
+}

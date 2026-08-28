@@ -4,7 +4,7 @@ Bokstäverna är banor (inga <text>), så filerna ser likadana ut överallt."""
 import os
 from typeset import typeset, metrics
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'svg')
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'logo')
 os.makedirs(OUT, exist_ok=True)
 
 # ---------------------------------------------------------------- palett

@@ -1,0 +1,4 @@
+# Bygger ordmärket ur den variabla Inter Tight-filen i site/fonts.
+fonttools>=4.55
+brotli>=1.1          # woff2-avkodning
+uharfbuzz>=0.45      # kerning och textformning

@@ -9,7 +9,7 @@ from fontTools.pens.transformPen import TransformPen
 from fontTools.misc.transform import Transform
 import uharfbuzz as hb
 
-FONTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'site', 'fonts')
+FONTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'site', 'fonts')
 _cache = {}
 
 def _instance(family, weight):
