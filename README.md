@@ -67,6 +67,7 @@ npm run brand:all            # الشعار ← الدُكوك ← PNG و PDF
 > سيمسح ما هنا. كل إصلاح موثّق بصيغته الأصلية في
 > [`docs/03-fixes-log.md`](docs/03-fixes-log.md) ليُنقل إلى المصدر.
 > الوضع المستقر: نقل مصدر Astro إلى هذا المستودع — [`docs/06-roadmap.md`](docs/06-roadmap.md).
+> بريف التسليم جاهز بالإنجليزية في [`docs/07-astro-handoff.md`](docs/07-astro-handoff.md).
 
 ## حالة المشروع
 
