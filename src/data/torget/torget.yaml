@@ -1,11 +1,9 @@
-# التواجد في ساحة كارلستاد. قابل للتحرير من لوحة التحرير.
-# ⚠️ ضع رقم هاتفك الحقيقي في الحقلين قبل النشر.
-active: false          # ← اجعلها true بعد وضع رقمك الحقيقي
-phone: "+46700000000"          # بصيغة دولية — يُستخدم في زر الاتصال
-phone_display: "070-000 00 00" # كما يُعرض للقارئ
-place: "Stora Torget"
-city: "Karlstad"
-map_url: "https://www.openstreetmap.org/search?query=Stora%20Torget%20Karlstad"
+active: true
+phone: '+46700000000'
+phone_display: 070-000 00 00
+place: Stora Torget
+city: Karlstad
+map_url: https://www.openstreetmap.org/search?query=Stora%20Torget%20Karlstad
 note:
-  sv: "Hör av dig innan du kommer så vi vet att vi ses. Vi svarar på samtal och sms."
-  en: "Get in touch before you come so we know to expect you. We answer calls and texts."
+  sv: Hör av dig innan du kommer så vi vet att vi ses. Vi svarar på samtal och sms.
+  en: Get in touch before you come so we know to expect you. We answer calls and texts.
