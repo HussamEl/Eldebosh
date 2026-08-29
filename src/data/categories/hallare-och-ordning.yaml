@@ -14,11 +14,23 @@ descriptions:
   en: Phone mounts, magnetic holders, desk stands and solutions that keep cables and gear in order.
 subcategories:
   - id: bilhallare
-    names: { sv: Bilhållare, en: Car mounts }
-    slugs: { sv: bilhallare, en: car-mounts }
+    names:
+      sv: Bilhållare
+      en: Car mounts
+    slugs:
+      sv: bilhallare
+      en: car-mounts
   - id: skrivbordsstall
-    names: { sv: Skrivbordsställ, en: Desk stands }
-    slugs: { sv: skrivbordsstall, en: desk-stands }
+    names:
+      sv: Skrivbordsställ
+      en: Desk stands
+    slugs:
+      sv: skrivbordsstall
+      en: desk-stands
   - id: kabelordning
-    names: { sv: Kabelordning, en: Cable management }
-    slugs: { sv: kabelordning, en: cable-management }
+    names:
+      sv: Kabelordning
+      en: Cable management
+    slugs:
+      sv: kabelordning
+      en: cable-management

@@ -1,10 +1,9 @@
-# التواجد في ساحة كارلستاد. قابل للتحرير من لوحة التحرير.
 active: true
-phone: "+46727782553"            # بصيغة دولية — يُستخدم في زر الاتصال
-phone_display: "072-778 25 53"   # كما يُعرض للقارئ
-place: "Stora Torget"
-city: "Karlstad"
-map_url: "https://www.openstreetmap.org/search?query=Stora%20Torget%20Karlstad"
+phone: '+46727782553'
+phone_display: 072-778 25 53
+place: Stora Torget
+city: Karlstad
+map_url: https://www.openstreetmap.org/search?query=Stora%20Torget%20Karlstad
 note:
-  sv: "Hör av dig innan du kommer så vi vet att vi ses. Vi svarar på samtal och sms."
-  en: "Get in touch before you come so we know to expect you. We answer calls and texts."
+  sv: Hör av dig innan du kommer så vi vet att vi ses. Vi svarar på samtal och sms.
+  en: Get in touch before you come so we know to expect you. We answer calls and texts.
