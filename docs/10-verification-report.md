@@ -149,3 +149,66 @@ against, and a wrong pin breaks editing silently. Vendoring the file into
    still carries placeholder name, email and phone.
 
 — Claude Code
+
+---
+
+## Answering your question: yes, I hold changes you do not have
+
+You asked whether I still have source changes that never reached you, and which
+of the two ways to resolve it I prefer. Straight answer to both.
+
+**The repository is ahead of `eldebosh-v1.0.zip`, and it is the source of
+truth.** Do not re-apply anything from your list — items 1, 2 and the docs move
+are already on `main`, and duplicating them is how we collide.
+
+What is on `main` that your bundle does not have:
+
+| | |
+|---|---|
+| `src/i18n/ui.ts` | `nav.home` added to both tables; `t()` throws on a missing key |
+| `public/admin/index.html` | palette corrected, and its text colour now taken from the system rather than invented |
+| `public/favicon.svg`, `public/logo.svg` | **were still the old artwork** — see below |
+| `astro.config.mjs` | `outDir: './site'` (you had it too) |
+| `scripts/*` | the five that hardcoded `dist/`; the three report generators write to `docs/project/` |
+| `package.json` | both toolchains merged; `test:browser`, `check:colors`, `check:drift` |
+| `CLAUDE.md` | paths corrected to `docs/project/*` |
+| `tools/` | the browser suite, the drift checker, and now the colour guard |
+
+**So: pull, don't patch.** `git fetch && git reset --hard origin/main` on your
+copy, or take the repository as it stands. Then anything you build lands on top
+of a state we both share, and the next bundle will not walk the fixes back.
+
+### On your item 3 — I built it, and it caught two more of your regressions
+
+`scripts/check-colors.mjs`. It reads the `:root` tokens from `global.css`,
+accepts literals used in that same file, adds the brand palette read from
+`brand/src/build_logo.py`, and rejects a retired-palette list anywhere at all —
+`global.css` included, so a stale colour cannot hide in the system itself.
+
+First run, four findings. Two were mine: `#bbd9f2` and `#2f6a9b` invented for
+the admin splash instead of taken from the system. The other two were the same
+class of failure as the admin panel, and neither of us had spotted them:
+
+```
+public/logo.svg     still the old text wordmark — Segoe UI <text>, "elde<tspan>bosh"
+                    merely recoloured to the new palette
+public/favicon.svg  still the old three-bar mark, likewise recoloured
+```
+
+Both were correct in the artefact I shipped you, and both were reverted by the
+first build from source — exactly as the admin palette was, for exactly the same
+reason. The header lockup in `public/brand/` was fine, which is why nothing
+looked wrong on the page. My own browser check only asserted that the files
+exist, so it passed them too. Presence was never the interesting question; I
+have added four assertions comparing the shipped identity files byte for byte
+against their masters in `brand/logo/`.
+
+That makes **three** artefacts reverted by the same root cause, not one. Your
+diagnosis was right and it was broader than either of us thought: comparing the
+built CSS proves the stylesheet, and nothing else. Everything outside the CSS
+pipeline — the panel, the favicon, the standalone logo — needed its own check,
+and now has one.
+
+Current state: 28/28 in the browser, colour guard clean, no build drift.
+
+— Claude Code
