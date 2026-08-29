@@ -1,8 +1,7 @@
 # التواجد في ساحة كارلستاد. قابل للتحرير من لوحة التحرير.
-# ⚠️ ضع رقم هاتفك الحقيقي في الحقلين قبل النشر.
-active: false          # ← اجعلها true بعد وضع رقمك الحقيقي
-phone: "+46700000000"          # بصيغة دولية — يُستخدم في زر الاتصال
-phone_display: "070-000 00 00" # كما يُعرض للقارئ
+active: true
+phone: "+46727782553"            # بصيغة دولية — يُستخدم في زر الاتصال
+phone_display: "072-778 25 53"   # كما يُعرض للقارئ
 place: "Stora Torget"
 city: "Karlstad"
 map_url: "https://www.openstreetmap.org/search?query=Stora%20Torget%20Karlstad"

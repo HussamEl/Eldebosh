@@ -28,11 +28,11 @@ CARD = f'''<!doctype html><meta charset="utf-8">{CSS}
   <div style="position:absolute;left:3mm;top:3mm;width:85mm;height:55mm;padding:7mm 8mm;display:flex;flex-direction:column;justify-content:space-between">
     <div>{logo('eldebosh-logo-horizontal.svg', width=None).replace('<svg ', '<svg style="width:44mm;height:auto" ',1)}</div>
     <div>
-      <div style="font-family:Inter Tight;font-weight:700;font-size:4.2mm">Förnamn Efternamn</div>
-      <div class="mini" style="color:#66727F">Roll · Eldebosh</div>
+      <div style="font-family:Inter Tight;font-weight:700;font-size:4.2mm">Hussam</div>
+      <div class="mini" style="color:#66727F">Eldebosh</div>
       <div class="mini" style="margin-top:3mm">
-        <span class="acc" style="color:#1273D1">eldebosh.com</span> · fornamn@eldebosh.com<br>
-        +46 (0)XX–XXX XX XX · Karlstad, Sverige
+        <span class="acc" style="color:#1273D1">eldebosh.com</span> · info@eldebosh.com<br>
+        072-778 25 53 · Karlstad, Sverige
       </div>
     </div>
   </div>
