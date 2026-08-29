@@ -1,0 +1,37 @@
+# المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
+# ⚠️ ناقص قبل النشر: asin · source_url · own_photos · hands_on · hands_on_limits
+# عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
+id: cooper-magstand-skrivbordsstall
+code: P-06
+lang: sv
+name: "Cooper MagStand höjdjusterbart stativ"
+brand: "Cooper"
+category: hallare-och-ordning
+subcategory: skrivbordsstall
+problems_solved:
+  - skrivbordet-ar-rorigt
+
+# مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
+key_specs:
+  "Justering": "Höjdjusterbart"
+  "Placering": "Skrivbord"
+
+pros: []
+cons: []
+best_for: ""
+price_band: budget
+
+# === الملكية والتجربة ===
+owned: true
+owned_since: 2025-07-01
+tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
+usage_period: ""
+own_photos: []
+hands_on: []
+hands_on_limits: []
+
+# === الربط ===
+asin: ""               # ← الصق ASIN هنا (10 خانات من رابط المنتج)
+source_url: ""         # ← رابط صفحة المنتج على أمازون
+last_verified:
+verified: false        # ← اجعلها true بعد اكتمال asin و source_url و last_verified

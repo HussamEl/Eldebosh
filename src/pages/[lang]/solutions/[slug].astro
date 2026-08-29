@@ -1,0 +1,109 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import SectionHead from '../../../components/SectionHead.astro';
+import ContentCard from '../../../components/ContentCard.astro';
+import ProductCard from '../../../components/ProductCard.astro';
+import AffiliateDisclosure from '../../../components/AffiliateDisclosure.astro';
+import SourceList from '../../../components/SourceList.astro';
+import { LANGS, t, type Lang } from '../../../i18n/ui';
+import { url, docs, getProducts, isCommercial } from '../../../lib/content';
+import { breadcrumbSchema, articleSchema, faqSchema } from '../../../lib/seo';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const lang of LANGS) {
+    for (const entry of await docs('solutions', lang)) {
+      paths.push({ params: { lang, slug: entry.data.slug }, props: { entry } });
+    }
+  }
+  return paths;
+}
+
+const { entry } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const tr = t(lang);
+const { Content } = await render(entry);
+
+const [guides, comparisons, posts] = await Promise.all([
+  docs('guides', lang),
+  docs('comparisons', lang),
+  docs('posts', lang),
+]);
+const rel = {
+  guides: guides.filter((g) => g.data.solution === entry.data.problem_id),
+  comparisons: comparisons.filter((c) => c.data.solution === entry.data.problem_id),
+  posts: posts.filter((p) => p.data.solution === entry.data.problem_id),
+};
+
+const products = await getProducts(entry.data.products, lang);
+const here = url.solution(lang, entry.data.slug);
+const crumbs = [
+  { name: tr('site.name'), url: url.home(lang) },
+  { name: tr('nav.solutions'), url: url.solutions(lang) },
+  { name: entry.data.title, url: here },
+];
+---
+
+<BaseLayout
+  lang={lang}
+  title={entry.data.title}
+  description={entry.data.description}
+  path={here}
+  noindex={entry.data.noindex}
+  schema={[
+    breadcrumbSchema(crumbs),
+    articleSchema({ ...entry.data, url: here }),
+    faqSchema([{ q: entry.data.question, a: entry.data.description }]),
+  ]}
+>
+  <Breadcrumbs items={crumbs} />
+
+  <div class="wrap stack page-body">
+    {isCommercial(products) && <AffiliateDisclosure lang={lang} />}
+
+    <header class="page-head">
+      <div class="charge" style="--fill:30%;max-width:5rem;" aria-hidden="true"></div>
+      <h1>{entry.data.question}</h1>
+      <p class="lead lead-lg">{entry.data.description}</p>
+      <p class="source">{tr('meta.updated')} {entry.data.updated.toISOString().slice(0, 10)}</p>
+    </header>
+
+    <section class="panel">
+      <h2 class="panel-title">{tr('solution.symptoms')}</h2>
+      <ul>{entry.data.symptoms.map((s) => <li>{s}</li>)}</ul>
+    </section>
+
+    {entry.data.hero_image && (
+      <figure class="hero-figure">
+        <img src={entry.data.hero_image} alt={entry.data.hero_image_alt ?? ''} width="1400" height="647" loading="eager" />
+        <figcaption>{tr('handson.photos')}</figcaption>
+      </figure>
+    )}
+
+    <div class="prose"><Content /></div>
+
+    <SourceList sources={entry.data.sources} lang={lang} />
+
+    {products.length > 0 && (
+      <section class="stack">
+        <SectionHead title={tr('home.guides')} fill="60%" />
+        <div class="stack">
+          {products.map((p) => <ProductCard id={p.id} lang={lang} />)}
+        </div>
+      </section>
+    )}
+
+    {(rel.guides.length + rel.comparisons.length + rel.posts.length) > 0 && (
+      <section class="stack">
+        <SectionHead title={tr('solution.related')} fill="90%" />
+        <div class="grid grid-3">
+          {rel.guides.map((g) => <ContentCard title={g.data.title} href={url.guide(lang, g.data.slug)} tag={tr('nav.guides')} />)}
+          {rel.comparisons.map((c) => <ContentCard title={c.data.title} href={url.comparison(lang, c.data.slug)} tag={tr('nav.compare')} />)}
+          {rel.posts.map((p) => <ContentCard title={p.data.title} href={url.post(lang, p.data.slug)} />)}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>

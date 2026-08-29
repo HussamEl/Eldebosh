@@ -1,0 +1,15 @@
+---
+/* صورة المنتج. عند غياب صورة موثقة يُعرض عنصر نائب من هوية الموقع
+   بدل صورة مختلقة أو مسروقة من متجر. */
+import Icon from './Icon.astro';
+interface Props { src?: string; alt?: string; icon?: string; }
+const { src, alt, icon = 'battery' } = Astro.props;
+---
+{src ? (
+  <img src={src} alt={alt ?? ''} loading="lazy" width="96" height="96" />
+) : (
+  <span class="product-thumb" aria-hidden="true">
+    <Icon name={icon} size={34} />
+    <span class="charge" style="--fill:46%"></span>
+  </span>
+)}

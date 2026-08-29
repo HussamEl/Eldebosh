@@ -1,0 +1,112 @@
+---
+/* المنتج يُعرض هنا فقط — لا صفحة منتج مستقلة في MVP.
+   الرابط يُبنى من بيانات المنتج، ولا يُكتب يدوياً في أي مقال. */
+import { t, type Lang } from '../i18n/ui';
+import { getProduct, affiliateHref, affiliateNetwork } from '../lib/content';
+import ProductImage from './ProductImage.astro';
+import HandsOn from './HandsOn.astro';
+
+interface Props {
+  id: string;
+  lang: Lang;
+  badge?: 'best-overall' | 'best-value' | 'best-budget' | 'best-specific' | 'premium';
+  reason?: string;
+  compact?: boolean;
+}
+
+const { id, lang, badge, reason, compact = false } = Astro.props;
+const tr = t(lang);
+const p = await getProduct(id, lang);
+const href = p ? affiliateHref(p) : null;
+---
+
+{!p ? (
+  <p class="notice">Produktdata saknas eller är inte verifierad: <code>{id}</code></p>
+) : (
+  <article class="product">
+    <div class="product-head">
+      <ProductImage src={p.own_photos[0]?.src ?? p.image} alt={p.own_photos[0]?.alt ?? p.image_alt ?? p.name} />
+      <div class="stack-xs">
+        <span class="badge-row">
+          {badge && <span class="product-badge">{tr(`badge.${badge}` as any)}</span>}
+          {p.tested && <span class="tested-pill">{tr('trust.tested')}</span>}
+        </span>
+        <h3>{p.name}</h3>
+        <p class="meta">
+          {p.brand} · {tr(`price.${p.price_band}` as any)}
+        </p>
+        {p.external_rating && (
+          <p class="rating">
+            <b>{p.external_rating.score}</b>/{p.external_rating.scale} ·{' '}
+            {p.external_rating.count.toLocaleString('sv-SE')} {tr('rating.based')}{' '}
+            <a href={p.external_rating.url} rel="nofollow noopener" target="_blank">{p.external_rating.publisher}</a>
+            {' · '}{p.external_rating.accessed.toISOString().slice(0, 10)}
+          </p>
+        )}
+        {reason && <p class="small">{reason}</p>}
+      </div>
+    </div>
+
+    {!compact && (
+      <div class="product-body">
+        <HandsOn
+          lang={lang}
+          tested={p.tested}
+          owned={p.owned}
+          ownedSince={p.owned_since}
+          usagePeriod={p.usage_period}
+          photos={p.own_photos}
+          notes={p.hands_on}
+          limits={p.hands_on_limits}
+          videoUrl={p.video_url}
+          videoThumb={p.video_thumb}
+        />
+        {p.best_for && (
+          <p><strong>{tr('product.bestfor')}:</strong> {p.best_for}</p>
+        )}
+
+        {Object.keys(p.key_specs).length > 0 && (
+          <table class="specs">
+            <caption class="eyebrow specs-caption">{tr('product.specs')}</caption>
+            <tbody>
+              {Object.entries(p.key_specs).map(([k, v]) => (
+                <tr><th scope="row">{k}</th><td>{v}</td></tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+
+        {(p.pros.length > 0 || p.cons.length > 0) && (
+          <div class="proscons">
+            {p.pros.length > 0 && (
+              <div><h4>{tr('product.pros')}</h4><ul>{p.pros.map((x) => <li>{x}</li>)}</ul></div>
+            )}
+            {p.cons.length > 0 && (
+              <div><h4>{tr('product.cons')}</h4><ul>{p.cons.map((x) => <li>{x}</li>)}</ul></div>
+            )}
+          </div>
+        )}
+
+        {href && (
+          <p>
+            <a
+              class="btn"
+              href={href}
+              rel="sponsored nofollow noopener"
+              target="_blank"
+              data-affiliate={p.id}
+              data-network={affiliateNetwork(p)}
+            >{tr('product.cta')}</a>
+          </p>
+        )}
+
+        {p.source_url && p.last_verified && (
+          <p class="source">
+            {tr('product.source')}: <a href={p.source_url} rel="nofollow noopener" target="_blank">{new URL(p.source_url).hostname}</a>
+            {' · '}{tr('product.verified')} {p.last_verified.toISOString().slice(0, 10)}
+          </p>
+        )}
+      </div>
+    )}
+  </article>
+)}

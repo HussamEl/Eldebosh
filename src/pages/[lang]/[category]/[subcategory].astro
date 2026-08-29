@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import SectionHead from '../../../components/SectionHead.astro';
+import ContentCard from '../../../components/ContentCard.astro';
+import { LANGS, RESERVED, t, type Lang } from '../../../i18n/ui';
+import { url, docs, activeCategories } from '../../../lib/content';
+import { breadcrumbSchema } from '../../../lib/seo';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const lang of LANGS) {
+    for (const c of await activeCategories(lang)) {
+      if (RESERVED.has(c.slug)) continue;
+      for (const s of c.subcategories) {
+        paths.push({ params: { lang, category: c.slug, subcategory: s.slug }, props: { cat: c, sub: s } });
+      }
+    }
+  }
+  return paths;
+}
+
+const { cat, sub } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const tr = t(lang);
+
+const [guides, comparisons] = await Promise.all([docs('guides', lang), docs('comparisons', lang)]);
+const pick = <T extends { data: { subcategory?: string } }>(l: T[]) => l.filter((x) => x.data.subcategory === sub.id);
+
+const here = url.subcategory(lang, cat.slug, sub.slug);
+const crumbs = [
+  { name: tr('site.name'), url: url.home(lang) },
+  { name: cat.name, url: url.category(lang, cat.slug) },
+  { name: sub.name, url: here },
+];
+---
+
+<BaseLayout lang={lang} title={sub.name} description={`${sub.name} — ${cat.description}`} path={here} schema={[breadcrumbSchema(crumbs)]}>
+  <Breadcrumbs items={crumbs} />
+  <div class="wrap stack page-body">
+    <header class="page-head">
+      <div class="charge" style="--fill:38%" aria-hidden="true"></div>
+      <h1>{sub.name}</h1>
+    </header>
+    {pick(guides).length === 0 && pick(comparisons).length === 0 ? (
+      <div class="notice">
+        <p>{tr('empty.generic')}</p>
+        <p class="mt-sm"><a class="btn btn-ghost" href={url.category(lang, cat.slug)}>{cat.name}</a></p>
+      </div>
+    ) : (
+      <>
+        {pick(guides).length > 0 && (
+          <section><SectionHead title={tr('nav.guides')} />
+            <div class="grid grid-3">{pick(guides).map((g) => <ContentCard title={g.data.title} href={url.guide(lang, g.data.slug)} />)}</div>
+          </section>
+        )}
+        {pick(comparisons).length > 0 && (
+          <section><SectionHead title={tr('nav.compare')} />
+            <div class="grid grid-3">{pick(comparisons).map((c) => <ContentCard title={c.data.title} href={url.comparison(lang, c.data.slug)} />)}</div>
+          </section>
+        )}
+      </>
+    )}
+  </div>
+</BaseLayout>

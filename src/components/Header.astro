@@ -1,0 +1,90 @@
+---
+import { t, type Lang } from '../i18n/ui';
+import { url, activeCategories } from '../lib/content';
+
+interface Props { lang: Lang; path: string; }
+const { lang, path } = Astro.props;
+const tr = t(lang);
+const cats = await activeCategories(lang);
+const other: Lang = lang === 'sv' ? 'en' : 'sv';
+const on = (href: string) => (path === href ? 'page' : undefined);
+
+const torgetHref = lang === 'sv' ? '/sv/pa-torget/' : '/en/on-the-square/';
+const primary = [
+  { href: torgetHref, label: tr('torget.nav') },
+  { href: url.solutions(lang), label: tr('nav.solutions') },
+  { href: url.guides(lang), label: tr('nav.guides') },
+  { href: url.comparisons(lang), label: tr('nav.compare') },
+];
+---
+
+<header class="masthead">
+  <div class="wrap masthead-inner">
+    <a class="brand" href={url.home(lang)} aria-label={`${tr('site.name')} — ${tr('nav.home')}`}>
+      <img src="/brand/eldebosh-logo-header.svg" alt={tr('site.name')} width="170" height="26" decoding="async" />
+    </a>
+
+    <!-- سطح المكتب -->
+    <nav class="nav nav-desktop" aria-label={tr('nav.menu')}>
+      <ul>
+        {primary.map((it) => (
+          <li><a href={it.href} aria-current={on(it.href)}>{it.label}</a></li>
+        ))}
+
+        {cats.length > 0 && (
+          <li>
+            <details name="nav">
+              <summary>{tr('nav.categories')}</summary>
+              <div class="nav-panel">
+                <p class="panel-label">{tr('nav.categories')}</p>
+                {cats.map((c) => (
+                  <a href={url.category(lang, c.slug)}>{c.name}</a>
+                ))}
+                <div class="panel-sep"></div>
+                {cats.flatMap((c) => c.subcategories.map((s) => (
+                  <a href={url.subcategory(lang, c.slug, s.slug)}>{s.name}</a>
+                )))}
+              </div>
+            </details>
+          </li>
+        )}
+
+        <li><a href={url.search(lang)}>{tr('nav.search')}</a></li>
+      </ul>
+      <a class="lang-chip" href={url.home(other)} hreflang={other} aria-label={tr('lang.switch')}>
+        {other.toUpperCase()}
+      </a>
+    </nav>
+
+    <!-- الجوال -->
+    <nav class="nav nav-mobile" aria-label={tr('nav.menu')}>
+      <ul>
+        <li>
+          <details name="nav">
+            <summary aria-label={tr('nav.menu')}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true">
+                <path d="M4 7h16" /><path d="M4 12h16" /><path d="M4 17h16" />
+              </svg>
+            </summary>
+            <div class="nav-panel">
+              {primary.map((it) => <a href={it.href} aria-current={on(it.href)}>{it.label}</a>)}
+              <a href={url.search(lang)}>{tr('nav.search')}</a>
+              {cats.length > 0 && (
+                <>
+                  <div class="panel-sep"></div>
+                  <p class="panel-label">{tr('nav.categories')}</p>
+                  {cats.map((c) => <a href={url.category(lang, c.slug)}>{c.name}</a>)}
+                </>
+              )}
+              <div class="panel-sep"></div>
+              <a href={url.info(lang, lang === 'sv' ? 'metod' : 'method')}>{tr('home.trust.cta')}</a>
+            </div>
+          </details>
+        </li>
+      </ul>
+      <a class="lang-chip" href={url.home(other)} hreflang={other} aria-label={tr('lang.switch')}>
+        {other.toUpperCase()}
+      </a>
+    </nav>
+  </div>
+</header>

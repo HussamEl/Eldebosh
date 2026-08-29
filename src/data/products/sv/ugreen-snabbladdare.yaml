@@ -1,0 +1,35 @@
+# منتج من صورك — بحوزتك ومصوَّر.
+# ⚠️ الطراز والقدرة تحتاج تأكيدك من صفحة المنتج.
+# ناقص: asin · source_url · key_specs · last_verified
+id: ugreen-snabbladdare
+code: P-19
+lang: sv
+name: "UGREEN snabbladdare USB-C"
+brand: "UGREEN"
+category: laddning-och-strom
+subcategory: snabbladdare
+problems_solved: []
+
+key_specs: {}
+
+pros: []
+cons: []
+best_for: ""
+price_band: mid
+
+# === الملكية والتجربة ===
+owned: true
+tested: false
+usage_period: ""
+own_photos:
+  - src: "/uploads/P-19-1.webp"
+    alt: "UGREEN väggladdare med USB-A och två USB-C-portar, kabel ansluten"
+    caption: "Vår egen bild."
+hands_on: []
+hands_on_limits: []
+
+# === الربط بأمازون ===
+asin: ""
+source_url: ""
+last_verified:
+verified: false

@@ -1,0 +1,24 @@
+id: hallare-och-ordning
+group: daily
+active: true
+order: 2
+icon: grid
+names:
+  sv: Hållare och ordning
+  en: Mounts and organisation
+slugs:
+  sv: hallare-och-ordning
+  en: mounts-and-organisation
+descriptions:
+  sv: Mobilhållare, magnetfästen, skrivbordsställ och lösningar som håller ordning på sladdar och prylar.
+  en: Phone mounts, magnetic holders, desk stands and solutions that keep cables and gear in order.
+subcategories:
+  - id: bilhallare
+    names: { sv: Bilhållare, en: Car mounts }
+    slugs: { sv: bilhallare, en: car-mounts }
+  - id: skrivbordsstall
+    names: { sv: Skrivbordsställ, en: Desk stands }
+    slugs: { sv: skrivbordsstall, en: desk-stands }
+  - id: kabelordning
+    names: { sv: Kabelordning, en: Cable management }
+    slugs: { sv: kabelordning, en: cable-management }

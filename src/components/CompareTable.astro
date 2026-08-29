@@ -1,0 +1,58 @@
+---
+/* جدول المقارنة يُبنى من بيانات المنتجات، لا يُكتب يدوياً. */
+import { t, type Lang } from '../i18n/ui';
+import { getProducts, affiliateHref, affiliateNetwork } from '../lib/content';
+
+interface Props { ids: string[]; lang: Lang; }
+const { ids, lang } = Astro.props;
+const tr = t(lang);
+const items = await getProducts(ids, lang);
+const specKeys = [...new Set(items.flatMap((p) => Object.keys(p.key_specs)))];
+---
+
+{items.length < 2 ? (
+  <p class="notice">Jämförelsen behöver minst två verifierade produkter.</p>
+) : (
+  <div class="compare-scroll">
+    <table class="compare">
+      <caption class="visually-hidden">{tr('compare.title')}</caption>
+      <thead>
+        <tr>
+          <th scope="col">&nbsp;</th>
+          {items.map((p) => <th scope="col">{p.name}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">{tr('price.mid')}</th>
+          {items.map((p) => <td>{tr(`price.${p.price_band}` as any)}</td>)}
+        </tr>
+        {specKeys.map((k) => (
+          <tr>
+            <th scope="row">{k}</th>
+            {items.map((p) => <td>{p.key_specs[k] ?? '—'}</td>)}
+          </tr>
+        ))}
+        <tr>
+          <th scope="row">{tr('product.bestfor')}</th>
+          {items.map((p) => <td>{p.best_for ?? '—'}</td>)}
+        </tr>
+        <tr>
+          <th scope="row">&nbsp;</th>
+          {items.map((p) => {
+            const href = affiliateHref(p);
+            return (
+              <td>
+                {href ? (
+                  <a class="btn btn-ghost" href={href} rel="sponsored nofollow noopener" target="_blank" data-affiliate={p.id} data-network={affiliateNetwork(p)}>
+                    {tr('product.cta')}
+                  </a>
+                ) : '—'}
+              </td>
+            );
+          })}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+)}

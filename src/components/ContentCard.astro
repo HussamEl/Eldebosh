@@ -1,0 +1,14 @@
+---
+import Icon from './Icon.astro';
+interface Props { title: string; href: string; description?: string; tag?: string; problem?: boolean; icon?: string; }
+const { title, href, description, tag, problem = false, icon } = Astro.props;
+---
+<article class={`card card-link${problem ? ' problem-card' : ''}`}>
+  {icon && (
+    <span class="card-icon" aria-hidden="true"><Icon name={icon} size={22} /></span>
+  )}
+  {problem && <div class="charge" aria-hidden="true"></div>}
+  {tag && !problem && <span class="tag">{tag}</span>}
+  <h3><a class="stretch" href={href}>{title}</a></h3>
+  {description && <p>{description}</p>}
+</article>

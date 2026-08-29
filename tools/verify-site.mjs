@@ -77,7 +77,10 @@ console.log('\n· identitet');
              label: img.closest('a').getAttribute('aria-label') };
   });
   check('logotypen i headern laddar', !!logo && logo.loaded && logo.h === 26,
-        logo ? `${logo.w}x${logo.h} · ${logo.label}` : 'saknas');
+        logo ? `${logo.w}x${logo.h}` : 'saknas');
+  check('logotyplänken har en läsbar aria-label',
+        !!logo && typeof logo.label === 'string' && logo.label.length > 3 && !/undefined|null/.test(logo.label),
+        logo ? `"${logo.label}"` : '');
   await page.close();
 }
 
@@ -199,7 +202,20 @@ console.log('\n· filter');
   await page.close();
 }
 
-/* 7. filer som måste finnas -------------------------------------------- */
+/* 7. inga läckta platshållare ------------------------------------------- */
+console.log('\n· utdata');
+{
+  const leaks = [];
+  for (const p of PAGES) {
+    const html = fs.readFileSync(path.join(ROOT, p.slice(1), 'index.html'), 'utf8');
+    // en saknad i18n-nyckel eller ett tomt fält renderas som strängen
+    // "undefined" rakt ut i sidan — det hände med logotypens aria-label
+    if (/>\s*undefined\s*</.test(html) || /="[^"]*\bundefined\b[^"]*"/.test(html)) leaks.push(p);
+  }
+  check('ingen sida renderar "undefined"', leaks.length === 0, leaks.slice(0, 5).join(' '));
+}
+
+/* 8. filer som måste finnas -------------------------------------------- */
 console.log('\n· filer');
 for (const f of ['favicon.svg', 'logo.svg', 'og-default.png', 'apple-touch-icon.png',
                  'icon-192.png', 'icon-512.png', 'brand/eldebosh-logo-header.svg',

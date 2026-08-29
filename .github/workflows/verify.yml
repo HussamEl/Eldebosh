@@ -7,17 +7,33 @@ on:
   workflow_dispatch:
 
 jobs:
-  site:
-    name: rökprov för sajten
+  build-and-verify:
+    name: bygg och verifiera
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npm run verify
+
+      # bygger från källan till site/ — validate.mjs stoppar bygget vid regelbrott
+      - run: npm run build
+
+      - run: npm run check:css
+      - run: npm run test:ui
+      - run: npm run test:browser
+      - run: npm run audit
+
+      # bygget ska vara reproducerbart: en ren build får inte ändra site/
+      - name: site/ är i synk med källan
+        run: |
+          if [ -n "$(git status --porcelain site)" ]; then
+            echo "::error::site/ skiljer sig från ett rent bygge — kör 'npm run build' och committa resultatet"
+            git status --short site | head -20
+            exit 1
+          fi

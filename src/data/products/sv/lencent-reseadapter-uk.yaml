@@ -1,0 +1,38 @@
+# المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
+# ⚠️ ناقص قبل النشر: asin · source_url · own_photos · hands_on · hands_on_limits
+# عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
+id: lencent-reseadapter-uk
+code: P-16
+lang: sv
+name: "LENCENT Reseadapter Sverige till Storbritannien"
+brand: "LENCENT"
+category: laddning-och-strom
+subcategory: snabbladdare
+problems_solved:
+  - ingen-eluttag-pa-resan
+
+# مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
+key_specs:
+  "Portar": "2×USB-C + 2×USB-A"
+  "Typ": "EU Schuko till UK Type G"
+  "Hopfällbar": "Ja"
+
+pros: []
+cons: []
+best_for: ""
+price_band: budget
+
+# === الملكية والتجربة ===
+owned: true
+owned_since: 2025-08-01
+tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
+usage_period: ""
+own_photos: []
+hands_on: []
+hands_on_limits: []
+
+# === الربط ===
+asin: ""               # ← الصق ASIN هنا (10 خانات من رابط المنتج)
+source_url: ""         # ← رابط صفحة المنتج على أمازون
+last_verified:
+verified: false        # ← اجعلها true بعد اكتمال asin و source_url و last_verified

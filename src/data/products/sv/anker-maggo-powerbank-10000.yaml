@@ -1,0 +1,61 @@
+# منتج بحوزة صاحب المشروع ومستخدَم فعلاً.
+# ⚠️ ناقص قبل النشر: asin · source_url · last_verified · own_photos (صورة واحدة تكفي)
+# بعدها: verified: true و tested: true
+id: anker-maggo-powerbank-10000
+code: P-01
+lang: sv
+name: "Anker MagGo Powerbank 10000 mAh"
+brand: "Anker"
+category: laddning-och-strom
+subcategory: powerbanks
+problems_solved:
+  - batteriet-tar-slut
+  - ingen-eluttag-pa-resan
+
+# مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
+key_specs:
+  "Kapacitet": "10 000 mAh"
+  "Trådlöst": "Qi2, 15 W"
+  "Display": "Smart Display"
+  "Fäste": "MagSafe-kompatibel"
+
+pros:
+  - "Displayen visar återstående nivå i siffror i stället för fyra lampor."
+  - "Qi2 på 15 W är den högre trådlösa nivån."
+  - "MagSafe-kompatibelt fäste sitter stadigt på kompatibla telefoner."
+
+cons:
+  - "Ligger i det högre prisläget bland powerbanks med samma kapacitet."
+  - "Displayen drar en liten mängd energi."
+
+best_for: "Dig som vill veta exakt hur mycket som är kvar i stället för att gissa utifrån lampor."
+price_band: premium
+
+# === الملكية والتجربة ===
+owned: true
+owned_since: 2025-06-01
+tested: true
+usage_period: "sedan juni 2025"
+own_photos:
+  - src: "/uploads/P-01-1-B0CFDPQXN4.webp"
+    alt: "Anker MagGo powerbank i mörk finish, uppfälld på sitt inbyggda stativ"
+    caption: "Vår egen bild."
+  - src: "/uploads/P-01-2.webp"
+    alt: "Anker MagGo powerbank stående upprätt, magnetsidan framåt"
+  - src: "/uploads/P-01-3.webp"
+    alt: "Två magnetiska powerbanks hållna i handen bredvid varandra för storleksjämförelse"
+hands_on:
+  - "Vi har ägt och använt den här sedan juni 2025 och den har fungerat som den ska i vår vardag."
+  - "Den har följt med i väskan och används regelbundet, inte bara vid enstaka tillfällen."
+
+hands_on_limits:
+  - "Vi har inte mätt uteffekten med mätinstrument — siffrorna nedan kommer från tillverkarens specifikation."
+  - "Vi har inte jämfört laddtiden mot tillverkarens uppgift under kontrollerade former."
+  - "Vi har inte använt den i sträng vinterkyla under längre tid."
+  - "Vi har inte testat hur kapaciteten står sig efter flera hundra laddcykler."
+
+# === الربط بأمازون ===
+asin: "B0CFDPQXN4"               # ← عشر خانات من رابط المنتج بعد /dp/
+source_url: "https://www.amazon.se/Anker-powerbank-10000mAh-display-stativ/dp/B0CFDPQXN4"         # ← رابط صفحة المنتج
+last_verified: 2026-08-20
+verified: true        # ← true بعد اكتمال asin و source_url و last_verified

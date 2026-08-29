@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TorgetContact from '../../components/TorgetContact.astro';
+import ProductTile from '../../components/ProductTile.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { getCollection } from 'astro:content';
+import { t } from '../../i18n/ui';
+import { url, verifiedProducts } from '../../lib/content';
+import { breadcrumbSchema } from '../../lib/seo';
+
+const lang = 'en' as const;
+const tr = t(lang);
+const here = '/en/on-the-square/';
+const d = (await getCollection('torget'))[0]?.data;
+const all = await verifiedProducts(lang, 24);
+const onTable = all.filter((p) => p.tested);
+
+const crumbs = [{ name: tr('site.name'), url: url.home(lang) }, { name: tr('torget.nav'), url: here }];
+---
+
+<BaseLayout
+  lang={lang}
+  title={tr('torget.page_title')}
+  description={tr('torget.page_desc')}
+  path={here}
+  altPaths={{ sv: '/sv/pa-torget/', en: '/en/on-the-square/' }}
+  schema={[breadcrumbSchema(crumbs)]}
+>
+  <Breadcrumbs items={crumbs} />
+
+  <div class="wrap stack page-body">
+    <header class="page-head">
+      <div class="charge" style="--fill:70%" aria-hidden="true"></div>
+      <h1>{tr('torget.page_title')}</h1>
+      <p class="lead lead-lg">{tr('torget.page_lead')}</p>
+    </header>
+
+    <TorgetContact lang={lang} />
+
+    <div class="prose">
+      <h2>{tr('torget.what_h')}</h2>
+      <ul>
+        <li>{tr('torget.what_1')}</li>
+        <li>{tr('torget.what_2')}</li>
+        <li>{tr('torget.what_3')}</li>
+      </ul>
+
+      <h2>{tr('torget.honest_h')}</h2>
+      <p>{tr('torget.honest_1')}</p>
+      <p>{tr('torget.honest_2')}</p>
+    </div>
+
+    {onTable.length > 0 && (
+      <section class="stack">
+        <div class="section-head">
+          <div class="charge" style="--fill:45%" aria-hidden="true"></div>
+          <h2>{tr('torget.gear_h')}</h2>
+          <p class="lead">{tr('torget.gear_lead')}</p>
+        </div>
+        <div class="tile-grid">
+          {onTable.map((p) => <ProductTile product={p} lang={lang} />)}
+        </div>
+      </section>
+    )}
+  </div>
+</BaseLayout>

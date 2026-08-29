@@ -1,0 +1,63 @@
+name: Diagnose FTP connection
+
+# تشخيص يدوي: يجمع أدلة ملموسة تُرسَل إلى دعم Hostinger.
+# لا ينشر شيئاً — يفحص الاتصال فقط.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Runner public IP
+        run: |
+          echo "عنوان خادم GitHub الذي يحاول الاتصال:"
+          curl -s https://api.ipify.org || echo "تعذّر"
+          echo
+
+      - name: DNS lookup
+        run: |
+          echo "هل يُترجم عنوان الخادم؟"
+          getent hosts "${{ secrets.FTP_SERVER }}" || echo "فشل الترجمة — العنوان قد يكون خاطئاً"
+          echo
+
+      - name: TCP port reachability
+        run: |
+          for port in 21 990 22; do
+            printf "المنفذ %-4s: " "$port"
+            if timeout 12 bash -c "cat < /dev/null > /dev/tcp/${{ secrets.FTP_SERVER }}/$port" 2>/dev/null; then
+              echo "مفتوح"
+            else
+              echo "مغلق أو محجوب"
+            fi
+          done
+          echo
+
+      - name: FTP banner
+        run: |
+          echo "رد الخادم على المنفذ 21 (بلا اعتماد):"
+          timeout 20 curl -v --connect-timeout 15 "ftp://${{ secrets.FTP_SERVER }}/" 2>&1 | head -25 || true
+          echo
+
+      - name: FTPS login test
+        run: |
+          echo "محاولة دخول مشفّرة وسرد المجلد:"
+          timeout 60 curl -sS --ssl-reqd --connect-timeout 20 \
+            --user "${{ secrets.FTP_USERNAME }}:${{ secrets.FTP_PASSWORD }}" \
+            "ftp://${{ secrets.FTP_SERVER }}${{ secrets.FTP_REMOTE_DIR }}" 2>&1 | head -30 || true
+          echo
+
+      - name: SFTP availability
+        run: |
+          echo "هل يدعم الخادم SFTP؟"
+          timeout 20 ssh -o StrictHostKeyChecking=no -o ConnectTimeout=15 \
+            "${{ secrets.FTP_USERNAME }}@${{ secrets.FTP_SERVER }}" exit 2>&1 | head -5 || true
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "--------------------------------------------"
+          echo "أرسل هذه النتيجة كاملة إلى دعم Hostinger."
+          echo "السؤال: هل تحجبون عناوين GitHub Actions؟"
+          echo "--------------------------------------------"

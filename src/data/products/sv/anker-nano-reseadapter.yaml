@@ -1,0 +1,39 @@
+# المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
+# ⚠️ ناقص قبل النشر: asin · source_url · own_photos · hands_on · hands_on_limits
+# عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
+id: anker-nano-reseadapter
+code: P-12
+lang: sv
+name: "Anker Nano Reseadapter"
+brand: "Anker"
+category: laddning-och-strom
+subcategory: snabbladdare
+problems_solved:
+  - ingen-eluttag-pa-resan
+  - skrivbordet-ar-rorigt
+
+# مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
+key_specs:
+  "Portar": "4 USB (2×USB-C + 2×USB-A) + AC"
+  "Ström": "5 A"
+  "Länder": "Tyskland, USA, England m.fl."
+
+pros: []
+cons: []
+best_for: ""
+price_band: mid
+
+# === الملكية والتجربة ===
+owned: true
+owned_since: 2025-08-01
+tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
+usage_period: ""
+own_photos: []
+hands_on: []
+hands_on_limits: []
+
+# === الربط ===
+asin: "B0DR2V76JV"               # ← الصق ASIN هنا (10 خانات من رابط المنتج)
+source_url: "https://www.amazon.se/dp/B0DR2V76JV"         # ← رابط صفحة المنتج على أمازون
+last_verified: 2026-08-24
+verified: false        # ← اجعلها true بعد اكتمال asin و source_url و last_verified

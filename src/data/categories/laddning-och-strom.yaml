@@ -1,0 +1,27 @@
+id: laddning-och-strom
+group: daily
+active: true
+order: 1
+icon: bolt
+names:
+  sv: Laddning och ström
+  en: Charging and power
+slugs:
+  sv: laddning-och-strom
+  en: charging-and-power
+descriptions:
+  sv: Powerbanks, snabbladdare, kablar och billaddning — allt som håller enheterna igång.
+  en: Power banks, fast chargers, cables and car charging — everything that keeps your devices running.
+subcategories:
+  - id: powerbanks
+    names: { sv: Powerbanks, en: Power banks }
+    slugs: { sv: powerbanks, en: power-banks }
+  - id: snabbladdare
+    names: { sv: Snabbladdare, en: Fast chargers }
+    slugs: { sv: snabbladdare, en: fast-chargers }
+  - id: kablar
+    names: { sv: Kablar och adaptrar, en: Cables and adapters }
+    slugs: { sv: kablar-och-adaptrar, en: cables-and-adapters }
+  - id: billaddning
+    names: { sv: Billaddning, en: Car charging }
+    slugs: { sv: billaddning, en: car-charging }

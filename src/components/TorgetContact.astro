@@ -1,0 +1,38 @@
+---
+/* لوحة الاتصال — "تواصل قبل أن تأتي".
+   بلا ساعات معلنة وبلا حالة لحظية: الوعد الوحيد هو الرد، لا الحضور.
+   صفر JavaScript — كل شيء روابط أصلية. */
+import { getCollection } from 'astro:content';
+import { t, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; compact?: boolean; }
+const { lang, compact = false } = Astro.props;
+const tr = t(lang);
+
+const entry = (await getCollection('torget'))[0];
+const d = entry?.data;
+const note = d?.note?.[lang] ?? d?.note?.sv ?? '';
+const smsBody = encodeURIComponent(tr('torget.sms_body'));
+---
+
+{d?.active && (
+  <aside class={`torget${compact ? ' torget-compact' : ''}`}>
+    <p class="torget-eyebrow">{d.place} · {d.city}</p>
+    <p class="torget-title">{tr('torget.contact_first')}</p>
+    {!compact && note && <p class="torget-note">{note}</p>}
+
+    <div class="torget-actions">
+      <a class="btn btn-volt" href={`tel:${d.phone}`}>
+        {tr('torget.call')} <span class="torget-num">{d.phone_display}</span>
+      </a>
+      <a class="btn btn-ghost" href={`sms:${d.phone}?&body=${smsBody}`}>
+        {tr('torget.sms')}
+      </a>
+      {d.map_url && (
+        <a class="btn btn-ghost" href={d.map_url} rel="nofollow noopener" target="_blank">
+          {tr('torget.map')}
+        </a>
+      )}
+    </div>
+  </aside>
+)}

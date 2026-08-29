@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { t } from '../../i18n/ui';
+import { url } from '../../lib/content';
+const lang = 'sv' as const;
+const tr = t(lang);
+const here = url.search(lang);
+---
+<BaseLayout lang={lang} title={tr('search.title')} description={tr('search.description')} path={here} noindex>
+  <div class="wrap page-body page-body-top" data-pagefind-ignore>
+    <h1>{tr('search.title')}</h1>
+    <div id="search" class="search-mount"></div>
+  </div>
+  <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+  <script src="/pagefind/pagefind-ui.js" is:inline></script>
+  <script is:inline>
+    window.addEventListener('DOMContentLoaded', () => {
+      if (typeof PagefindUI === 'undefined') return;
+      new PagefindUI({ element: '#search', showSubResults: true, showImages: false });
+      const q = new URLSearchParams(location.search).get('q');
+      if (q) {
+        const input = document.querySelector('#search input');
+        if (input) { input.value = q; input.dispatchEvent(new Event('input', { bubbles: true })); }
+      }
+    });
+  </script>
+</BaseLayout>

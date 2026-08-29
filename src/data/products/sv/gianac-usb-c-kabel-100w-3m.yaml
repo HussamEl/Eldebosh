@@ -1,0 +1,40 @@
+# المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
+# ⚠️ ناقص قبل النشر: asin · source_url · own_photos · hands_on · hands_on_limits
+# عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
+id: gianac-usb-c-kabel-100w-3m
+code: P-15
+lang: sv
+name: "GIANAC USB-C till USB-C 100W, 3 m"
+brand: "GIANAC"
+category: laddning-och-strom
+subcategory: kablar
+problems_solved:
+  - laddkabeln-gar-sonder
+  - skrivbordet-ar-rorigt
+
+# مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
+key_specs:
+  "Effekt": "100 W"
+  "Längd": "3 m"
+  "Kontakt": "90 grader"
+  "Chip": "E-Mark"
+
+pros: []
+cons: []
+best_for: ""
+price_band: budget
+
+# === الملكية والتجربة ===
+owned: true
+owned_since: 2026-07-01
+tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
+usage_period: ""
+own_photos: []
+hands_on: []
+hands_on_limits: []
+
+# === الربط ===
+asin: "B0C8FL2QYZ"               # ← الصق ASIN هنا (10 خانات من رابط المنتج)
+source_url: "https://www.amazon.se/dp/B0C8FL2QYZ"         # ← رابط صفحة المنتج على أمازون
+last_verified: 2026-08-24
+verified: false        # ← اجعلها true بعد اكتمال asin و source_url و last_verified

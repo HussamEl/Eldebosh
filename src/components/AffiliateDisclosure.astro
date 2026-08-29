@@ -1,0 +1,13 @@
+---
+/* إلزامي أعلى كل صفحة تجارية — Marknadsföringslagen.
+   لا يُنقل إلى الفوتر ولا يُخفى خلف زر. */
+import { t, type Lang } from '../i18n/ui';
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const tr = t(lang);
+---
+<aside class="disclosure" data-pagefind-ignore>
+  <b>{tr('disclosure.label')}</b>
+  {tr('disclosure.short')}
+  <span class="amazon-line">{tr('amazon.disclosure')}</span>
+</aside>

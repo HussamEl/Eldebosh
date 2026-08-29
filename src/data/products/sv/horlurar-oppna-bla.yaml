@@ -1,0 +1,36 @@
+# منتج من صورك — بحوزتك ومصوَّر.
+# ⚠️ الطراز الدقيق والمواصفات تحتاج تأكيدك — العلامة تأكدت من الصورة. الفئة الصحيحة (الصوت) غير مفعّلة بعد.
+# ناقص: asin · source_url · key_specs · last_verified
+id: horlurar-oppna-bla
+code: P-18
+lang: sv
+name: "HUAWEI öppna hörlurar (ljusblå)"
+brand: "HUAWEI"
+category: laddning-och-strom
+problems_solved: []
+
+key_specs: {}
+
+pros: []
+cons: []
+best_for: ""
+price_band: mid
+
+# === الملكية والتجربة ===
+owned: true
+tested: false
+usage_period: ""
+own_photos:
+  - src: "/uploads/P-18-1.webp"
+    alt: "Öppna hörlurar i ljusblått laddfodral, öronsnäckorna synliga"
+    caption: "Vår egen bild."
+  - src: "/uploads/P-18-2.webp"
+    alt: "Huawei laddfodral i ljusblått, stängt och sett framifrån"
+hands_on: []
+hands_on_limits: []
+
+# === الربط بأمازون ===
+asin: ""
+source_url: ""
+last_verified:
+verified: false

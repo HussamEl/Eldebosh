@@ -1,0 +1,35 @@
+# منتج من صورك — بحوزتك ومصوَّر.
+# ⚠️ الاسم والعلامة تحتاج تأكيدك — أي منتج من مشترياتك هذا؟
+# ناقص: asin · source_url · key_specs · last_verified
+id: magnetiskt-stativ-vikbart
+code: P-07
+lang: sv
+name: "Vikbart magnetiskt mobilstativ"
+brand: "OKÄNT"
+category: hallare-och-ordning
+subcategory: skrivbordsstall
+problems_solved: []
+
+key_specs: {}
+
+pros: []
+cons: []
+best_for: ""
+price_band: mid
+
+# === الملكية والتجربة ===
+owned: true
+tested: false
+usage_period: ""
+own_photos:
+  - src: "/uploads/P-07-1.webp"
+    alt: "Vikbart magnetiskt mobilstativ uppfällt med tre ben"
+    caption: "Vår egen bild."
+hands_on: []
+hands_on_limits: []
+
+# === الربط بأمازون ===
+asin: ""
+source_url: ""
+last_verified:
+verified: false

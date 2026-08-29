@@ -1,0 +1,56 @@
+# منتج بحوزة صاحب المشروع ومستخدَم فعلاً.
+# ⚠️ ناقص قبل النشر: asin · source_url · last_verified · own_photos (صورة واحدة تكفي)
+# بعدها: verified: true و tested: true
+id: ugreen-zapix-powerbank-10000
+code: P-04
+lang: sv
+name: "UGREEN Zapix Magnetisk Powerbank 10000 mAh"
+brand: "UGREEN"
+category: laddning-och-strom
+subcategory: powerbanks
+problems_solved:
+  - batteriet-tar-slut
+
+# مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
+key_specs:
+  "Kapacitet": "10 000 mAh"
+  "Trådlöst": "7,5 W"
+  "Fäste": "Magnetiskt"
+
+pros:
+  - "Samma kapacitet som de dyrare modellerna till ett lägre prisläge."
+  - "Magnetfästet gör den enkel att sätta på och ta av."
+
+cons:
+  - "7,5 W trådlöst är hälften av Qi2-nivån — laddningen tar märkbart längre tid."
+  - "Passar sämre om du vill ladda upp telefonen snabbt under en kort paus."
+
+best_for: "Dig som laddar över längre stunder och inte behöver högsta trådlösa effekt."
+price_band: mid
+
+# === الملكية والتجربة ===
+owned: true
+owned_since: 2025-06-01
+tested: true
+usage_period: "sedan juni 2025"
+own_photos:
+  - src: "/uploads/P-04-1-B0CH33F5P2.webp"
+    alt: "UGREEN Zapix magnetisk powerbank sedd uppifrån med magnetringen synlig"
+    caption: "Vår egen bild."
+  - src: "/uploads/P-04-2.webp"
+    alt: "UGREEN Zapix magnetisk powerbank med USB-C-kabel ansluten"
+hands_on:
+  - "Vi har ägt och använt den här sedan juni 2025 och den har fungerat som den ska i vår vardag."
+  - "Den har följt med i väskan och används regelbundet, inte bara vid enstaka tillfällen."
+
+hands_on_limits:
+  - "Vi har inte mätt uteffekten med mätinstrument — siffrorna nedan kommer från tillverkarens specifikation."
+  - "Vi har inte jämfört laddtiden mot tillverkarens uppgift under kontrollerade former."
+  - "Vi har inte använt den i sträng vinterkyla under längre tid."
+  - "Vi har inte testat hur kapaciteten står sig efter flera hundra laddcykler."
+
+# === الربط بأمازون ===
+asin: "B0CH33F5P2"               # ← عشر خانات من رابط المنتج بعد /dp/
+source_url: "https://www.amazon.se/dp/B0CH33F5P2"         # ← رابط صفحة المنتج
+last_verified: 2026-08-20
+verified: true        # ← true بعد اكتمال asin و source_url و last_verified

@@ -1,19 +1,43 @@
 {
   "name": "eldebosh",
+  "type": "module",
   "version": "1.0.0",
   "private": true,
-  "description": "Eldebosh — den byggda sajten och den visuella identiteten",
-  "type": "module",
-  "engines": { "node": ">=18" },
   "scripts": {
+    "dev": "astro dev",
+    "check": "node scripts/validate.mjs",
+    "build": "node scripts/validate.mjs && astro build && pagefind --site site",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test:ui": "node scripts/test-ui.mjs",
+    "verify": "npm run build && npm run check:css && npm run test:ui && npm run test:browser && npm run audit && npm run cleanup && npm run state && npm run assets && npm run csv",
+    "audit": "node scripts/audit.mjs",
+    "cleanup": "node scripts/server-cleanup.mjs",
+    "preview:file": "node scripts/make-preview.mjs",
+    "assets": "node scripts/make-assets.mjs",
+    "state": "node scripts/make-state.mjs",
+    "csv": "node scripts/make-csv.mjs",
+    "check:css": "node scripts/check-css.mjs",
+    "test:browser": "node tools/verify-site.mjs",
     "serve": "npx --yes http-server site -p 8080 -c-1",
-    "verify": "node tools/verify-site.mjs",
     "brand:logo": "python3 brand/src/build_logo.py",
     "brand:canvas": "python3 brand/src/assets.py && python3 brand/src/print.py",
     "brand:render": "node brand/src/render.mjs && node brand/src/print.mjs",
     "brand:all": "npm run brand:logo && npm run brand:canvas && npm run brand:render"
   },
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.0",
+    "@astrojs/sitemap": "^3.4.0",
+    "astro": "^5.13.0"
+  },
   "devDependencies": {
-    "playwright": "1.56.1"
+    "jsdom": "^30.0.1",
+    "pagefind": "^1.3.0",
+    "playwright": "1.56.1",
+    "yaml": "^2.5.0"
+  },
+  "description": "Eldebosh — Astro-källan, den byggda sajten och den visuella identiteten",
+  "engines": {
+    "node": ">=18"
   }
 }

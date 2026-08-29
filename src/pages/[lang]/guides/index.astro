@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PageHead from '../../../components/PageHead.astro';
+import ContentCard from '../../../components/ContentCard.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import { LANGS, t, type Lang } from '../../../i18n/ui';
+import { url, docs } from '../../../lib/content';
+import { breadcrumbSchema } from '../../../lib/seo';
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const tr = t(lang);
+const items = await docs('guides', lang);
+const here = url.guides(lang);
+const crumbs = [{ name: tr('site.name'), url: url.home(lang) }, { name: tr('nav.guides'), url: here }];
+---
+
+<BaseLayout
+  lang={lang}
+  title={tr('nav.guides')}
+  description={tr('hero.lead')}
+  path={here}
+  altPaths={{ sv: url.guides('sv'), en: url.guides('en') }}
+  schema={[breadcrumbSchema(crumbs)]}
+>
+  <Breadcrumbs items={crumbs} />
+  <section class="section section-flush">
+    <div class="wrap">
+      <PageHead title={tr('nav.guides')} />
+      {items.length === 0 ? (
+        <div class="notice">
+          <p>{tr('empty.generic')}</p>
+          <p class="mt-sm"><a class="btn btn-ghost" href={url.home(lang)}>{tr('empty.cta')}</a></p>
+        </div>
+      ) : (
+        <div class="grid grid-3">
+          {items.map((it) => (
+            <ContentCard title={it.data.title} href={url.guide(lang, it.data.slug)} description={it.data.description} />
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>

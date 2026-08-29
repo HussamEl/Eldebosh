@@ -1,0 +1,10 @@
+---
+/* رأس صفحة القوائم — يستخدم h1 لأنه العنوان الأساسي للصفحة. */
+interface Props { title: string; lead?: string; }
+const { title, lead } = Astro.props;
+---
+<header class="page-head">
+  <div class="charge" style="--fill:38%" aria-hidden="true"></div>
+  <h1>{title}</h1>
+  {lead && <p class="lead lead-lg">{lead}</p>}
+</header>

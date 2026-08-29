@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import ContentCard from '../../components/ContentCard.astro';
+import { LANGS, t, type Lang } from '../../i18n/ui';
+import { url, docs, activeCategories, verifiedProducts } from '../../lib/content';
+import ProductTile from '../../components/ProductTile.astro';
+import GearFilter from '../../components/GearFilter.astro';
+import TorgetContact from '../../components/TorgetContact.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
+
+export function getStaticPaths() {
+  return LANGS.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const tr = t(lang);
+
+const [solutions, guides, comparisons, posts, cats, gear] = await Promise.all([
+  docs('solutions', lang),
+  docs('guides', lang),
+  docs('comparisons', lang),
+  docs('posts', lang),
+  activeCategories(lang),
+  verifiedProducts(lang, 12),
+]);
+
+const problems = solutions.filter((s) => s.data.featured).slice(0, 6);
+const testedCount = gear.filter((p) => p.tested).length;
+
+const altPaths = { sv: url.home('sv'), en: url.home('en') };
+---
+
+<BaseLayout
+  lang={lang}
+  title={tr('site.name')}
+  description={tr('hero.lead')}
+  path={url.home(lang)}
+  altPaths={altPaths}
+>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="charge" style="--fill:64%" aria-hidden="true"></div>
+        <h1>{tr('site.tagline')}</h1>
+        <p class="hero-lead">{tr('hero.lead')}</p>
+      </div>
+      <form class="searchbar" action={url.search(lang)} method="get" role="search">
+        <input type="search" name="q" placeholder={tr('hero.search')} aria-label={tr('hero.search')} />
+        <button class="btn btn-volt" type="submit">{tr('nav.search')}</button>
+      </form>
+    </div>
+  </section>
+
+  {gear.length > 0 && (
+    <section class="section section-flush">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="charge" style="--fill:30%" aria-hidden="true"></div>
+          <h2>{tr('home.gear')}</h2>
+          <p class="lead">{tr('home.gear.lead')}</p>
+        </div>
+
+        {gear.length > 3 && (
+          <GearFilter lang={lang} testedCount={testedCount} total={gear.length} />
+        )}
+
+        <div
+          class="tile-grid"
+          data-gear-grid
+          data-count-template={tr('filter.count')}
+        >
+          {gear.map((p) => <ProductTile product={p} lang={lang} />)}
+        </div>
+
+        <div class="row-actions">
+          {guides.length > 0 && (
+            <a class="btn btn-ghost" href={url.guide(lang, guides[0].data.slug)}>{tr('home.gear.all')}</a>
+          )}
+        </div>
+
+        <div class="mt-gap">
+          <TorgetContact lang={lang} compact />
+        </div>
+
+        <div class="mt-gap">
+          <AffiliateDisclosure lang={lang} />
+        </div>
+      </div>
+    </section>
+  )}
+
+  {problems.length >= 3 && (
+    <section class="section">
+      <div class="wrap">
+        <SectionHead title={tr('home.problems')} lead={tr('home.problems.lead')} fill="22%" />
+        <div class="grid grid-3">
+          {problems.map((s) => (
+            <ContentCard problem icon={s.data.icon} title={s.data.question} href={url.solution(lang, s.data.slug)} description={s.data.description} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {cats.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <SectionHead title={tr('home.categories')} />
+        <div class="grid grid-2">
+          {cats.map((c) => (
+            <ContentCard icon={c.icon} title={c.name} href={url.category(lang, c.slug)} description={c.description} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {guides.length >= 2 && (
+    <section class="section">
+      <div class="wrap">
+        <SectionHead title={tr('home.guides')} fill="55%" />
+        <div class="grid grid-3">
+          {guides.slice(0, 4).map((g) => (
+            <ContentCard title={g.data.title} href={url.guide(lang, g.data.slug)} description={g.data.description} tag={tr('nav.guides')} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {comparisons.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <SectionHead title={tr('home.compare')} fill="68%" />
+        <div class="grid grid-3">
+          {comparisons.slice(0, 3).map((c) => (
+            <ContentCard title={c.data.title} href={url.comparison(lang, c.data.slug)} description={c.data.description} tag={tr('nav.compare')} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="wrap">
+      <div class="trustbar">
+        <div class="charge" style="--fill:100%" aria-hidden="true"></div>
+        <h2>{tr('home.trust')}</h2>
+        <p>{tr('home.trust.lead')}</p>
+        <p><a class="btn btn-volt" href={url.info(lang, lang === 'sv' ? 'metod' : 'method')}>{tr('home.trust.cta')}</a></p>
+      </div>
+    </div>
+  </section>
+
+  {posts.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <SectionHead title={tr('home.posts')} fill="88%" />
+        <div class="grid grid-3">
+          {posts.slice(0, 4).map((p) => (
+            <ContentCard title={p.data.title} href={url.post(lang, p.data.slug)} description={p.data.description} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

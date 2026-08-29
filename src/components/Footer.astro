@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import { t, type Lang } from '../i18n/ui';
+import { url, activeCategories } from '../lib/content';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const tr = t(lang);
+const cats = await activeCategories(lang);
+const all = await getCollection('pages');
+const pick = (group: string) =>
+  all
+    .filter((p) => p.data.lang === lang && p.data.published && p.data.footer_group === group)
+    .sort((a, b) => a.data.order - b.data.order);
+const legal = pick('legal');
+const about = pick('about');
+const year = new Date().getFullYear();
+---
+
+<footer class="footer" data-pagefind-ignore>
+  <div class="wrap">
+    <div class="grid grid-3">
+      <div>
+        <h4>{tr('nav.categories')}</h4>
+        <ul>
+          {cats.map((c) => <li><a href={url.category(lang, c.slug)}>{c.name}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h4>{tr('footer.about')}</h4>
+        <ul>
+          {about.map((p) => <li><a href={url.info(lang, p.data.slug)}>{p.data.title}</a></li>)}
+        </ul>
+      </div>
+      <div>
+        <h4>{tr('footer.legal')}</h4>
+        <ul>
+          {legal.map((p) => <li><a href={url.info(lang, p.data.slug)}>{p.data.title}</a></li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>{tr('disclosure.short')}</p>
+      <p class="mt-xs">{tr('amazon.disclosure')}</p>
+      <p class="mt-sm">© {year} Eldebosh. {tr('footer.rights')}</p>
+    </div>
+  </div>
+</footer>

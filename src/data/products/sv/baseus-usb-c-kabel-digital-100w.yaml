@@ -1,0 +1,37 @@
+# المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
+# ⚠️ ناقص قبل النشر: asin · source_url · own_photos · hands_on · hands_on_limits
+# عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
+id: baseus-usb-c-kabel-digital-100w
+code: P-13
+lang: sv
+name: "Baseus USB-C-kabel med digital skärm 100W"
+brand: "Baseus"
+category: laddning-och-strom
+subcategory: kablar
+problems_solved:
+  - laddkabeln-gar-sonder
+
+# مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
+key_specs:
+  "Effekt": "100 W"
+  "Display": "Digital skärm"
+
+pros: []
+cons: []
+best_for: ""
+price_band: budget
+
+# === الملكية والتجربة ===
+owned: true
+owned_since: 2025-05-01
+tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
+usage_period: ""
+own_photos: []
+hands_on: []
+hands_on_limits: []
+
+# === الربط ===
+asin: "B0DM22GCLQ"               # ← الصق ASIN هنا (10 خانات من رابط المنتج)
+source_url: "https://www.amazon.se/dp/B0DM22GCLQ"         # ← رابط صفحة المنتج على أمازون
+last_verified: 2026-08-24
+verified: false        # ← اجعلها true بعد اكتمال asin و source_url و last_verified

@@ -1,0 +1,42 @@
+# المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
+# ⚠️ ناقص قبل النشر: asin · source_url · own_photos · hands_on · hands_on_limits
+# عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
+id: ugreen-usb4-kabel-240w
+code: P-20
+lang: sv
+name: "UGREEN USB-C 240W / 40 Gbps, 1 m"
+brand: "UGREEN"
+category: laddning-och-strom
+subcategory: kablar
+problems_solved:
+  - laddkabeln-gar-sonder
+
+# مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
+key_specs:
+  "Effekt": "240 W"
+  "Dataöverföring": "40 Gbps (USB4)"
+  "Video": "8K-signal"
+  "Längd": "1 m"
+
+pros: []
+cons: []
+best_for: ""
+price_band: mid
+
+# === الملكية والتجربة ===
+owned: true
+owned_since: 2025-08-01
+tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
+usage_period: ""
+own_photos:
+  - src: "/uploads/P-20-1.webp"
+    alt: "UGREEN USB-C-kabel hoprullad bredvid en telefon"
+    caption: "Vår egen bild."
+hands_on: []
+hands_on_limits: []
+
+# === الربط ===
+asin: ""               # ← الصق ASIN هنا (10 خانات من رابط المنتج)
+source_url: ""         # ← رابط صفحة المنتج على أمازون
+last_verified:
+verified: false        # ← اجعلها true بعد اكتمال asin و source_url و last_verified

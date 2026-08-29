@@ -1,0 +1,39 @@
+# المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
+# ⚠️ ناقص قبل النشر: asin · source_url · own_photos · hands_on · hands_on_limits
+# عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
+id: ugreen-magflow-2i1
+code: P-09
+lang: sv
+name: "UGREEN MagFlow 2-i-1 magnetiskt laddställ"
+brand: "UGREEN"
+category: hallare-och-ordning
+subcategory: skrivbordsstall
+problems_solved:
+  - skrivbordet-ar-rorigt
+  - skrivbordet-ar-rorigt
+
+# مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
+key_specs:
+  "Funktion": "Laddställ för telefon och hörlurar"
+  "Trådlöst": "Ja"
+  "Kabel": "USB-C medföljer"
+
+pros: []
+cons: []
+best_for: ""
+price_band: mid
+
+# === الملكية والتجربة ===
+owned: true
+owned_since: 2025-06-01
+tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
+usage_period: ""
+own_photos: []
+hands_on: []
+hands_on_limits: []
+
+# === الربط ===
+asin: "B0B9X1RY8G"               # ← الصق ASIN هنا (10 خانات من رابط المنتج)
+source_url: "https://www.amazon.se/dp/B0B9X1RY8G"         # ← رابط صفحة المنتج على أمازون
+last_verified: 2026-08-24
+verified: false        # ← اجعلها true بعد اكتمال asin و source_url و last_verified

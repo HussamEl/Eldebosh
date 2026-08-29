@@ -1,0 +1,72 @@
+---
+/* شارة التجربة الفعلية + الأدلة.
+   تظهر فقط عندما tested=true. المنتج غير المجرَّب يعرض الشارة المعاكسة صراحةً. */
+import { t, type Lang } from '../i18n/ui';
+
+interface Photo { src: string; alt: string; caption?: string; }
+interface Props {
+  lang: Lang;
+  tested: boolean;
+  owned?: boolean;
+  ownedSince?: Date;
+  usagePeriod?: string;
+  photos?: Photo[];
+  notes?: string[];
+  limits?: string[];
+  videoUrl?: string;
+  videoThumb?: string;
+}
+const { lang, tested, owned = false, ownedSince, usagePeriod, photos = [], notes = [], limits = [], videoUrl, videoThumb } = Astro.props;
+const tr = t(lang);
+---
+
+{tested ? (
+  <section class="handson">
+    <p class="handson-badge">
+      <span class="dot" aria-hidden="true"></span>
+      {tr('handson.badge')}
+      {usagePeriod && <> — {tr('handson.used')} {usagePeriod}</>}
+      {ownedSince && <> · {tr('handson.since')} {ownedSince.toISOString().slice(0, 7)}</>}
+    </p>
+
+    {photos.length > 0 && (
+      <div class="handson-photos">
+        {photos.map((p) => (
+          <figure>
+            <img src={p.src} alt={p.alt} loading="lazy" width="320" height="240" />
+            {p.caption && <figcaption>{p.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    )}
+
+    {notes.length > 0 && (
+      <>
+        <h4 class="eyebrow">{tr('handson.notes')}</h4>
+        <ul>{notes.map((n) => <li>{n}</li>)}</ul>
+      </>
+    )}
+
+    {limits.length > 0 && (
+      <>
+        <h4 class="eyebrow">{tr('handson.limits')}</h4>
+        <ul class="handson-limits">{limits.map((l) => <li>{l}</li>)}</ul>
+      </>
+    )}
+
+    {videoUrl && (
+      <p>
+        <a class="btn btn-ghost" href={videoUrl} rel="noopener" target="_blank">
+          {tr('handson.video')}
+        </a>
+      </p>
+    )}
+  </section>
+) : owned ? (
+  <p class="handson-owned">
+    {tr('handson.owned_only')}
+    {ownedSince && <> {tr('handson.since')} {ownedSince.toISOString().slice(0, 7)}.</>}
+  </p>
+) : (
+  <p class="handson-none">{tr('handson.not_tested')}</p>
+)}

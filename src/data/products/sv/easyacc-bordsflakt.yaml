@@ -1,0 +1,34 @@
+# منتج من صورك — بحوزتك ومصوَّر.
+# ⚠️ ينتمي إلى فئة "الراحة والتبريد" غير المفعّلة. وُضع مؤقتاً في فئة الطاقة.
+# ناقص: asin · source_url · key_specs · last_verified
+id: easyacc-bordsflakt
+code: P-14
+lang: sv
+name: "EasyAcc bordsfläkt 4000 mAh"
+brand: "EasyAcc"
+category: laddning-och-strom
+problems_solved: []
+
+key_specs: {}
+
+pros: []
+cons: []
+best_for: ""
+price_band: mid
+
+# === الملكية والتجربة ===
+owned: true
+tested: false
+usage_period: ""
+own_photos:
+  - src: "/uploads/P-14-1.webp"
+    alt: "EasyAcc uppladdningsbar bordsfläkt i svart"
+    caption: "Vår egen bild."
+hands_on: []
+hands_on_limits: []
+
+# === الربط بأمازون ===
+asin: ""
+source_url: ""
+last_verified:
+verified: false

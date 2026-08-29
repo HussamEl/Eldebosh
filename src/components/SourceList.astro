@@ -1,0 +1,35 @@
+---
+/* "ما تقوله المصادر" — الاستشهاد بالاختبارات والتقييمات المنشورة.
+   القاعدة: نحن لا نختبر. ننقل بالإسناد، ونحلل، ونصدر حكماً خاصاً بنا. */
+import { t, type Lang } from '../i18n/ui';
+
+interface Source {
+  type: string; publisher: string; url: string;
+  accessed: Date; published?: Date; claim: string;
+}
+interface Props { sources: Source[]; lang: Lang; }
+const { sources, lang } = Astro.props;
+const tr = t(lang);
+const d = (x: Date) => x.toISOString().slice(0, 10);
+---
+
+{sources.length > 0 && (
+  <section class="sources-block">
+    <h2 class="panel-title">{tr('sources.title')}</h2>
+    <p class="source" style="margin-block:.4rem 1rem;">{tr('sources.note')}</p>
+    <ul class="source-list">
+      {sources.map((s) => (
+        <li>
+          <p>{s.claim}</p>
+          <p class="source">
+            {s.publisher}
+            {s.published && <> · {d(s.published)}</>}
+            {' · '}
+            <a href={s.url} rel="nofollow noopener" target="_blank">{tr('sources.open')}</a>
+            {' · '}{tr('sources.accessed')} {d(s.accessed)}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}

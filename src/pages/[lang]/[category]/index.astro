@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import SectionHead from '../../../components/SectionHead.astro';
+import ContentCard from '../../../components/ContentCard.astro';
+import { LANGS, RESERVED, t, type Lang } from '../../../i18n/ui';
+import { url, docs, activeCategories } from '../../../lib/content';
+import { breadcrumbSchema } from '../../../lib/seo';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const lang of LANGS) {
+    for (const c of await activeCategories(lang)) {
+      if (RESERVED.has(c.slug)) continue; // حماية من تصادم المسارات
+      paths.push({ params: { lang, category: c.slug }, props: { cat: c } });
+    }
+  }
+  return paths;
+}
+
+const { cat } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const tr = t(lang);
+
+const [solutions, guides, comparisons, posts] = await Promise.all([
+  docs('solutions', lang), docs('guides', lang), docs('comparisons', lang), docs('posts', lang),
+]);
+const inCat = <T extends { data: { category: string } }>(list: T[]) => list.filter((x) => x.data.category === cat.id);
+
+const here = url.category(lang, cat.slug);
+const crumbs = [{ name: tr('site.name'), url: url.home(lang) }, { name: cat.name, url: here }];
+---
+
+<BaseLayout lang={lang} title={cat.name} description={cat.description} path={here} schema={[breadcrumbSchema(crumbs)]}>
+  <Breadcrumbs items={crumbs} />
+  <div class="wrap stack page-body">
+    <header class="page-head">
+      <div class="charge" style="--fill:40%;max-width:5rem;" aria-hidden="true"></div>
+      <h1>{cat.name}</h1>
+      <p class="lead lead-lg">{cat.description}</p>
+    </header>
+
+    {cat.subcategories.length > 0 && (
+      <nav class="grid grid-3" aria-label={cat.name}>
+        {cat.subcategories.map((s) => (
+          <ContentCard title={s.name} href={url.subcategory(lang, cat.slug, s.slug)} />
+        ))}
+      </nav>
+    )}
+
+    {inCat(solutions).length > 0 && (
+      <section><SectionHead title={tr('nav.solutions')} fill="25%" />
+        <div class="grid grid-3">{inCat(solutions).map((s) => <ContentCard problem icon={s.data.icon} title={s.data.question} href={url.solution(lang, s.data.slug)} />)}</div>
+      </section>
+    )}
+    {inCat(guides).length > 0 && (
+      <section><SectionHead title={tr('nav.guides')} fill="55%" />
+        <div class="grid grid-3">{inCat(guides).map((g) => <ContentCard title={g.data.title} href={url.guide(lang, g.data.slug)} />)}</div>
+      </section>
+    )}
+    {inCat(comparisons).length > 0 && (
+      <section><SectionHead title={tr('nav.compare')} fill="75%" />
+        <div class="grid grid-3">{inCat(comparisons).map((c) => <ContentCard title={c.data.title} href={url.comparison(lang, c.data.slug)} />)}</div>
+      </section>
+    )}
+    {inCat(posts).length > 0 && (
+      <section><SectionHead title={tr('home.posts')} fill="95%" />
+        <div class="grid grid-3">{inCat(posts).map((p) => <ContentCard title={p.data.title} href={url.post(lang, p.data.slug)} />)}</div>
+      </section>
+    )}
+  </div>
+</BaseLayout>

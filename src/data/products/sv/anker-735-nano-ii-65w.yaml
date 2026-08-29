@@ -1,0 +1,47 @@
+# المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
+# ⚠️ ناقص قبل النشر: asin · source_url · own_photos · hands_on · hands_on_limits
+# عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
+id: anker-735-nano-ii-65w
+code: P-11
+lang: sv
+name: "Anker 735 Nano II 65W"
+brand: "Anker"
+category: laddning-och-strom
+subcategory: snabbladdare
+problems_solved:
+  - mobilen-laddar-langsamt
+  - skrivbordet-ar-rorigt
+
+# مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
+key_specs:
+  "Effekt": "65 W"
+  "Portar": "3 (USB-C + USB-A)"
+  "Teknik": "GaN, PPS"
+
+pros: []
+cons: []
+best_for: ""
+price_band: mid
+
+# === الملكية والتجربة ===
+owned: true
+owned_since: 2026-02-01
+tested: true          # اجعلها true بعد إضافة الصور والملاحظات والحدود
+usage_period: "sedan februari 2026"
+own_photos:
+  - src: "/uploads/P-11-1-B09LLRNGSD.webp"
+    alt: "Anker 735 Nano II väggladdare med USB-A och USB-C, kabel ansluten"
+    caption: "Vår egen bild."
+hands_on:
+  - "Vi har ägt och använt den här sedan februari 2026 och den har fungerat som den ska i vår vardag."
+  - "Den används dagligen hemma till både telefon och bärbar dator."
+hands_on_limits:
+  - "Vi har inte mätt uteffekten med mätinstrument — siffrorna kommer från tillverkarens specifikation."
+  - "Vi har inte mätt hur effekten fördelas när alla tre portarna används samtidigt."
+  - "Vi har inte jämfört laddtiden mot tillverkarens uppgift under kontrollerade former."
+
+# === الربط ===
+asin: "B09LLRNGSD"               # ← الصق ASIN هنا (10 خانات من رابط المنتج)
+source_url: "https://www.amazon.se/dp/B09LLRNGSD"         # ← رابط صفحة المنتج على أمازون
+last_verified: 2026-08-24
+verified: false        # ← اجعلها true بعد اكتمال asin و source_url و last_verified

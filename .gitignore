@@ -3,9 +3,19 @@ node_modules/
 __pycache__/
 *.pyc
 
-# mellanfiler från brand/src (dukarna som renderas till PNG/PDF)
+# Astro
+.astro/
+dist/
+
+# hemligheter
+.env
+.env.*
+!.env.example
+
+# mellanfiler från brand/src
 brand/src/build/
 
 # system
 .DS_Store
 Thumbs.db
+npm-debug.log*

@@ -1,0 +1,119 @@
+---
+/* بطاقة منتج مصغّرة — للشبكة أعلى الصفحة الرئيسية.
+   مصممة لتعمل بلا صورة: الرقم الأهم في المواصفات يصبح هو العنصر البصري.
+   السبب: صور أمازون تحتاج الواجهة البرمجية (تُفتح بعد أول مبيعات)،
+   وصور المتجر لا يجوز نسخها يدوياً. */
+import { t, type Lang } from '../i18n/ui';
+import { affiliateHref, affiliateNetwork, type Product } from '../lib/content';
+
+interface Props { product: Product; lang: Lang; }
+const { product: p, lang } = Astro.props;
+const tr = t(lang);
+const href = affiliateHref(p);
+const viewerId = `v-${p.code ?? p.id}`;
+
+/* الرقم البطل: أول مواصفة تبدأ برقم. النص غير الرقمي لا يصلح كعنصر بصري. */
+const specs = Object.entries(p.key_specs);
+const numeric = specs.find(([, v]) => /^\s*\d/.test(String(v)));
+const m = numeric ? String(numeric[1]).match(/^\s*([\d\s.,]+)\s*(.*)$/) : null;
+
+const heroValue = m ? m[1].trim() : null;
+const heroUnit = m ? m[2].trim().slice(0, 8) : '';
+const heroLabel = numeric ? numeric[0] : '';
+
+/* الرقائق: بقية المواصفات، مع تقصير القيم الطويلة */
+const photos = p.own_photos.slice(0, 3);
+const chips = specs
+  .filter(([k]) => k !== heroLabel)
+  .slice(0, 2)
+  .map(([k, v]) => [k, String(v).length > 18 ? String(v).slice(0, 17) + '…' : String(v)] as const);
+---
+
+<article
+  id={`t-${p.code ?? p.id}`}
+  class="tile"
+  data-category={p.category}
+  data-band={p.price_band}
+  data-tested={String(p.tested)}
+  data-name={`${p.brand} ${p.name}`.toLowerCase()}
+>
+  <Fragment set:html={photos.length ? `<a class="tile-face" href="#${viewerId}" aria-label="${tr('viewer.open')}">` : (href ? `<a class="tile-face" href="${href}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="${p.id}" data-network="${affiliateNetwork(p)}">` : '<div class="tile-face">')} />
+    {photos.length > 0 ? (
+      <span class="tile-photos" data-n={photos.length}>
+        {photos.map((ph, i) => (
+          <img
+            class="tile-photo"
+            src={ph.src}
+            alt={i === 0 ? ph.alt : ''}
+            aria-hidden={i > 0 ? 'true' : undefined}
+            loading="lazy"
+            width="360"
+            height="360"
+            decoding="async"
+            style={`--i:${i}`}
+          />
+        ))}
+      </span>
+    ) : heroValue ? (
+      <>
+        <span class="tile-hero" aria-hidden="true">
+          <span class="tile-hero-value">{heroValue}</span>
+          {heroUnit && <span class="tile-hero-unit">{heroUnit}</span>}
+        </span>
+        <span class="tile-hero-label">{heroLabel}</span>
+      </>
+    ) : (
+      <span class="tile-mono" aria-hidden="true">{p.brand.slice(0, 2).toUpperCase()}</span>
+    )}
+  <Fragment set:html={photos.length || href ? '</a>' : '</div>'} />
+
+  <div class="tile-body">
+    <p class="tile-brand">
+      {p.brand}
+      {p.tested && <span class="tile-dot" title={tr('trust.tested')} aria-label={tr('trust.tested')}></span>}
+    </p>
+    <h3 class="tile-name">{p.name}</h3>
+
+    {chips.length > 0 && (
+      <ul class="tile-chips">
+        {chips.map(([k, v]) => <li><b>{v}</b> {k}</li>)}
+      </ul>
+    )}
+
+    <p class="tile-band">
+      {tr(`price.${p.price_band}` as any)}
+      {p.tested && <span class="tile-torget">{tr('torget.badge')}</span>}
+    </p>
+
+    {href ? (
+      <a class="tile-cta" href={href} rel="sponsored nofollow noopener" target="_blank" data-affiliate={p.id} data-network={affiliateNetwork(p)}>
+        {tr('tile.cta')}
+      </a>
+    ) : (
+      <span class="tile-cta is-soon">{tr('tile.soon')}</span>
+    )}
+  </div>
+
+  {photos.length > 0 && (
+    <div class="viewer" id={viewerId}>
+      <a class="viewer-veil" href={`#t-${p.code ?? p.id}`} aria-label={tr('viewer.close')}></a>
+      <div class="viewer-box">
+        <a class="viewer-close" href={`#t-${p.code ?? p.id}`} aria-label={tr('viewer.close')}>×</a>
+        <p class="viewer-title">{p.brand} · {p.name}</p>
+        <div class="viewer-shots">
+          {photos.map((ph) => (
+            <figure>
+              <img src={ph.src} alt={ph.alt} loading="lazy" width="720" height="720" decoding="async" />
+              {ph.caption && <figcaption>{ph.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+        {href && (
+          <a class="btn btn-volt viewer-buy" href={href} rel="sponsored nofollow noopener" target="_blank" data-affiliate={p.id} data-network={affiliateNetwork(p)}>
+            {tr('tile.cta')}
+          </a>
+        )}
+      </div>
+    </div>
+  )}
+</article>

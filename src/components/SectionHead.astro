@@ -1,0 +1,10 @@
+---
+interface Props { title: string; lead?: string; eyebrow?: string; fill?: string; }
+const { title, lead, eyebrow, fill } = Astro.props;
+---
+<div class="section-head">
+  {fill && <div class="charge" style={`--fill:${fill}`} aria-hidden="true"></div>}
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+  <h2>{title}</h2>
+  {lead && <p class="lead">{lead}</p>}
+</div>

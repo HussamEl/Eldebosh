@@ -1,0 +1,25 @@
+---
+/* الجزيرة التفاعلية الوحيدة — تصفية المنتجات.
+   بلا سكربت: كل المنتجات تظهر والشريط مخفي. */
+import { t, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; testedCount: number; total: number; }
+const { lang, testedCount, total } = Astro.props;
+const tr = t(lang);
+---
+
+<div class="gearbar" data-gearbar hidden>
+  <div class="gearbar-chips" role="group" aria-label={tr('filter.label')}>
+    <button type="button" class="chip is-on" data-filter="all" aria-pressed="true">
+      {tr('filter.all')} <span class="chip-n">{total}</span>
+    </button>
+    {testedCount > 0 && (
+      <button type="button" class="chip chip-tested" data-toggle="tested" aria-pressed="false">
+        <span class="tile-dot" aria-hidden="true"></span>
+        {tr('torget.badge')} <span class="chip-n">{testedCount}</span>
+      </button>
+    )}
+  </div>
+</div>
+
+<p class="gear-count" data-gear-count hidden aria-live="polite"></p>

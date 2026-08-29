@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { t, type Lang } from '../i18n/ui';
+import { abs, hreflangs } from '../lib/seo';
+
+/* بصمة البناء — تظهر في مصدر الصفحة، فتكشف فوراً إن كان الخادم يعرض نسخة قديمة. */
+const BUILD_ID = new Date().toISOString().slice(0, 16).replace('T', ' ');
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  path: string;
+  altPaths?: Partial<Record<Lang, string>>;
+  noindex?: boolean;
+  schema?: unknown[];
+  image?: string;
+}
+
+const { lang, title, description, path, altPaths, noindex = false, schema = [], image = '/og-default.png' } = Astro.props;
+const tr = t(lang);
+const alts = hreflangs(altPaths ?? { [lang]: path });
+const fullTitle = title === tr('site.name') ? `${title} — ${tr('site.tagline')}` : `${title} | ${tr('site.name')}`;
+---
+
+<!doctype html>
+<html lang={lang === 'sv' ? 'sv-SE' : 'en'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={abs(path)} />
+    {alts.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={abs(path)} />
+    <meta property="og:image" content={abs(image)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:image" content={abs(image)} />
+    <meta property="og:locale" content={lang === 'sv' ? 'sv_SE' : 'en_GB'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="eldebosh-build" content={BUILD_ID} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/inter-tight-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+  <body>
+    <a class="skip" href="#main">{tr('skip')}</a>
+    <Header lang={lang} path={path} />
+    <main id="main" data-pagefind-body>
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <script src="/js/eldebosh-ui.js" defer></script>
+  </body>
+</html>
