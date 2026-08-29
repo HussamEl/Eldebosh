@@ -215,7 +215,27 @@ console.log('\n· utdata');
   check('ingen sida renderar "undefined"', leaks.length === 0, leaks.slice(0, 5).join(' '));
 }
 
-/* 8. filer som måste finnas -------------------------------------------- */
+/* 8. identitetsfilerna är rätt konstverk, inte bara närvarande ---------- */
+console.log('\n· identitetsfiler');
+{
+  // Att filen finns räcker inte: public/favicon.svg och logo.svg låg kvar som
+  // den gamla ordmärkesgrafiken, omfärgad men fortfarande fel bild.
+  const pairs = [
+    ['favicon.svg', '../brand/logo/favicon.svg'],
+    ['logo.svg', '../brand/logo/eldebosh-logo-horizontal.svg'],
+    ['brand/eldebosh-logo-header.svg', '../brand/logo/eldebosh-logo-header.svg'],
+    ['brand/eldebosh-icon.svg', '../brand/logo/eldebosh-icon.svg'],
+  ];
+  for (const [shipped, master] of pairs) {
+    const a = path.join(ROOT, shipped);
+    const b = path.join(ROOT, master);
+    const same = fs.existsSync(a) && fs.existsSync(b) &&
+      fs.readFileSync(a, 'utf8').trim() === fs.readFileSync(b, 'utf8').trim();
+    check(`${shipped} är identisk med källan i brand/`, same);
+  }
+}
+
+/* 9. filer som måste finnas -------------------------------------------- */
 console.log('\n· filer');
 for (const f of ['favicon.svg', 'logo.svg', 'og-default.png', 'apple-touch-icon.png',
                  'icon-192.png', 'icon-512.png', 'brand/eldebosh-logo-header.svg',

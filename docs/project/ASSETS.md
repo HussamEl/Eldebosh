@@ -45,8 +45,8 @@
 
 | الرمز | العنصر | المسار | الحجم |
 |---|---|---|---|
-| `B-01` | favicon.svg | `/favicon.svg` | 0 KB |
-| `B-02` | logo.svg | `/logo.svg` | 0 KB |
+| `B-01` | favicon.svg | `/favicon.svg` | 1 KB |
+| `B-02` | logo.svg | `/logo.svg` | 10 KB |
 | `B-03` | og-default.png | `/og-default.png` | 76 KB |
 | `B-04` | qr-card.png | `/qr-card.png` | 187 KB |
 | `B-05` | qr-eldebosh.png | `/qr-eldebosh.png` | 10 KB |
