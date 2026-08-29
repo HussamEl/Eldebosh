@@ -1,6 +1,6 @@
 id: hallare-och-ordning
 group: daily
-active: false
+active: true
 order: 2
 icon: grid
 names:
