@@ -29,11 +29,6 @@ jobs:
       - run: npm run test:browser
       - run: npm run audit
 
-      # bygget ska vara reproducerbart: en ren build får inte ändra site/
-      - name: site/ är i synk med källan
-        run: |
-          if [ -n "$(git status --porcelain site)" ]; then
-            echo "::error::site/ skiljer sig från ett rent bygge — kör 'npm run build' och committa resultatet"
-            git status --short site | head -20
-            exit 1
-          fi
+      # site/ får inte glida ifrån källan. Byggstämpeln och Pagefinds
+      # nyckelordning ändras varje körning med flit och normaliseras bort.
+      - run: npm run check:drift

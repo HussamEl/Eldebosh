@@ -23,7 +23,8 @@
     "brand:logo": "python3 brand/src/build_logo.py",
     "brand:canvas": "python3 brand/src/assets.py && python3 brand/src/print.py",
     "brand:render": "node brand/src/render.mjs && node brand/src/print.mjs",
-    "brand:all": "npm run brand:logo && npm run brand:canvas && npm run brand:render"
+    "brand:all": "npm run brand:logo && npm run brand:canvas && npm run brand:render",
+    "check:drift": "node tools/check-build-drift.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
