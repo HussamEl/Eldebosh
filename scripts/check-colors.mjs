@@ -51,18 +51,25 @@ for (const v of ['#fff', '#ffffff', '#000', '#000000']) brand.add(v);
 
 const allowed = new Set([...tokens.keys(), ...literals, ...brand]);
 
-/* ---------- 3. الملفات المكتوبة يدوياً ---------- */
+/* ---------- 3. الملفات المكتوبة يدوياً ----------
+   كل ما يكتبه إنسان ويمكن أن يحمل لوناً: صفحات لوحة التحرير وأصول الهوية في
+   `public/`، **وكل ما في `src/`** — مكوّنات `.astro` قد تحمل `style="…#hex"`،
+   ومحتوى `.mdx` كذلك، وملفات `.ts` قد تبني لوناً في سلسلة نصية.
+   استبعاد `.astro` و`.mdx` كان ثغرة: لون متقاعد يمرّ إلى `site/` بلا فحص. */
+const EXT = /\.(html|svg|yml|yaml|css|astro|mdx|ts|js|mjs)$/;
+const SKIP_DIRS = ['uploads', 'fonts', 'pagefind', 'node_modules'];
+
 const walk = (dir, out = []) => {
   for (const entry of readdirSync(dir)) {
     const p = join(dir, entry);
     if (statSync(p).isDirectory()) {
-      if (['uploads', 'fonts', 'pagefind'].includes(entry)) continue;
+      if (SKIP_DIRS.includes(entry)) continue;
       walk(p, out);
-    } else if (/\.(html|svg|yml|yaml)$/.test(entry)) out.push(p);
+    } else if (EXT.test(entry)) out.push(p);
   }
   return out;
 };
-const files = [...walk(join(ROOT, 'public')), join(ROOT, 'src/styles/global.css')];
+const files = [...walk(join(ROOT, 'public')), ...walk(join(ROOT, 'src'))];
 
 /* ---------- 4. الفحص ---------- */
 const nearest = (hex) => {
@@ -100,7 +107,7 @@ for (const file of files) {
   }
 }
 
-console.log(`\nفحص الألوان: ${files.length} ملفاً · ${tokens.size} رمزاً في :root · ${literals.size} لوناً في global.css\n`);
+console.log(`\nفحص الألوان: ${files.length} ملفاً (public + src) · ${tokens.size} رمزاً في :root · ${literals.size} لوناً في global.css\n`);
 
 if (!offences.length) {
   console.log('✓ لا لون خارج نظام التصميم\n');

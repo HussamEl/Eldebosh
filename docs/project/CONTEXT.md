@@ -1,5 +1,7 @@
 # ELDEBOSH.COM — CONTEXT
 
+> **الإصدار:** `v1.1` · 2026-08-29 · مصدرها `docs/project/` في المستودع
+
 > الحالة والقرارات وأسبابها. **القواعد في `INSTRUCTIONS`.**
 > مصدر الحقيقة للكود: `github.com/HussamEl/Eldebosh` — فرع `main`.
 > **هذا الملف وحده يُرفع في خانة Context.** لا ترفع غيره.

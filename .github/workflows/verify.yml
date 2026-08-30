@@ -26,6 +26,7 @@ jobs:
 
       - run: npm run check:css
       - run: npm run check:colors
+      - run: npm run check:docs
       - run: npm run test:ui
       - run: npm run test:browser
       - run: npm run audit

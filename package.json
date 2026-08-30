@@ -10,7 +10,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "test:ui": "node scripts/test-ui.mjs",
-    "verify": "npm run build && npm run check:css && npm run check:colors && npm run test:ui && npm run test:browser && npm run audit && npm run cleanup && npm run state && npm run assets && npm run csv",
+    "verify": "npm run build && npm run check:css && npm run check:colors && npm run test:ui && npm run test:browser && npm run audit && npm run cleanup && npm run state && npm run assets && npm run csv && npm run check:docs",
     "audit": "node scripts/audit.mjs",
     "cleanup": "node scripts/server-cleanup.mjs",
     "preview:file": "node scripts/make-preview.mjs",
@@ -25,7 +25,8 @@
     "brand:render": "node brand/src/render.mjs && node brand/src/print.mjs",
     "brand:all": "npm run brand:logo && npm run brand:canvas && npm run brand:render",
     "check:drift": "node tools/check-build-drift.mjs",
-    "check:colors": "node scripts/check-colors.mjs"
+    "check:colors": "node scripts/check-colors.mjs",
+    "check:docs": "node scripts/check-docs.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
