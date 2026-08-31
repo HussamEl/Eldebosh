@@ -80,9 +80,16 @@ if (problems.length) {
   console.error('\n✗ ' + problems.join('\n✗ ') + '\n');
   process.exit(1);
 }
+// الساعة التي تُكتب في السجل هي ساعة حسام في كارلستاد، لا ساعة الخادم.
+// الخادم يعمل بالـUTC، فطُبعت مرة ساعةٌ متأخرة ساعتين عمّا يراه — وهو ما أربكه.
+const now = new Date();
+const karlstad = new Intl.DateTimeFormat('sv-SE', {
+  timeZone: 'Europe/Stockholm', dateStyle: 'short', timeStyle: 'short',
+}).format(now).replace(' ', ' ');
+
 if (lastEntry) {
   console.log(`\nآخر رسالة في السجل: ${lastEntry.id} · ${lastEntry.who} · ${lastEntry.when}`);
-  console.log(`الرسالة التالية تأخذ الرقم: EB-${String(Number(lastEntry.id.slice(3)) + 1).padStart(3, '0')}`);
+  console.log(`الرسالة التالية:      EB-${String(Number(lastEntry.id.slice(3)) + 1).padStart(3, '0')} · ${karlstad} (كارلستاد)`);
 }
 
 console.log('\n✓ الأرقام حاضرة ومتّسقة — أعلنها في أول كل محادثة\n');
