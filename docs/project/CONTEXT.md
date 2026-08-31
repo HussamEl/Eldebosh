@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — CONTEXT
 
-> **الإصدار:** `v1.3` · 2026-08-31 · مصدرها `docs/project/` في المستودع
+> **الإصدار:** `v2.0` · 2026-08-31 · مصدرها `docs/project/` في المستودع
 
 > الحالة والقرارات وأسبابها. **القواعد في `INSTRUCTIONS`.**
 > مصدر الحقيقة للكود: `github.com/HussamEl/Eldebosh` — فرع `main`.

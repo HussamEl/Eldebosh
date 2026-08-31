@@ -87,6 +87,14 @@ const karlstad = new Intl.DateTimeFormat('sv-SE', {
   timeZone: 'Europe/Stockholm', dateStyle: 'short', timeStyle: 'short',
 }).format(now).replace(' ', ' ');
 
+if (!lastEntry) {
+  const karlstadNow = new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'Europe/Stockholm', dateStyle: 'short', timeStyle: 'short',
+  }).format(new Date());
+  console.log(`\nالسجل فارغ — العدّاد مُصفَّر.`);
+  console.log(`الرسالة التالية:      EB-001 · ${karlstadNow} (كارلستاد)`);
+}
+
 if (lastEntry) {
   console.log(`\nآخر رسالة في السجل: ${lastEntry.id} · ${lastEntry.who} · ${lastEntry.when}`);
   console.log(`الرسالة التالية:      EB-${String(Number(lastEntry.id.slice(3)) + 1).padStart(3, '0')} · ${karlstad} (كارلستاد)`);
