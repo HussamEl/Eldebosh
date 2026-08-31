@@ -26,7 +26,8 @@
     "brand:all": "npm run brand:logo && npm run brand:canvas && npm run brand:render",
     "check:drift": "node tools/check-build-drift.mjs",
     "check:colors": "node scripts/check-colors.mjs",
-    "check:docs": "node scripts/check-docs.mjs"
+    "check:docs": "node scripts/check-docs.mjs",
+    "deploy:branch": "node scripts/publish-deploy-branch.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",

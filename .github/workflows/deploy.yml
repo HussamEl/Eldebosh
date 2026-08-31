@@ -1,0 +1,49 @@
+# ينشر الموقع المبني على فرع `deploy`، ومنه تسحبه الاستضافة.
+#
+# لا FTP هنا: الرفع عبر FTP من خوادم GitHub يسقط بـ Timeout — الاستضافة تحجبها.
+# هذا المسار لا يخرج من GitHub إطلاقاً: البناء يحدث هنا، والدفع إلى فرع في نفس
+# المستودع. الخطوة الأخيرة — السحب — تبدأها الاستضافة من طرفها.
+#
+# إعداد الاستضافة مرة واحدة: docs/12-deploy-from-github.md
+
+name: نشر إلى فرع deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0     # يحتاج تاريخ فرع deploy ليكون النشر تقديمياً
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # لا يُنشر إلا ما مرّ من البوابة
+      - run: npm run build
+      - run: npm run check:css
+      - run: npm run check:colors
+      - run: npm run test:ui
+      - run: npm run audit
+
+      - name: نشر site/ على فرع deploy
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          node scripts/publish-deploy-branch.mjs

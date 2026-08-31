@@ -59,6 +59,18 @@ for (const rel of DOCS) {
   }
 }
 
+// السجل يتغيّر مع كل رسالة، فلا يخضع لقاعدة رفع الإصدار — لكن رقمه الأخير
+// هو ما يحتاجه كل طرف ليعرف من أين يبدأ.
+const logPath = join(ROOT, 'docs/project/LOG.md');
+let lastEntry = null;
+if (existsSync(logPath)) {
+  const rows = readFileSync(logPath, 'utf8').match(/^\|\s*(EB-\d{3})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|/gm);
+  if (rows && rows.length) {
+    const [, id, who, when] = rows[rows.length - 1].match(/^\|\s*(EB-\d{3})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|/);
+    lastEntry = { id, who, when };
+  }
+}
+
 console.log('\nإصدارات الوثائق الحاكمة:\n');
 for (const v of versions) {
   console.log(`  ${v.version.padEnd(6)} ${v.date}   ${v.rel}`);
@@ -68,4 +80,9 @@ if (problems.length) {
   console.error('\n✗ ' + problems.join('\n✗ ') + '\n');
   process.exit(1);
 }
+if (lastEntry) {
+  console.log(`\nآخر رسالة في السجل: ${lastEntry.id} · ${lastEntry.who} · ${lastEntry.when}`);
+  console.log(`الرسالة التالية تأخذ الرقم: EB-${String(Number(lastEntry.id.slice(3)) + 1).padStart(3, '0')}`);
+}
+
 console.log('\n✓ الأرقام حاضرة ومتّسقة — أعلنها في أول كل محادثة\n');

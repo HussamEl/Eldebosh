@@ -11,6 +11,7 @@
 | [07-astro-handoff.md](07-astro-handoff.md) | **بالإنجليزية** — بريف تسليم: ما تغيّر في البناء ولماذا، والعقد الذي يجب أن يبقى |
 | [08-source-request.md](08-source-request.md) | **بالإنجليزية** — طلب المصدر ولوحة التحكم وخطة التوسع |
 | [09-source-response.md](09-source-response.md) | **بالإنجليزية** — الردّ: بنية المصدر، تدفّق التحرير، تقييم التوسع |
+| [12-deploy-from-github.md](12-deploy-from-github.md) | **النشر التلقائي**: غيتهب يبني، والاستضافة تسحب — الإعداد خطوة بخطوة |
 | [10-verification-report.md](10-verification-report.md) | **بالإنجليزية** — نتيجة تشغيل الفحص على المصدر: عطلان وقيمهما المقاسة |
 | [project/](project/) | وثائق المشروع: القرارات، المخاطر، الحالة، الأدلة |
 | [project/INSTRUCTIONS.md](project/INSTRUCTIONS.md) · [CONTEXT.md](project/CONTEXT.md) · [BRIEFING.md](project/BRIEFING.md) | الوثائق الحاكمة — نسخة المستودع هي المرجع |
