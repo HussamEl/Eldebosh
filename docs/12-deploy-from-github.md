@@ -38,34 +38,57 @@ public_html
 
 ## الإعداد — مرة واحدة
 
-**١. افتح hPanel** → موقعك → `Advanced` → `GIT`
+> الخطوات مُتحقَّق منها من توثيق Hostinger في أغسطس 2026. الأسماء قد تختلف قليلًا
+> إن حُدِّثت الواجهة — المعنى هو الثابت.
 
-**٢. أنشئ مستودعًا جديدًا** بهذه القيم:
+### أولًا: نظّف قبل أن تبدأ
+
+**احذف كل محتويات `public_html` من File Manager.** سببان: Git لا ينسخ إلى مجلد
+فيه ملفات غريبة، والرفع فوق القديم يترك صفحات لم تعد تُولَّد وهي تعمل. هذه المرة
+الوحيدة التي ستحتاج فيها التنظيف.
+
+### ثانيًا: اربط المستودع
+
+**١.** `hPanel` ← `Websites` ← موقعك ← `Dashboard`
+
+**٢.** من القائمة الجانبية: `Advanced` ← `Git`
+
+**٣.** اضغط `Continue with GitHub` — سيطلب تسجيل الدخول إلى غيتهب وتثبيت تطبيق
+Hostinger. اختر مستودع `Eldebosh` وحده، لا كل المستودعات.
+
+**٤.** اختر المستودع من القائمة ثم `Next`، واملأ:
 
 ```
-Repository:  https://github.com/HussamEl/Eldebosh
-Branch:      deploy
-Directory:   public_html
+Branch:          deploy          ← ليس main
+Root directory:  public_html
 ```
 
-> المستودع عام، فلا حاجة لمفتاح SSH.
+> ⚠️ **الفرع `deploy` لا `main`.** الفرق أن `main` يحمل المصدر كله — لو نشرته
+> لظهر `src/` و`node_modules` وملفات المشروع على الإنترنت. أما `deploy` فيحمل
+> الموقع المبني وحده في الجذر.
 
-**٣. اضغط `Create`** — سيسحب الموقع فورًا. افتح `eldebosh.com` وتأكد.
+**٥.** اضغط `Deploy`. السجل يظهر مباشرة أثناء التنفيذ.
 
-**٤. فعّل السحب التلقائي:**
+**٦.** افتح `eldebosh.com` — يجب أن يظهر الموقع.
 
-- في hPanel بعد الإنشاء ستجد زر `Auto Deployment` — انسخ عنوان الـWebhook.
-- افتح على غيتهب:
+### ثالثًا: فعّل النشر التلقائي
+
+في صفحة Git ستجد نافذة تحمل **عنوان Webhook** — انسخه، ثم:
 
 ```
 https://github.com/HussamEl/Eldebosh/settings/hooks
 ```
 
-- `Add webhook` → الصق العنوان في `Payload URL` → `Content type: application/json`
-  → `Just the push event` → `Add webhook`.
+`Add webhook` ← الصق العنوان في `Payload URL` ← `Content type: application/json`
+← `Just the push event` ← `Add webhook`.
 
 **تمّ.** من الآن: أدفع إلى `main` ← Actions يبني ويفحص ← يحدّث `deploy` ←
 الـWebhook يوقظ الاستضافة ← تسحب. بلا لمسة منك.
+
+### إن لم تجد Git في القائمة
+
+الميزة غير متاحة في كل الخطط. إن لم تظهر تحت `Advanced`، فالبديل: نزّل فرع
+`deploy` كـZIP من غيتهب وارفع محتوياته — لا بناء ولا `npm`، الملفات جاهزة.
 
 ---
 
@@ -103,8 +126,11 @@ File Manager — وإلا بقيت صفحات لم تعد تُولَّد وهي 
 | الموقع بلا تنسيق | `.htaccess` لم يصل أو مجلد خاطئ | تأكد أن `Directory` هو `public_html` |
 | صفحة محذوفة ما زالت تعمل | بقايا ما قبل أول سحب | نظّف `public_html` وأعد السحب |
 
-**السحب اليدوي متاح دائمًا:** hPanel → GIT → زر `Deploy`. وهذا هو خط الرجعة إن
-تعطّلت الأتمتة — لا يحتاج جهازك ولا بناءً محليًا.
+**السحب اليدوي متاح دائمًا:** صفحة Git ← تبويب `Overview` ← زر `Redeploy`.
+وهذا خط الرجعة إن تعطّلت الأتمتة — لا يحتاج جهازك ولا بناءً محليًا.
+
+**وتبويب `Deployments`** يعرض تاريخ كل نشر: الفرع، ورقم الـcommit، والوقت،
+والحالة. اضغط أي سطر لترى سجله كاملًا. هذا أول مكان تنظر فيه عند أي شك.
 
 ---
 
@@ -114,3 +140,12 @@ File Manager — وإلا بقيت صفحات لم تعد تُولَّد وهي 
 في [05-deployment.md](05-deployment.md).
 
 الفرق أن `deploy` **جاهز للرفع كما هو** — لا بناء، ولا `npm`، ولا جهاز.
+
+---
+
+## المصادر
+
+الخطوات مُتحقَّق منها من:
+
+- [How to deploy a Git repository in Hostinger](https://www.hostinger.com/support/1583302-how-to-deploy-a-git-repository-in-hostinger/)
+- [Git — Hostinger Documentation](https://docs.hostinger.com/websites/git)
