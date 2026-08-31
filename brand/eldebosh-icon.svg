@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Eldebosh">
+  <title>Eldebosh</title>
+  <defs>
+    <linearGradient id="badgei" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#17527F"/><stop offset="1" stop-color="#0D2F4D"/>
+    </linearGradient>
+    <linearGradient id="acci" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#55C6F2"/><stop offset="1" stop-color="#2FB2E6"/>
+    </linearGradient>
+    <linearGradient id="sheeni" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity=".13"/>
+      <stop offset=".55" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="512" height="512" rx="140.8" fill="url(#badgei)"/>
+  <rect x="0" y="0" width="512" height="512" rx="140.8" fill="url(#sheeni)"/>
+  <rect x="5.33" y="5.33" width="501.33" height="501.33" rx="135.68" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="10.67"/>
+  <rect x="123.73" y="123.73" width="55.47" height="264.53" rx="27.73" fill="#F2F8FE"/>
+  <rect x="123.73" y="123.73" width="243.2" height="55.47" rx="27.73" fill="#F2F8FE"/>
+  <rect x="123.73" y="228.27" width="162.13" height="55.47" rx="27.73" fill="url(#acci)"/>
+  <rect x="123.73" y="332.8" width="204.8" height="55.47" rx="27.73" fill="#F2F8FE"/>
+</svg>

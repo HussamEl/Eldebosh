@@ -1,0 +1,369 @@
+# لوحة التحرير المرئية — Sveltia CMS
+# الدخول: زر "Sign In with Token" ثم لصق رمز وصول شخصي من GitHub.
+# طريقة الرمز لا تحتاج أي إعداد إضافي هنا — لا تضف base_url.
+#
+# للتحويل لاحقاً إلى دخول بزر واحد عبر Cloudflare Workers:
+#   أضف تحت branch سطراً واحداً:  base_url: <عنوان الوسيط>
+
+backend:
+  name: github
+  repo: HussamEl/eldebosh
+  branch: main
+
+publish_mode: simple
+media_folder: public/uploads
+public_folder: /uploads
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
+# صور الرفع تُحوَّل وتُصغَّر تلقائياً — الأداء أولوية
+media_libraries:
+  default:
+    config:
+      max_file_size: 2097152
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 1600
+          height: 1600
+
+collections:
+  # ============ التواجد في الساحة ============
+  - name: torget
+    label: "التواجد في الساحة"
+    files:
+      - name: settings
+        label: "إعدادات الساحة"
+        file: src/data/torget/torget.yaml
+        fields:
+          - { name: active, label: "إظهار قسم الساحة في الموقع", widget: boolean, default: true }
+          - { name: phone, label: "رقم الهاتف (بصيغة دولية)", widget: string, hint: "مثال: +46701234567 — يُستخدم في زر الاتصال والرسالة" }
+          - { name: phone_display, label: "الرقم كما يُعرض", widget: string, hint: "مثال: 070-123 45 67" }
+          - { name: place, label: "المكان", widget: string, default: "Stora Torget" }
+          - { name: city, label: "المدينة", widget: string, default: "Karlstad" }
+          - { name: map_url, label: "رابط الخريطة", widget: string, required: false }
+          - name: note
+            label: "ملاحظة للزائر"
+            widget: object
+            fields:
+              - { name: sv, label: "سويدي", widget: text }
+              - { name: en, label: "إنجليزي", widget: text }
+
+  # ============ المنتجات — سويدي ============
+  - name: products_sv
+    label: "المنتجات (سويدي)"
+    label_singular: "منتج"
+    folder: src/data/products/sv
+    create: true
+    extension: yaml
+    format: yaml
+    identifier_field: id
+    summary: "{{name}}  ·  {{brand}}"
+    sortable_fields: [name, brand, price_band, last_verified]
+    view_filters:
+      - { label: "موثق ويظهر في الموقع", field: verified, pattern: true }
+      - { label: "يحتاج استكمالاً", field: verified, pattern: false }
+      - { label: "مجرَّب فعلياً", field: tested, pattern: true }
+    view_groups:
+      - { label: "حسب الفئة", field: category }
+      - { label: "حسب العلامة", field: brand }
+    fields:
+      - { name: id, label: "المعرّف (بالإنجليزية، بلا مسافات)", widget: string, pattern: ['^[a-z0-9-]+$', 'حروف صغيرة وأرقام وشرطات فقط'] }
+      - { name: verified, label: "★ موثق — يظهر في الموقع", widget: boolean, default: false, hint: "لن يظهر المنتج في أي صفحة قبل تفعيل هذا الخيار مع ASIN ورابط المصدر" }
+      - { name: lang, label: اللغة, widget: hidden, default: sv }
+      - { name: name, label: "اسم المنتج", widget: string }
+      - { name: brand, label: "العلامة التجارية", widget: string }
+      - { name: category, label: "الفئة", widget: relation, collection: categories, search_fields: [id], value_field: id, display_fields: [id] }
+      - { name: subcategory, label: "الفئة الفرعية", widget: string, required: false }
+      - { name: problems_solved, label: "المشاكل التي يحلها", widget: list, required: false, field: { name: id, label: "معرّف المشكلة", widget: string } }
+      - { name: key_specs, label: "المواصفات (من مصدر موثق فقط)", widget: keyvalue, required: false, hint: "كل مواصفة = اسم + قيمة، من صفحة الشركة المصنعة أو المتجر" }
+      - { name: pros, label: "المزايا", widget: list, required: false, field: { name: text, label: نص, widget: string } }
+      - { name: cons, label: "العيوب", widget: list, required: false, field: { name: text, label: نص, widget: string } }
+      - { name: best_for, label: "الأنسب لـ", widget: string, required: false }
+      - { name: price_band, label: "النطاق السعري", widget: select, options: [budget, mid, premium], default: mid, hint: "لا يوجد سعر ثابت — قاعدة ملزمة" }
+      - { name: image, label: "الصورة", widget: image, required: false }
+      - { name: image_alt, label: "نص بديل للصورة", widget: string, required: false }
+      - name: affiliate
+        label: "رابط الأفلييت"
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: network, label: "الشبكة", widget: string }
+          - { name: url, label: "الرابط", widget: string }
+          - { name: region, label: "المنطقة", widget: string, default: SE }
+      - { name: asin, label: "ASIN (أمازون)", widget: string, required: false }
+      - { name: owned, label: "المنتج بحوزتي فعلاً", widget: boolean, default: false }
+      - { name: tested, label: "استخدمته فعلياً ويجوز الكتابة بصيغة التجربة", widget: boolean, default: false, hint: "تفعيله يفرض: تاريخ الاقتناء + مدة الاستخدام + صورة من تصويرك + حدود التجربة" }
+      - { name: owned_since, label: "تاريخ الاقتناء", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, required: false }
+      - { name: usage_period, label: "مدة الاستخدام", widget: string, required: false, hint: "مثال: 6 månader · en vinter" }
+      - name: own_photos
+        label: "صوري الخاصة (لا صور من المتجر)"
+        widget: list
+        required: false
+        fields:
+          - { name: src, label: "الصورة", widget: image }
+          - { name: alt, label: "نص بديل بالسويدية", widget: string }
+          - { name: caption, label: "تعليق", widget: string, required: false }
+      - { name: hands_on, label: "ملاحظات من استخدامي الفعلي", widget: list, required: false, field: { name: text, label: ملاحظة, widget: string } }
+      - { name: hands_on_limits, label: "ما لا تُظهره تجربتي (إلزامي عند التجربة)", widget: list, required: false, field: { name: text, label: حد, widget: string } }
+      - { name: video_url, label: "رابط فيديو يوتيوب", widget: string, required: false }
+      - { name: video_thumb, label: "صورة مصغّرة للفيديو", widget: image, required: false }
+
+      - name: external_rating
+        label: "تقييم خارجي (بإسناد)"
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: publisher, label: "الجهة", widget: string, hint: "Amazon.se · Kjell · Prisjakt" }
+          - { name: score, label: "الدرجة", widget: number, value_type: float }
+          - { name: scale, label: "من", widget: number, default: 5 }
+          - { name: count, label: "عدد التقييمات", widget: number }
+          - { name: url, label: "الرابط", widget: string }
+          - { name: accessed, label: "تاريخ الاطلاع", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+      - { name: source_url, label: "رابط المصدر (إلزامي للنشر)", widget: string, required: false }
+      - { name: last_verified, label: "تاريخ آخر تحقق", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, required: false }
+
+  # ============ صفحات الحلول — سويدي ============
+  - name: solutions_sv
+    label: "صفحات الحلول (سويدي)"
+    label_singular: "صفحة حل"
+    folder: src/content/solutions/sv
+    create: true
+    extension: mdx
+    format: frontmatter
+    summary: "{{question}}"
+    sortable_fields: [title, updated, published]
+    view_filters:
+      - { label: "منشور", field: published, pattern: true }
+      - { label: "مسودة", field: published, pattern: false }
+    fields:
+      - { name: lang, label: اللغة, widget: hidden, default: sv }
+      - { name: title, label: "عنوان SEO (حتى 70 حرفاً)", widget: string }
+      - { name: description, label: "وصف SEO (50–165 حرفاً)", widget: text }
+      - { name: slug, label: "المسار", widget: string, pattern: ['^[a-z0-9-]+$', 'حروف صغيرة وشرطات فقط'] }
+      - { name: problem_id, label: "معرّف المشكلة (يربط الأدلة بهذه الصفحة)", widget: string }
+      - { name: question, label: "السؤال كما يطرحه المستخدم", widget: string }
+      - { name: symptoms, label: "الأعراض", widget: list, field: { name: text, label: عرض, widget: string } }
+      - { name: category, label: "الفئة", widget: relation, collection: categories, search_fields: [id], value_field: id, display_fields: [id] }
+      - { name: subcategory, label: "الفئة الفرعية", widget: string, required: false }
+      - { name: products, label: "منتجات مرتبطة", widget: list, required: false, field: { name: id, label: "معرّف المنتج", widget: string } }
+      - { name: featured, label: "إظهار في الصفحة الرئيسية", widget: boolean, default: false }
+      - { name: hands_on, label: "الصفحة تستند إلى تجربة فعلية", widget: boolean, default: false }
+      - { name: published, label: "منشور", widget: boolean, default: false }
+      - { name: updated, label: "تاريخ التحديث", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+      - name: sources
+        label: "المصادر الخارجية (اختبارات · تقييمات · أسعار)"
+        widget: list
+        required: false
+        collapsed: true
+        summary: "{{fields.publisher}} — {{fields.claim}}"
+        fields:
+          - { name: type, label: "النوع", widget: select, options: [test, rating, price, spec, regulation] }
+          - { name: publisher, label: "الجهة", widget: string, hint: "Råd & Rön · Testfakta · Prisjakt · Kjell …" }
+          - { name: url, label: "الرابط", widget: string }
+          - { name: published, label: "تاريخ نشر المصدر", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, required: false }
+          - { name: accessed, label: "تاريخ اطلاعنا", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+          - { name: claim, label: "ماذا يقول المصدر (بصياغتك، لا نسخاً)", widget: text }
+      - { name: body, label: "النص", widget: markdown }
+
+  # ============ أدلة الشراء — سويدي ============
+  - name: guides_sv
+    label: "أدلة الشراء (سويدي)"
+    label_singular: "دليل"
+    folder: src/content/guides/sv
+    create: true
+    extension: mdx
+    format: frontmatter
+    summary: "{{title}}"
+    sortable_fields: [title, updated, published]
+    view_filters:
+      - { label: "منشور", field: published, pattern: true }
+      - { label: "مسودة", field: published, pattern: false }
+    fields:
+      - { name: lang, label: اللغة, widget: hidden, default: sv }
+      - { name: title, label: "العنوان", widget: string }
+      - { name: description, label: "وصف SEO (50–165 حرفاً)", widget: text }
+      - { name: slug, label: "المسار", widget: string, pattern: ['^[a-z0-9-]+$', 'حروف صغيرة وشرطات فقط'] }
+      - { name: solution, label: "صفحة الحل الأب (إلزامي)", widget: string, hint: "problem_id لصفحة الحل" }
+      - { name: category, label: "الفئة", widget: relation, collection: categories, search_fields: [id], value_field: id, display_fields: [id] }
+      - { name: subcategory, label: "الفئة الفرعية", widget: string, required: false }
+      - name: picks
+        label: "الترشيحات (منتجان على الأقل)"
+        widget: list
+        fields:
+          - { name: product, label: "معرّف المنتج", widget: string }
+          - { name: badge, label: "الوسم داخل هذا الدليل", widget: select, options: [best-overall, best-value, best-budget, best-specific, premium] }
+          - { name: reason, label: "سبب الترشيح", widget: text }
+      - { name: hands_on, label: "الصفحة تستند إلى تجربة فعلية", widget: boolean, default: false }
+      - { name: published, label: "منشور", widget: boolean, default: false }
+      - { name: updated, label: "تاريخ التحديث", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+      - name: sources
+        label: "المصادر الخارجية (اختبارات · تقييمات · أسعار)"
+        widget: list
+        required: false
+        collapsed: true
+        summary: "{{fields.publisher}} — {{fields.claim}}"
+        fields:
+          - { name: type, label: "النوع", widget: select, options: [test, rating, price, spec, regulation] }
+          - { name: publisher, label: "الجهة", widget: string, hint: "Råd & Rön · Testfakta · Prisjakt · Kjell …" }
+          - { name: url, label: "الرابط", widget: string }
+          - { name: published, label: "تاريخ نشر المصدر", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, required: false }
+          - { name: accessed, label: "تاريخ اطلاعنا", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+          - { name: claim, label: "ماذا يقول المصدر (بصياغتك، لا نسخاً)", widget: text }
+      - { name: body, label: "النص", widget: markdown }
+
+  # ============ المقارنات — سويدي ============
+  - name: comparisons_sv
+    label: "المقارنات (سويدي)"
+    label_singular: "مقارنة"
+    folder: src/content/comparisons/sv
+    create: true
+    extension: mdx
+    format: frontmatter
+    summary: "{{title}}"
+    sortable_fields: [title, updated, published]
+    view_filters:
+      - { label: "منشور", field: published, pattern: true }
+      - { label: "مسودة", field: published, pattern: false }
+    fields:
+      - { name: lang, label: اللغة, widget: hidden, default: sv }
+      - { name: title, label: "العنوان", widget: string }
+      - { name: description, label: "وصف SEO (50–165 حرفاً)", widget: text }
+      - { name: slug, label: "المسار", widget: string, pattern: ['^[a-z0-9-]+$', 'حروف صغيرة وشرطات فقط'] }
+      - { name: solution, label: "صفحة الحل الأب (إلزامي)", widget: string }
+      - { name: category, label: "الفئة", widget: relation, collection: categories, search_fields: [id], value_field: id, display_fields: [id] }
+      - { name: subcategory, label: "الفئة الفرعية", widget: string, required: false }
+      - { name: products, label: "المنتجات المقارَنة (2–4)", widget: list, field: { name: id, label: "معرّف المنتج", widget: string } }
+      - { name: verdict, label: "الخلاصة", widget: text }
+      - { name: hands_on, label: "الصفحة تستند إلى تجربة فعلية", widget: boolean, default: false }
+      - { name: published, label: "منشور", widget: boolean, default: false }
+      - { name: updated, label: "تاريخ التحديث", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+      - name: sources
+        label: "المصادر الخارجية (اختبارات · تقييمات · أسعار)"
+        widget: list
+        required: false
+        collapsed: true
+        summary: "{{fields.publisher}} — {{fields.claim}}"
+        fields:
+          - { name: type, label: "النوع", widget: select, options: [test, rating, price, spec, regulation] }
+          - { name: publisher, label: "الجهة", widget: string, hint: "Råd & Rön · Testfakta · Prisjakt · Kjell …" }
+          - { name: url, label: "الرابط", widget: string }
+          - { name: published, label: "تاريخ نشر المصدر", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, required: false }
+          - { name: accessed, label: "تاريخ اطلاعنا", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+          - { name: claim, label: "ماذا يقول المصدر (بصياغتك، لا نسخاً)", widget: text }
+      - { name: body, label: "النص", widget: markdown }
+
+  # ============ المقالات — سويدي ============
+  - name: posts_sv
+    label: "المقالات (سويدي)"
+    label_singular: "مقال"
+    folder: src/content/posts/sv
+    create: true
+    extension: mdx
+    format: frontmatter
+    summary: "{{title}}"
+    sortable_fields: [title, updated, published]
+    view_filters:
+      - { label: "منشور", field: published, pattern: true }
+      - { label: "مسودة", field: published, pattern: false }
+    fields:
+      - { name: lang, label: اللغة, widget: hidden, default: sv }
+      - { name: title, label: "العنوان", widget: string }
+      - { name: description, label: "وصف SEO (50–165 حرفاً)", widget: text }
+      - { name: slug, label: "المسار", widget: string, pattern: ['^[a-z0-9-]+$', 'حروف صغيرة وشرطات فقط'] }
+      - { name: solution, label: "صفحة الحل الأب (إلزامي)", widget: string }
+      - { name: category, label: "الفئة", widget: relation, collection: categories, search_fields: [id], value_field: id, display_fields: [id] }
+      - { name: products, label: "منتجات مرتبطة", widget: list, required: false, field: { name: id, label: "معرّف المنتج", widget: string } }
+      - { name: hands_on, label: "الصفحة تستند إلى تجربة فعلية", widget: boolean, default: false }
+      - { name: published, label: "منشور", widget: boolean, default: false }
+      - { name: updated, label: "تاريخ التحديث", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+      - name: sources
+        label: "المصادر الخارجية (اختبارات · تقييمات · أسعار)"
+        widget: list
+        required: false
+        collapsed: true
+        summary: "{{fields.publisher}} — {{fields.claim}}"
+        fields:
+          - { name: type, label: "النوع", widget: select, options: [test, rating, price, spec, regulation] }
+          - { name: publisher, label: "الجهة", widget: string, hint: "Råd & Rön · Testfakta · Prisjakt · Kjell …" }
+          - { name: url, label: "الرابط", widget: string }
+          - { name: published, label: "تاريخ نشر المصدر", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, required: false }
+          - { name: accessed, label: "تاريخ اطلاعنا", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+          - { name: claim, label: "ماذا يقول المصدر (بصياغتك، لا نسخاً)", widget: text }
+      - { name: body, label: "النص", widget: markdown }
+
+  # ============ الصفحات الثابتة — سويدي ============
+  - name: pages_sv
+    label: "الصفحات الثابتة (سويدي)"
+    label_singular: "صفحة"
+    folder: src/content/pages/sv
+    create: true
+    extension: mdx
+    format: frontmatter
+    fields:
+      - { name: lang, label: اللغة, widget: hidden, default: sv }
+      - { name: title, label: "العنوان", widget: string }
+      - { name: description, label: "الوصف", widget: text }
+      - { name: slug, label: "المسار", widget: string }
+      - { name: footer_group, label: "مكانها في الفوتر", widget: select, options: [legal, about, none], default: none }
+      - { name: order, label: "الترتيب", widget: number, default: 99 }
+      - { name: published, label: "منشور", widget: boolean, default: true }
+      - { name: updated, label: "تاريخ التحديث", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
+      - { name: body, label: "النص", widget: markdown }
+
+  # ============ الفئات ============
+  - name: categories
+    label: "الفئات"
+    label_singular: "فئة"
+    folder: src/data/categories
+    create: true
+    extension: yaml
+    format: yaml
+    identifier_field: id
+    fields:
+      - { name: id, label: "المعرّف", widget: string, pattern: ['^[a-z0-9-]+$', 'حروف صغيرة وشرطات فقط'] }
+      - { name: group, label: "المجموعة في القائمة", widget: select, options: [daily, mobility, home] }
+      - { name: active, label: "مفعّلة (تظهر في القائمة)", widget: boolean, default: false, hint: "لا تفعّل الفئة قبل نشر 3 صفحات فيها" }
+      - { name: order, label: "الترتيب", widget: number, default: 99 }
+      - { name: icon, label: "الأيقونة", widget: string, default: circle }
+      - name: names
+        label: "الاسم"
+        widget: object
+        fields:
+          - { name: sv, label: "سويدي", widget: string }
+          - { name: en, label: "إنجليزي", widget: string }
+      - name: slugs
+        label: "المسار"
+        widget: object
+        fields:
+          - { name: sv, label: "سويدي", widget: string }
+          - { name: en, label: "إنجليزي", widget: string }
+      - name: descriptions
+        label: "الوصف"
+        widget: object
+        fields:
+          - { name: sv, label: "سويدي", widget: text }
+          - { name: en, label: "إنجليزي", widget: text }
+      - name: subcategories
+        label: "الفئات الفرعية"
+        widget: list
+        required: false
+        fields:
+          - { name: id, label: "المعرّف", widget: string }
+          - name: names
+            label: "الاسم"
+            widget: object
+            fields:
+              - { name: sv, label: "سويدي", widget: string }
+              - { name: en, label: "إنجليزي", widget: string }
+          - name: slugs
+            label: "المسار"
+            widget: object
+            fields:
+              - { name: sv, label: "سويدي", widget: string }
+              - { name: en, label: "إنجليزي", widget: string }
