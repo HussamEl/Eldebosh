@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — INSTRUCTIONS
 
-> **Version:** `v1.0` · 2026-08-31 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.1` · 2026-08-31 · canonical copy: `docs/project/` in the repository
 >
 > **The governing document.** Where anything else conflicts with this, this wins.
 > Current state: `CONTEXT`. Source of truth for code: `github.com/HussamEl/Eldebosh`.
@@ -265,13 +265,3 @@ makes text unreadable.
 - Tables separate Arabic and English into different columns.
 - Lead with the conclusion, then the detail. Steps are numbered and start with a
   verb.
-
----
-
-## 13. The final principle
-
-Build `eldebosh.com` as a trusted place to discover practical technology — not as
-a site that places affiliate links.
-
-**Trust is the only capital in this model.** Any decision that raises short-term
-income and lowers trust is rejected.
