@@ -14,7 +14,8 @@
 | [12-deploy-from-github.md](12-deploy-from-github.md) | **النشر التلقائي**: غيتهب يبني، والاستضافة تسحب — الإعداد خطوة بخطوة |
 | [10-verification-report.md](10-verification-report.md) | **بالإنجليزية** — نتيجة تشغيل الفحص على المصدر: عطلان وقيمهما المقاسة |
 | [project/](project/) | وثائق المشروع: القرارات، المخاطر، الحالة، الأدلة |
-| [project/INSTRUCTIONS.md](project/INSTRUCTIONS.md) · [CONTEXT.md](project/CONTEXT.md) · [BRIEFING.md](project/BRIEFING.md) | الوثائق الحاكمة — نسخة المستودع هي المرجع |
+| [project/INSTRUCTIONS.md](project/INSTRUCTIONS.md) · [CONTEXT.md](project/CONTEXT.md) · [BRIEFING.md](project/BRIEFING.md) · [LOG.md](project/LOG.md) | **الوثائق الحاكمة — بالإنجليزية.** نسخة المستودع هي المرجع |
+| [project/ar-reading-copy.html](project/ar-reading-copy.html) | نسخة قراءة عربية منسّقة للوثائق الأربع — تُعاد كتابتها عند تغيّر الإنجليزية |
 
 اصطلاح: الشرح بالعربية، وأسماء الملفات والأكواد بالإنجليزية كما هي في المستودع.
 الوثيقتان 07 و08 و09 بالإنجليزية لأنها لغة التخاطب بين المساعدَين.

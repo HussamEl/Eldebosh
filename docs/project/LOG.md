@@ -1,58 +1,62 @@
-# سجلّ الرسائل — الخيط الواحد
+# ELDEBOSH.COM — MESSAGE LOG
 
-> **الإصدار:** `v1.0` · 2026-08-31 · مصدره `docs/project/` في المستودع
+> **Version:** `v1.0` · 2026-08-31 · canonical copy: `docs/project/` in the repository
 >
-> **لماذا:** ثلاثة أطراف يردّون في ثلاث محادثات منفصلة، وحسام هو القناة بينهم.
-> بلا رقم واحد متسلسل لا أحد يعرف — ولا حسام — أين انتهى الخيط.
+> Three parties reply in three separate conversations and Hussam relays between
+> them. Without one shared counter, nobody — least of all Hussam — knows where
+> the thread ended.
 
 ---
 
-## الصيغة
+## Format
 
-كل رد يبدأ بسطر واحد، هو أول ما يُقرأ:
+Every reply opens with a single line, read before anything else:
 
 ```
-EB-014 · كلاودي كود · 2026-09-01 09:15 · ردًّا على EB-013
+EB-014 · Claude Code · 2026-09-01 09:15 · replying to EB-013
 ```
 
-| الجزء | القاعدة |
+| Field | Rule |
 |---|---|
-| `EB-###` | **عدّاد واحد للجميع**، لا عدّاد لكل طرف. ثلاثة أرقام، بلا فجوات |
-| الاسم | `كلاودي كود` · `كلاودي بروجيكت` · `جيمناي` · `حسام` |
-| الوقت | `YYYY-MM-DD HH:MM` **بتوقيت كارلستاد** — ساعة حسام، لا ساعة الخادم |
-| `ردًّا على` | رقم الرسالة المُجاب عنها. موضوع جديد: `موضوع جديد` |
+| `EB-###` | **One counter for everyone.** Three digits, sequential, no gaps |
+| Name | `Claude Code` · `Claude Project` · `Gemini` · `Hussam` |
+| Time | `YYYY-MM-DD HH:MM` in **Karlstad local time** — Hussam's clock, not the server's |
+| `replying to` | The message being answered, or `new thread` |
 
-**من يعطي الرقم:** الطرف الذي يكتب. ينظر إلى آخر رقم هنا ويزيد واحداً.
+**Who assigns the number:** whoever writes. Take the last number here and add one.
 
-**اقرأ الساعة، لا تقدّرها.** من كانت بيئته بالـUTC يحوّل قبل الكتابة
-(`Europe/Stockholm`: صيفاً `UTC+2`، شتاءً `UTC+1`). وقت تقريبي يُفسد السجل.
+**Read the clock; do not estimate it.** A party on UTC converts first
+(`Europe/Stockholm`: `UTC+2` summer, `UTC+1` winter). An approximate timestamp
+corrupts the log.
 
-**من يسجّل:** كلاودي كود — لأنه الوحيد الذي يدفع إلى المستودع. الأطراف الأخرى
-ترقّم رسائلها، وحسام ينقلها، وتُسجَّل هنا في أول دفعة تالية.
+**Who records:** Claude Code, being the only party that pushes. Others number
+their own messages, Hussam relays them, and they are recorded here on the next
+push.
 
-**عند التضارب:** الأسبق وقتاً يحتفظ بالرقم، والآخر يأخذ التالي. السجل هو الحكم.
+**On collision:** the earlier timestamp keeps the number, the other takes the
+next. This log settles it.
 
 ---
 
-## من يبدأ بماذا
+## Who starts what
 
-الترتيب ليس دوراً ثابتاً، بل **مالكاً لكل نوع عمل**. الدور الثابت يهدر الوقت
-حين لا يكون لدى أحدهم ما يقوله.
+Ownership by kind of work, not a fixed rotation — a fixed rotation wastes turns
+when a party has nothing to say.
 
-| نوع العمل | يبدأ | يراجع |
+| Kind of work | Starts | Reviews |
 |---|---|---|
-| كود · بناء · فحص · نشر · هوية | **كلاودي كود** | كلاودي بروجيكت |
-| محتوى · SEO · قرارات المنتج · قانوني | **كلاودي بروجيكت** | كلاودي كود |
-| بحث خارجي · رأي ثانٍ · تحقّق من ادعاء | **جيمناي** | من يعنيه الأمر |
-| ما يكلّف مالاً أو وقتاً أو يمسّ الخصوصية | **حسام** | — |
+| Code · build · checks · deployment · identity | **Claude Code** | Claude Project |
+| Content · SEO · product decisions · legal | **Claude Project** | Claude Code |
+| External research · second opinion · verification | **Gemini** | Whoever is concerned |
+| Anything costing money, time or touching privacy | **Hussam** | — |
 
-**من يفتح موضوعاً يغلقه.**
+**Whoever opens a thread closes it.**
 
 ---
 
-## السجل
+## The log
 
-| # | من | التوقيت (كارلستاد) | الموضوع | ردًّا على |
+| # | From | Time (Karlstad) | Subject | Replying to |
 |---|---|---|---|---|
 
-<!-- أضف الأحدث في الأسفل. لا تحذف سطراً؛ الخطأ يُصحَّح بسطر جديد. -->
+<!-- Append newest at the bottom. Never delete a row; correct with a new one. -->

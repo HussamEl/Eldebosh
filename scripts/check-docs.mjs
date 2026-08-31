@@ -21,8 +21,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = ['INSTRUCTIONS.md', 'CONTEXT.md', 'BRIEFING.md']
   .map((f) => `docs/project/${f}`);
 
-// > **الإصدار:** `v1.1` · 2026-08-29 · …
-const STAMP = /^>\s*\*\*الإصدار:\*\*\s*`(v[\d.]+)`\s*·\s*(\d{4}-\d{2}-\d{2})/m;
+// > **Version:** `v1.0` · 2026-08-31 · …
+const STAMP = /^>\s*\*\*Version:\*\*\s*`(v[\d.]+)`\s*·\s*(\d{4}-\d{2}-\d{2})/m;
 
 const git = (args) => {
   try {
@@ -42,7 +42,7 @@ for (const rel of DOCS) {
   const text = readFileSync(abs, 'utf8');
   const stamp = text.match(STAMP);
   if (!stamp) {
-    problems.push(`${rel} — لا سطر إصدار في أعلى الملف\n    المطلوب: > **الإصدار:** \`v1.1\` · YYYY-MM-DD · …`);
+    problems.push(`${rel} — لا سطر إصدار في أعلى الملف\n    المطلوب: > **Version:** \`v1.0\` · YYYY-MM-DD · …`);
     continue;
   }
   const [, version, date] = stamp;

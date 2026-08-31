@@ -1,258 +1,277 @@
 # ELDEBOSH.COM — INSTRUCTIONS
 
-> **الإصدار:** `v1.0` · 2026-08-31 · مصدرها `docs/project/` في المستودع
+> **Version:** `v1.0` · 2026-08-31 · canonical copy: `docs/project/` in the repository
 >
-> **المرجع الأعلى.** عند أي تعارض مع أي وثيقة أخرى، هذه هي الحاكمة.
-> الحالة في `CONTEXT`. مصدر الحقيقة للكود: `github.com/HussamEl/Eldebosh`.
+> **The governing document.** Where anything else conflicts with this, this wins.
+> Current state: `CONTEXT`. Source of truth for code: `github.com/HussamEl/Eldebosh`.
 
 ---
 
-## 1. الأدوار
+## 1. Who does what
 
-| الطرف | يملك | لا يملك |
+| Party | Owns | Does not |
 |---|---|---|
-| **حسام** | القرار · التصوير · مراجعة السويدية | ليس مطوراً |
-| **كلاودي كود** | المستودع · صلاحية الدفع · متصفح حقيقي · التنفيذ في الكود | لا يقرر نيابة عن حسام |
-| **كلاودي بروجيكت** | المواصفات · المحتوى · SEO · القرارات التحريرية | **لا يدفع إلى المستودع** |
-| **جيمناي** | بحث خارجي · رأي ثانٍ · تحقّق من ادعاء | لا ينفّذ في الكود |
+| **Hussam** | Decisions · photography · Swedish review | Is not a developer |
+| **Claude Code** | The repository · push access · a real browser · execution in code | Decide on Hussam's behalf |
+| **Claude Project** | Specifications · content · SEO · editorial decisions | **Push to the repository** |
+| **Gemini** | External research · second opinion · verifying claims | Execute in code |
 
-**حسام هو القناة بين الأطراف.** ولا أحد ينفّذ بشكل أعمى: من رأى حلاً أفضل
-اقترحه بسبب مختصر، ومن رأى تناقضاً — في الطلب أو في هذه الوثائق نفسها — أعلنه
-قبل التنفيذ.
+**Hussam is the channel between the parties.** Nobody executes blindly: propose
+a better approach with a one-line reason, and flag a contradiction — in the
+request or in these documents — before acting on it.
 
-**من يفتح موضوعاً يغلقه.** لا يُترك سؤال بلا جواب مرقّم.
+**Whoever opens a thread closes it.** No question is left without a numbered answer.
 
 ---
 
-## 2. ترقيم الرسائل — إلزامي
+## 2. Message numbering — mandatory
 
-ثلاثة أطراف في ثلاث محادثات، وحسام هو القناة. بلا رقم واحد لا أحد يعرف أين
-انتهى الخيط.
+Three parties, three separate conversations, one owner relaying between them.
+Without a single counter, nobody — least of all Hussam — knows where the thread
+ended.
 
-**كل رد يبدأ بهذا السطر:**
+**Every reply opens with one line:**
 
 ```
-EB-014 · كلاودي بروجيكت · 2026-09-01 09:15 · ردًّا على EB-013
+EB-014 · Claude Project · 2026-09-01 09:15 · replying to EB-013
 ```
 
-| الجزء | القاعدة |
+| Field | Rule |
 |---|---|
-| `EB-###` | عدّاد **واحد للجميع**، لا عدّاد لكل طرف |
-| الاسم | `كلاودي كود` · `كلاودي بروجيكت` · `جيمناي` · `حسام` |
-| الوقت | **بتوقيت كارلستاد** — الساعة التي يقرأها حسام، لا ساعة الخادم |
-| `ردًّا على` | رقم الرسالة المُجاب عنها، أو `موضوع جديد` |
+| `EB-###` | **One counter for everyone.** Not one per party. Three digits, no gaps |
+| Name | `Claude Code` · `Claude Project` · `Gemini` · `Hussam` |
+| Time | **Karlstad local time** — the clock Hussam reads, not the server's |
+| `replying to` | The message being answered, or `new thread` |
 
-**اقرأ الساعة، لا تقدّرها.** من كانت بيئته بالـUTC يحوّل (`UTC+2` صيفاً،
-`UTC+1` شتاءً). كتابة وقت تقريبي تُفسد السجل كله.
+**Read the clock; do not estimate it.** A party running on UTC converts first
+(`Europe/Stockholm`: `UTC+2` in summer, `UTC+1` in winter). An approximate
+timestamp corrupts the whole log.
 
-السجل في `docs/project/LOG.md` وهو الحَكَم عند أي تضارب. و`npm run verify`
-يطبع الرقم التالي والوقت الصحيح جاهزين للنسخ.
-
----
-
-## 3. المستودع مصدر الحقيقة — لا الحزم
-
-```
-لا ترسل حزمة مشروع. صف التعديل، وينفّذه كلاودي كود في المستودع.
-```
-
-**السبب:** حزمة أقدم من المستودع تُعيد إصلاحات كانت مدفوعة فعلاً. المستودع
-**عام**، فمن يصل إلى الإنترنت يقرأ منه أحدث نسخة مباشرة.
+The log lives at `docs/project/LOG.md` and settles any dispute.
+`npm run verify` prints the next free number and the correct time, ready to copy.
 
 ---
 
-## 4. المعاينة قبل الحزمة
+## 3. The repository is the source of truth — not packages
 
-عند أي طلب تعديل بصري — لون، مسافة، خط، تخطيط:
+```
+Do not send a project package. Describe the change; Claude Code applies it.
+```
+
+**Why:** a package older than the repository silently reverts fixes that were
+already pushed. The repository is **public**, so anything with web access reads
+the current version directly.
+
+---
+
+## 4. Preview before packaging
+
+For any visual request — colour, spacing, type, layout:
 
 ```
 npm run preview:file
 ```
 
-يولّد ملفاً واحداً مكتفياً بذاته يُفتح على الجوال، وفيه كل الصفحات تعمل.
-**أرسل ملف المعاينة وحده.** دورة «عدّل ← احزم ← ارفع ← انشر ← انتظر» تهدر أياماً.
+This produces a single self-contained file that opens on a phone with every page
+working. **Send that file alone.** The cycle of edit → package → upload → publish
+→ wait → look costs days.
 
 ---
 
-## 5. اقتصاد الجلسة
+## 5. Session economy
 
-- **محادثة واحدة لكل مرحلة.** عند انتهائها: "حدّث الوثائق" ثم محادثة جديدة.
-- **لا ترفق ملفاً إلا عند الحاجة الفعلية** — استخدم الرموز المرجعية مثل `P-04-1`.
-- **لا تعد إرسال ما لم يتغيّر.**
+- **One conversation per phase.** When it ends: update the documents, then start
+  a new conversation.
+- **Attach a file only when it is genuinely needed** — use reference codes such
+  as `P-04-1` instead.
+- **Never resend what has not changed.**
 
 ---
 
-## 6. القواعد الملزمة
+## 6. Binding rules
 
-**كلها مفروضة آلياً في `scripts/validate.mjs`؛ البناء يفشل عند الخرق.**
+**All of these are enforced in `scripts/validate.mjs`. The build fails on a
+violation, by design.**
 
-### 6.1 لا اختلاق
+### 6.1 Nothing invented
 
-ممنوع اختراع: مواصفات، أسعار، تقييمات، شهادات، إحصاءات، نتائج اختبار.
-كل معلومة تعود إلى **مصدر موثق**؛ وإلا فاكتب **"يحتاج تحققاً"** ولا تنشر.
+Never invent specifications, prices, ratings, certifications, statistics or test
+results. Every product claim traces to a **documented source**; where none
+exists, write **"needs verification"** and do not publish.
 
-**ويشمل هذا المعلومات التقنية:** إن لم تكن متأكداً من كيفية عمل أداة أو خدمة،
-**تحقق قبل الشرح.**
+**This includes technical claims:** if you are unsure how a tool or service
+works, **verify before explaining it**.
 
-### 6.2 التجربة — ثلاث حالات
+### 6.2 Experience has three states
 
-| الحالة | ما يُسمح | ما يراه القارئ |
+| State | Permitted | What the reader sees |
 |---|---|---|
-| `tested: true` | صيغة التجربة، صور خاصة، فيديو | شارة: نملكه ونستخدمه |
-| `owned: true` فقط | صور خاصة ووصف مادي، **بلا حكم على الأداء** | نملكه، والبيانات قيد الاستكمال |
-| غير مملوك | مواصفات ومصادر منشورة فقط | سطر صريح: لم نجرّبه |
+| `tested: true` | First-person experience, own photos, video | Badge: we own and use it |
+| `owned: true` only | Own photos and physical description, **no performance claims** | We own it; data being completed |
+| Not owned | Published specifications and sources only | Explicit line: we have not tested it |
 
-**`tested: true` يفرض خمسة حقول:** `owned_since` · `usage_period` · صورة من
-تصويرنا · `hands_on` · `hands_on_limits`.
+**`tested: true` requires five fields:** `owned_since` · `usage_period` · one of
+our own photos · `hands_on` · `hands_on_limits`.
 
-**حقل الحدود هو الأهم** — ذكر ما لا تُظهره تجربتنا هو ما يفصلنا عن المنافسين.
+**The limits field matters most** — stating what our experience does *not* show
+is what separates us from competitors who claim testing that never happened.
 
-**ممنوع دائماً:** `Bäst i test` · ادعاء قياس بجهاز · نقل نص المصدر حرفياً.
+**Never:** `Bäst i test` · claiming instrument measurements · copying source text
+verbatim.
 
-### 6.3 حدود أمازون
+### 6.3 Amazon boundaries
 
-| البند | الحالة |
+| Item | Status |
 |---|---|
-| رابط مباشر · زر `Köp på Amazon` · مواصفات من مصدر | ✅ مسموح |
-| **صور** من أمازون أو المتاجر | ❌ عبر الواجهة البرمجية فقط، بعد ثلاث مبيعات |
-| **أسعار** | ❌ عبر الواجهة البرمجية فقط |
-| الشراء عبر روابطك أو روابط العائلة | ❌ إغلاق فوري |
+| Direct product link · `Köp på Amazon` button · sourced specifications | ✅ Allowed |
+| **Images** from Amazon or retailers | ❌ Only via the API, after three sales |
+| **Prices** | ❌ Only via the API |
+| Buying through your own or family links | ❌ Immediate account closure |
 
-**الروابط تُولَّد من `asin` فقط** — الوسم في `src/lib/affiliate.ts`. لصق رابط
-أمازون يدوياً يرفضه الفحص.
+**Links are generated from `asin` alone** — the tag lives in
+`src/lib/affiliate.ts`. Pasting an Amazon URL by hand is rejected by validation.
 
-⚠️ **ولا تعديل صور المتاجر بنية التهرّب.** التعديل لا ينشئ ملكية، ويحوّل
-المخالفة إلى تحايل متعمّد.
+⚠️ **Never edit retailer images to evade the rule.** Editing does not create
+ownership, and turns a violation into deliberate circumvention.
 
-### 6.4 لا محتوى ضعيف
+### 6.4 No thin content
 
-ممنوع إنشاء صفحات لزيادة العدد. **ولا رابط يقود إلى صفحة فارغة** — الفئة بلا
-محتوى منشور لا تظهر إطلاقاً.
+Never create pages to inflate a count. **And no link may lead to an empty page** —
+a category with no published content does not appear at all.
 
-### 6.5 لا أسرار
+### 6.5 No secrets
 
-ممنوع وضع مفاتيح أو كلمات مرور في أي ملف — **بما في ذلك الوثائق**.
+Never place keys or passwords in any file — **including the documentation**.
 
-### 6.6 الالتزام السويدي
+### 6.6 Swedish compliance
 
-GDPR والقانون السويدي. الإفصاح التجاري إلزامي وظاهر أعلى كل صفحة تجارية، لا في
-الفوتر فقط.
+GDPR and Swedish law. Commercial disclosure is mandatory and visible at the top
+of every commercial page, not only in the footer.
 
 ---
 
-## 7. القيود التقنية المغلقة
+## 7. Closed technical constraints
 
-| البند | القرار |
+| Item | Decision |
 |---|---|
-| إطار العمل | **Astro 5** (توليد ثابت) |
-| المحتوى | Content Collections — MDX و YAML |
-| لوحة التحرير | Sveltia CMS على `/admin/` |
-| البحث | Pagefind |
-| المستودع | `HussamEl/Eldebosh` — عام |
-| ناتج البناء | `site/` — **يُولَّد ولا يُحرَّر** |
-| النشر | Actions → فرع `deploy` → Hostinger تسحب |
-| جهاز حسام | **Windows 11** |
-| ووردبريس | ❌ **ممنوع على الدومين** — جُرِّب وفشل |
+| Framework | **Astro 5** (static generation) |
+| Content | Content Collections — MDX and YAML |
+| Editor | Sveltia CMS at `/admin/` |
+| Search | Pagefind |
+| Repository | `HussamEl/Eldebosh` — public |
+| Build output | `site/` — **generated, never hand-edited** |
+| Deployment | Actions → `deploy` branch → Hostinger pulls |
+| Hussam's machine | **Windows 11** |
+| WordPress | ❌ **Forbidden on this domain** — tried and failed |
 
-**أولويات المفاضلة:** تجربة الجوال ← السرعة ← وضوح المحتوى ← سهولة التصفح ←
-سهولة المقارنة والشراء.
+**Trade-off order:** mobile experience → speed → content clarity → navigation →
+ease of comparing and buying.
 
-**JavaScript: جزيرة واحدة معتمدة** — تصفية المنتجات. عارض الصور يعمل بلا سكربت
-عبر `:target`. أي جزيرة جديدة تحتاج **موافقة صريحة**.
+**JavaScript: one approved island** — product filtering. The photo viewer works
+without script via `:target`. Any new island needs **explicit approval**.
 
 ---
 
-## 8. قواعد هندسية لا تُخترق
+## 8. Engineering rules that are not negotiable
 
-كل بند وقع فعلاً وكلّف وقتاً.
+Each one cost real time.
 
-**١. قارن المصدر لا الناتج.** تطابق الناتج لا يثبت إلا ما يمر بمسار البناء.
-ما هو خارجه — لوحة التحرير، الأيقونات، الشعار المستقل — يحتاج فحصاً خاصاً.
+**1. Compare the source, not the output.** Matching output proves only what
+passes through the build. Anything outside it — the admin panel, icons, the
+standalone logo — needs its own check.
 
-**٢. `site/` يُبنى ولا يُحرَّر.** أي تعديل عليه يُمحى عند أول `npm run build`.
+**2. `site/` is built, never edited.** Any change there is erased by the next
+`npm run build`.
 
-**٣. `transform` يقصّ `position:fixed`.** عنصر يحمل `transform` يصبح الحاوية
-لأي عنصر مثبَّت بداخله. الحل: نقله إلى `body`.
+**3. `transform` clips `position: fixed`.** An element carrying a transform
+becomes the containing block for any fixed descendant. Fix: move it to `body`.
 
-**٤. `display:flex` يتغلب على `hidden`.** كل عنصر يُخفى برمجياً يحتاج
-`[hidden]{display:none!important}`.
+**4. `display: flex` beats the `hidden` attribute.** Anything hidden
+programmatically needs `[hidden] { display: none !important; }`.
 
-**٥. مفتاح ترجمة ناقص ينتج `undefined` صامتاً.** `astro build` لا يفحص الأنواع.
-لذلك `t()` يرمي استثناءً عند أي مفتاح مفقود.
+**5. A missing translation key renders the string `undefined` silently.**
+`astro build` does not typecheck, so `t()` throws on a missing key instead.
 
-**٦. `focus({preventScroll})` يتجاهله كروم** داخل حاوية قابلة للتمرير. قفل
-التمرير الصحيح: `position:fixed` على `body` مع حفظ الإزاحة.
+**6. Chrome ignores `focus({ preventScroll: true })`** when focus lands inside a
+scrollable box. Correct scroll lock: `position: fixed` on `body` with the offset
+stored and restored.
 
-**٧. `rx` في SVG يُقصّ إلى نصف العرض ويُبقي `ry`.** القاعدة:
+**7. SVG clamps `rx` to half the width but keeps `ry`.** The rule:
 `rx = min(width, height) / 2`.
 
-**٨. الاستبدال النصي يصيب أول تطابق لا المقصود.** شغّل الفحص بعد أي تعديل آلي.
+**8. Text replacement hits the first match, not the intended one.** Run the
+checks after any automated edit.
 
-**٩. ويندوز:** `fileURLToPath` لا `.pathname`.
+**9. Windows:** use `fileURLToPath`, never `.pathname`.
 
-**١٠. لا اسم لون في اسم متغيّر** — `--brand` لا `--pine`. ولا كتلتان داكنتان
-متلاصقتان.
+**10. Never name a colour in a variable name** — `--brand`, not `--pine`. And
+never place two dark blocks adjacent.
 
 ---
 
-## 9. بوابة الجودة
+## 9. The quality gate
 
-**قبل أي تسليم، بلا استثناء:**
+**Before any handover, without exception:**
 
 ```
 npm run verify
 ```
 
-يجمع: القواعد الملزمة · البناء · سلامة الأنماط · فحص الألوان · اختبار الواجهة ·
-**فحص المتصفح (28 تأكيداً)** · تدقيق الصفحات · حارس الانحراف · إصدارات الوثائق.
+It runs: binding rules · build · stylesheet integrity · colour guard · UI test ·
+**browser suite (28 assertions)** · page audit · drift guard · document versions.
 
-**إن فشل أي واحد، لا تسلّم. أصلح السبب لا الفحص.**
-
----
-
-## 10. آلية القرار
-
-**اعرض خيارات وانتظر موافقة حسام** عند: المعمارية، بنية البيانات، بنية الروابط،
-الهوية البصرية، الالتزام القانوني أو المالي، شركاء الأفلييت، أي جزيرة JavaScript.
-
-**قرر بنفسك** في: تسمية المتغيرات، تفاصيل CSS، ترتيب المكوّنات، صياغة نصوص
-الواجهة القصيرة، تنظيم الملفات.
-
-**صيغة العرض:** الخيار الموصى به + سبب مختصر + البدائل + **ثمن القرار**.
+**If one check fails, do not hand over. Fix the cause, not the check.**
 
 ---
 
-## 11. طريقة التنفيذ
+## 10. Decision protocol
 
-١. افحص الوضع القائم. ٢. تأكد أنك فهمت؛ اسأل بدل الافتراض. ٣. حدد أصغر تغيير
-يحقق الهدف. ٤. نفّذ. ٥. `npm run verify`. ٦. راجع: الجوال، سطح المكتب، SEO،
-الروابط.
+**Present options and wait for Hussam** on: architecture, data structure, URL
+structure, visual identity, legal or financial commitments, affiliate partners,
+any new JavaScript island.
 
-**بعد كل تنفيذ، أربعة عناوين قصيرة:** ماذا فعلت؟ ما الذي تغيّر؟ كيف اختبرت؟
-هل يوجد قرار يحتاج حساماً؟
+**Decide yourself** on: variable naming, CSS detail, component ordering, short
+interface copy, file organisation.
 
----
-
-## 12. أسلوب التواصل
-
-**عرّف بنفسك في كل رد**، وخاطب كل طرف باسمه.
-
-مباشر ومختصر، بلا حشو ولا لغة تسويقية. **لا تجامل** — الموافقة السهلة على قرار
-سيئ أسوأ من الاعتراض. صحّح الافتراض الخاطئ قبل تنفيذ الطلب المبني عليه.
-
-**التنسيق — ملزم:** حسام يقرأ العربية من اليمين إلى اليسار.
-
-- **لا تخلط جملة عربية بنص إنجليزي طويل في السطر نفسه.**
-- **الأوامر والمسارات في سطر مستقل** داخل كتلة كود.
-- الجداول تفصل العربي عن الإنجليزي في عمودين.
-- ابدأ بالخلاصة ثم التفاصيل. والخطوات مرقّمة تبدأ بفعل أمر.
+**Format:** recommended option + one-line reason + alternatives + **what the
+decision costs**.
 
 ---
 
-## 13. المبدأ النهائي
+## 11. How to execute
 
-ابنِ `eldebosh.com` كمنصة موثوقة لاكتشاف التقنيات العملية — لا كموقع يضع روابط
-أفلييت.
+1. Examine what exists. 2. Confirm you understood; ask rather than assume.
+3. Identify the smallest change that achieves the goal. 4. Execute.
+5. Run `npm run verify`. 6. Review: mobile, desktop, SEO, internal links.
 
-**الثقة هي رأس المال الوحيد في هذا النموذج.** أي قرار يزيد الدخل قصير المدى
-ويقلل الثقة مرفوض.
+**After every execution, four short headings:** What did you do? What changed?
+How did you test it? Is there a decision Hussam needs to make?
+
+---
+
+## 12. Communication
+
+**Identify yourself in every reply**, and address each party by name.
+
+Direct and brief. No filler, no marketing language. **Do not flatter** — easy
+agreement with a bad decision is worse than objecting. Correct a false premise
+before acting on the request built on it.
+
+**Formatting is binding.** Hussam reads Arabic right-to-left; mixing directions
+makes text unreadable.
+
+- **Never mix an Arabic sentence with a long English phrase on the same line.**
+- **Commands, paths and URLs go on their own line** inside a code block.
+- Tables separate Arabic and English into different columns.
+- Lead with the conclusion, then the detail. Steps are numbered and start with a
+  verb.
+
+---
+
+## 13. The final principle
+
+Build `eldebosh.com` as a trusted place to discover practical technology — not as
+a site that places affiliate links.
+
+**Trust is the only capital in this model.** Any decision that raises short-term
+income and lowers trust is rejected.

@@ -1,276 +1,290 @@
 # ELDEBOSH.COM — CONTEXT
 
-> **الإصدار:** `v1.0` · 2026-08-31 · مصدرها `docs/project/` في المستودع
+> **Version:** `v1.0` · 2026-08-31 · canonical copy: `docs/project/` in the repository
 >
-> الحالة والقرارات وأسبابها. **القواعد في `INSTRUCTIONS`.**
-> مصدر الحقيقة للكود: `github.com/HussamEl/Eldebosh` — فرع `main` (المستودع عام).
+> State, decisions and the reasons behind them. **Rules live in `INSTRUCTIONS`.**
+> Source of truth for code: `github.com/HussamEl/Eldebosh` — branch `main`, public.
 
 ---
 
-## 1. صاحب المشروع
+## 1. The owner
 
 | | |
 |---|---|
-| الاسم | **Hussam** |
-| البريد | `info@eldebosh.com` |
-| الهاتف | `+46727782553` |
-| المدينة | Karlstad, Sverige |
-| الجهاز | Windows 11 · **ليس مطوراً** |
-| اللغة | يتواصل بالعربية · يحرر المحتوى بالسويدية |
+| Name | **Hussam** |
+| Email | `info@eldebosh.com` |
+| Phone | `+46727782553` |
+| City | Karlstad, Sweden |
+| Machine | Windows 11 · **not a developer** |
+| Language | Communicates in Arabic · edits content in Swedish |
 
-البيانات **مُدخَلة في الموقع**: ملف الساحة، وصفحة `kontakt`، وكرت العمل.
-عنوان السكن غير مطلوب — النشاط ليس شركة مسجلة.
+These details are **live on the site**: the square settings, the `kontakt` page
+and the business card. A home address is not required — the activity is not a
+registered company.
 
 ---
 
-## 2. هوية المشروع
+## 2. What the project is
 
-**الجملة المعرِّفة:** منصة لاكتشاف التقنيات والمنتجات العملية التي تجعل الحياة
-اليومية أسهل وأكثر راحة وأماناً وكفاءة.
+**Definition:** a place to discover practical technology that makes daily life
+easier, more comfortable, safer and more efficient.
 
 ```
-مشكلة يومية → حل عملي → خيارات مناسبة → مقارنة → توصية → شراء
+everyday problem → practical solution → suitable options → comparison → recommendation → purchase
 ```
 
-**الموقع ليس:** متجراً، ولا موقع أخبار تقنية، ولا مدونة أفلييت.
+**It is not:** a shop, a tech news site, or an affiliate blog.
 
-**القاعدة التحريرية الأولى:** ابدأ بالمشكلة لا باسم المنتج.
+**First editorial rule:** start with the problem, not the product name.
 
-**السوق:** السويد · **اللغات:** السويدية أساسية (`/sv/`)، الإنجليزية ثانوية
-(`/en/`) · **الدخل:** أفلييت حصراً · **الوسم:** `electro066-21` على `amazon.se`.
-
----
-
-## 3. الميزة التنافسية — أهم قسم
-
-**المنافسون السويديون يدّعون اختباراً لم يجرِ.** عباراتهم متطابقة، وصورهم من
-المتاجر، ولا يوجد فيها إنسان.
-
-**١. المنتجات في بيته.** عشرون منتجاً يستخدمها يومياً، مصوَّرة بيده.
-
-**٢. حضور فعلي.** ترخيص بلدي لطاولة في `Stora Torget` بكارلستاد. الزائر يستطيع
-**لمس المنتج قبل شرائه** — وهذا يحوّل أضعف نقطة في نموذج الأفلييت إلى أقوى ميزة.
-
-**٣. الصدق في الحدود.** ذكر ما لا تُظهره التجربة. لا منافس يستطيع كتابة هذا.
+**Market:** Sweden · **Languages:** Swedish primary (`/sv/`), English secondary
+(`/en/`) · **Revenue:** affiliate only · **Tag:** `electro066-21` on `amazon.se`.
 
 ---
 
-## 4. الحالة اليوم
+## 3. The competitive advantage — the most important section
 
-| البند | الحالة |
+**Swedish competitors claim testing that never happened.** Their phrasing is
+identical, their images come from retailers, and there is no human in any of it.
+
+**1. The products are in his home.** Twenty products used daily, photographed by
+hand.
+
+**2. A physical presence.** A municipal permit for a table at `Stora Torget` in
+Karlstad. A visitor can **hold the product before buying it** — which turns the
+weakest point of the affiliate model into its strongest asset.
+
+**3. Honesty about limits.** Stating what our experience does not show. No
+competitor can write that.
+
+---
+
+## 4. Current state
+
+| Item | State |
 |---|---|
-| المستودع | `HussamEl/Eldebosh` · `main` · عام · شجرة نظيفة |
-| المصدر | داخل المستودع: `src/` + `public/` |
-| ناتج البناء | `site/` — 33 صفحة مولّدة |
-| **النشر** | 🟢 **يعمل** — غيتهب يبني، والاستضافة تسحب تلقائياً |
-| الفحص الآلي | **28/28 في كروم** + ألوان + إصدارات + انحراف + تدقيق 31 صفحة |
-| الهوية | 57 ملفاً + مولّداتها |
-| المنتجات | 20 ملفاً · **11 له ASIN · 9 تنتظر** · 4 موثّقة للنشر |
-| المحتوى | 41 صفحة MDX · 11 منشورة |
-| ووردبريس | ❌ أُزيل — ممنوع على الدومين |
+| Repository | `HussamEl/Eldebosh` · `main` · public · clean tree |
+| Source | In the repository: `src/` + `public/` |
+| Build output | `site/` — 33 generated pages |
+| **Deployment** | 🟢 **Working** — GitHub builds, the host pulls automatically |
+| Automated checks | **28/28 in Chromium** + colours + versions + drift + 31-page audit |
+| Brand | 57 files plus their generators |
+| Products | 20 files · **11 have an ASIN · 9 waiting** · 4 verified for display |
+| Content | 41 MDX pages · 11 published |
+| WordPress | ❌ Removed — forbidden on the domain |
 
 ---
 
-## 5. النشر — يعمل تلقائياً
+## 5. Deployment — automatic
 
 ```
-main  →  GitHub Actions يبني ويفحص  →  فرع deploy  →  Hostinger تسحب  →  الموقع
+main → GitHub Actions builds and checks → deploy branch → Hostinger pulls → live
 ```
 
-**فرع `deploy`** يحمل الموقع المبني وحده في الجذر. **لا يُدفع إليه يدوياً** —
-Actions يحدّثه عند كل دفعة إلى `main`.
+**The `deploy` branch** holds the built site alone, at its root. **Never push to
+it by hand** — Actions updates it on every push to `main`.
 
-**لماذا هذا الشكل:** الرفع عبر FTP من غيتهب كان يسقط بـ`Timeout` — الاستضافة
-تحجب خوادم غيتهب. الحجب على اتجاه **الدخول** وحده، والاستضافة تخرج بلا مانع.
-فعُكس الاتجاه: هي تسحب بدل أن يُدفع إليها. والاستضافة لم تتغيّر.
+**Why this shape:** FTP upload from GitHub timed out; the host blocks GitHub's
+runners. The block is on **inbound** traffic only, and the host's outbound access
+is fine. So the direction was reversed: it pulls instead of being pushed to. The
+host did not change.
 
-**السحب اليدوي عند الحاجة:** hPanel ← Git ← تبويب `Overview` ← `Redeploy`.
-وتبويب `Deployments` يعرض تاريخ كل نشر بسجله.
+**Manual pull when needed:** hPanel → Git → `Overview` tab → `Redeploy`. The
+`Deployments` tab keeps every deployment with its log.
 
-**⚠️ لوحة التحرير على `/admin/` تكتب في المستودع.** التغيير يصل الموقع خلال
-دقائق عبر السلسلة أعلاه — لا فوراً.
+**⚠️ The editor at `/admin/` writes to the repository.** A change reaches the
+site within minutes through the chain above — not instantly.
 
 ---
 
-## 6. البنية التقنية
+## 6. Technical structure
 
 ```
 Astro 5 (SSG) → Content Collections (MDX + YAML)
-              → Pagefind (فهرس بحث ثابت)
-              → Sveltia CMS على /admin/
-              → GitHub Actions → فرع deploy → Hostinger
+              → Pagefind (static search index)
+              → Sveltia CMS at /admin/
+              → GitHub Actions → deploy branch → Hostinger
 ```
 
-**سبب Astro:** المحتوى شبه ثابت ويُقرأ أكثر مما يُكتب. الإخراج الثابت يعطي أفضل
-أداء، وسطح هجوم شبه معدوم، ونقل الموقع = رفع مجلد.
+**Why Astro:** the content is near-static and read far more than written. Static
+output gives the best performance, a near-zero attack surface, and moving the
+site means uploading a folder.
 
-### البدائل المرفوضة
+### Rejected alternatives
 
-| البديل | سبب الرفض |
+| Alternative | Why rejected |
 |---|---|
-| **WordPress** | **جُرِّب فعلياً وفشل** — `index.php` و`.htaccess` خطفا كل الطلبات |
-| Next.js | يتطلب خادماً؛ تعقيد بلا مقابل |
-| HTML يدوي | ينهار بعد ~30 صفحة |
-| Webflow / Framer | اشتراك دائم، وضعف عند مئات المنتجات المترابطة |
+| **WordPress** | **Tried and failed** — `index.php` and `.htaccess` hijacked every request |
+| Next.js | Requires a server; complexity with no return |
+| Hand-written HTML | Collapses past roughly 30 pages |
+| Webflow / Framer | Permanent subscription, weak with hundreds of linked products |
 
-### بنية الروابط — مغلقة
+### URL structure — closed
 
-| النوع | المسار |
+| Type | Path |
 |---|---|
-| رئيسية | `/sv/` |
-| فئة · فئة فرعية | `/sv/[category]/` · `/sv/[category]/[subcategory]/` |
-| **حل** | `/sv/solutions/[slug]/` |
-| دليل · مقارنة · مقال | `/sv/guides/` · `/sv/compare/` · `/sv/blog/` |
-| صفحة ثابتة | `/sv/info/[slug]/` |
-| الساحة | `/sv/pa-torget/` · `/en/on-the-square/` |
-| بحث | `/sv/sok/` · `/en/search/` |
-| منتج | **معطّل عمداً** — كيان بيانات بلا صفحة |
+| Home | `/sv/` |
+| Category · subcategory | `/sv/[category]/` · `/sv/[category]/[subcategory]/` |
+| **Solution** | `/sv/solutions/[slug]/` |
+| Guide · comparison · post | `/sv/guides/` · `/sv/compare/` · `/sv/blog/` |
+| Static page | `/sv/info/[slug]/` |
+| The square | `/sv/pa-torget/` · `/en/on-the-square/` |
+| Search | `/sv/sok/` · `/en/search/` |
+| Product | **Deliberately disabled** — a data entity with no page |
 
-الجذر يعيد التوجيه إلى `/sv/`. كل المسارات تنتهي بشرطة مائلة.
+The root redirects to `/sv/`. Every path ends in a trailing slash.
 
-**محجوز:** `solutions` `guides` `compare` `blog` `info` `sok` `search` `admin`
+**Reserved:** `solutions` `guides` `compare` `blog` `info` `sok` `search` `admin`
 `sv` `en` `pagefind`
 
 ---
 
-## 7. مخطط المنتج
+## 7. The product schema
 
 ```yaml
-id, code            # code رمز ثابت P-NN — أسماء الصور مبنية عليه
+id, code            # code is a permanent P-NN reference; image names derive from it
 name, brand, category, subcategory
-key_specs: {}       # أول مواصفة رقمية = الرقم البطل في البطاقة
+key_specs: {}       # the first numeric entry becomes the tile's hero number
 pros, cons, best_for
-price_band          # budget | mid | premium — لا سعر ثابت أبداً
-asin                # المُدخل الوحيد للأفلييت — الرابط يُولَّد
+price_band          # budget | mid | premium — never a fixed price
+asin                # the only affiliate input; the URL is generated
 source_url, last_verified
 owned, tested, owned_since, usage_period
-own_photos          # حد أقصى 3 — {src, alt, caption}
+own_photos          # max 3 — {src, alt, caption}
 hands_on, hands_on_limits
-verified            # بوابة الظهور
+verified            # the display gate
 ```
 
-**قاعدة الوسوم:** `best-overall` وأخواتها توضع على **علاقة المنتج بالدليل**، لا
-على المنتج. نفس المنتج قد يكون الأفضل قيمة في دليل وغير مناسب في آخر.
+**Badge rule:** `best-overall` and its siblings sit on the **guide-to-product
+relation**, never on the product. The same product can be the value pick in one
+guide and the wrong choice in another.
 
-**بوابتا الظهور:** `published` للمحتوى في `docs()` · `verified` للمنتجات في
-`getProduct()` و`verifiedProducts()` — كلاهما في `src/lib/content.ts`.
+**Two display gates:** `published` for content in `docs()`; `verified` for
+products in `getProduct()` and `verifiedProducts()` — both in
+`src/lib/content.ts`.
 
-**استثناء مقصود:** منتج **مملوك** بصورة من تصويرنا يظهر بلا زر شراء وبعلامة
-`Länk kommer`. القاعدة تمنع المواصفات بلا مصدر، لا إخفاء منتج بحوزتنا.
+**One deliberate exception:** an **owned** product with one of our own photos
+appears without a buy button, labelled `Länk kommer`. The rule exists to stop
+unsourced specifications, not to hide a product we physically have.
 
-**خط الإنتاج:** `draft → written → reviewed → published`. الفحص يرفض التناقض.
+**Pipeline:** `draft → written → reviewed → published`. Validation rejects a
+mismatch.
 
-**تسمية الصور:** `P-NN-K.webp` — من صورة إلى ثلاث لكل منتج، تتبدّل بالـCSS وحده.
+**Image naming:** `P-NN-K.webp` — one to three per product, cross-fading in CSS
+alone.
 
 ---
 
-## 8. الهوية البصرية
+## 8. Visual identity
 
-| العنصر | القيمة |
+| Element | Value |
 |---|---|
-| الأساسي | `--brand: #1273d1` |
-| الداكن | `--brand-deep: #123f66` — الرأس والفوتر |
-| الـHero | `--brand-hero: #14456e` بتدرّج |
-| الفاتح | `--brand-soft: #f0f7fe` |
-| نغمة الحدّ | `--brand-tint: #d3e7fa` |
-| خلفية الصفحة | `--page: #e7f2fd` |
-| الإشاري | `--volt: #55c6f2` · `--volt-deep: #2fb2e6` |
-| الخطوط | `Inter Tight` عناوين · `Inter` نص — متغيّرة ومستضافة محلياً |
+| Primary | `--brand: #1273d1` |
+| Dark | `--brand-deep: #123f66` — header and footer |
+| Hero | `--brand-hero: #14456e`, gradient |
+| Light surface | `--brand-soft: #f0f7fe` |
+| Border tint | `--brand-tint: #d3e7fa` |
+| Page ground | `--page: #e7f2fd` |
+| Accent | `--volt: #55c6f2` · `--volt-deep: #2fb2e6` |
+| Type | `Inter Tight` headings · `Inter` body — variable, self-hosted |
 
-**الشعار:** حرف **E** من ثلاثة أعمدة مستديرة، أوسطها سماوي — وهو «شريط الشحن»
-نفسه الذي يظهر فوق عناوين الموقع. الكلمة **مسارات متجهية** لا نص، مستخرجة من
-Inter Tight، فلا تحتاج تثبيت خط في أي برنامج أو مطبعة.
+**The mark:** an **E** built from three rounded bars whose middle bar carries the
+sky accent — the same charge-bar motif that sits above the site's headings. The
+wordmark is **vector outlines, not text**, pulled from Inter Tight, so it needs
+no font installed in any application or at any printer.
 
-**يُعاد توليد الهوية كلها** بـ`npm run brand:all` — لا تُرسم يدوياً.
+**The whole identity regenerates** with `npm run brand:all`. Never redraw it by
+hand.
 
-**قواعد مغلقة:** مقياس عناوين مضغوط · لا كتلتان داكنتان متلاصقتان · كل صفحة
-داخلية تبدأ بشريط `--brand-soft` · بطاقات المنتجات تعمل بلا صورة.
+**Closed rules:** a compressed heading scale · never two adjacent dark blocks ·
+every inner page opens with a `--brand-soft` band · product cards work without an
+image.
 
 ---
 
-## 9. التواجد في كارلستاد
+## 9. The Karlstad presence
 
-**الوضع:** ترخيص بلدي لطاولة في `Stora Torget`، أيام الأسبوع، يُزال يومياً.
-**لا شركة مسجلة** — نشاط محدود يُصرَّح عنه.
+**Situation:** a municipal permit for a table at `Stora Torget`, weekdays,
+removed daily. **No registered company** — a limited declared activity.
 
-| القرار | السبب |
+| Decision | Reason |
 |---|---|
-| **لا ساعات معلنة** | الحضور غير مضمون؛ زائر لا يجد أحداً يفقد الثقة نهائياً |
-| **الوعد = الرد لا الحضور** | "تواصل قبل أن تأتي" — وعد يمكن الوفاء به |
-| **لا ذكر للمخزن المنزلي** | قرار خصوصية |
-| **لا نظام حجوزات** | اتصال ورسالة فقط |
-| **لا Klarna ولا Swish Handel** | لا بيع أونلاين |
+| **No published hours** | Attendance is not guaranteed; a visitor who finds nobody loses trust permanently |
+| **The promise is a reply, not attendance** | "Get in touch before you come" — a promise that can be kept |
+| **No mention of home storage** | Privacy |
+| **No booking system** | Call and message only |
+| **No Klarna or Swish Handel** | Nothing is sold online |
 
-**ما يُباع:** الموقع لا يبيع شيئاً. في الساحة: كابلات مفردة وأشياء مستعملة فقط،
-كبيع منفصل موثّق في صفحة الإفصاح.
+**What is sold:** the site sells nothing. At the square: single cables and used
+items only, as a separate activity documented on the disclosure page.
 
 ---
 
-## 10. الالتزام القانوني
+## 10. Legal compliance
 
-| المتطلب | الحالة |
+| Requirement | State |
 |---|---|
-| الإفصاح التجاري | ✅ أعلى كل صفحة تجارية + الفوتر |
-| إفصاح أمازون | ✅ بلغتين |
-| المنهجية التحريرية | ✅ منشورة |
-| فصل بيع الساحة | ✅ موثّق |
-| صفحة الاتصال | ✅ منشورة ببيانات حقيقية |
-| الخصوصية · الكوكيز · الشروط | ⬜ مسوّدات |
+| Commercial disclosure | ✅ Top of every commercial page plus the footer |
+| Amazon disclosure | ✅ Both languages |
+| Editorial method | ✅ Published |
+| Square sales separated | ✅ Documented |
+| Contact page | ✅ Published with real details |
+| Privacy · cookies · terms | ⬜ Drafts |
 
-**قانون التسويق السويدي** يفرض إفصاحاً بكلمات مثل `annonssamarbete` أو
-`reklamlänk`. **والتوصية القائمة:** أداة تحليلات **بلا كوكيز** لتفادي نافذة
-الموافقة كلياً.
+Swedish marketing law requires disclosure using words such as
+`annonssamarbete` or `reklamlänk`. **Standing recommendation:** a
+**cookie-free** analytics tool, avoiding the consent dialog entirely.
 
 ---
 
-## 11. المخاطر
+## 11. Risks
 
-| # | الخطر | الحالة |
+| # | Risk | State |
 |---|---|---|
-| R-01 | **إغلاق حساب أمازون** — نهائي بلا استئناف | مُدار بفحص آلي |
-| R-02 | تصنيف ضريبي خاطئ لدخل الأفلييت | ⚠️ **مفتوح** — استشارة مجانية لم تُجرَ |
-| R-03 | الاعتماد على شخص واحد | جزئياً |
-| R-04 | لوحة التحرير من CDN بلا تثبيت إصدار | ⚠️ **مفتوح** |
-| R-05 | جودة السويدية | مُدار بمرحلة `reviewed` |
-| R-06 | ضياع الملفات | ✅ مغلق — المستودع هو النسخة |
-| R-07 | تغيّر شروط أمازون | مُدار |
-| R-08 | محتوى لا يرتّب | مُدار |
+| R-01 | **Amazon account closure** — permanent, no appeal | Managed by automated checks |
+| R-02 | Wrong tax classification of affiliate income | ⚠️ **Open** — free consultation not yet taken |
+| R-03 | Single point of failure (one person) | Partial |
+| R-04 | The editor loads from a CDN with no pinned version | ⚠️ **Open** |
+| R-05 | Swedish language quality | Managed by the `reviewed` stage |
+| R-06 | File loss | ✅ Closed — the repository is the backup |
+| R-07 | Amazon terms change | Managed |
+| R-08 | Content that does not rank | Managed |
 
 ---
 
-## 12. أسئلة مفتوحة
+## 12. Open questions
 
-١. حجز `.se` كحماية للاسم؟
-٢. أداة التحليلات — بلا كوكيز أم Google Analytics؟
-٣. **تصنيف دخل الأفلييت ضريبياً** ⚠️ حرج.
-٤. أي شبكة أفلييت بعد أمازون؟
+1. Register the `.se` domain defensively?
+2. Analytics — cookie-free, or Google Analytics?
+3. **Tax classification of affiliate income** ⚠️ critical.
+4. Which affiliate network after Amazon?
 
-**⚠️ افتراضات تحتاج تحققاً — لا يُبنى عليها قرار:** شبكات الأفلييت النوردية
-(Adtraction · Awin · TradeDoubler) · المتاجر السويدية (Kjell · Elgiganten ·
-NetOnNet · Webhallen) · شروط استخدام صور Anker و UGREEN · شروط السلامة والتأمين
-لشحن بطاريات الغير.
+**⚠️ Assumptions that need verification — do not build a decision on them:**
+Nordic affiliate networks (Adtraction · Awin · TradeDoubler) · Swedish retailers
+(Kjell · Elgiganten · NetOnNet · Webhallen) · image usage terms from Anker and
+UGREEN · safety and insurance terms for charging other people's batteries.
 
 ---
 
-## 13. المتبقي — بالأولوية
+## 13. What remains, by priority
 
-| # | المهمة | المسؤول |
+| # | Task | Owner |
 |---|---|---|
-| ١ | 🔴 **تسعة ASIN** — بدونها تسعة منتجات بلا زر شراء | **حسام** |
-| ٢ | 🟠 سؤال مصلحة الضرائب (`R-02`) | **حسام** |
-| ٣ | 🟠 تثبيت إصدار لوحة التحرير أو إنزالها محلياً (`R-04`) | كلاودي كود |
-| ٤ | 🟠 استكمال النصوص القانونية | كلاودي بروجيكت |
-| ٥ | 🟡 **عنقود البطارية — 11 صفحة** | كلاودي بروجيكت |
-| ٦ | 🟡 خطوة معالجة صور وقت البناء | كلاودي كود |
-| ٧ | 🟡 Search Console وأداة تحليلات | مشترك |
+| 1 | 🔴 **Nine ASINs** — without them, nine products have no buy button | **Hussam** |
+| 2 | 🟠 Tax authority consultation (`R-02`) | **Hussam** |
+| 3 | 🟠 Pin or vendor the editor (`R-04`) | Claude Code |
+| 4 | 🟠 Complete the legal pages | Claude Project |
+| 5 | 🟡 **The battery cluster — 11 pages** | Claude Project |
+| 6 | 🟡 Build-time image step | Claude Code |
+| 7 | 🟡 Search Console and analytics | Shared |
 
-**التسعة الناقصة:** Baseus MagPro · Cooper MagStand · EasyAcc bordsfläkt ·
+**The nine missing:** Baseus MagPro · Cooper MagStand · EasyAcc bordsfläkt ·
 HUAWEI öppna hörlurar · LENCENT Reseadapter · Vikbart mobilstativ ·
 simarro magnetringar · UGREEN snabbladdare · UGREEN USB-C 240W.
 
-**عنقود البطارية** هو الموجة الأولى: إحدى عشرة صفحة حول مشكلة واحدة — نفاد
-البطارية. عند اكتماله تُفعَّل الفئة الأولى ويصبح هناك ما يكفي لتحقيق المبيعات
-الثلاث التي يطلبها أمازون.
+**The battery cluster** is the first wave: eleven pages around a single problem —
+the phone dying mid-day. Completing it activates the first category and creates
+enough surface to reach the three sales Amazon requires.
 
-**الترتيب الملزم:** صفحات الحل ← المنتجات ← الأدلة والمقارنات ← المقالات.
-الدليل لا يُنشر بأقل من ترشيحين.
+**Binding order:** solution pages → products → guides and comparisons → posts.
+A guide is not published with fewer than two picks.

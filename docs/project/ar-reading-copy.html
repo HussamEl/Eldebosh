@@ -1,0 +1,643 @@
+<title>وثائق Eldebosh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --navy:#123F66; --azure:#1273D1; --sky:#55C6F2;
+  --ground:#F1F7FD; --surface:#FFFFFF; --surface-2:#E7F2FD;
+  --ink:#0E1A24; --body:#3B4A58; --muted:#6A7885;
+  --line:#D5E3EF; --line-2:#B9CFE2;
+  --warn:#A8501F; --ok:#1F7A4C;
+  --ar:"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --shadow:0 1px 2px rgba(18,63,102,.05), 0 12px 28px -22px rgba(18,63,102,.45);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --navy:#8FC6EE; --azure:#68ADE8; --sky:#55C6F2;
+    --ground:#071C2C; --surface:#0D2B42; --surface-2:#12354F;
+    --ink:#EAF3FB; --body:#B9D2E5; --muted:#88A5BD;
+    --line:#1C4262; --line-2:#26567C;
+    --warn:#E0A16C; --ok:#66C99A;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 28px -22px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --navy:#8FC6EE; --azure:#68ADE8; --sky:#55C6F2;
+  --ground:#071C2C; --surface:#0D2B42; --surface-2:#12354F;
+  --ink:#EAF3FB; --body:#B9D2E5; --muted:#88A5BD;
+  --line:#1C4262; --line-2:#26567C;
+  --warn:#E0A16C; --ok:#66C99A;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 12px 28px -22px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--body);
+  font-family:var(--ar);font-size:16.5px;line-height:1.9;
+  -webkit-font-smoothing:antialiased}
+.wrap{width:min(100% - 2rem,64rem);margin-inline:auto}
+
+/* ---------- شريط علوي ---------- */
+.top{position:sticky;top:0;z-index:20;background:var(--navy);
+  border-bottom:1px solid rgba(255,255,255,.12)}
+:root[data-theme="dark"] .top,
+:root:not([data-theme="light"]) .top{background:#0A2740}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .top{background:var(--navy)}}
+.top .wrap{display:flex;align-items:center;gap:1rem;min-height:56px;flex-wrap:wrap}
+.mark{display:flex;align-items:center;gap:.55rem;color:#fff;font-weight:700;
+  font-size:1.02rem;letter-spacing:-.01em;margin-inline-end:auto}
+.mark svg{display:block}
+.tabs{display:flex;gap:.15rem;flex-wrap:wrap}
+.tabs a{color:#C9E1F5;text-decoration:none;font-size:.87rem;font-weight:500;
+  padding:.34rem .7rem;border-radius:7px}
+.tabs a:hover{background:rgba(255,255,255,.12);color:#fff}
+.ver{font-family:var(--mono);font-size:.72rem;color:#9FD9F6;
+  border:1px solid rgba(255,255,255,.22);border-radius:99px;padding:.15rem .55rem}
+
+/* ---------- ترويسة ---------- */
+header.intro{padding-block:clamp(2rem,1.4rem+2.4vw,3.2rem)}
+h1{font-size:clamp(1.7rem,1.2rem+2.2vw,2.5rem);font-weight:700;color:var(--ink);
+  margin:0 0 .6rem;letter-spacing:-.02em;line-height:1.25;text-wrap:balance}
+.lede{font-size:1.05rem;max-width:60ch;color:var(--body)}
+.note{margin-top:1.4rem;background:var(--surface);border:1px solid var(--line);
+  border-radius:12px;padding:.9rem 1.1rem;font-size:.93rem;display:flex;gap:.75rem;
+  align-items:flex-start;box-shadow:var(--shadow)}
+.note b{color:var(--ink)}
+.note .bar{flex:0 0 auto;width:3px;align-self:stretch;border-radius:2px;background:var(--sky)}
+
+/* ---------- أقسام ---------- */
+section.doc{padding-block:clamp(1.8rem,1.2rem+2vw,2.8rem);
+  border-top:1px solid var(--line)}
+.doc > h2{font-size:clamp(1.25rem,1rem+1vw,1.6rem);color:var(--ink);font-weight:700;
+  margin:0 0 .3rem;letter-spacing:-.015em}
+.charge{width:2.6rem;height:3px;border-radius:2px;background:var(--line-2);
+  position:relative;margin-bottom:.7rem}
+.charge::after{content:"";position:absolute;inset-block:0;inset-inline-start:0;
+  width:42%;border-radius:2px;background:var(--sky)}
+.doc > .sub{color:var(--muted);font-size:.9rem;margin:0 0 1.6rem}
+.doc h3{font-size:1.03rem;color:var(--ink);font-weight:600;margin:1.9rem 0 .5rem}
+.doc h4{font-size:.94rem;color:var(--ink);font-weight:600;margin:1.3rem 0 .4rem}
+.doc p{margin:.55rem 0}
+.doc ul,.doc ol{margin:.5rem 0;padding-inline-start:1.3rem}
+.doc li{margin:.28rem 0}
+strong{color:var(--ink);font-weight:600}
+
+code{font-family:var(--mono);font-size:.83em;background:var(--surface-2);
+  color:var(--azure);padding:.1em .42em;border-radius:5px;
+  unicode-bidi:isolate;direction:ltr;display:inline-block}
+pre{background:var(--surface);border:1px solid var(--line);border-radius:10px;
+  padding:.85rem 1rem;overflow-x:auto;direction:ltr;text-align:left;
+  font-family:var(--mono);font-size:.83rem;line-height:1.7;color:var(--ink);
+  box-shadow:var(--shadow);margin:.8rem 0}
+pre code{background:none;padding:0;color:inherit;font-size:1em;display:block}
+
+.scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--line);
+  border-radius:12px;box-shadow:var(--shadow);margin:.9rem 0}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:start;padding:.62rem .8rem;border-bottom:1px solid var(--line);
+  vertical-align:top}
+th{font-size:.76rem;letter-spacing:.06em;color:var(--muted);font-weight:600;
+  text-transform:uppercase;background:var(--surface-2)}
+tr:last-child td{border-bottom:0}
+td code{white-space:nowrap}
+.num{font-variant-numeric:tabular-nums}
+
+.callout{background:var(--surface);border:1px solid var(--line);
+  border-inline-start:3px solid var(--sky);border-radius:0 12px 12px 0;
+  padding:.9rem 1.1rem;margin:1rem 0;font-size:.95rem;box-shadow:var(--shadow)}
+.callout.warn{border-inline-start-color:var(--warn)}
+.callout.warn b{color:var(--warn)}
+.callout.rule{border-inline-start-color:var(--azure)}
+
+.grid{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));margin:1rem 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:.95rem 1.05rem;box-shadow:var(--shadow)}
+.card h4{margin:0 0 .3rem;font-size:.92rem}
+.card p{margin:0;font-size:.89rem;color:var(--muted);line-height:1.7}
+
+.rules{counter-reset:r;list-style:none;padding:0;margin:1rem 0;display:grid;gap:.6rem}
+.rules li{counter-increment:r;background:var(--surface);border:1px solid var(--line);
+  border-radius:12px;padding:.8rem 1rem .8rem 1rem;display:grid;
+  grid-template-columns:auto 1fr;gap:.85rem;align-items:start;box-shadow:var(--shadow)}
+.rules li::before{content:counter(r);font-family:var(--mono);font-size:.78rem;
+  font-weight:500;color:var(--azure);background:var(--surface-2);
+  width:1.7rem;height:1.7rem;display:grid;place-items:center;border-radius:6px}
+.rules li > div{font-size:.93rem}
+.rules b{display:block;color:var(--ink);margin-bottom:.1rem}
+
+footer{border-top:1px solid var(--line);padding-block:2rem 3rem;
+  color:var(--muted);font-size:.87rem}
+:focus-visible{outline:2.5px solid var(--sky);outline-offset:3px;border-radius:4px}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+}
+html{scroll-padding-top:70px}
+</style>
+<body dir="rtl">
+
+<nav class="top">
+  <div class="wrap">
+    <span class="mark">
+      <svg width="20" height="20" viewBox="0 0 120 120" aria-hidden="true">
+        <rect width="120" height="120" rx="33" fill="#0D2F4D"/>
+        <rect x="29" y="29" width="13" height="62" rx="6.5" fill="#F2F8FE"/>
+        <rect x="29" y="29" width="57" height="13" rx="6.5" fill="#F2F8FE"/>
+        <rect x="29" y="53.5" width="38" height="13" rx="6.5" fill="#55C6F2"/>
+        <rect x="29" y="78" width="48" height="13" rx="6.5" fill="#F2F8FE"/>
+      </svg>
+      Eldebosh
+    </span>
+    <span class="ver" dir="ltr">v1.0</span>
+    <div class="tabs">
+      <a href="#instructions">القواعد</a>
+      <a href="#context">الحالة</a>
+      <a href="#briefing">الإحاطة</a>
+      <a href="#log">السجل</a>
+    </div>
+  </div>
+</nav>
+
+<header class="intro wrap">
+  <h1>وثائق المشروع الحاكمة</h1>
+  <p class="lede">
+    أربع وثائق تحكم العمل بين حسام وثلاثة مساعدين. هذه <strong>نسخة قراءة
+    بالعربية</strong> — النسخة الإنجليزية في المستودع هي المرجع الذي يقرأه
+    المساعدون.
+  </p>
+  <div class="note">
+    <span class="bar"></span>
+    <span>
+      <b>لماذا الإنجليزية هي المرجع؟</b> المساعدون يقرأونها أسرع وأدق، والفحص
+      الآلي يتحقق من أرقام إصداراتها. وهذه الصفحة تُعاد كتابتها كلما تغيّرت
+      النسخة الإنجليزية — الرقم أعلى الصفحة يخبرك إن كانت متأخرة.
+      المصدر: <code dir="ltr">docs/project/</code> في المستودع.
+    </span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ==================== INSTRUCTIONS ==================== -->
+<section class="doc" id="instructions">
+  <div class="charge"></div>
+  <h2>القواعد الحاكمة</h2>
+  <p class="sub"><code dir="ltr">INSTRUCTIONS.md</code> — المرجع الأعلى. عند أي تعارض مع وثيقة أخرى، هذه هي الحاكمة.</p>
+
+  <h3>من يفعل ماذا</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>الطرف</th><th>يملك</th><th>لا يفعل</th></tr></thead>
+      <tbody>
+        <tr><td><strong>حسام</strong></td><td>القرار · التصوير · مراجعة السويدية</td><td>ليس مطوّرًا</td></tr>
+        <tr><td><strong>كلاودي كود</strong></td><td>المستودع · صلاحية الدفع · متصفح حقيقي · التنفيذ في الكود</td><td>لا يقرر نيابة عن حسام</td></tr>
+        <tr><td><strong>كلاودي بروجيكت</strong></td><td>المواصفات · المحتوى · SEO · القرارات التحريرية</td><td>لا يدفع إلى المستودع</td></tr>
+        <tr><td><strong>جيمناي</strong></td><td>بحث خارجي · رأي ثانٍ · تحقّق من ادعاء</td><td>لا ينفّذ في الكود</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>حسام هو القناة بين الأطراف.</strong> ولا أحد ينفّذ بشكل أعمى: من رأى
+  حلًّا أفضل اقترحه بسبب مختصر، ومن رأى تناقضًا — في الطلب أو في هذه الوثائق
+  نفسها — أعلنه قبل التنفيذ. <strong>ومن يفتح موضوعًا يغلقه.</strong></p>
+
+  <h3>ترقيم الرسائل — إلزامي</h3>
+  <p>ثلاثة أطراف في ثلاث محادثات. بلا عدّاد واحد لا أحد يعرف أين انتهى الخيط.</p>
+  <pre><code>EB-014 · Claude Project · 2026-09-01 09:15 · replying to EB-013</code></pre>
+  <ul>
+    <li><strong>عدّاد واحد للجميع</strong> — لا عدّاد لكل طرف. ثلاثة أرقام بلا فجوات.</li>
+    <li><strong>الوقت بتوقيت كارلستاد</strong> — الساعة التي تقرأها أنت، لا ساعة الخادم.</li>
+    <li><strong>اقرأ الساعة ولا تقدّرها.</strong> من كانت بيئته بالـUTC يحوّل أولًا.</li>
+  </ul>
+  <p>السجل في <code dir="ltr">docs/project/LOG.md</code> وهو الحَكَم عند أي تضارب،
+  و<code dir="ltr">npm run verify</code> يطبع الرقم التالي والوقت الصحيح جاهزين للنسخ.</p>
+
+  <h3>المستودع مصدر الحقيقة — لا الحزم</h3>
+  <div class="callout rule">
+    <b>لا ترسل حزمة مشروع. صف التعديل، وينفّذه كلاودي كود في المستودع.</b>
+    <p>حزمة أقدم من المستودع تُعيد إصلاحات كانت مدفوعة فعلًا. والمستودع عام،
+    فمن يصل إلى الإنترنت يقرأ منه أحدث نسخة مباشرة.</p>
+  </div>
+
+  <h3>المعاينة قبل الحزمة</h3>
+  <p>عند أي طلب تعديل بصري — لون، مسافة، خط، تخطيط:</p>
+  <pre><code>npm run preview:file</code></pre>
+  <p>يولّد ملفًا واحدًا مكتفيًا بذاته يُفتح على الجوال وفيه كل الصفحات تعمل.
+  <strong>أرسل ملف المعاينة وحده.</strong> دورة «عدّل ← احزم ← ارفع ← انشر ←
+  انتظر» تهدر أيامًا.</p>
+
+  <h3>اقتصاد الجلسة</h3>
+  <ul>
+    <li><strong>محادثة واحدة لكل مرحلة.</strong> عند انتهائها: حدّث الوثائق ثم ابدأ محادثة جديدة.</li>
+    <li><strong>لا ترفق ملفًا إلا عند الحاجة الفعلية</strong> — استخدم الرموز مثل <code dir="ltr">P-04-1</code>.</li>
+    <li><strong>لا تعد إرسال ما لم يتغيّر.</strong></li>
+  </ul>
+
+  <h3>القواعد الملزمة</h3>
+  <p>كلها مفروضة آليًا في <code dir="ltr">scripts/validate.mjs</code> — البناء
+  يفشل عند الخرق، وهذا مقصود.</p>
+
+  <h4>لا اختلاق</h4>
+  <p>ممنوع اختراع مواصفات أو أسعار أو تقييمات أو شهادات أو نتائج اختبار. كل معلومة
+  تعود إلى مصدر موثق؛ وإلا فاكتب «يحتاج تحققًا» ولا تنشر. <strong>ويشمل هذا
+  المعلومات التقنية:</strong> إن لم تكن متأكدًا من كيفية عمل أداة، تحقق قبل الشرح.</p>
+
+  <h4>التجربة — ثلاث حالات</h4>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>الحالة</th><th>ما يُسمح</th><th>ما يراه القارئ</th></tr></thead>
+      <tbody>
+        <tr><td><code dir="ltr">tested: true</code></td><td>صيغة التجربة · صور خاصة · فيديو</td><td>شارة: نملكه ونستخدمه</td></tr>
+        <tr><td><code dir="ltr">owned: true</code> فقط</td><td>صور خاصة ووصف مادي، <strong>بلا حكم على الأداء</strong></td><td>نملكه، والبيانات قيد الاستكمال</td></tr>
+        <tr><td>غير مملوك</td><td>مواصفات ومصادر منشورة فقط</td><td>سطر صريح: لم نجرّبه</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><code dir="ltr">tested: true</code> يفرض خمسة حقول:
+  <code dir="ltr">owned_since</code> · <code dir="ltr">usage_period</code> · صورة
+  من تصويرنا · <code dir="ltr">hands_on</code> · <code dir="ltr">hands_on_limits</code>.</p>
+  <div class="callout">
+    <b>حقل الحدود هو الأهم.</b>
+    <p>ذكر ما لا تُظهره تجربتنا هو ما يفصلنا عن منافسين يدّعون اختبارًا لم يجرِ.</p>
+  </div>
+
+  <h4>حدود أمازون</h4>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>البند</th><th>الحالة</th></tr></thead>
+      <tbody>
+        <tr><td>رابط مباشر · زر الشراء · مواصفات من مصدر</td><td>✅ مسموح</td></tr>
+        <tr><td><strong>صور</strong> من أمازون أو المتاجر</td><td>❌ عبر الواجهة البرمجية فقط، بعد ثلاث مبيعات</td></tr>
+        <tr><td><strong>أسعار</strong></td><td>❌ عبر الواجهة البرمجية فقط</td></tr>
+        <tr><td>الشراء عبر روابطك أو روابط العائلة</td><td>❌ إغلاق فوري للحساب</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>الروابط تُولَّد من <code dir="ltr">asin</code> وحده — الوسم في
+  <code dir="ltr">src/lib/affiliate.ts</code>. ولصق رابط أمازون يدويًا يرفضه الفحص.</p>
+  <div class="callout warn">
+    <b>⚠️ لا تعديل صور المتاجر بنية التهرّب.</b>
+    <p>التعديل لا ينشئ ملكية، ويحوّل المخالفة إلى تحايل متعمّد.</p>
+  </div>
+
+  <h4>ثلاث قواعد أخرى</h4>
+  <ul>
+    <li><strong>لا محتوى ضعيف</strong> — ولا رابط يقود إلى صفحة فارغة.</li>
+    <li><strong>لا أسرار</strong> في أي ملف، بما في ذلك الوثائق.</li>
+    <li><strong>الالتزام السويدي</strong> — الإفصاح التجاري ظاهر أعلى كل صفحة تجارية لا في الفوتر فقط.</li>
+  </ul>
+
+  <h3>قواعد هندسية لا تُخترق</h3>
+  <p>كل بند وقع فعلًا وكلّف وقتًا.</p>
+  <ol class="rules">
+    <li><div><b>قارن المصدر لا الناتج.</b>تطابق الناتج لا يثبت إلا ما يمر بمسار البناء. ما هو خارجه — لوحة التحرير، الأيقونات، الشعار المستقل — يحتاج فحصًا خاصًا.</div></li>
+    <li><div><b><code dir="ltr">site/</code> يُبنى ولا يُحرَّر.</b>أي تعديل عليه يُمحى عند أول <code dir="ltr">npm run build</code>.</div></li>
+    <li><div><b><code dir="ltr">transform</code> يقصّ <code dir="ltr">position:fixed</code>.</b>عنصر يحمل تحويلًا يصبح الحاوية لأي عنصر مثبَّت بداخله. الحل: نقله إلى <code dir="ltr">body</code>.</div></li>
+    <li><div><b><code dir="ltr">display:flex</code> يتغلب على <code dir="ltr">hidden</code>.</b>كل عنصر يُخفى برمجيًا يحتاج <code dir="ltr">[hidden]{display:none!important}</code>.</div></li>
+    <li><div><b>مفتاح ترجمة ناقص يُنتج <code dir="ltr">undefined</code> صامتًا.</b><code dir="ltr">astro build</code> لا يفحص الأنواع، لذلك <code dir="ltr">t()</code> يرمي استثناءً عند أي مفتاح مفقود.</div></li>
+    <li><div><b>كروم يتجاهل <code dir="ltr">focus({preventScroll})</code></b>داخل حاوية قابلة للتمرير. القفل الصحيح: <code dir="ltr">position:fixed</code> على <code dir="ltr">body</code> مع حفظ الإزاحة.</div></li>
+    <li><div><b>SVG يقصّ <code dir="ltr">rx</code> إلى نصف العرض ويُبقي <code dir="ltr">ry</code>.</b>القاعدة: <code dir="ltr">rx = min(width, height) / 2</code>.</div></li>
+    <li><div><b>الاستبدال النصي يصيب أول تطابق لا المقصود.</b>شغّل الفحص بعد أي تعديل آلي.</div></li>
+    <li><div><b>ويندوز.</b>استخدم <code dir="ltr">fileURLToPath</code> لا <code dir="ltr">.pathname</code>.</div></li>
+    <li><div><b>لا اسم لون في اسم متغيّر.</b><code dir="ltr">--brand</code> لا <code dir="ltr">--pine</code>. ولا كتلتان داكنتان متلاصقتان.</div></li>
+  </ol>
+
+  <h3>بوابة الجودة</h3>
+  <p>قبل أي تسليم، بلا استثناء:</p>
+  <pre><code>npm run verify</code></pre>
+  <p>يجمع: القواعد الملزمة · البناء · سلامة الأنماط · فحص الألوان · اختبار
+  الواجهة · <strong>فحص المتصفح (28 تأكيدًا)</strong> · تدقيق الصفحات · حارس
+  الانحراف · إصدارات الوثائق.</p>
+  <div class="callout warn">
+    <b>إن فشل أي فحص، لا تسلّم. أصلح السبب لا الفحص.</b>
+  </div>
+
+  <h3>آلية القرار</h3>
+  <div class="grid">
+    <div class="card"><h4>اعرض وانتظر حسام</h4><p>المعمارية · بنية البيانات · بنية الروابط · الهوية البصرية · الالتزام القانوني أو المالي · شركاء الأفلييت · أي جزيرة JavaScript جديدة.</p></div>
+    <div class="card"><h4>قرر بنفسك</h4><p>تسمية المتغيرات · تفاصيل CSS · ترتيب المكوّنات · صياغة نصوص الواجهة القصيرة · تنظيم الملفات.</p></div>
+  </div>
+  <p><strong>صيغة العرض:</strong> الخيار الموصى به + سبب مختصر + البدائل +
+  <strong>ثمن القرار</strong>.</p>
+
+  <h3>أسلوب التواصل</h3>
+  <p><strong>عرّف بنفسك في كل رد</strong>، وخاطب كل طرف باسمه. مباشر ومختصر، بلا
+  حشو ولا لغة تسويقية. <strong>لا تجامل</strong> — الموافقة السهلة على قرار سيئ
+  أسوأ من الاعتراض.</p>
+  <div class="callout">
+    <b>التنسيق ملزم — لأنك تقرأ العربية من اليمين إلى اليسار.</b>
+    <ul>
+      <li>لا خلط جملة عربية بنص إنجليزي طويل في السطر نفسه.</li>
+      <li>الأوامر والمسارات في سطر مستقل داخل كتلة كود.</li>
+      <li>الجداول تفصل العربي عن الإنجليزي في عمودين.</li>
+      <li>ابدأ بالخلاصة ثم التفاصيل، والخطوات مرقّمة تبدأ بفعل أمر.</li>
+    </ul>
+  </div>
+
+  <h3>المبدأ النهائي</h3>
+  <div class="callout">
+    <b>الثقة هي رأس المال الوحيد في هذا النموذج.</b>
+    <p>ابنِ الموقع كمنصة موثوقة لاكتشاف التقنيات العملية — لا كموقع يضع روابط
+    أفلييت. وأي قرار يزيد الدخل قصير المدى ويقلل الثقة مرفوض.</p>
+  </div>
+</section>
+
+<!-- ==================== CONTEXT ==================== -->
+<section class="doc" id="context">
+  <div class="charge"></div>
+  <h2>الحالة والقرارات</h2>
+  <p class="sub"><code dir="ltr">CONTEXT.md</code> — أين وصل المشروع، وما القرارات المغلقة وأسبابها.</p>
+
+  <h3>صاحب المشروع</h3>
+  <div class="scroll">
+    <table>
+      <tbody>
+        <tr><th>الاسم</th><td>Hussam</td></tr>
+        <tr><th>البريد</th><td><code dir="ltr">info@eldebosh.com</code></td></tr>
+        <tr><th>الهاتف</th><td><code dir="ltr">+46727782553</code></td></tr>
+        <tr><th>المدينة</th><td>Karlstad, Sverige</td></tr>
+        <tr><th>الجهاز</th><td>Windows 11 · ليس مطوّرًا</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>البيانات <strong>منشورة على الموقع</strong>: ملف الساحة، وصفحة الاتصال، وكرت
+  العمل. وعنوان السكن غير مطلوب — النشاط ليس شركة مسجلة.</p>
+
+  <h3>ما هو المشروع</h3>
+  <p>منصة لاكتشاف التقنيات والمنتجات العملية التي تجعل الحياة اليومية أسهل وأكثر
+  راحة وأمانًا وكفاءة.</p>
+  <pre><code>مشكلة يومية → حل عملي → خيارات مناسبة → مقارنة → توصية → شراء</code></pre>
+  <p><strong>وليس:</strong> متجرًا، ولا موقع أخبار تقنية، ولا مدونة أفلييت.
+  <strong>والقاعدة التحريرية الأولى:</strong> ابدأ بالمشكلة لا باسم المنتج.</p>
+  <p>السوق السويد · السويدية أساسية <code dir="ltr">/sv/</code> والإنجليزية ثانوية
+  <code dir="ltr">/en/</code> · الدخل أفلييت حصرًا · الوسم
+  <code dir="ltr">electro066-21</code> على <code dir="ltr">amazon.se</code>.</p>
+
+  <h3>الميزة التنافسية — أهم قسم</h3>
+  <p>المنافسون السويديون يدّعون اختبارًا لم يجرِ: عباراتهم متطابقة، وصورهم من
+  المتاجر، ولا يوجد فيها إنسان.</p>
+  <div class="grid">
+    <div class="card"><h4>المنتجات في بيته</h4><p>عشرون منتجًا تُستخدم يوميًا، مصوَّرة بيده.</p></div>
+    <div class="card"><h4>حضور فعلي</h4><p>ترخيص بلدي لطاولة في ساحة كارلستاد. الزائر يلمس المنتج قبل شرائه — وهذا يحوّل أضعف نقطة في نموذج الأفلييت إلى أقوى ميزة.</p></div>
+    <div class="card"><h4>الصدق في الحدود</h4><p>ذكر ما لا تُظهره التجربة. لا منافس يستطيع كتابة هذا.</p></div>
+  </div>
+
+  <h3>الحالة اليوم</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>البند</th><th>الحالة</th></tr></thead>
+      <tbody>
+        <tr><td>المستودع</td><td><code dir="ltr">HussamEl/Eldebosh</code> · عام · شجرة نظيفة</td></tr>
+        <tr><td>ناتج البناء</td><td class="num"><code dir="ltr">site/</code> — 33 صفحة</td></tr>
+        <tr><td><strong>النشر</strong></td><td>🟢 <strong>يعمل</strong> — غيتهب يبني والاستضافة تسحب</td></tr>
+        <tr><td>الفحص الآلي</td><td class="num">28/28 في كروم + ألوان + انحراف + تدقيق 31 صفحة</td></tr>
+        <tr><td>المنتجات</td><td class="num">20 · <strong>11 له رابط · 9 تنتظر</strong></td></tr>
+        <tr><td>المحتوى</td><td class="num">41 صفحة · 11 منشورة</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>النشر — كيف يعمل</h3>
+  <pre><code>main → GitHub Actions يبني ويفحص → فرع deploy → Hostinger تسحب → الموقع</code></pre>
+  <p>فرع <code dir="ltr">deploy</code> يحمل الموقع المبني وحده في الجذر، ولا يُدفع
+  إليه يدويًا — Actions يحدّثه عند كل دفعة إلى <code dir="ltr">main</code>.</p>
+  <div class="callout">
+    <b>لماذا هذا الشكل؟</b>
+    <p>الرفع عبر FTP من غيتهب كان يسقط لأن الاستضافة تحجب خوادمه. والحجب على
+    اتجاه <strong>الدخول</strong> وحده — والاستضافة تخرج بلا مانع. فعُكس الاتجاه:
+    هي تسحب بدل أن يُدفع إليها. والاستضافة لم تتغيّر.</p>
+  </div>
+  <div class="callout warn">
+    <b>⚠️ لوحة التحرير تكتب في المستودع لا في الموقع.</b>
+    <p>التغيير يصل خلال دقائق عبر السلسلة أعلاه — لا فورًا. والسحب اليدوي متاح:
+    hPanel ← Git ← <code dir="ltr">Redeploy</code>.</p>
+  </div>
+
+  <h3>البنية التقنية</h3>
+  <pre><code>Astro 5 (SSG) → Content Collections (MDX + YAML)
+              → Pagefind (فهرس بحث ثابت)
+              → Sveltia CMS على /admin/
+              → GitHub Actions → deploy → Hostinger</code></pre>
+  <p><strong>سبب Astro:</strong> المحتوى شبه ثابت ويُقرأ أكثر مما يُكتب. الإخراج
+  الثابت يعطي أفضل أداء، وسطح هجوم شبه معدوم، ونقل الموقع = رفع مجلد.</p>
+
+  <h4>البدائل المرفوضة</h4>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>البديل</th><th>سبب الرفض</th></tr></thead>
+      <tbody>
+        <tr><td>WordPress</td><td><strong>جُرِّب فعلًا وفشل</strong> — خطف كل الطلبات وعطّل الموقع</td></tr>
+        <tr><td>Next.js</td><td>يتطلب خادمًا؛ تعقيد بلا مقابل</td></tr>
+        <tr><td>HTML يدوي</td><td>ينهار بعد ~30 صفحة</td></tr>
+        <tr><td>Webflow / Framer</td><td>اشتراك دائم، وضعف عند مئات المنتجات المترابطة</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>مخطط المنتج</h3>
+  <pre><code>id, code            # code رمز ثابت P-NN — أسماء الصور مبنية عليه
+name, brand, category, subcategory
+key_specs: {}       # أول مواصفة رقمية = الرقم البطل في البطاقة
+price_band          # budget | mid | premium — لا سعر ثابت أبداً
+asin                # المُدخل الوحيد للأفلييت — الرابط يُولَّد
+owned, tested, own_photos, hands_on, hands_on_limits
+verified            # بوابة الظهور</code></pre>
+  <ul>
+    <li><strong>قاعدة الوسوم:</strong> «الأفضل قيمة» وأخواتها توضع على <strong>علاقة
+    المنتج بالدليل</strong> لا على المنتج. نفس المنتج قد يكون الأنسب في دليل وغير
+    مناسب في آخر.</li>
+    <li><strong>بوابتا الظهور:</strong> <code dir="ltr">published</code> للمحتوى،
+    و<code dir="ltr">verified</code> للمنتجات — كلاهما في
+    <code dir="ltr">src/lib/content.ts</code>.</li>
+    <li><strong>استثناء مقصود:</strong> منتج مملوك بصورة من تصويرنا يظهر بلا زر
+    شراء وبعبارة <code dir="ltr">Länk kommer</code>. القاعدة تمنع المواصفات بلا
+    مصدر، لا إخفاء منتج بحوزتنا.</li>
+  </ul>
+
+  <h3>الهوية البصرية</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>العنصر</th><th>القيمة</th></tr></thead>
+      <tbody>
+        <tr><td>الأساسي</td><td><code dir="ltr">--brand: #1273d1</code></td></tr>
+        <tr><td>الداكن — الرأس والفوتر</td><td><code dir="ltr">--brand-deep: #123f66</code></td></tr>
+        <tr><td>خلفية الصفحة</td><td><code dir="ltr">--page: #e7f2fd</code></td></tr>
+        <tr><td>الإشاري</td><td><code dir="ltr">--volt: #55c6f2</code></td></tr>
+        <tr><td>الخطوط</td><td>Inter Tight عناوين · Inter نص — مستضافة محليًا</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p><strong>الشعار:</strong> حرف <strong>E</strong> من ثلاثة أعمدة مستديرة أوسطها
+  سماوي — وهو «شريط الشحن» نفسه فوق عناوين الموقع. والكلمة <strong>مسارات
+  متجهية لا نص</strong>، فلا تحتاج تثبيت خط في أي برنامج أو مطبعة. وتُعاد الهوية
+  كلها بأمر <code dir="ltr">npm run brand:all</code> — لا تُرسم يدويًا.</p>
+
+  <h3>التواجد في كارلستاد</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>القرار</th><th>السبب</th></tr></thead>
+      <tbody>
+        <tr><td>لا ساعات معلنة</td><td>الحضور غير مضمون؛ زائر لا يجد أحدًا يفقد الثقة نهائيًا</td></tr>
+        <tr><td>الوعد = الرد لا الحضور</td><td>«تواصل قبل أن تأتي» — وعد يمكن الوفاء به</td></tr>
+        <tr><td>لا ذكر للمخزن المنزلي</td><td>قرار خصوصية</td></tr>
+        <tr><td>لا نظام حجوزات · لا دفع أونلاين</td><td>لا بيع أونلاين أصلًا</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>المخاطر المفتوحة</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>#</th><th>الخطر</th><th>الحالة</th></tr></thead>
+      <tbody>
+        <tr><td><code dir="ltr">R-01</code></td><td>إغلاق حساب أمازون — نهائي بلا استئناف</td><td>مُدار بفحص آلي</td></tr>
+        <tr><td><code dir="ltr">R-02</code></td><td>تصنيف ضريبي خاطئ لدخل الأفلييت</td><td>⚠️ <strong>مفتوح</strong></td></tr>
+        <tr><td><code dir="ltr">R-04</code></td><td>لوحة التحرير من CDN بلا تثبيت إصدار</td><td>⚠️ <strong>مفتوح</strong></td></tr>
+        <tr><td><code dir="ltr">R-06</code></td><td>ضياع الملفات</td><td>✅ مغلق — المستودع هو النسخة</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>المتبقي بالأولوية</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>#</th><th>المهمة</th><th>المسؤول</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td>🔴 <strong>تسعة ASIN</strong> — بدونها تسعة منتجات بلا زر شراء</td><td><strong>حسام</strong></td></tr>
+        <tr><td class="num">2</td><td>🟠 استشارة ضريبية</td><td><strong>حسام</strong></td></tr>
+        <tr><td class="num">3</td><td>🟠 تثبيت إصدار لوحة التحرير</td><td>كلاودي كود</td></tr>
+        <tr><td class="num">4</td><td>🟠 استكمال النصوص القانونية</td><td>كلاودي بروجيكت</td></tr>
+        <tr><td class="num">5</td><td>🟡 عنقود البطارية — 11 صفحة</td><td>كلاودي بروجيكت</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout warn">
+    <b>التسعة الناقصة</b>
+    <p dir="ltr" style="font-family:var(--mono);font-size:.83rem;line-height:1.9">
+    Baseus MagPro · Cooper MagStand · EasyAcc bordsfläkt · HUAWEI öppna hörlurar ·
+    LENCENT Reseadapter · Vikbart mobilstativ · simarro magnetringar ·
+    UGREEN snabbladdare · UGREEN USB-C 240W</p>
+  </div>
+  <p><strong>عنقود البطارية</strong> هو الموجة الأولى: إحدى عشرة صفحة حول مشكلة
+  واحدة — نفاد البطارية. عند اكتماله تُفعَّل الفئة الأولى ويصبح هناك ما يكفي
+  لتحقيق المبيعات الثلاث التي يطلبها أمازون.</p>
+  <p><strong>الترتيب الملزم:</strong> صفحات الحل ← المنتجات ← الأدلة والمقارنات ←
+  المقالات. والدليل لا يُنشر بأقل من ترشيحين.</p>
+</section>
+
+<!-- ==================== BRIEFING ==================== -->
+<section class="doc" id="briefing">
+  <div class="charge"></div>
+  <h2>الإحاطة لطرف جديد</h2>
+  <p class="sub"><code dir="ltr">BRIEFING.md</code> — تُقرأ بلا أي سياق سابق. هذه التي تُرسل لجيمناي أو أي مبرمج جديد.</p>
+
+  <h3>المشروع في ثلاثة أسطر</h3>
+  <p>موقع محتوى سويدي يوجّه القارئ من <strong>مشكلة يومية</strong> إلى <strong>حل
+  عملي</strong> ثم إلى منتج مناسب على أمازون. الدخل من عمولة الأفلييت.</p>
+  <p>الميزة أن صاحب المشروع <strong>يملك المنتجات ويستخدمها</strong>، وله
+  <strong>حضور فعلي</strong> في ساحة كارلستاد حيث يستطيع الزائر لمس المنتج قبل
+  شرائه. مبني بـ<code dir="ltr">Astro</code> ويُنشر ثابتًا — لا قاعدة بيانات ولا
+  خادم تطبيقات.</p>
+
+  <h3>أين كل شيء</h3>
+  <pre><code>github.com/HussamEl/Eldebosh    فرع main — مستودع عام
+
+src/         المصدر: المخططات، المكوّنات، المسارات، المحتوى، البيانات
+public/      ما يُنسخ كما هو: لوحة التحرير، الهوية، الخطوط، الصور
+site/        ناتج البناء — يُولَّد ولا يُحرَّر
+scripts/     الفحوص والمولّدات
+tools/       فحص المتصفح وحارس الانحراف
+brand/       الهوية ومولّداتها
+docs/        الوثائق · docs/project/ الوثائق الحاكمة</code></pre>
+  <pre><code>npm install
+npm run dev            تشغيل محلي
+npm run verify         بوابة الجودة — كل الفحوص
+npm run preview:file   ملف معاينة واحد يُفتح على الجوال</code></pre>
+
+  <h3>القرارات المغلقة — لا تُعاد مناقشتها</h3>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>القرار</th><th>السبب المختصر</th></tr></thead>
+      <tbody>
+        <tr><td>Astro لا WordPress</td><td>ووردبريس جُرِّب وفشل — خطف كل الطلبات</td></tr>
+        <tr><td>لا صفحات منتج</td><td>صفحة بلا تجربة ولا سعر تنافس المتاجر وتخسر</td></tr>
+        <tr><td>جزيرة JavaScript واحدة</td><td>التفاعل في المكان الأهم تجاريًا فقط</td></tr>
+        <tr><td>لا بيع أونلاين</td><td>لا بضاعة تُباع؛ بناء ما لا يُستعمل هدر</td></tr>
+        <tr><td>لا ساعات معلنة للساحة</td><td>الحضور غير مضمون؛ الوعد هو الرد</td></tr>
+        <tr><td>النشر بالسحب لا بالدفع</td><td>الاستضافة تحجب خوادم غيتهب في اتجاه الدخول وحده</td></tr>
+        <tr><td>لا سعر ثابت</td><td><code dir="ltr">price_band</code> بدل رقم — لا شيء يتقادم</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>كيف تعمل مع حسام</h3>
+  <ul>
+    <li><strong>اشرح بلغة عملية.</strong> لا تفترض معرفة تقنية.</li>
+    <li><strong>التنسيق يهم</strong> — يقرأ العربية من اليمين إلى اليسار. لا تخلط
+    جملة عربية بنص إنجليزي طويل في السطر نفسه، وضع الأوامر في أسطر مستقلة.</li>
+    <li><strong>للتعديلات البصرية:</strong> ملف معاينة واحد يفتحه على الجوال. لا
+    حزمة ولا رفع ولا نشر.</li>
+    <li><strong>لا تجامل.</strong> الموافقة السهلة على قرار سيئ أسوأ من الاعتراض.</li>
+  </ul>
+</section>
+
+<!-- ==================== LOG ==================== -->
+<section class="doc" id="log">
+  <div class="charge"></div>
+  <h2>سجلّ الرسائل</h2>
+  <p class="sub"><code dir="ltr">LOG.md</code> — الخيط الواحد الذي يجمع المحادثات الثلاث.</p>
+
+  <p>ثلاثة أطراف يردّون في ثلاث محادثات منفصلة، وأنت القناة بينهم. بلا رقم واحد
+  متسلسل لا أحد يعرف — ولا أنت — أين انتهى الخيط.</p>
+
+  <h3>الصيغة</h3>
+  <pre><code>EB-014 · Claude Code · 2026-09-01 09:15 · replying to EB-013</code></pre>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>الجزء</th><th>القاعدة</th></tr></thead>
+      <tbody>
+        <tr><td><code dir="ltr">EB-###</code></td><td>عدّاد <strong>واحد للجميع</strong>. ثلاثة أرقام متسلسلة بلا فجوات</td></tr>
+        <tr><td>الاسم</td><td>كلاودي كود · كلاودي بروجيكت · جيمناي · حسام</td></tr>
+        <tr><td>الوقت</td><td><strong>بتوقيت كارلستاد</strong> — ساعتك أنت، لا ساعة الخادم</td></tr>
+        <tr><td>ردًّا على</td><td>رقم الرسالة المُجاب عنها، أو «موضوع جديد»</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout warn">
+    <b>اقرأ الساعة ولا تقدّرها.</b>
+    <p>من كانت بيئته بالـUTC يحوّل أولًا (كارلستاد: <code dir="ltr">UTC+2</code>
+    صيفًا، <code dir="ltr">UTC+1</code> شتاءً). وقت تقريبي واحد يُفسد السجل كله.</p>
+  </div>
+  <p><strong>من يسجّل:</strong> كلاودي كود، لأنه الوحيد الذي يدفع إلى المستودع.
+  الأطراف الأخرى ترقّم رسائلها، وأنت تنقلها، وتُسجَّل في أول دفعة تالية.
+  <strong>وعند التضارب:</strong> الأسبق وقتًا يحتفظ بالرقم، والسجل هو الحكم.</p>
+
+  <h3>من يبدأ بماذا</h3>
+  <p>الترتيب ليس دورًا ثابتًا بل <strong>مالكًا لكل نوع عمل</strong> — الدور
+  الثابت يهدر الوقت حين لا يكون لدى أحدهم ما يقوله.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>نوع العمل</th><th>يبدأ</th><th>يراجع</th></tr></thead>
+      <tbody>
+        <tr><td>كود · بناء · فحص · نشر · هوية</td><td><strong>كلاودي كود</strong></td><td>كلاودي بروجيكت</td></tr>
+        <tr><td>محتوى · SEO · قرارات المنتج · قانوني</td><td><strong>كلاودي بروجيكت</strong></td><td>كلاودي كود</td></tr>
+        <tr><td>بحث خارجي · رأي ثانٍ · تحقّق</td><td><strong>جيمناي</strong></td><td>من يعنيه الأمر</td></tr>
+        <tr><td>ما يكلّف مالًا أو وقتًا أو يمسّ الخصوصية</td><td><strong>حسام</strong></td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout"><b>من يفتح موضوعًا يغلقه.</b><p>لا يُترك سؤال بلا جواب مرقّم.</p></div>
+
+  <h3>حالة العدّاد</h3>
+  <div class="callout">
+    <b>السجل فارغ — العدّاد مُصفَّر.</b>
+    <p>أول رسالة في المحادثة القادمة تأخذ <code dir="ltr">EB-001</code>.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>Eldebosh — وثائق حاكمة <code dir="ltr">v1.0</code> · 2026-08-31 ·
+  نسخة قراءة بالعربية. المرجع هو النسخة الإنجليزية في
+  <code dir="ltr">docs/project/</code> داخل المستودع.</p>
+</footer>
+</body>

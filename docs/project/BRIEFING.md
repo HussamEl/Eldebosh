@@ -1,165 +1,173 @@
-# ELDEBOSH.COM — إحاطة
+# ELDEBOSH.COM — BRIEFING
 
-> **الإصدار:** `v1.0` · 2026-08-31 · مصدرها `docs/project/` في المستودع
+> **Version:** `v1.0` · 2026-08-31 · canonical copy: `docs/project/` in the repository
 >
-> مكتوبة لتُقرأ بلا أي سياق سابق. لا تفترض معرفة بمحادثات سبقتها.
+> Written to be read with no prior context. It assumes no knowledge of earlier
+> conversations.
 
 ---
 
-## 1. المشروع في ثلاثة أسطر
+## 1. The project in three lines
 
-موقع محتوى سويدي يوجّه القارئ من **مشكلة يومية** إلى **حل عملي** ثم إلى منتج
-مناسب على أمازون. الدخل من عمولة الأفلييت.
+A Swedish content site that moves a reader from an **everyday problem** to a
+**practical solution** and then to a suitable product on Amazon. Revenue comes
+from affiliate commission.
 
-الميزة أن صاحب المشروع **يملك المنتجات ويستخدمها**، وله **حضور فعلي** في ساحة
-كارلستاد حيث يستطيع الزائر لمس المنتج قبل شرائه.
+The advantage: the owner **owns and uses the products**, and has a **physical
+presence** at the Karlstad market square where a visitor can hold a product
+before buying it.
 
-مبني بـ`Astro` ويُنشر ثابتاً — لا قاعدة بيانات ولا خادم تطبيقات.
+Built with `Astro` and published statically — no database, no application server.
 
 ---
 
-## 2. من في المشروع
+## 2. Who is involved
 
-| الطرف | الدور |
+| Party | Role |
 |---|---|
-| **حسام** | صاحب المشروع · يقرر · يصوّر · يراجع السويدية · **ليس مطوراً** |
-| **كلاودي كود** | يملك المستودع · صلاحية الدفع · متصفح حقيقي · ينفّذ في الكود |
-| **كلاودي بروجيكت** | المواصفات والمحتوى وSEO · **لا يدفع إلى المستودع** |
-| **جيمناي** | بحث خارجي · رأي ثانٍ · تحقّق من ادعاء |
+| **Hussam** | Owner · decides · photographs · reviews Swedish · **not a developer** |
+| **Claude Code** | Owns the repository · push access · a real browser · executes in code |
+| **Claude Project** | Specifications, content and SEO · **does not push to the repository** |
+| **Gemini** | External research · second opinion · verifying claims |
 
-**حسام هو القناة بين الأطراف.**
+**Hussam is the channel between the parties.**
 
-**ترقيم الرسائل إلزامي** — كل رد يبدأ بـ:
+**Message numbering is mandatory.** Every reply opens with:
 
 ```
-EB-014 · اسم الطرف · 2026-09-01 09:15 · ردًّا على EB-013
+EB-014 · <party> · 2026-09-01 09:15 · replying to EB-013
 ```
 
-عدّاد واحد للجميع، والوقت **بتوقيت كارلستاد**. السجل: `docs/project/LOG.md`.
+One counter for everyone, timestamped in **Karlstad local time**. The log lives
+at `docs/project/LOG.md`.
 
 ---
 
-## 3. أين كل شيء
+## 3. Where everything is
 
-**مصدر الحقيقة — مستودع عام:**
-
-```
-github.com/HussamEl/Eldebosh    فرع main
-```
+**Source of truth — a public repository:**
 
 ```
-src/         المصدر: المخططات، المكوّنات، المسارات، المحتوى، البيانات
-public/      ما يُنسخ كما هو: لوحة التحرير، الهوية، الخطوط، الصور
-site/        ناتج البناء — يُولَّد ولا يُحرَّر
-scripts/     الفحوص والمولّدات
-tools/       فحص المتصفح وحارس الانحراف
-brand/       الهوية ومولّداتها
-docs/        الوثائق · docs/project/ الوثائق الحاكمة
+github.com/HussamEl/Eldebosh    branch main
 ```
 
-**الأوامر:**
+```
+src/         source: schemas, components, routes, content, data
+public/      copied verbatim: the editor, brand assets, fonts, images
+site/        build output — generated, never hand-edited
+scripts/     checks and generators
+tools/       browser suite and drift guard
+brand/       the identity and its generators
+docs/        documentation · docs/project/ the governing documents
+```
+
+**Commands:**
 
 ```
 npm install
-npm run dev            تشغيل محلي
-npm run verify         بوابة الجودة — كل الفحوص
-npm run preview:file   ملف معاينة واحد يُفتح على الجوال
+npm run dev            local development
+npm run verify         the quality gate — every check
+npm run preview:file   one preview file that opens on a phone
 ```
 
 ---
 
-## 4. القواعد التي لا تُخترق
+## 4. Rules that are never broken
 
-**كلها مفروضة آلياً. البناء يفشل عند الخرق — وهذا مقصود.**
+**All are enforced automatically. The build fails on a violation, by design.**
 
-**١. لا اختلاق.** كل معلومة عن منتج تعود إلى مصدر موثق. وإن لم تكن متأكداً من
-كيفية عمل أداة، **تحقق قبل الشرح**.
+**1. Nothing invented.** Every product claim traces to a documented source. And
+if you are unsure how a tool works, **verify before explaining it**.
 
-**٢. التجربة بثلاث حالات.** مجرَّب بدليل · مملوك بلا حكم على الأداء · غير مملوك.
-و`tested: true` يفرض خمسة حقول، أهمها **ما لا تُظهره تجربتنا**.
+**2. Experience has three states.** Tested with evidence · owned with no
+performance claim · not owned. `tested: true` requires five fields, the most
+important being **what our experience does not show**.
 
-**٣. حدود أمازون.** الروابط مسموحة وهي جوهر البرنامج. **الصور والأسعار ممنوعة**
-قبل الواجهة البرمجية. العقوبة إغلاق نهائي بلا استئناف.
+**3. Amazon boundaries.** Links are allowed and are the core of the programme.
+**Images and prices are forbidden** before API access. The penalty is permanent
+closure with no appeal.
 
-**٤. لا رابط يقود إلى صفحة فارغة.**
+**4. No link leads to an empty page.**
 
-**٥. لا أسرار في أي ملف** — بما في ذلك الوثائق.
+**5. No secrets in any file** — including the documentation.
 
-**٦. المستودع مصدر الحقيقة لا الحزم.** صف التعديل، وينفّذه كلاودي كود.
+**6. The repository is the source of truth, not packages.** Describe the change;
+Claude Code applies it.
 
 ---
 
-## 5. القرارات المغلقة — لا تُعاد مناقشتها
+## 5. Closed decisions — not reopened
 
-| القرار | السبب المختصر |
+| Decision | Short reason |
 |---|---|
-| **Astro** لا WordPress | ووردبريس **جُرِّب وفشل** — خطف كل الطلبات وعطّل الموقع |
-| **لا صفحات منتج** | صفحة بلا تجربة ولا سعر تنافس المتاجر وتخسر |
-| **جزيرة JavaScript واحدة** | التفاعل في المكان الأهم تجارياً فقط |
-| **لا بيع أونلاين** | لا بضاعة تُباع؛ بناء ما لا يُستعمل هدر |
-| **لا ساعات معلنة للساحة** | الحضور غير مضمون؛ الوعد هو الرد لا الحضور |
-| **النشر بالسحب لا بالدفع** | الاستضافة تحجب خوادم غيتهب في اتجاه الدخول وحده |
-| **لا سعر ثابت** | `price_band` بدل رقم — لا شيء يتقادم |
+| **Astro, not WordPress** | WordPress **was tried and failed** — it hijacked every request |
+| **No product pages** | A page with no experience and no price competes with retailers and loses |
+| **One JavaScript island** | Interaction only where it matters commercially |
+| **No online sales** | There is no stock to sell; building what goes unused is waste |
+| **No published hours for the square** | Attendance is not guaranteed; the promise is a reply |
+| **Deploy by pull, not push** | The host blocks GitHub's runners inbound only |
+| **No fixed price** | `price_band` instead of a number — nothing goes stale |
 
 ---
 
-## 6. الحالة اليوم
+## 6. Current state
 
-| البند | الحالة |
+| Item | State |
 |---|---|
-| الموقع | 33 صفحة مولّدة بلغتين |
-| **النشر** | 🟢 يعمل تلقائياً — غيتهب يبني والاستضافة تسحب |
-| الفحص الآلي | 28/28 في كروم + ألوان + انحراف + تدقيق 31 صفحة |
-| المنتجات | 20 · **11 له رابط · 9 تنتظر** |
-| المحتوى | 41 صفحة · 11 منشورة |
+| Site | 33 generated pages, two languages |
+| **Deployment** | 🟢 Automatic — GitHub builds, the host pulls |
+| Automated checks | 28/28 in Chromium + colours + drift + 31-page audit |
+| Products | 20 · **11 have a link · 9 waiting** |
+| Content | 41 pages · 11 published |
 
 ---
 
-## 7. ما ينتظر
+## 7. What is waiting
 
-| # | المهمة | من |
+| # | Task | Owner |
 |---|---|---|
-| ١ | 🔴 روابط أمازون لتسعة منتجات | حسام |
-| ٢ | 🟠 استشارة ضريبية عن تصنيف دخل الأفلييت | حسام |
-| ٣ | 🟠 تثبيت إصدار لوحة التحرير | كلاودي كود |
-| ٤ | 🟠 استكمال النصوص القانونية | كلاودي بروجيكت |
-| ٥ | 🟡 عنقود البطارية — 11 صفحة | كلاودي بروجيكت |
+| 1 | 🔴 Amazon links for nine products | Hussam |
+| 2 | 🟠 Tax consultation on affiliate income | Hussam |
+| 3 | 🟠 Pin the editor's version | Claude Code |
+| 4 | 🟠 Complete the legal pages | Claude Project |
+| 5 | 🟡 The battery cluster — 11 pages | Claude Project |
 
-**عنقود البطارية** هو الموجة الأولى: إحدى عشرة صفحة حول مشكلة واحدة — نفاد
-البطارية. عند اكتماله تُفعَّل الفئة الأولى ويصبح هناك ما يكفي لتحقيق المبيعات
-الثلاث التي يطلبها أمازون.
-
----
-
-## 8. كيف تعمل مع حسام
-
-**اشرح بلغة عملية.** لا تفترض معرفة تقنية.
-
-**التنسيق يهم:** يقرأ العربية من اليمين إلى اليسار. لا تخلط جملة عربية بنص
-إنجليزي طويل في السطر نفسه. ضع الأوامر والمسارات في أسطر مستقلة داخل كتل كود.
-
-**للتعديلات البصرية:** أرسل ملف معاينة واحداً يفتحه على الجوال. **لا حزمة، ولا
-رفع، ولا نشر.**
-
-**لا تجامل.** الموافقة السهلة على قرار سيئ أسوأ من الاعتراض.
+**The battery cluster** is the first wave: eleven pages around a single problem —
+the phone dying mid-day. Completing it activates the first category and creates
+enough surface to reach the three sales Amazon requires.
 
 ---
 
-## 9. قبل أن تلمس الكود
+## 8. Working with Hussam
 
-**اقرأ في المستودع:**
+**Explain in practical language.** Assume no technical knowledge.
+
+**Formatting matters:** he reads Arabic right-to-left. Never mix an Arabic
+sentence with a long English phrase on the same line. Put commands and paths on
+their own lines inside code blocks.
+
+**For visual changes:** send one preview file he opens on his phone. **No
+package, no upload, no publishing.**
+
+**Do not flatter.** Easy agreement with a bad decision is worse than objecting.
+
+---
+
+## 9. Before touching the code
+
+**Read in the repository:**
 
 ```
-CLAUDE.md                       دستور المستودع
-docs/README.md                  فهرس الوثائق
-docs/project/INSTRUCTIONS.md    القواعد الحاكمة
-docs/project/CONTEXT.md         الحالة والقرارات
+CLAUDE.md                       the repository constitution
+docs/README.md                  documentation index
+docs/project/INSTRUCTIONS.md    the governing rules
+docs/project/CONTEXT.md         state and decisions
 ```
 
-**وشغّل قبل أي تسليم:**
+**And run before any handover:**
 
 ```
 npm run verify
 ```
 
-**إن فشل فحص واحد، لا تسلّم. أصلح السبب لا الفحص.**
+**If one check fails, do not hand over. Fix the cause, not the check.**
