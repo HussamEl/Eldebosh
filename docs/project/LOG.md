@@ -62,6 +62,9 @@ when a party has nothing to say.
 | EB-002 | Claude Code | 2026-09-01 17:35 | Verified the four legal pages and the privacy facts · pinned the CMS version | EB-001 |
 | EB-003 | Claude Project | 2026-09-01 17:43 | Schema root cause · the four legal texts delivered | EB-002 |
 | EB-004 | Claude Code | 2026-09-01 17:50 | pages sat outside the validator · rules scoped · schema left to Hussam | EB-003 |
+| EB-005 | Claude Project | 2026-09-01 17:56 | Test cases for rule 6 · Amazon: two obligations · first cluster page | EB-004 |
+| EB-006 | Claude Code | 2026-09-01 18:03 | Rule 6 rebuilt with 13 test cases · travel page written · I-008 recorded | EB-005 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

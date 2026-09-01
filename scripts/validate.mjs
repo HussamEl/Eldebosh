@@ -7,6 +7,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import YAML from 'yaml';
+import { findUnbackedClaim } from './lib/claim-rule.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const errors = [];
@@ -159,27 +160,20 @@ for (const d of docs) {
 }
 
 /* ---------- 6. لا ادعاء تجربة في النص ---------- */
-// عبارات سويدية/إنجليزية توحي باختبار ميداني لم يجرِ.
-const CLAIM = /\b(vi (har )?testat|vi provade|vårt test av|i vårt test|efter (att ha )?testat|we tested|our test(s|ing)? of|hands[- ]on test)\b/i;
+// المنطق وحالاته في scripts/lib/claim-rule.mjs — node scripts/test-claim-rule.mjs
 const testedIds = new Set(products.filter((p) => p.data.tested === true).map((p) => p.data.id));
 function pageHasTestedProduct(d) {
   const ids = [...(d.data.products ?? []), ...(d.data.picks ?? []).map((x) => x?.product)].filter(Boolean);
   return ids.some((id) => testedIds.has(id));
 }
-// «لا ندّعي أننا اختبرنا» نفيٌ للادعاء لا ادعاء. صفحة المنهج مبنية على هذه
-// الجملة بالذات، فالقاعدة التي تعاقبها تعاقب أصدق نص في الموقع.
-const DENIAL = /\b(aldrig|inte|utan att|never|not|without)\b/i;
-function isDenied(body, index) {
-  const start = Math.max(0, body.lastIndexOf('.', index) + 1);
-  return DENIAL.test(body.slice(start, index));
-}
 for (const d of docs) {
-  const m = d.body.match(CLAIM);
-  if (!m) continue;
-  if (isDenied(d.body, m.index)) continue;
+  const hit = findUnbackedClaim(d.body);
+  if (!hit) continue;
   if (d.data.hands_on === true && pageHasTestedProduct(d)) continue; // مسموح: تجربة حقيقية موثقة
   errors.push(
-    `${d.file}: ادعاء تجربة ("${m[0]}") بلا سند. اضبط hands_on: true واربط الصفحة بمنتج tested=true، أو أعد الصياغة إلى استشهاد بمصدر`
+    hit.kind === 'comparative'
+      ? `${d.file}: مقارنة تدّعي تجربةً ضمناً ("${hit.text}") — النفي فيها يقع على غيرنا والادعاء علينا`
+      : `${d.file}: ادعاء تجربة ("${hit.text}") بلا سند. اضبط hands_on: true واربط الصفحة بمنتج tested=true، أو أعد الصياغة إلى استشهاد بمصدر`
   );
 }
 
