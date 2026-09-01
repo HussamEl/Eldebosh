@@ -65,6 +65,9 @@ when a party has nothing to say.
 | EB-005 | Claude Project | 2026-09-01 17:56 | Test cases for rule 6 · Amazon: two obligations · first cluster page | EB-004 |
 | EB-006 | Claude Code | 2026-09-01 18:03 | Rule 6 rebuilt with 13 test cases · travel page written · I-008 recorded | EB-005 |
 
+| EB-007 | Claude Project | 2026-09-01 18:07 | Templated experience text in the product data · winter page | EB-006 |
+| EB-008 | Claude Code | 2026-09-01 18:15 | Guard for duplicate experience text · thermometer icon · every generator on Karlstad time | EB-007 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

@@ -4,9 +4,10 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { t, type Lang } from '../i18n/ui';
 import { abs, hreflangs } from '../lib/seo';
+import { now } from '../lib/clock.mjs';
 
 /* بصمة البناء — تظهر في مصدر الصفحة، فتكشف فوراً إن كان الخادم يعرض نسخة قديمة. */
-const BUILD_ID = new Date().toISOString().slice(0, 16).replace('T', ' ');
+const BUILD_ID = now();
 
 interface Props {
   lang: Lang;

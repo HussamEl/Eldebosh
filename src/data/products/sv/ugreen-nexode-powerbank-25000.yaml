@@ -42,10 +42,6 @@ own_photos:
     caption: "Vår egen bild."
   - src: "/uploads/P-03-2.webp"
     alt: "UGREEN Nexode powerbank ansluten till en mobil router med kabel"
-hands_on:
-  - "Vi har ägt och använt den här sedan januari 2026 och den har fungerat som den ska i vår vardag."
-  - "Den har följt med i väskan och används regelbundet, inte bara vid enstaka tillfällen."
-
 hands_on_limits:
   - "Vi har inte mätt uteffekten med mätinstrument — siffrorna nedan kommer från tillverkarens specifikation."
   - "Vi har inte jämfört laddtiden mot tillverkarens uppgift under kontrollerade former."

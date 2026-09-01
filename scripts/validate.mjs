@@ -159,6 +159,31 @@ for (const d of docs) {
   }
 }
 
+/* ---------- 5c. نصّ التجربة لا يتكرر بين منتجين ---------- */
+// جملة تجربة متطابقة حرفياً في منتجين تقول للقارئ إن أحداً لم يكتبها عن تجربة.
+// وهذا نفسه ما نأخذه على المنافسين. تنبيه اليوم، وخطأ يوم تصل جمل حسام الحقيقية.
+{
+  // التاريخ وحده لا يجعل الجملتين مختلفتين: «منذ يونيو ٢٠٢٥» و«منذ يناير ٢٠٢٦»
+  // قالبٌ واحد. تُقنَّع الشهور والأرقام قبل المقارنة.
+  const MONTHS = /\b(januari|februari|mars|april|maj|juni|juli|augusti|september|oktober|november|december)\b/g;
+  const shape = (line) =>
+    line.trim().toLowerCase().replace(/\s+/g, ' ').replace(MONTHS, '§').replace(/\d+/g, '#');
+
+  const seen = new Map();
+  for (const p of products) {
+    for (const line of p.data.hands_on ?? []) {
+      const key = shape(line);
+      (seen.get(key) ?? seen.set(key, []).get(key)).push(p.data.code ?? p.data.id);
+    }
+  }
+  for (const [line, owners] of seen) {
+    if (owners.length < 2) continue;
+    warnings.push(
+      `نصّ تجربة مكرر حرفياً في ${owners.length} منتجات (${owners.join('، ')}): "${line.slice(0, 60)}…" — التجربة تُكتب مرة واحدة عن منتج واحد`
+    );
+  }
+}
+
 /* ---------- 6. لا ادعاء تجربة في النص ---------- */
 // المنطق وحالاته في scripts/lib/claim-rule.mjs — node scripts/test-claim-rule.mjs
 const testedIds = new Set(products.filter((p) => p.data.tested === true).map((p) => p.data.id));

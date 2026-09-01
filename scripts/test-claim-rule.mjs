@@ -23,6 +23,9 @@ const cases = [
   ['pass', 'Vi har inte mätt effekt, laddtider eller verkligt uttag med instrument.'],
   ['pass', 'Vi hittar inte på testresultat eller egna mätvärden.'],
   ['pass', 'Sidan bygger på dokumenterade specifikationer från tillverkaren.'],
+  // إثبات ثم نفي بعد «men» — يجب أن تمرّ، وإلا فالحارس مفرط
+  ['pass', 'Vi äger och använder modellerna nedan, men vi har inte använt dem genom en hel svensk vinter i sträng kyla.'],
+  ['pass', 'Det som står ovan är hur litiumbatterier fungerar, inte ett resultat vi har mätt.'],
 
   // ---- النفي لا يعبر حدّ الجملة ----
   ['fail', 'Vi mäter inte med instrument. Vi har testat den i kyla.'],

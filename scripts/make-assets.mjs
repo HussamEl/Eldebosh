@@ -10,6 +10,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from '
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 import YAML from 'yaml';
+import { today } from '../src/lib/clock.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const rel = (p) => p.replace(ROOT, '').replace(/\\/g, '/');
@@ -59,7 +60,7 @@ const lines = [
   '> مثال: «عدّل بطاقة `P-03`» أو «الشعار `B-02` صغير جداً».',
   '> الصور موجودة في المستودع، وتُقرأ من مسارها بلا رفع ولا استهلاك.',
   '',
-  `> يُولَّد آلياً بـ \`npm run assets\` · آخر تحديث: ${new Date().toISOString().slice(0, 10)}`,
+  `> يُولَّد آلياً بـ \`npm run assets\` · آخر تحديث: ${today()}`,
   '',
   '---',
   '',

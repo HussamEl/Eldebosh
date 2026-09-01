@@ -9,6 +9,7 @@
 import { readdirSync, statSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
+import { now } from '../src/lib/clock.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DIST = join(ROOT, 'site');
@@ -29,7 +30,7 @@ const report = [
   '# ملفات النسخة الحالية',
   '',
   `عدد الملفات: ${files.length}`,
-  `تاريخ البناء: ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
+  `تاريخ البناء: ${now()}`,
   '',
   '## القاعدة',
   '',

@@ -7,6 +7,7 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from '
 import { fileURLToPath } from 'node:url';
 import { join, extname } from 'node:path';
 import YAML from 'yaml';
+import { now } from '../src/lib/clock.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const read = (p) => readFileSync(join(ROOT, p), 'utf8');
@@ -118,7 +119,7 @@ const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
 const out = `# لوحة الحالة
 
 > **تُحسب آلياً من المستودع — لا تُحرَّر يدوياً.**
-> \`npm run state\` · آخر تحديث: ${new Date().toISOString().slice(0, 16).replace('T', ' ')}
+> \`npm run state\` · آخر تحديث: ${now()}
 
 ---
 
