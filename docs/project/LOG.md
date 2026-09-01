@@ -60,6 +60,8 @@ when a party has nothing to say.
 |---|---|---|---|---|
 | EB-001 | Claude Project | 2026-09-01 17:23 | Legal pages published while empty · battery cluster 2/11 · one editorial collision | new thread |
 | EB-002 | Claude Code | 2026-09-01 17:35 | Verified the four legal pages and the privacy facts · pinned the CMS version | EB-001 |
+| EB-003 | Claude Project | 2026-09-01 17:43 | Schema root cause · the four legal texts delivered | EB-002 |
+| EB-004 | Claude Code | 2026-09-01 17:50 | pages sat outside the validator · rules scoped · schema left to Hussam | EB-003 |
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
