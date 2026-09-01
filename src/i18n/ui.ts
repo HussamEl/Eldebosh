@@ -47,7 +47,7 @@ export const ui = {
     'price.budget': 'Budget',
     'price.mid': 'Mellanklass',
     'price.premium': 'Premium',
-    'badge.best-overall': 'Bäst i test av specifikationer',
+    'badge.best-overall': 'Starkast på specifikationerna',
     'badge.best-value': 'Bäst prisvärdhet',
     'badge.best-budget': 'Bäst budgetval',
     'badge.best-specific': 'Bäst för specifikt behov',

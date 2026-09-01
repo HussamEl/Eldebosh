@@ -8,6 +8,7 @@ import { join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import YAML from 'yaml';
 import { findUnbackedClaim } from './lib/claim-rule.mjs';
+import { findOverclaimedCount } from '../src/lib/overclaim.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const errors = [];
@@ -159,6 +160,8 @@ for (const d of docs) {
   }
 }
 
+const testedIds = new Set(products.filter((p) => p.data.tested === true).map((p) => p.data.id));
+
 /* ---------- 5c. نصّ التجربة لا يتكرر بين منتجين ---------- */
 // جملة تجربة متطابقة حرفياً في منتجين تقول للقارئ إن أحداً لم يكتبها عن تجربة.
 // وهذا نفسه ما نأخذه على المنافسين. تنبيه اليوم، وخطأ يوم تصل جمل حسام الحقيقية.
@@ -184,9 +187,39 @@ for (const d of docs) {
   }
 }
 
+/* ---------- 5d. عبارة «Bäst i test» ممنوعة في كل مكان ---------- */
+// المادة 6.2 تمنعها صراحةً — ادعاء اختبار مقارن أمام قانون التسويق السويدي.
+// وتفحص ملفات الترجمة أيضاً: أول ظهور لها كان في تسمية شارة، لا في مقال.
+{
+  const BANNED = /\bb[äa]st i test\b/i;
+  const uiFile = join(ROOT, 'src/i18n/ui.ts');
+  const scan = [
+    ...docs.map((d) => [d.file, `${d.data.title ?? ''}\n${d.data.description ?? ''}\n${d.body}`]),
+    ...products.map((p) => [p.file, JSON.stringify(p.data)]),
+    [uiFile, await readFile(uiFile, 'utf8').catch(() => '')],
+  ];
+  for (const [file, text] of scan) {
+    const m = text.match(BANNED);
+    if (m) errors.push(`${file}: عبارة "${m[0]}" ممنوعة — المادة 6.2`);
+  }
+}
+
+/* ---------- 5e. لا ادعاء جماعي على مجموعة غير مُختبَرة ---------- */
+for (const d of docs) {
+  const ids = [...(d.data.products ?? []), ...(d.data.picks ?? []).map((x) => x?.product)].filter(Boolean);
+  if (!ids.length) continue;
+  const total = ids.length;
+  const tested = ids.filter((id) => testedIds.has(id)).length;
+  const hit = findOverclaimedCount(`${d.data.title ?? ''}\n${d.body}`, { total, tested });
+  if (hit) {
+    errors.push(
+      `${d.file}: ادعاء استخدام على المجموعة كلها ("${hit.text}") بينما ${hit.tested} من ${hit.total} فقط tested=true`
+    );
+  }
+}
+
 /* ---------- 6. لا ادعاء تجربة في النص ---------- */
 // المنطق وحالاته في scripts/lib/claim-rule.mjs — node scripts/test-claim-rule.mjs
-const testedIds = new Set(products.filter((p) => p.data.tested === true).map((p) => p.data.id));
 function pageHasTestedProduct(d) {
   const ids = [...(d.data.products ?? []), ...(d.data.picks ?? []).map((x) => x?.product)].filter(Boolean);
   return ids.some((id) => testedIds.has(id));

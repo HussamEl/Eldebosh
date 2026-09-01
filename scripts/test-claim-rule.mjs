@@ -7,6 +7,7 @@
  *   node scripts/test-claim-rule.mjs
  */
 import { findUnbackedClaim } from './lib/claim-rule.mjs';
+import { findOverclaimedCount } from '../src/lib/overclaim.mjs';
 
 const cases = [
   // ---- يجب أن تفشل: ادعاء تجربة بلا سند ----
@@ -32,7 +33,32 @@ const cases = [
   ['pass', 'Vi har testat ingenting än. Allt bygger på källor.'],
 ];
 
+/* ---- الادعاء الجماعي: الكذب في العدد لا في الفعل ---- */
+const counted = [
+  // أربعة منتجات، اثنان مُختبَران
+  ['fail', 'Vi äger och använder alla fyra modellerna nedan.', { total: 4, tested: 2 }],
+  ['fail', 'Bästa powerbanken — fyra modeller vi använder själva', { total: 4, tested: 2 }],
+  ['fail', 'Vi kör alla tre dagligen.', { total: 3, tested: 1 }],
+  // الصياغة الصادقة: ملكية للكل، استخدام لبعضهم
+  ['pass', 'Vi äger alla fyra modellerna nedan.', { total: 4, tested: 2 }],
+  ['pass', 'Två av dem har vi använt tillräckligt länge för att skriva om erfarenheten.', { total: 4, tested: 2 }],
+  ['pass', 'Vi äger alla tre modellerna nedan. Två av dem har vi använt länge.', { total: 3, tested: 2 }],
+  // المجموعة مُختبَرة بالكامل — الادعاء صادق
+  ['pass', 'Vi äger och använder alla fyra modellerna nedan.', { total: 4, tested: 4 }],
+];
+
 let failed = 0;
+for (const [want, sentence, counts] of counted) {
+  const hit = findOverclaimedCount(sentence, counts);
+  const got = hit ? 'fail' : 'pass';
+  const ok = got === want;
+  if (!ok) failed++;
+  console.log(
+    `  ${ok ? '✓' : '✗'} [${want.padEnd(4)}] ${sentence.slice(0, 62)}` +
+      `  (${counts.tested}/${counts.total})${hit ? `  ← "${hit.text}"` : ''}`,
+  );
+}
+
 for (const [want, sentence] of cases) {
   const hit = findUnbackedClaim(sentence);
   const got = hit ? 'fail' : 'pass';
@@ -43,9 +69,10 @@ for (const [want, sentence] of cases) {
   console.log(`  ${mark} [${want.padEnd(4)}] ${sentence.slice(0, 72)}${why}`);
 }
 
+const total = cases.length + counted.length;
 console.log(
   failed
-    ? `\n✗ ${failed} من ${cases.length} حالة لم تتصرّف كما يجب\n`
-    : `\n✓ ${cases.length}/${cases.length} حالة\n`,
+    ? `\n✗ ${failed} من ${total} حالة لم تتصرّف كما يجب\n`
+    : `\n✓ ${total}/${total} حالة\n`,
 );
 process.exit(failed ? 1 : 0);

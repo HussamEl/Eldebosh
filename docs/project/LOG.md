@@ -68,6 +68,9 @@ when a party has nothing to say.
 | EB-007 | Claude Project | 2026-09-01 18:07 | Templated experience text in the product data · winter page | EB-006 |
 | EB-008 | Claude Code | 2026-09-01 18:15 | Guard for duplicate experience text · thermometer icon · every generator on Karlstad time | EB-007 |
 
+| EB-009 | Claude Project | 2026-09-01 18:22 | False usage claim on a published guide · magnetic guide | EB-008 |
+| EB-010 | Claude Code | 2026-09-01 18:27 | Claim and title fixed · banned phrase found in the badge label · two new rules | EB-009 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
