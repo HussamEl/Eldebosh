@@ -45,7 +45,7 @@ for (const f of productFiles) {
 }
 
 const docs = [];
-for (const coll of ['solutions', 'guides', 'comparisons', 'posts']) {
+for (const coll of ['solutions', 'guides', 'comparisons', 'posts', 'pages']) {
   for (const f of (await walk(join(ROOT, 'src/content', coll))).filter((f) => ['.md', '.mdx'].includes(extname(f)))) {
     const raw = await readFile(f, 'utf8');
     const { data, body } = frontmatter(raw, f);
@@ -108,6 +108,8 @@ for (const p of products) {
 const solutionIds = new Set(docs.filter((d) => d.coll === 'solutions').map((d) => `${d.data.lang}:${d.data.problem_id}`));
 for (const d of docs) {
   if (d.coll === 'solutions') continue;
+  // الصفحات الثابتة (سياسة، اتصال، عنّا) ليست صفحات تجارية ولا تعود إلى حل
+  if (d.coll === 'pages') continue;
   if (!d.data.solution) { errors.push(`${d.file}: حقل solution مفقود — كل صفحة يجب أن تعود إلى صفحة حل`); continue; }
   if (!solutionIds.has(`${d.data.lang}:${d.data.solution}`)) {
     errors.push(`${d.file}: solution="${d.data.solution}" لا توجد له صفحة حل بلغة ${d.data.lang}`);
@@ -164,9 +166,17 @@ function pageHasTestedProduct(d) {
   const ids = [...(d.data.products ?? []), ...(d.data.picks ?? []).map((x) => x?.product)].filter(Boolean);
   return ids.some((id) => testedIds.has(id));
 }
+// «لا ندّعي أننا اختبرنا» نفيٌ للادعاء لا ادعاء. صفحة المنهج مبنية على هذه
+// الجملة بالذات، فالقاعدة التي تعاقبها تعاقب أصدق نص في الموقع.
+const DENIAL = /\b(aldrig|inte|utan att|never|not|without)\b/i;
+function isDenied(body, index) {
+  const start = Math.max(0, body.lastIndexOf('.', index) + 1);
+  return DENIAL.test(body.slice(start, index));
+}
 for (const d of docs) {
   const m = d.body.match(CLAIM);
   if (!m) continue;
+  if (isDenied(d.body, m.index)) continue;
   if (d.data.hands_on === true && pageHasTestedProduct(d)) continue; // مسموح: تجربة حقيقية موثقة
   errors.push(
     `${d.file}: ادعاء تجربة ("${m[0]}") بلا سند. اضبط hands_on: true واربط الصفحة بمنتج tested=true، أو أعد الصياغة إلى استشهاد بمصدر`
