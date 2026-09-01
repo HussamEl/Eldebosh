@@ -26,7 +26,11 @@
       <span>اضغط «Sign In with Token» ثم الصق رمز الوصول من GitHub.</span>
       <i></i>
     </div>
-    <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
+    <!-- إصدار مثبّت عمداً. الرابط بلا رقم يتبع آخر إصدار، فيتغيّر ما تحت يدك
+         دون إشعار — و«@sveltia/cms» نشر 0.204.0 في 2026-09-01 وحده.
+         للترقية: بدّل الرقم هنا، افتح /admin/ وتحقق أن الدخول والحفظ يعملان،
+         ثم ادفع. لا ترفع الرقم دون هذا الفحص. -->
+    <script src="https://unpkg.com/@sveltia/cms@0.204.0/dist/sveltia-cms.js" type="module"></script>
     <script type="module">
       const boot = document.getElementById('boot');
       const hide = () => boot && boot.remove();
