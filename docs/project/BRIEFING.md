@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — BRIEFING
 
-> **Version:** `v1.0` · 2026-08-31 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.1` · 2026-09-02 · canonical copy: `docs/project/` in the repository
 >
 > Written to be read with no prior context. It assumes no knowledge of earlier
 > conversations.
@@ -32,14 +32,17 @@ Built with `Astro` and published statically — no database, no application serv
 
 **Hussam is the channel between the parties.**
 
-**Message numbering is mandatory.** Every reply opens with:
+**Message numbering is mandatory.** Every reply **opens** with one line and
+**closes** with the party board:
 
 ```
-EB-014 · <party> · 2026-09-01 09:15 · replying to EB-013
+EB-001 · <party> · 2026-09-02 14:30 · new thread
 ```
 
 One counter for everyone, timestamped in **Karlstad local time**. The log lives
-at `docs/project/LOG.md`.
+at `docs/project/LOG.md`. **The counter was reset to `EB-001` on 2026-09-02** at
+Hussam's instruction, so that a party joining now reads a project, not a
+transcript. The board format is in `INSTRUCTIONS` section 2.
 
 ---
 
@@ -116,9 +119,15 @@ Claude Code applies it.
 |---|---|
 | Site | 33 generated pages, two languages |
 | **Deployment** | 🟢 Automatic — GitHub builds, the host pulls |
-| Automated checks | 28/28 in Chromium + colours + drift + 31-page audit |
+| Automated checks | 28/28 in Chromium · **32 claim cases** · colours · style · drift · 31-page audit |
 | Products | 20 · **11 have a link · 9 waiting** |
-| Content | 41 pages · 11 published |
+| Content | 41 pages · 11 published · **6 written, waiting on review** |
+| Battery cluster | **7 of 11 written** · 4 blocked on research or data |
+| Review | `npm run preview:file` — one file, drafts included, opens on a phone |
+
+**The constraint is no longer writing.** Six finished pages wait on one person
+reading Swedish as a second language. An extra page lengthens that queue. The
+preview file exists so a review is one page at a time: read one, publish one.
 
 ---
 
@@ -126,15 +135,22 @@ Claude Code applies it.
 
 | # | Task | Owner |
 |---|---|---|
-| 1 | 🔴 Amazon links for nine products | Hussam |
-| 2 | 🟠 Tax consultation on affiliate income | Hussam |
-| 3 | 🟠 Pin the editor's version | Claude Code |
-| 4 | 🟠 Complete the legal pages | Claude Project |
-| 5 | 🟡 The battery cluster — 11 pages | Claude Project |
+| 1 | 🔴 **Review the six written pages** — read one, publish one | **Hussam** |
+| 2 | 🔴 **One real experience sentence and one frequency word per product** | **Hussam** |
+| 3 | 🔴 Amazon links for nine products | **Hussam** |
+| 4 | 🟠 Airline rules · cold-weather figures — official sources only | **Gemini** |
+| 5 | 🟠 Publish the legal texts — written and waiting | **Hussam** |
+| 6 | 🟠 Tax consultation on affiliate income | **Hussam** |
+| 7 | 🟡 Documented weight per product (`I-010`) | **Hussam** or Gemini |
+| 8 | 🟡 Build-time image step | Claude Code |
 
 **The battery cluster** is the first wave: eleven pages around a single problem —
 the phone dying mid-day. Completing it activates the first category and creates
 enough surface to reach the three sales Amazon requires.
+
+**Why every red row belongs to Hussam.** The site's only real advantage is that
+he owns the products and reads the Swedish. Neither can be delegated, and
+neither can be invented — which is precisely the rule the checks enforce.
 
 ---
 

@@ -58,34 +58,13 @@ when a party has nothing to say.
 
 | # | From | Time (Karlstad) | Subject | Replying to |
 |---|---|---|---|---|
-| EB-001 | Claude Project | 2026-09-01 17:23 | Legal pages published while empty · battery cluster 2/11 · one editorial collision | new thread |
-| EB-002 | Claude Code | 2026-09-01 17:35 | Verified the four legal pages and the privacy facts · pinned the CMS version | EB-001 |
-| EB-003 | Claude Project | 2026-09-01 17:43 | Schema root cause · the four legal texts delivered | EB-002 |
-| EB-004 | Claude Code | 2026-09-01 17:50 | pages sat outside the validator · rules scoped · schema left to Hussam | EB-003 |
-| EB-005 | Claude Project | 2026-09-01 17:56 | Test cases for rule 6 · Amazon: two obligations · first cluster page | EB-004 |
-| EB-006 | Claude Code | 2026-09-01 18:03 | Rule 6 rebuilt with 13 test cases · travel page written · I-008 recorded | EB-005 |
-
-| EB-007 | Claude Project | 2026-09-01 18:07 | Templated experience text in the product data · winter page | EB-006 |
-| EB-008 | Claude Code | 2026-09-01 18:15 | Guard for duplicate experience text · thermometer icon · every generator on Karlstad time | EB-007 |
-
-| EB-009 | Claude Project | 2026-09-01 18:22 | False usage claim on a published guide · magnetic guide | EB-008 |
-| EB-010 | Claude Code | 2026-09-01 18:27 | Claim and title fixed · banned phrase found in the badge label · two new rules | EB-009 |
-
-| EB-011 | Claude Project | 2026-09-01 18:31 | Three interface strings contradict the project · mAh/watt article | EB-010 |
-| EB-012 | Claude Code | 2026-09-02 11:43 | Interface strings rewritten in both languages · rule 5f · article written | EB-011 |
-
-| EB-013 | Claude Project | 2026-09-02 11:53 | metod rewritten · size comparison · usage_period should carry frequency | EB-012 |
-| EB-014 | Claude Code | 2026-09-02 11:58 | metod published · comparison written · rule 5d now exempts its own denial | EB-013 |
-
-| EB-015 | Claude Project | 2026-09-02 12:04 | Q3 withdrawn as its own call · eleventh page · Gemini research brief | EB-014 |
-| EB-016 | Claude Code | 2026-09-02 12:08 | Eleventh page written · weight section trimmed · KEYWORD_MAP v1.1 | EB-015 |
-
-| EB-017 | Claude Project | 2026-09-02 12:11 | The bottleneck moved to review · ask the preview to include drafts | new thread |
-| EB-018 | Claude Code | 2026-09-02 12:18 | Preview now builds drafts to a separate dir · CONTEXT v1.1 | EB-017 |
-
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
-**Note on the reset.** Numbers used in chat before this table existed carry no
-authority — the counter starts here, at `EB-001`. Anything referenced by an
-older number is re-cited by subject, never by its old number.
+**Note on the reset of 2026-09-02.** Hussam reset the counter a second time, and
+for a reason worth recording: he had relayed every message himself without ever
+writing one, and a party joining a numbered thread reads a transcript instead of
+a project. The counter starts again at `EB-001`. Nothing before it is cited by
+its old number — earlier work is referred to by subject, or by its `I-###`
+issue, both of which survive the reset. The work itself lost nothing; only the
+numbering did.

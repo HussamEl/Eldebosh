@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — INSTRUCTIONS
 
-> **Version:** `v1.1` · 2026-08-31 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.2` · 2026-09-02 · canonical copy: `docs/project/` in the repository
 >
 > **The governing document.** Where anything else conflicts with this, this wins.
 > Current state: `CONTEXT`. Source of truth for code: `github.com/HussamEl/Eldebosh`.
@@ -49,6 +49,37 @@ timestamp corrupts the whole log.
 
 The log lives at `docs/project/LOG.md` and settles any dispute.
 `npm run verify` prints the next free number and the correct time, ready to copy.
+
+**The counter was reset to `EB-001` on 2026-09-02.** A party joining the project
+should read a project, not a transcript — so nothing before that reset is cited
+by its old number. Refer to earlier work by subject, or by its `I-###` issue.
+
+### Every reply also closes with the party board
+
+The opening line says who is writing. The closing board says **where everyone
+stands**, so Hussam never has to reconstruct it from the thread. It is the last
+thing in every reply, without exception:
+
+```
+| | الطرف | الحالة |
+|---|---|---|
+| ✍️ | **كلاودي كود** | كتب هذا الرد · EB-001 |
+| ⏳ | **كلاودي بروجيكت** | ينتظر ردّاً |
+| 💤 | **جيميناي** | لم يُستدعَ |
+| 🔴 | **حسام** | مطلوب: <إجراء واحد> |
+```
+
+| Marker | Meaning |
+|---|---|
+| ✍️ | wrote this reply |
+| ⏳ | waiting on a reply from another party |
+| 🔴 | has something to do **now** |
+| 🟡 | has something that can wait |
+| 💤 | not involved in this exchange |
+| ✅ | finished what was asked |
+
+**Every party appears every time**, including the one with nothing to do —
+absence from the board is what made Hussam lose the thread before.
 
 ---
 
