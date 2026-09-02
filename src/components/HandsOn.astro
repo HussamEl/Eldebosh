@@ -24,8 +24,9 @@ const tr = t(lang);
    ملتصقتان، والتاريخ نفسه مرتين. النصّ الواحد لا يترك للقالب مسافةً يخطئ فيها. */
 const ym = ownedSince ? ownedSince.toISOString().slice(0, 7) : null;
 
-/* `usage_period` عبارة تامة أصلاً («sedan juni 2025»)، فلا تسبقها كلمة ولا
-   يتبعها التاريخ نفسه بصيغة أخرى. */
+/* `usage_period` تحمل اليوم تاريخاً يكرّر `owned_since` («sedan juni 2025»)،
+   فلا تسبقها كلمة ولا يتبعها التاريخ نفسه بصيغة أخرى. حين تصير تواتراً
+   («dagligen») يعود `handson.used` إلى السطر: «— sedan 2025-06 · använd dagligen». */
 const period = usagePeriod || (ym ? `${tr('handson.since')} ${ym}` : null);
 const badgeLine = period ? `${tr('handson.badge')} — ${period}` : tr('handson.badge');
 const sinceLine = ym ? `${tr('handson.since')} ${ym}` : null;

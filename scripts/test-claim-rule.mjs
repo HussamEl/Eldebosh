@@ -6,7 +6,7 @@
  *
  *   node scripts/test-claim-rule.mjs
  */
-import { findUnbackedClaim, findOwnedOnlyUseClaim } from './lib/claim-rule.mjs';
+import { findUnbackedClaim, findOwnedOnlyUseClaim, findBannedPhrase } from './lib/claim-rule.mjs';
 import { findOverclaimedCount } from '../src/lib/overclaim.mjs';
 
 const cases = [
@@ -33,6 +33,15 @@ const cases = [
   ['pass', 'Vi har testat ingenting än. Allt bygger på källor.'],
 ];
 
+/* ---- العبارة الممنوعة: تُمنع إلا في نفيها ---- */
+const banned = [
+  ['fail', 'Den här powerbanken är bäst i test.'],
+  ['fail', 'Bäst i test av specifikationer'],
+  ['pass', 'Vi skriver aldrig "bäst i test".'],
+  ['pass', 'Vi använder inte uttrycket bäst i test.'],
+  ['pass', 'Vi jämför specifikationer och anger källa.'],
+];
+
 /* ---- سلسلة «مملوك غير مُختبَر» لا تدّعي استخدامه ---- */
 const ownedOnly = [
   ['fail', 'Vi äger och använder den här produkten.'],
@@ -57,6 +66,14 @@ const counted = [
 ];
 
 let failed = 0;
+for (const [want, sentence] of banned) {
+  const hit = findBannedPhrase(sentence);
+  const got = hit ? 'fail' : 'pass';
+  const ok = got === want;
+  if (!ok) failed++;
+  console.log(`  ${ok ? '✓' : '✗'} [${want.padEnd(4)}] ${sentence.slice(0, 68)}${hit ? `  ← "${hit}"` : ''}`);
+}
+
 for (const [want, sentence] of ownedOnly) {
   const hit = findOwnedOnlyUseClaim(sentence);
   const got = hit ? 'fail' : 'pass';
@@ -86,7 +103,7 @@ for (const [want, sentence] of cases) {
   console.log(`  ${mark} [${want.padEnd(4)}] ${sentence.slice(0, 72)}${why}`);
 }
 
-const total = cases.length + counted.length + ownedOnly.length;
+const total = cases.length + counted.length + ownedOnly.length + banned.length;
 console.log(
   failed
     ? `\n✗ ${failed} من ${total} حالة لم تتصرّف كما يجب\n`

@@ -101,4 +101,24 @@ export function findOwnedOnlyUseClaim(text) {
   return null;
 }
 
+/**
+ * عبارة «Bäst i test» — ممنوعة بالمادة 6.2، إلا حين ننفي أننا نكتبها.
+ *
+ * صفحة المنهج تعِد القارئ بأننا **لا** نكتبها أبداً. قاعدةٌ تمنع ذكرها حتى في
+ * الوعد بتركها تمنع الشفافية نفسها. النفي هنا يُعفي كما يُعفي في الادعاء.
+ */
+const BANNED = /\bb[äa]st i test\b/i;
+
+export function findBannedPhrase(text) {
+  for (const raw of text.split(/(?<=[.!?])\s+|\n+/)) {
+    const sentence = raw.trim();
+    if (!sentence) continue;
+    const m = sentence.match(BANNED);
+    if (!m) continue;
+    if (isDenied(sentence, m.index, m[0])) continue;
+    return m[0];
+  }
+  return null;
+}
+
 export const _internals = { CLAIM, COMPARATIVE, DENIAL, sentenceAt };

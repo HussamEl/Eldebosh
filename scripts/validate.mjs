@@ -7,7 +7,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import YAML from 'yaml';
-import { findUnbackedClaim, findOwnedOnlyUseClaim } from './lib/claim-rule.mjs';
+import { findUnbackedClaim, findOwnedOnlyUseClaim, findBannedPhrase } from './lib/claim-rule.mjs';
 import { findOverclaimedCount } from '../src/lib/overclaim.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -191,7 +191,6 @@ const testedIds = new Set(products.filter((p) => p.data.tested === true).map((p)
 // المادة 6.2 تمنعها صراحةً — ادعاء اختبار مقارن أمام قانون التسويق السويدي.
 // وتفحص ملفات الترجمة أيضاً: أول ظهور لها كان في تسمية شارة، لا في مقال.
 {
-  const BANNED = /\bb[äa]st i test\b/i;
   const uiFile = join(ROOT, 'src/i18n/ui.ts');
   const scan = [
     ...docs.map((d) => [d.file, `${d.data.title ?? ''}\n${d.data.description ?? ''}\n${d.body}`]),
@@ -199,8 +198,8 @@ const testedIds = new Set(products.filter((p) => p.data.tested === true).map((p)
     [uiFile, await readFile(uiFile, 'utf8').catch(() => '')],
   ];
   for (const [file, text] of scan) {
-    const m = text.match(BANNED);
-    if (m) errors.push(`${file}: عبارة "${m[0]}" ممنوعة — المادة 6.2`);
+    const hit = findBannedPhrase(text);
+    if (hit) errors.push(`${file}: عبارة "${hit}" ممنوعة — المادة 6.2`);
   }
 }
 

@@ -74,6 +74,9 @@ when a party has nothing to say.
 | EB-011 | Claude Project | 2026-09-01 18:31 | Three interface strings contradict the project · mAh/watt article | EB-010 |
 | EB-012 | Claude Code | 2026-09-02 11:43 | Interface strings rewritten in both languages · rule 5f · article written | EB-011 |
 
+| EB-013 | Claude Project | 2026-09-02 11:53 | metod rewritten · size comparison · usage_period should carry frequency | EB-012 |
+| EB-014 | Claude Code | 2026-09-02 11:58 | metod published · comparison written · rule 5d now exempts its own denial | EB-013 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
