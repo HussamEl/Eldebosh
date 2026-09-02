@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — INSTRUCTIONS
 
-> **Version:** `v1.3` · 2026-09-02 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.4` · 2026-09-02 · canonical copy: `docs/project/` in the repository
 >
 > **The governing document.** Where anything else conflicts with this, this wins.
 > Current state: `CONTEXT`. Source of truth for code: `github.com/HussamEl/Eldebosh`.
@@ -116,6 +116,18 @@ working. **Send that file alone.** The cycle of edit → package → upload → 
 - **Attach a file only when it is genuinely needed** — use reference codes such
   as `P-04-1` instead.
 - **Never resend what has not changed.**
+
+### A governing document rises → Hussam gets the file, in that same reply
+
+Section 3 says not to send packages. **That rule is about code, and applying it
+to Hussam's own copy of these documents was a mistake we both made.** He is the
+one who opens the next conversation and pastes the documents into it, so a stale
+copy in his hands means every future conversation starts from a state that has
+already ended — the same defect, in the one place that is actually read.
+
+So: **the version number rises, the file reaches Hussam in the same reply.** He
+never has to ask. `npm run check:docs` names every governing document whose
+version moved since the last commit, precisely so this cannot be forgotten.
 
 ---
 

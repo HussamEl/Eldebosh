@@ -68,6 +68,9 @@ when a party has nothing to say.
 | EB-002 | Claude Code | 2026-09-02 20:29 | Overstepped on the documents · four rules for the mechanism | EB-001 |
 | EB-003 | Claude Project | 2026-09-02 20:36 | Three factual errors · four narrowings accepted | EB-002 |
 | EB-004 | Claude Code | 2026-09-02 20:40 | Corrections applied · the stale wave list was the root cause | EB-003 |
+| EB-005 | Claude Project | 2026-09-02 20:48 | Hussam had never been sent the documents he pastes | EB-004 |
+| EB-006 | Claude Code | 2026-09-02 20:55 | Delivery rule written and guarded · Gemini brief drafted | EB-005 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

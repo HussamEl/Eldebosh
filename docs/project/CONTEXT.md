@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — CONTEXT
 
-> **Version:** `v1.2` · 2026-09-02 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.3` · 2026-09-02 · canonical copy: `docs/project/` in the repository
 >
 > State, decisions and the reasons behind them. **Rules live in `INSTRUCTIONS`.**
 > Source of truth for code: `github.com/HussamEl/Eldebosh` — branch `main`, public.
@@ -301,8 +301,9 @@ simarro magnetringar · UGREEN snabbladdare · UGREEN USB-C 240W.
 
 **The battery cluster** is the first wave: eleven pages around a single problem —
 the phone dying mid-day. Completing it activates the first category and creates
-enough surface to reach the three sales Amazon requires. **Eight of the eleven now have real text: two are
-published, six are written and waiting on review.** The three that remain are
+enough surface to reach the three sales Amazon requires. **Eight of the eleven
+now have real text: two are published, six are written and waiting on review.**
+The three that remain are
 blocked on `I-008`, `I-010` and Gemini's research — so the constraint is no
 longer writing. It is review, and review is one person reading Swedish as a
 second language. That is why `npm run preview:file` exists: six pages in one

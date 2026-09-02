@@ -76,6 +76,22 @@ for (const v of versions) {
   console.log(`  ${v.version.padEnd(6)} ${v.date}   ${v.rel}`);
 }
 
+/* أي وثيقة ارتفع رقمها منذ آخر كوميت؟
+   حسام هو من يلصق هذه الوثائق في المحادثة القادمة، فنسخته القديمة تعني أن كل
+   محادثة تبدأ من حالة انتهت. رفعُ الرقم بلا إرسال الملف هو العطب نفسه الذي
+   نطارده — حالة صحيحة في المستودع، وقديمة في المكان الذي يُقرأ منه. */
+const bumped = [];
+for (const { rel, version } of versions) {
+  const committed = git(['show', `HEAD:${rel}`]);
+  if (committed === null) continue;
+  const old = committed.match(STAMP);
+  if (old && old[1] !== version) bumped.push({ rel, from: old[1], to: version });
+}
+if (bumped.length) {
+  console.log('\n⚠ ارتفع رقم هذه الوثائق — أرسل الملف إلى حسام في الرد نفسه:\n');
+  for (const b of bumped) console.log(`  ${b.from} ← ${b.to}   ${b.rel}`);
+}
+
 if (problems.length) {
   console.error('\n✗ ' + problems.join('\n✗ ') + '\n');
   process.exit(1);
