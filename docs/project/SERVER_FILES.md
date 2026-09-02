@@ -1,7 +1,7 @@
 # ملفات النسخة الحالية
 
-عدد الملفات: 130
-تاريخ البناء: 2026-09-02 12:07
+عدد الملفات: 132
+تاريخ البناء: 2026-09-02 21:39
 
 ## القاعدة
 
@@ -51,6 +51,7 @@
 /sv/sok
 /sv/solutions
 /sv/solutions/batteriet-tar-slut
+/sv/solutions/ingen-eluttag-pa-resan
 /uploads
 ```
 

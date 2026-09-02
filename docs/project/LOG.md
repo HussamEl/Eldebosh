@@ -72,8 +72,10 @@ when a party has nothing to say.
 | EB-006 | Claude Code | 2026-09-02 20:55 | Delivery rule written and guarded · Gemini brief drafted | EB-005 |
 
 | EB-007 | Claude Project | 2026-09-02 21:05 | Three answers, then its desk is empty · unified Gemini brief | EB-006 |
-| EB-008 | — | reserved | **Reserved for Gemini** — its first reply | EB-007 |
+| EB-008 | Gemini | 2026-09-02 21:30 | First research reply — citations not verifiable, see I-011 | EB-007 |
 | EB-009 | Claude Code | 2026-09-02 21:09 | Version line adopted as sent-not-held · preview rebuilt | EB-007 |
+
+| EB-010 | Claude Code | 2026-09-02 21:40 | First cluster page published · Gemini reply audited | EB-008 |
 
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
