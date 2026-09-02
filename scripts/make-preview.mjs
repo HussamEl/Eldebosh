@@ -9,16 +9,48 @@
  *   npm run preview:file        (بعد npm run build)
  */
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { join, extname } from 'node:path';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const DIST = join(ROOT, 'site');
+const DIST = join(ROOT, '.preview-site');
 
-if (!existsSync(DIST)) {
-  console.error('✗ لا يوجد بناء. شغّل npm run build أولاً.');
+/* ---------- بناء يشمل المسوّدات، إلى مجلّد منفصل ----------
+   المراجعة كانت مستحيلة: `published: false` تعني أن الصفحة لا تُبنى، فلا
+   تدخل المعاينة، فلا يقرأها حسام إلا في `git`. البناء هنا يُشغَّل بعلَم
+   `ELDEBOSH_PREVIEW=1` الذي يفتح المسوّدات ويحوّل المخرجات إلى
+   `.preview-site` — فلا تلمس هذه العملية النسخة المنشورة إطلاقاً. */
+const build = spawnSync(process.execPath, [join(ROOT, 'node_modules/astro/astro.js'), 'build'], {
+  cwd: ROOT,
+  env: { ...process.env, ELDEBOSH_PREVIEW: '1' },
+  stdio: ['ignore', 'ignore', 'inherit'],
+});
+if (build.status !== 0) {
+  console.error('✗ فشل بناء المعاينة.');
   process.exit(1);
 }
+if (!existsSync(DIST)) {
+  console.error('✗ لم يُنتج بناء المعاينة مجلّداً.');
+  process.exit(1);
+}
+
+/* ---------- أي الصفحات مسوّدة، وأيها جاهزة للمراجعة؟ ---------- */
+const stages = new Map();
+(function scan(dir) {
+  for (const e of readdirSync(dir)) {
+    const f = join(dir, e);
+    if (statSync(f).isDirectory()) scan(f);
+    else if (e.endsWith('.mdx') || e.endsWith('.md')) {
+      const fm = readFileSync(f, 'utf8').match(/^---\n([\s\S]*?)\n---/);
+      if (!fm) continue;
+      if (/^published:\s*true\s*$/m.test(fm[1])) continue;
+      const slug = fm[1].match(/^slug:\s*"?([a-z0-9-]+)"?\s*$/m);
+      const stage = fm[1].match(/^stage:\s*(\w+)\s*$/m);
+      if (slug) stages.set(slug[1], stage ? stage[1] : 'draft');
+    }
+  }
+})(join(ROOT, 'src/content'));
 
 /* ---------- جمع كل الصفحات ---------- */
 function walk(dir, out = []) {
@@ -85,10 +117,28 @@ for (const file of files) {
   });
 
   const titleMatch = html.match(/<title>([^<]*)<\/title>/);
-  routes[path] = { html: inner, title: titleMatch ? titleMatch[1] : 'Eldebosh' };
+  const slug = path.replace(/\/$/, '').split('/').pop();
+  const stage = stages.get(slug) ?? null;
+  // `written` نصّ مكتمل ينتظر مراجعة حسام. `draft` هيكل فارغ لم يُكتب بعد.
+  const ready = stage === 'written' || stage === 'reviewed';
+  if (stage) {
+    inner =
+      `<p class="pv-draft${ready ? ' is-ready' : ''}">` +
+      (ready ? 'Klar för granskning — inte publicerad' : 'Utkast — texten är inte skriven') +
+      '</p>' +
+      inner;
+  }
+  routes[path] = { html: inner, title: titleMatch ? titleMatch[1] : 'Eldebosh', stage, ready };
 }
 
 const home = routes['/sv/'] ? '/sv/' : Object.keys(routes)[0];
+
+/* ترتيب المراجعة — نفس ترتيب النشر المُلزم في CONTEXT §13 */
+const REVIEW_ORDER = ['solutions', 'guides', 'compare', 'blog'];
+const reviewRank = (path) => {
+  const i = REVIEW_ORDER.findIndex((seg) => path.includes(`/${seg}/`));
+  return i === -1 ? REVIEW_ORDER.length : i;
+};
 
 /* ---------- التجميع ---------- */
 const out = `<!doctype html>
@@ -102,10 +152,34 @@ const out = `<!doctype html>
   /* المعاينة المحلية: لا شيء مرئي يُضاف — الموقع كما هو */
   #app { min-height: 100dvh; }
   .pv-missing { padding: 4rem 1.25rem; text-align: center; font: 500 15px/1.6 system-ui, sans-serif; color: #67768a; }
+  .pv-draft {
+    margin: 0; padding: 0.6rem 1.25rem; text-align: center;
+    font: 600 13px/1.5 system-ui, sans-serif; letter-spacing: .02em;
+    background: #67768a; color: #fff;
+  }
+  .pv-draft.is-ready { background: #14456e; }
+  .pv-bar {
+    position: sticky; bottom: 0; z-index: 50; display: flex; gap: .5rem;
+    overflow-x: auto; padding: .5rem .75rem;
+    background: #14456e; box-shadow: 0 -2px 12px rgba(18,63,102,.35);
+  }
+  .pv-bar a {
+    flex: 0 0 auto; padding: .35rem .7rem; border-radius: 999px;
+    font: 600 12px/1.4 system-ui, sans-serif; text-decoration: none;
+    background: #1273d1; color: #fff; white-space: nowrap;
+  }
+  .pv-bar b { flex: 0 0 auto; align-self: center; color: #b9d2e5; font: 600 12px/1.4 system-ui, sans-serif; }
 </style>
 </head>
 <body>
 <div id="app"></div>
+<nav class="pv-bar" aria-label="Klara för granskning"><b>Granska:</b>${Object.entries(routes)
+  .filter(([p, r]) => r.ready && p.startsWith('/sv/'))
+  // ترتيب المراجعة هو ترتيب النشر: حلول ثم أدلة ومقارنات ثم مقالات،
+  // فلا يُنشر رابط قبل الصفحة التي يقود إليها.
+  .sort(([a], [b]) => reviewRank(a) - reviewRank(b) || a.localeCompare(b))
+  .map(([p, r]) => `<a href="#${p}">${r.title.replace(/ \| Eldebosh.*/, '').replace(/ [—-] .*/, '')}</a>`)
+  .join('')}</nav>
 
 <script id="pv-routes" type="application/json">${JSON.stringify(routes).replace(/</g, '\\u003c')}</script>
 <script id="pv-images" type="application/json">${JSON.stringify(Object.fromEntries(images)).replace(/</g, '\\u003c')}</script>
@@ -214,4 +288,9 @@ const out = `<!doctype html>
 </html>`;
 
 writeFileSync(join(ROOT, 'eldebosh-preview.html'), out, 'utf8');
-console.log(`\n✓ ${(out.length / 1024).toFixed(0)} KB · ${Object.keys(routes).length} صفحة · ${images.size} صورة\n`);
+const ready = Object.entries(routes).filter(([p, r]) => r.ready && p.startsWith('/sv/')).length;
+console.log(
+  `\n✓ ${(out.length / 1024).toFixed(0)} KB · ${Object.keys(routes).length} صفحة · ${images.size} صورة\n` +
+    `  ${ready} صفحة جاهزة للمراجعة — شريط سفلي يقفز إليها مباشرة\n` +
+    `  eldebosh-preview.html — يُفتح على الجوال بلا إنترنت\n`,
+);

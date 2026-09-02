@@ -9,7 +9,8 @@ export default defineConfig({
   output: 'static',
   // Byggresultatet heter site/ och versionshanteras — det är artefakten
   // som laddas upp manuellt så länge FTP-deployen är trasig.
-  outDir: './site',
+  // المعاينة تبني إلى مجلّد آخر كي لا تلمس النسخة المنشورة أبداً
+  outDir: process.env.ELDEBOSH_PREVIEW === '1' ? './.preview-site' : './site',
   trailingSlash: 'always',
   i18n: {
     defaultLocale: 'sv',

@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — CONTEXT
 
-> **Version:** `v1.0` · 2026-08-31 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.1` · 2026-09-02 · canonical copy: `docs/project/` in the repository
 >
 > State, decisions and the reasons behind them. **Rules live in `INSTRUCTIONS`.**
 > Source of truth for code: `github.com/HussamEl/Eldebosh` — branch `main`, public.
@@ -67,10 +67,11 @@ competitor can write that.
 | Source | In the repository: `src/` + `public/` |
 | Build output | `site/` — 33 generated pages |
 | **Deployment** | 🟢 **Working** — GitHub builds, the host pulls automatically |
-| Automated checks | **28/28 in Chromium** + colours + versions + drift + 31-page audit |
+| Automated checks | **28/28 in Chromium** + **32 claim cases** + colours + versions + drift + 31-page audit |
 | Brand | 57 files plus their generators |
 | Products | 20 files · **11 have an ASIN · 9 waiting** · 4 verified for display |
-| Content | 41 MDX pages · 11 published |
+| Content | 41 MDX pages · 11 published · **6 written, waiting on review** |
+| Review | `npm run preview:file` — one file, drafts included, opens on a phone |
 | WordPress | ❌ Removed — forbidden on the domain |
 
 ---
@@ -226,14 +227,23 @@ items only, as a separate activity documented on the disclosure page.
 |---|---|
 | Commercial disclosure | ✅ Top of every commercial page plus the footer |
 | Amazon disclosure | ✅ Both languages |
-| Editorial method | ✅ Published |
+| Editorial method | ✅ Published — rewritten `2026-09-02` around the three experience levels |
 | Square sales separated | ✅ Documented |
 | Contact page | ✅ Published with real details |
-| Privacy · cookies · terms | ⬜ Drafts |
+| Privacy · cookies | 🟡 **Written and waiting on Hussam** — the pages are live but still carry draft text |
+| Terms of use | ❌ **Not to be written** |
 
 Swedish marketing law requires disclosure using words such as
 `annonssamarbete` or `reklamlänk`. **Standing recommendation:** a
 **cookie-free** analytics tool, avoiding the consent dialog entirely.
+
+**Why no terms of use.** The site sells nothing, registers nobody and accepts no
+content from visitors, so there is no agreement between us and a reader for such
+a page to govern. Writing one to fill a checkbox is exactly what rule `6.4`
+forbids. What genuinely needs saying — that specifications change and that we
+are not the seller — is already published, in `metod` and `annonssamarbete`.
+Neither party here is a lawyer; should Hussam want the page anyway it is three
+lines, not a page.
 
 ---
 
@@ -255,7 +265,9 @@ Swedish marketing law requires disclosure using words such as
 ## 12. Open questions
 
 1. Register the `.se` domain defensively?
-2. Analytics — cookie-free, or Google Analytics?
+2. Analytics — cookie-free, or Google Analytics? **Now a condition on published
+   text:** the privacy policy states the site loads nothing external and sets no
+   cookie. The day a tool is chosen, that page is rewritten before it is enabled.
 3. **Tax classification of affiliate income** ⚠️ critical.
 4. Which affiliate network after Amazon?
 
@@ -272,11 +284,17 @@ UGREEN · safety and insurance terms for charging other people's batteries.
 |---|---|---|
 | 1 | 🔴 **Nine ASINs** — without them, nine products have no buy button | **Hussam** |
 | 2 | 🟠 Tax authority consultation (`R-02`) | **Hussam** |
-| 3 | 🟠 Pin or vendor the editor (`R-04`) | Claude Code |
-| 4 | 🟠 Complete the legal pages | Claude Project |
-| 5 | 🟡 **The battery cluster — 11 pages** | Claude Project |
-| 6 | 🟡 Build-time image step | Claude Code |
-| 7 | 🟡 Search Console and analytics | Shared |
+| 3 | 🔴 **Review the six written pages** — the bottleneck is here now | **Hussam** |
+| 4 | 🔴 **A real experience sentence and a frequency word per product** | **Hussam** |
+| 5 | 🟠 Tax authority consultation (`R-02`) | **Hussam** |
+| 6 | 🟠 Publish the legal texts — they are written and waiting | **Hussam** |
+| 7 | 🟠 Airline rules and cold-weather figures | **Gemini** |
+| 8 | 🟡 Documented weight per product (`I-010`) | **Hussam** or Gemini |
+| 9 | 🟡 Build-time image step | Claude Code |
+| 10 | 🟡 Search Console and analytics | Shared |
+
+**Done since `v1.0`:** the editor is pinned (`R-04`) · `metod` rewritten and
+published · four interface strings corrected · six cluster pages written.
 
 **The nine missing:** Baseus MagPro · Cooper MagStand · EasyAcc bordsfläkt ·
 HUAWEI öppna hörlurar · LENCENT Reseadapter · Vikbart mobilstativ ·
@@ -284,7 +302,12 @@ simarro magnetringar · UGREEN snabbladdare · UGREEN USB-C 240W.
 
 **The battery cluster** is the first wave: eleven pages around a single problem —
 the phone dying mid-day. Completing it activates the first category and creates
-enough surface to reach the three sales Amazon requires.
+enough surface to reach the three sales Amazon requires. **Seven of eleven are
+written; none of the seven is published.** The four that remain are blocked on
+`I-008`, `I-010` and Gemini's research — so the constraint is no longer writing.
+It is review, and review is one person reading Swedish as a second language.
+That is why `npm run preview:file` exists: six pages in one file on a phone,
+read one, publish one.
 
 **Binding order:** solution pages → products → guides and comparisons → posts.
 A guide is not published with fewer than two picks.

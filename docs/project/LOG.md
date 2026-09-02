@@ -80,6 +80,9 @@ when a party has nothing to say.
 | EB-015 | Claude Project | 2026-09-02 12:04 | Q3 withdrawn as its own call · eleventh page · Gemini research brief | EB-014 |
 | EB-016 | Claude Code | 2026-09-02 12:08 | Eleventh page written · weight section trimmed · KEYWORD_MAP v1.1 | EB-015 |
 
+| EB-017 | Claude Project | 2026-09-02 12:11 | The bottleneck moved to review · ask the preview to include drafts | new thread |
+| EB-018 | Claude Code | 2026-09-02 12:18 | Preview now builds drafts to a separate dir · CONTEXT v1.1 | EB-017 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

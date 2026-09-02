@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { type Lang, DEFAULT_LANG, SEGMENTS } from '../i18n/ui';
 import { amazonUrl, AMAZON } from './affiliate';
+import { PREVIEW } from './preview';
 
 /* ================= الروابط =================
    مصدر واحد لبناء كل مسار في الموقع.
@@ -26,11 +27,11 @@ export const url = {
 
 type DocCollection = 'solutions' | 'guides' | 'comparisons' | 'posts';
 
-/** المنشور فقط. غير المنشور لا يظهر ولا يُبنى. */
+/** المنشور فقط. غير المنشور لا يظهر ولا يُبنى — إلا في وضع المعاينة. */
 export async function docs<C extends DocCollection>(collection: C, lang: Lang) {
   const all = await getCollection(collection);
   return all
-    .filter((e: any) => e.data.lang === lang && e.data.published === true)
+    .filter((e: any) => e.data.lang === lang && (PREVIEW || e.data.published === true))
     .sort((a: any, b: any) => +b.data.updated - +a.data.updated) as CollectionEntry<C>[];
 }
 

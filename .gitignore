@@ -6,6 +6,8 @@ __pycache__/
 # Astro
 .astro/
 dist/
+.preview-site/
+eldebosh-preview.html
 
 # hemligheter
 .env

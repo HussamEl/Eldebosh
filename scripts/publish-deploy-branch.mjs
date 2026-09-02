@@ -17,6 +17,12 @@ import { join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 
+/* بناء المعاينة يُخرج المسوّدات. لا يقترب من النشر بأي حال. */
+if (process.env.ELDEBOSH_PREVIEW === '1') {
+  console.error('✗ ELDEBOSH_PREVIEW مضبوط — هذا وضع معاينة، لا يُنشر منه شيء.');
+  process.exit(1);
+}
+
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const arg = (name, fallback) => {
   const i = process.argv.indexOf(`--${name}`);

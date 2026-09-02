@@ -4,12 +4,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import { t, type Lang } from '../../../i18n/ui';
 import { url } from '../../../lib/content';
+import { PREVIEW } from '../../../lib/preview';
 import { breadcrumbSchema } from '../../../lib/seo';
 
 export async function getStaticPaths() {
   const all = await getCollection('pages');
   return all
-    .filter((p) => p.data.published)
+    .filter((p) => PREVIEW || p.data.published)
     .map((entry) => ({ params: { lang: entry.data.lang, slug: entry.data.slug }, props: { entry } }));
 }
 
