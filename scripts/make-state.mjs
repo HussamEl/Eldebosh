@@ -58,21 +58,36 @@ for (const c of collections) {
 }
 
 /* ---------- الموجة الأولى: عنقود البطارية ---------- */
+/* الموجة الأولى — عنقود البطارية. المصدر: KEYWORD_MAP.md القسم 8.
+   ⚠️ `liten-powerbank-for-fickan` خرجت في v1.1 ودخلت مكانها
+   `magsafe-vs-qi2-vs-tradlos`. نسيان هذا التبديل هنا هو ما جعل العدّ خاطئاً
+   في وثيقتين، فالقائمة تُحدَّث مع الخريطة لا بعدها. */
 const wave1 = [
   'batteriet-tar-slut', 'ingen-eluttag-pa-resan', 'mobilen-dor-i-kylan',
-  'basta-powerbank-2026', 'liten-powerbank-for-fickan', 'powerbank-for-resa',
+  'basta-powerbank-2026', 'magsafe-vs-qi2-vs-tradlos', 'powerbank-for-resa',
   'magnetisk-powerbank', '10000-vs-20000-mah', 'mah-och-watt-vad-betyder-siffrorna',
   'powerbank-pa-flyget', 'darfor-laddar-mobilen-samre-pa-vintern',
 ];
-let wave1Done = 0;
+
+/* «مكتوبة» تعني: لها نصّ حقيقي — أي stage عند written فما فوق. والمنشور
+   مكتوبٌ أيضاً. تعريف واحد، فلا يعود العدّ يختلف بين وثيقة وأخرى. */
+const HAS_TEXT = new Set(['written', 'reviewed', 'published']);
+const wave1State = { published: 0, text: 0, draft: 0, missing: [] };
+const wave1Seen = new Set();
 for (const c of collections) {
   const dir = join(ROOT, 'src/content', c, 'sv');
   if (!existsSync(dir)) continue;
   for (const f of readdirSync(dir).filter((f) => ['.md', '.mdx'].includes(extname(f)))) {
     const d = frontmatter(readFileSync(join(dir, f), 'utf8'));
-    if (d?.published === true && wave1.includes(d.slug)) wave1Done++;
+    if (!d || !wave1.includes(d.slug)) continue;
+    wave1Seen.add(d.slug);
+    if (d.published === true) wave1State.published++;
+    if (HAS_TEXT.has(d.stage ?? 'draft')) wave1State.text++;
+    else wave1State.draft++;
   }
 }
+wave1State.missing = wave1.filter((s) => !wave1Seen.has(s));
+const wave1Done = wave1State.published;
 
 /* ---------- الفئات ---------- */
 const catDir = join(ROOT, 'src/data/categories');
@@ -175,7 +190,8 @@ ${bar(stages.published, stages.draft + stages.written + stages.reviewed + stages
 **الموجة الأولى — عنقود البطارية**
 
 \`\`\`
-${bar(wave1Done, 11)}  ${wave1Done}/11  (${pct(wave1Done, 11)}%)
+${bar(wave1Done, 11)}  ${wave1Done}/11 منشورة  (${pct(wave1Done, 11)}%)
+${wave1State.text}/11 لها نصّ حقيقي · ${wave1State.text - wave1State.published} تنتظر المراجعة · ${wave1State.draft} هيكل
 \`\`\`
 
 **إجمالي النشر**
@@ -227,4 +243,11 @@ ${drafts_legal.length ? `**٤.** أكمل ${drafts_legal.length} نصاً قان
 
 writeFileSync(join(ROOT, 'docs/project/STATE.md'), out, 'utf8');
 console.log(`\n✓ STATE.md`);
-console.log(`  منتجات ${P.total} · منشور ${published}/${published + drafts} · الموجة الأولى ${wave1Done}/11\n`);
+console.log(`  منتجات ${P.total} · منشور ${published}/${published + drafts}`);
+console.log(
+  `  الموجة الأولى: ${wave1State.text}/11 لها نصّ ` +
+    `(${wave1State.published} منشورة · ${wave1State.text - wave1State.published} تنتظر المراجعة) · ` +
+    `${wave1State.draft} هيكل` +
+    (wave1State.missing.length ? `  ⚠ مفقود: ${wave1State.missing.join('، ')}` : '') +
+    '\n',
+);

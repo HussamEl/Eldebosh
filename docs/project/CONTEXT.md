@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — CONTEXT
 
-> **Version:** `v1.1` · 2026-09-02 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.2` · 2026-09-02 · canonical copy: `docs/project/` in the repository
 >
 > State, decisions and the reasons behind them. **Rules live in `INSTRUCTIONS`.**
 > Source of truth for code: `github.com/HussamEl/Eldebosh` — branch `main`, public.
@@ -282,16 +282,15 @@ UGREEN · safety and insurance terms for charging other people's batteries.
 
 | # | Task | Owner |
 |---|---|---|
-| 1 | 🔴 **Nine ASINs** — without them, nine products have no buy button | **Hussam** |
-| 2 | 🟠 Tax authority consultation (`R-02`) | **Hussam** |
-| 3 | 🔴 **Review the six written pages** — the bottleneck is here now | **Hussam** |
-| 4 | 🔴 **A real experience sentence and a frequency word per product** | **Hussam** |
-| 5 | 🟠 Tax authority consultation (`R-02`) | **Hussam** |
-| 6 | 🟠 Publish the legal texts — they are written and waiting | **Hussam** |
-| 7 | 🟠 Airline rules and cold-weather figures | **Gemini** |
-| 8 | 🟡 Documented weight per product (`I-010`) | **Hussam** or Gemini |
-| 9 | 🟡 Build-time image step | Claude Code |
-| 10 | 🟡 Search Console and analytics | Shared |
+| 1 | 🔴 **Review the six written pages** — the bottleneck is here now | **Hussam** |
+| 2 | 🔴 **A real experience sentence and a frequency word per product** | **Hussam** |
+| 3 | 🔴 **Nine ASINs** — without them, nine products have no buy button | **Hussam** |
+| 4 | 🟠 Airline rules and cold-weather figures | **Gemini** |
+| 5 | 🟠 Publish the legal texts — they are written and waiting | **Hussam** |
+| 6 | 🟠 Tax authority consultation (`R-02`) | **Hussam** |
+| 7 | 🟡 Documented weight per product (`I-010`) | **Hussam** or Gemini |
+| 8 | 🟡 Build-time image step | Claude Code |
+| 9 | 🟡 Search Console and analytics | Shared |
 
 **Done since `v1.0`:** the editor is pinned (`R-04`) · `metod` rewritten and
 published · four interface strings corrected · six cluster pages written.
@@ -302,12 +301,17 @@ simarro magnetringar · UGREEN snabbladdare · UGREEN USB-C 240W.
 
 **The battery cluster** is the first wave: eleven pages around a single problem —
 the phone dying mid-day. Completing it activates the first category and creates
-enough surface to reach the three sales Amazon requires. **Seven of eleven are
-written; none of the seven is published.** The four that remain are blocked on
-`I-008`, `I-010` and Gemini's research — so the constraint is no longer writing.
-It is review, and review is one person reading Swedish as a second language.
-That is why `npm run preview:file` exists: six pages in one file on a phone,
-read one, publish one.
+enough surface to reach the three sales Amazon requires. **Eight of the eleven now have real text: two are
+published, six are written and waiting on review.** The three that remain are
+blocked on `I-008`, `I-010` and Gemini's research — so the constraint is no
+longer writing. It is review, and review is one person reading Swedish as a
+second language. That is why `npm run preview:file` exists: six pages in one
+file on a phone, read one, publish one.
+
+**One definition, so the count stops drifting:** *written* means the page has
+real text — `stage` at `written` or above. A published page is written too. The
+number is generated, not typed: `npm run state` prints it and `STATE.md` carries
+it.
 
 **Binding order:** solution pages → products → guides and comparisons → posts.
 A guide is not published with fewer than two picks.

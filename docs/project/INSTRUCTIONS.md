@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — INSTRUCTIONS
 
-> **Version:** `v1.2` · 2026-09-02 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.3` · 2026-09-02 · canonical copy: `docs/project/` in the repository
 >
 > **The governing document.** Where anything else conflicts with this, this wins.
 > Current state: `CONTEXT`. Source of truth for code: `github.com/HussamEl/Eldebosh`.
@@ -33,7 +33,7 @@ ended.
 **Every reply opens with one line:**
 
 ```
-EB-014 · Claude Project · 2026-09-01 09:15 · replying to EB-013
+EB-004 · Claude Project · 2026-09-02 21:10 · replying to EB-003
 ```
 
 | Field | Rule |
