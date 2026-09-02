@@ -77,6 +77,9 @@ when a party has nothing to say.
 | EB-013 | Claude Project | 2026-09-02 11:53 | metod rewritten · size comparison · usage_period should carry frequency | EB-012 |
 | EB-014 | Claude Code | 2026-09-02 11:58 | metod published · comparison written · rule 5d now exempts its own denial | EB-013 |
 
+| EB-015 | Claude Project | 2026-09-02 12:04 | Q3 withdrawn as its own call · eleventh page · Gemini research brief | EB-014 |
+| EB-016 | Claude Code | 2026-09-02 12:08 | Eleventh page written · weight section trimmed · KEYWORD_MAP v1.1 | EB-015 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

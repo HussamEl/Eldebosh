@@ -1,4 +1,4 @@
-# خريطة الكلمات المفتاحية v1.0 — 33 صفحة
+# خريطة الكلمات المفتاحية v1.1 — 33 صفحة
 
 > خارطة طريق الأشهر الثلاثة الأولى.
 > **الهياكل مولّدة فعلياً داخل المشروع** كمسودات جاهزة للكتابة.
@@ -137,7 +137,7 @@ batteriet-tar-slut
 ingen-eluttag-pa-resan
 mobilen-dor-i-kylan
   ├── basta-powerbank-2026
-  ├── liten-powerbank-for-fickan
+  ├── magsafe-vs-qi2-vs-tradlos
   ├── powerbank-for-resa
   ├── magnetisk-powerbank
   ├── 10000-vs-20000-mah
@@ -145,6 +145,13 @@ mobilen-dor-i-kylan
   ├── powerbank-pa-flyget
   └── darfor-laddar-mobilen-samre-pa-vintern
 ```
+
+**تبديل في v1.1:** خرجت `liten-powerbank-for-fickan` من الموجة الأولى ودخلت
+مكانها `magsafe-vs-qi2-vs-tradlos`. **لم تُحذف** — تأخّرت إلى موجة لاحقة.
+السبب الأول أنها كانت سترشّح المنتجات الثلاثة نفسها التي يرشّحها
+`magnetisk-powerbank`، فصفحتان تتنافسان على استعلام واحد. والسبب الثاني أن
+محورها الحجم والوزن، و`I-010` يقول إننا لا نملك وزناً موثّقاً واحداً — فهي غير
+قابلة للكتابة اليوم لا مؤجَّلة باختيار.
 
 **عند اكتمالها:** فئة `laddning-och-strom` تُفعَّل وتظهر في القائمة، ويصبح لديك ما يكفي للتقدم لبرامج الأفلييت.
 
