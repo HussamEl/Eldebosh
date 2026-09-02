@@ -503,6 +503,8 @@ ul, ol { padding-inline-start: 1.1rem; }
   border-inline-start: 3px solid var(--line-2); padding-inline-start: 0.85rem;
 }
 .handson-owned { border-inline-start-color: var(--brand); }
+/* تاريخ الاقتناء سطر مستقل — لا يُلصق بنهاية جملة تامة. */
+.handson-since { display: block; margin-block-start: 0.2rem; }
 
 /* ---------- المصادر ---------- */
 

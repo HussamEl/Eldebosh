@@ -18,15 +18,24 @@ interface Props {
 }
 const { lang, tested, owned = false, ownedSince, usagePeriod, photos = [], notes = [], limits = [], videoUrl, videoThumb } = Astro.props;
 const tr = t(lang);
+
+/* تُبنى الأسطر هنا لا في القالب: `Astro` يبتلع الفراغ حول التعبيرات المتجاورة،
+   وكان الناتج المنشور «använd isedan juni 2025 · sedan2025-06» — كلمتان
+   ملتصقتان، والتاريخ نفسه مرتين. النصّ الواحد لا يترك للقالب مسافةً يخطئ فيها. */
+const ym = ownedSince ? ownedSince.toISOString().slice(0, 7) : null;
+
+/* `usage_period` عبارة تامة أصلاً («sedan juni 2025»)، فلا تسبقها كلمة ولا
+   يتبعها التاريخ نفسه بصيغة أخرى. */
+const period = usagePeriod || (ym ? `${tr('handson.since')} ${ym}` : null);
+const badgeLine = period ? `${tr('handson.badge')} — ${period}` : tr('handson.badge');
+const sinceLine = ym ? `${tr('handson.since')} ${ym}` : null;
 ---
 
 {tested ? (
   <section class="handson">
     <p class="handson-badge">
       <span class="dot" aria-hidden="true"></span>
-      {tr('handson.badge')}
-      {usagePeriod && <> — {tr('handson.used')} {usagePeriod}</>}
-      {ownedSince && <> · {tr('handson.since')} {ownedSince.toISOString().slice(0, 7)}</>}
+      {badgeLine}
     </p>
 
     {photos.length > 0 && (
@@ -65,7 +74,7 @@ const tr = t(lang);
 ) : owned ? (
   <p class="handson-owned">
     {tr('handson.owned_only')}
-    {ownedSince && <> {tr('handson.since')} {ownedSince.toISOString().slice(0, 7)}.</>}
+    {sinceLine && <span class="handson-since">{sinceLine}</span>}
   </p>
 ) : (
   <p class="handson-none">{tr('handson.not_tested')}</p>

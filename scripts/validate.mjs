@@ -7,7 +7,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import YAML from 'yaml';
-import { findUnbackedClaim } from './lib/claim-rule.mjs';
+import { findUnbackedClaim, findOwnedOnlyUseClaim } from './lib/claim-rule.mjs';
 import { findOverclaimedCount } from '../src/lib/overclaim.mjs';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
@@ -201,6 +201,19 @@ const testedIds = new Set(products.filter((p) => p.data.tested === true).map((p)
   for (const [file, text] of scan) {
     const m = text.match(BANNED);
     if (m) errors.push(`${file}: عبارة "${m[0]}" ممنوعة — المادة 6.2`);
+  }
+}
+
+/* ---------- 5f. سلسلة «مملوك غير مُختبَر» لا تدّعي استخدامه ---------- */
+// هذان المفتاحان لا يُعرضان إلا تحت منتج tested=false. أي ادعاء استخدام فيهما
+// كذبٌ بحكم موضعه، مهما كان صادقاً في مكان آخر.
+{
+  const text = await readFile(join(ROOT, 'src/i18n/ui.ts'), 'utf8').catch(() => '');
+  for (const key of ['handson.owned_only', 'handson.not_tested']) {
+    for (const m of text.matchAll(new RegExp(`'${key}':\\s*'((?:[^'\\\\]|\\\\.)*)'`, 'g'))) {
+      const hit = findOwnedOnlyUseClaim(m[1]);
+      if (hit) errors.push(`src/i18n/ui.ts: "${key}" يدّعي استخدام منتج غير مُختبَر ("${hit}")`);
+    }
   }
 }
 

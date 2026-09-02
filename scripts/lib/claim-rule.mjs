@@ -80,4 +80,25 @@ export function findUnbackedClaim(body) {
   return null;
 }
 
+/**
+ * السلسلتان المعروضتان تحت منتج غير مُختبَر لا يجوز أن تدّعيا استخدامه.
+ *
+ * حُذف ادعاء الاستخدام من بيانات المنتجين غير المُختبَرين، وبقي يُرسَم من ملف
+ * الترجمة — أي من المكان الذي يراه الزائر فعلاً. هذه القاعدة تربط السلسلة
+ * بشرط عرضها: مفتاحٌ لا يظهر إلا عند `tested: false` لا يقول «نستخدمها».
+ */
+const USE = /\b(använder|använt|använda|use|uses|used|using)\b/i;
+
+export function findOwnedOnlyUseClaim(text) {
+  for (const raw of text.split(/(?<=[.!?])\s+/)) {
+    const sentence = raw.trim();
+    if (!sentence) continue;
+    const m = sentence.match(USE);
+    if (!m) continue;
+    if (isDenied(sentence, m.index, m[0])) continue;
+    return m[0];
+  }
+  return null;
+}
+
 export const _internals = { CLAIM, COMPARATIVE, DENIAL, sentenceAt };

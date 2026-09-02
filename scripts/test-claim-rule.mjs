@@ -6,7 +6,7 @@
  *
  *   node scripts/test-claim-rule.mjs
  */
-import { findUnbackedClaim } from './lib/claim-rule.mjs';
+import { findUnbackedClaim, findOwnedOnlyUseClaim } from './lib/claim-rule.mjs';
 import { findOverclaimedCount } from '../src/lib/overclaim.mjs';
 
 const cases = [
@@ -33,6 +33,15 @@ const cases = [
   ['pass', 'Vi har testat ingenting än. Allt bygger på källor.'],
 ];
 
+/* ---- سلسلة «مملوك غير مُختبَر» لا تدّعي استخدامه ---- */
+const ownedOnly = [
+  ['fail', 'Vi äger och använder den här produkten.'],
+  ['fail', 'We own and use this product.'],
+  ['pass', 'Vi äger den här produkten men har ännu inte använt den tillräckligt för att skriva om erfarenheten.'],
+  ['pass', 'We own this product but have not yet used it enough to write about the experience.'],
+  ['pass', 'Vi äger inte den här produkten. Bedömningen bygger på dokumenterade källor.'],
+];
+
 /* ---- الادعاء الجماعي: الكذب في العدد لا في الفعل ---- */
 const counted = [
   // أربعة منتجات، اثنان مُختبَران
@@ -48,6 +57,14 @@ const counted = [
 ];
 
 let failed = 0;
+for (const [want, sentence] of ownedOnly) {
+  const hit = findOwnedOnlyUseClaim(sentence);
+  const got = hit ? 'fail' : 'pass';
+  const ok = got === want;
+  if (!ok) failed++;
+  console.log(`  ${ok ? '✓' : '✗'} [${want.padEnd(4)}] ${sentence.slice(0, 68)}${hit ? `  ← "${hit}"` : ''}`);
+}
+
 for (const [want, sentence, counts] of counted) {
   const hit = findOverclaimedCount(sentence, counts);
   const got = hit ? 'fail' : 'pass';
@@ -69,7 +86,7 @@ for (const [want, sentence] of cases) {
   console.log(`  ${mark} [${want.padEnd(4)}] ${sentence.slice(0, 72)}${why}`);
 }
 
-const total = cases.length + counted.length;
+const total = cases.length + counted.length + ownedOnly.length;
 console.log(
   failed
     ? `\n✗ ${failed} من ${total} حالة لم تتصرّف كما يجب\n`

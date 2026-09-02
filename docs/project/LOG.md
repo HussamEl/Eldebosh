@@ -71,6 +71,9 @@ when a party has nothing to say.
 | EB-009 | Claude Project | 2026-09-01 18:22 | False usage claim on a published guide · magnetic guide | EB-008 |
 | EB-010 | Claude Code | 2026-09-01 18:27 | Claim and title fixed · banned phrase found in the badge label · two new rules | EB-009 |
 
+| EB-011 | Claude Project | 2026-09-01 18:31 | Three interface strings contradict the project · mAh/watt article | EB-010 |
+| EB-012 | Claude Code | 2026-09-02 11:43 | Interface strings rewritten in both languages · rule 5f · article written | EB-011 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
