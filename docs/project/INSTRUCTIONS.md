@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — INSTRUCTIONS
 
-> **Version:** `v1.4` · 2026-09-02 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.5` · 2026-09-02 · canonical copy: `docs/project/` in the repository
 >
 > **The governing document.** Where anything else conflicts with this, this wins.
 > Current state: `CONTEXT`. Source of truth for code: `github.com/HussamEl/Eldebosh`.
@@ -80,6 +80,19 @@ thing in every reply, without exception:
 
 **Every party appears every time**, including the one with nothing to do —
 absence from the board is what made Hussam lose the thread before.
+
+**Below the board, one more line** — which documents he was last *sent*:
+
+```
+📎 آخر نسخة أُرسلت إلى حسام: INSTRUCTIONS v1.5 · CONTEXT v1.3 · BRIEFING v1.2
+```
+
+It says **sent**, not *held*. We know what we handed over; we do not know
+whether he replaced his copies, and a line claiming otherwise would manufacture
+the very illusion it exists to prevent.
+
+**Never write this line from memory.** Read it from `npm run check:docs` or from
+the documents themselves. A stale version line is worse than no line at all.
 
 ---
 
