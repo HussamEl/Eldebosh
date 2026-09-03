@@ -181,6 +181,19 @@ ul, ol { padding-inline-start: 1.1rem; }
 }
 .brand img { height: 26px; width: auto; display: block; }
 @media (max-width: 22em) { .brand img { height: 23px; } }
+
+/* طابع الرفع — مؤقّت، يُحذف قبل الإطلاق مع src/lib/build-stamp.ts.
+   `:has` تُبقي الحذف نظيفاً: يختفي الطابع فيستعيد الشعار هامشه التلقائي
+   بلا تعديل أي قاعدة أخرى. */
+.masthead-inner:has(.build-stamp) .brand { margin-inline-end: 0.55rem; }
+.build-stamp {
+  margin-inline-end: auto;
+  font-size: 0.7rem; font-variant-numeric: tabular-nums; letter-spacing: 0.01em;
+  color: var(--volt); background: rgb(255 255 255 / 0.08);
+  border: 1px solid rgb(255 255 255 / 0.16); border-radius: 999px;
+  padding: 0.12rem 0.5rem; white-space: nowrap;
+}
+@media (max-width: 30em) { .build-stamp { font-size: 0.62rem; padding: 0.1rem 0.36rem; } }
 .brand span { color: var(--brand); }
 
 .nav { display: flex; align-items: center; }

@@ -1,6 +1,8 @@
 ---
 import { t, type Lang } from '../i18n/ui';
 import { url, activeCategories } from '../lib/content';
+import { SHOW_BUILD_STAMP } from '../lib/build-stamp';
+import { now } from '../lib/clock.mjs';
 
 interface Props { lang: Lang; path: string; }
 const { lang, path } = Astro.props;
@@ -23,6 +25,11 @@ const primary = [
     <a class="brand" href={url.home(lang)} aria-label={`${tr('site.name')} — ${tr('nav.home')}`}>
       <img src="/brand/eldebosh-logo-header.svg" alt={tr('site.name')} width="170" height="26" decoding="async" />
     </a>
+
+    {/* طابع الرفع — مؤقّت. اقرأ src/lib/build-stamp.ts قبل حذفه. */}
+    {SHOW_BUILD_STAMP && (
+      <span class="build-stamp" data-build title="آخر بناء — يُحذف قبل الإطلاق">{now()}</span>
+    )}
 
     <!-- سطح المكتب -->
     <nav class="nav nav-desktop" aria-label={tr('nav.menu')}>

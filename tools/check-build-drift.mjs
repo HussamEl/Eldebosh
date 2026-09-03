@@ -13,6 +13,11 @@ import fs from 'node:fs';
 
 const STAMP = /<meta name="eldebosh-build" content="[^"]*">/g;
 
+/** الطابع المرئي في الرأس — مؤقّت مثل مصدره. يتغيّر مع كل بناء بالضبط كبصمة
+ *  الـ`meta`، فلولا تقنيعه لصار كل ملف HTML منحرفاً وسقطت البوابة.
+ *  يُحذف مع `src/lib/build-stamp.ts` ولا يُحذف قبله. */
+const VISIBLE_STAMP = /(<span class="build-stamp"[^>]*>)[^<]*(<\/span>)/g;
+
 /** Pagefind serialiserar sin entry-JSON i hash-ordning — samma data, olika
  *  nyckelordning mellan körningar. Kanonisera i stället för att flagga det. */
 const sortKeys = (v) =>
@@ -25,7 +30,7 @@ const norm = (text, file) => {
   if (file.endsWith('.json')) {
     try { return JSON.stringify(sortKeys(JSON.parse(text))); } catch { /* faller igenom */ }
   }
-  return text.replace(STAMP, '<meta name="eldebosh-build" content="">');
+  return text.replace(STAMP, '<meta name="eldebosh-build" content="">').replace(VISIBLE_STAMP, '$1$2');
 };
 
 const git = (args) => execFileSync('git', args, { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
