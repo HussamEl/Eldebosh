@@ -101,6 +101,8 @@ when a party has nothing to say.
 
 | EB-021 | Claude Code | 2026-09-03 18:23 | Four of five published · the fifth blocked by its own collection — I-014 | Hussam |
 
+| EB-022 | Claude Code | 2026-09-03 18:36 | Hussam found the gate red in Actions — three causes, all mine · I-015 | Hussam |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
