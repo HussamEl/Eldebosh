@@ -32,7 +32,13 @@ export async function docs<C extends DocCollection>(collection: C, lang: Lang) {
   const all = await getCollection(collection);
   return all
     .filter((e: any) => e.data.lang === lang && (PREVIEW || e.data.published === true))
-    .sort((a: any, b: any) => +b.data.updated - +a.data.updated) as CollectionEntry<C>[];
+    // الترتيب لا يجوز أن يعتمد على ترتيب قراءة الملفات من القرص: ستّ صفحات
+    // تحمل التاريخ نفسه، وعند التساوي كان الناتج يختلف بين جهاز وآخر — فتختلف
+    // الصفحة الرئيسية بين بنائين، ويسقط حارس الانحراف. الفاصل عند التعادل
+    // `slug` لأنه فريد وثابت.
+    .sort((a: any, b: any) =>
+      +b.data.updated - +a.data.updated || String(a.data.slug).localeCompare(String(b.data.slug)),
+    ) as CollectionEntry<C>[];
 }
 
 /** عدد الصفحات المنشورة في كل فئة فرعية — لإخفاء الفارغة. */
@@ -52,7 +58,7 @@ export async function activeCategories(lang: Lang) {
   const all = await getCollection('categories');
   return all
     .filter((c) => c.data.active)
-    .sort((a, b) => a.data.order - b.data.order)
+    .sort((a, b) => a.data.order - b.data.order || String(a.data.id).localeCompare(String(b.data.id)))
     .map((c) => ({
       id: c.data.id,
       group: c.data.group,
@@ -111,7 +117,10 @@ export async function verifiedProducts(lang: Lang, limit = 24): Promise<Product[
     out.push(p);
   }
   // الموثق أولاً، ثم المصوَّر بانتظار الرابط
-  out.sort((a, b) => Number(Boolean(b.asin)) - Number(Boolean(a.asin)));
+  out.sort(
+    (a, b) =>
+      Number(Boolean(b.asin)) - Number(Boolean(a.asin)) || String(a.id).localeCompare(String(b.id)),
+  );
   return out.slice(0, limit);
 }
 

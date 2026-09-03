@@ -103,6 +103,8 @@ when a party has nothing to say.
 
 | EB-022 | Claude Code | 2026-09-03 18:36 | Hussam found the gate red in Actions — three causes, all mine · I-015 | Hussam |
 
+| EB-023 | Claude Code | 2026-09-03 18:39 | Fourth cause: a tie-prone sort made the build non-reproducible | Hussam |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
