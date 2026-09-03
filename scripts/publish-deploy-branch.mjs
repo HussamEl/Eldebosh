@@ -11,11 +11,12 @@
  *
  *   node scripts/publish-deploy-branch.mjs [--remote origin] [--branch deploy]
  */
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { mkdtempSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
+const npm = process.platform === 'win32' ? 'npm.cmd' : 'npm';
 
 /* بناء المعاينة يُخرج المسوّدات. لا يقترب من النشر بأي حال. */
 if (process.env.ELDEBOSH_PREVIEW === '1') {
@@ -24,6 +25,22 @@ if (process.env.ELDEBOSH_PREVIEW === '1') {
 }
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+
+/* البوابة قبل النشر — لا بعده.
+   وقع هذا فعلاً: بقيت البوابة حمراء في GitHub Actions لأربع دفعات، وكنتُ أنشر
+   يدوياً من هنا فيصل المحتوى إلى `deploy` رغم ذلك. أي أن تشغيل هذا السكربت
+   بيدي كان يلتفّ حول الفحص الذي بُني ليمنع النشر.
+   يُتخطّى داخل Actions وحده، لأن سير العمل هناك يشغّل البوابة قبله. */
+if (!process.env.GITHUB_ACTIONS) {
+  for (const step of ['build', 'check:css', 'check:colors', 'audit', 'check:drift']) {
+    const r = spawnSync(npm, ['run', step], { cwd: ROOT, stdio: 'inherit', shell: true });
+    if (r.status !== 0) {
+      console.error(`\n✗ البوابة سقطت عند \`npm run ${step}\` — لا نشر.\n`);
+      process.exit(1);
+    }
+  }
+}
+
 const arg = (name, fallback) => {
   const i = process.argv.indexOf(`--${name}`);
   return i > -1 ? process.argv[i + 1] : fallback;

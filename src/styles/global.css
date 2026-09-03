@@ -509,6 +509,8 @@ ul, ol { padding-inline-start: 1.1rem; }
 /* ---------- المصادر ---------- */
 
 .sources-block { border: 1px solid var(--line); border-radius: var(--r); padding: var(--gap); }
+/* كانت نمطاً مضمّناً على العنصر، فأفشلت الفحص أول مرة ظهرت فيها قائمة مصادر. */
+.sources-note { margin-block: 0.4rem 1rem; }
 .source-list { list-style: none; padding: 0; display: grid; gap: 0.85rem; }
 .source-list > li { padding-inline-start: 0.85rem; border-inline-start: 2px solid var(--line); }
 .source-list > li > p:first-child { font-size: var(--step--1); }
