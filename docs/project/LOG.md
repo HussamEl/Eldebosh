@@ -97,6 +97,8 @@ when a party has nothing to say.
 | EB-018 | Claude Project | 2026-09-03 10:58 | Flight page with four official sources · regional-page rule | EB-016 |
 | EB-019 | Claude Code | 2026-09-03 11:01 | Flight page written · I-013 recorded · nine of eleven have text | EB-018 |
 
+| EB-020 | Claude Code | 2026-09-03 18:16 | Flight page published on Hussam's word · I-008 closed | Hussam |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
