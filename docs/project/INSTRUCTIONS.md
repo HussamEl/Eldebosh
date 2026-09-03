@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — INSTRUCTIONS
 
-> **Version:** `v1.5` · 2026-09-02 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.6` · 2026-09-03 · canonical copy: `docs/project/` in the repository
 >
 > **The governing document.** Where anything else conflicts with this, this wins.
 > Current state: `CONTEXT`. Source of truth for code: `github.com/HussamEl/Eldebosh`.
@@ -192,8 +192,29 @@ ownership, and turns a violation into deliberate circumvention.
 
 ### 6.4 No thin content
 
-Never create pages to inflate a count. **And no link may lead to an empty page** —
-a category with no published content does not appear at all.
+Never create pages to inflate a count.
+
+A page may exist without its content, but only if it says so plainly. A
+skeleton — a heading with no text behind it — is published only when all of
+the following hold:
+
+- It tells the reader, in its own words, that it has not been written yet.
+- It is marked as such wherever it is listed, before the reader clicks.
+- It carries `noindex` and stays out of the sitemap.
+- It sells nothing: no product card, no comparison, no affiliate link — and
+  therefore no commercial disclosure, which on a page with no links would
+  confuse the reader and weaken the disclosure everywhere else.
+- Any invitation to write to us costs the reader nothing to regret: no form,
+  no account, nothing stored.
+
+What stays forbidden is the pretence — a page that looks finished and is not,
+a category that promises content it does not have, or a heading written to
+occupy a keyword.
+
+**A skeleton is a promise with a date on it.** One that has stood unwritten
+for ninety days is no longer honest: it is either written or unpublished.
+Nothing else about it may be changed to buy it more time.
+**Enforced in `scripts/validate.mjs`, rule 5g.**
 
 ### 6.5 No secrets
 

@@ -236,6 +236,28 @@ for (const d of docs) {
   }
 }
 
+/* ---------- 5g. الهيكل وعدٌ عليه تاريخ ---------- */
+// المادة 6.4: هيكل وقف تسعين يوماً بلا كتابة لم يعد صادقاً — يُكتب أو يُسحب.
+// وهذه الجملة وحدها من نصّ المادة قابلة للفرض، فتُفرض. القياس من `updated`،
+// وهو يوم نشر الهيكل، وتغييره لشراء وقت إضافي يخالف المادة نفسها.
+{
+  const DAYS = 90;
+  const today = new Date();
+  for (const d of docs) {
+    if (d.data.published !== true || (d.data.stage ?? 'draft') !== 'draft') continue;
+    const since = d.data.updated ? new Date(d.data.updated) : null;
+    if (!since || Number.isNaN(+since)) continue;
+    const age = Math.floor((today - since) / 86400000);
+    if (age > DAYS) {
+      errors.push(
+        `${d.file}: هيكل منشور منذ ${age} يوماً (الحدّ ${DAYS}) — يُكتب أو يُسحب، ولا يُمدَّد بتغيير التاريخ`
+      );
+    } else if (age > DAYS - 14) {
+      warnings.push(`${d.file}: هيكل عمره ${age} يوماً — يبقى له ${DAYS - age}`);
+    }
+  }
+}
+
 /* ---------- 6. لا ادعاء تجربة في النص ---------- */
 // المنطق وحالاته في scripts/lib/claim-rule.mjs — node scripts/test-claim-rule.mjs
 function pageHasTestedProduct(d) {
