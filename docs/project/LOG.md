@@ -109,6 +109,8 @@ when a party has nothing to say.
 
 | EB-025 | Claude Code | 2026-09-03 19:27 | Skeletons published as declared placeholders by Hussam's decision · I-016 | Hussam |
 
+| EB-026 | Claude Code | 2026-09-03 19:34 | Two workflows merged · publishing now depends on the gate · I-017 | Hussam |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

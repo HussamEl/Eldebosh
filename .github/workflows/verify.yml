@@ -1,3 +1,14 @@
+# البوابة ثم النشر — سير عمل واحد لا اثنان.
+#
+# كانا ملفّين مستقلّين يعملان على الدفعة نفسها، فنتج عن ذلك أمران:
+#   ١. كل دفعة تبني المشروع مرتين وتُنتج كوميتَي نشر على فرع `deploy`.
+#   ٢. والأخطر: `deploy` كان ينجح بينما `verify` يسقط — أي أن الموقع يُنشر
+#      والبوابة حمراء. وقع هذا فعلاً في الدفعتين 34/45 و33/44.
+#
+# `needs: verify` تُغلق ذلك: لا نشر إلا بعد اجتياز الفحوص كلها.
+# ولا يبني النشر شيئاً — `site/` مدفوع في المستودع، وحارس الانحراف في
+# البوابة هو ما يضمن أنه يطابق المصدر.
+
 name: verify
 
 on:
@@ -6,8 +17,12 @@ on:
   pull_request:
   workflow_dispatch:
 
+concurrency:
+  group: site-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build-and-verify:
+  verify:
     name: bygg och verifiera
     runs-on: ubuntu-latest
     steps:
@@ -24,13 +39,35 @@ jobs:
       # bygger från källan till site/ — validate.mjs stoppar bygget vid regelbrott
       - run: npm run build
 
+      - run: npm run test:claims
       - run: npm run check:css
       - run: npm run check:colors
       - run: npm run check:docs
       - run: npm run test:ui
       - run: npm run test:browser
       - run: npm run audit
+      - run: npm run check:drafts
 
       # site/ får inte glida ifrån källan. Byggstämpeln och Pagefinds
       # nyckelordning ändras varje körning med flit och normaliseras bort.
       - run: npm run check:drift
+
+  publish:
+    name: نشر إلى فرع deploy
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0     # يحتاج تاريخ فرع deploy ليكون النشر تقديمياً
+
+      # لا بناء هنا: `site/` المدفوع هو ما يُنشر، وقد أثبتت البوابة أنه يطابق
+      # المصدر. والسكربت لا يستعمل إلا وحدات Node المدمجة، فلا npm ci.
+      - name: نشر site/ على فرع deploy
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          node scripts/publish-deploy-branch.mjs
