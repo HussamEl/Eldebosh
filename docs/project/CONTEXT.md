@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — CONTEXT
 
-> **Version:** `v1.4` · 2026-09-03 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.5` · 2026-09-03 · canonical copy: `docs/project/` in the repository
 >
 > State, decisions and the reasons behind them. **Rules live in `INSTRUCTIONS`.**
 > Source of truth for code: `github.com/HussamEl/Eldebosh` — branch `main`, public.
@@ -90,8 +90,19 @@ runners. The block is on **inbound** traffic only, and the host's outbound acces
 is fine. So the direction was reversed: it pulls instead of being pushed to. The
 host did not change.
 
-**Manual pull when needed:** hPanel → Git → `Overview` tab → `Redeploy`. The
-`Deployments` tab keeps every deployment with its log.
+**Confirmed automatic on 2026-09-03, by measurement rather than assumption.**
+Commit `4b92732` was pushed at 23:49; the deploy branch moved to `134682c`; the
+build stamp on the live site read `2026-09-03 23:49` — and Hussam never opened
+hPanel. The webhook works, so **no manual step is ever required of him.**
+
+**Manual pull, as a fallback only:** hPanel → Websites → Dashboard → Advanced →
+Git → `Overview` tab → `Redeploy`. The `Deployments` tab keeps every deployment
+with its log. Written out because the phrase "pull from hPanel" was repeated at
+Hussam for days without anyone saying what it meant.
+
+**How to re-measure it if it is ever doubted:** after any push, the stamp beside
+the Home button equals the build time. Equal means automatic; behind means the
+webhook stopped.
 
 **⚠️ The editor at `/admin/` writes to the repository.** A change reaches the
 site within minutes through the chain above — not instantly.

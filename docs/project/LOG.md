@@ -126,6 +126,9 @@ when a party has nothing to say.
 | EB-035 | Claude Project | 2026-09-03 23:43 | Origin of the phantom rule found in its own CONTEXT §13 · second-wave plan | EB-034 |
 | EB-036 | Claude Code | 2026-09-03 23:49 | §13 rewritten · the second wave's blocker measured and disputed — I-019 · rule 2b | EB-035 |
 
+| EB-037 | Hussam | 2026-09-03 23:55 | Read the live stamp: 2026-09-03 23:49 — it matches the build | EB-036 |
+| EB-038 | Claude Code | 2026-09-03 23:56 | Deployment confirmed fully automatic · no pull is ever asked of Hussam again | EB-037 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
