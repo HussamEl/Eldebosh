@@ -1,7 +1,11 @@
 ---
 import Icon from './Icon.astro';
-interface Props { title: string; href: string; description?: string; tag?: string; problem?: boolean; icon?: string; }
-const { title, href, description, tag, problem = false, icon } = Astro.props;
+import { PREVIEW } from '../lib/preview';
+interface Props { title: string; href: string; description?: string; tag?: string; problem?: boolean; icon?: string; draft?: boolean; }
+const { title, href, description, tag, problem = false, icon, draft = false } = Astro.props;
+/* في المعاينة وحدها. البناء المنشور لا يعرف هذه الحالة أصلاً — الصفحة غير
+   المنشورة لا تُبنى — لكن المعاينة تبنيها، وكانت تعرضها كأنها حيّة. */
+const showDraft = PREVIEW && draft;
 ---
 <article class={`card card-link${problem ? ' problem-card' : ''}`}>
   {icon && (
@@ -9,6 +13,7 @@ const { title, href, description, tag, problem = false, icon } = Astro.props;
   )}
   {problem && <div class="charge" aria-hidden="true"></div>}
   {tag && !problem && <span class="tag">{tag}</span>}
+  {showDraft && <span class="tag tag-draft">Utkast — inte på sajten</span>}
   <h3><a class="stretch" href={href}>{title}</a></h3>
   {description && <p>{description}</p>}
 </article>

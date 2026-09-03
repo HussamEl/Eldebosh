@@ -186,6 +186,9 @@ ul, ol { padding-inline-start: 1.1rem; }
    `:has` تُبقي الحذف نظيفاً: يختفي الطابع فيستعيد الشعار هامشه التلقائي
    بلا تعديل أي قاعدة أخرى. */
 .masthead-inner:has(.build-stamp) .brand { margin-inline-end: 0.55rem; }
+/* شارة المعاينة: تظهر في بناء المعاينة وحده، ولا وجود لها في الموقع الحيّ. */
+.tag-draft { background: var(--brand-hero); color: var(--paper); border-color: var(--brand-hero); }
+
 .build-stamp {
   margin-inline-end: auto;
   font-size: 0.7rem; font-variant-numeric: tabular-nums; letter-spacing: 0.01em;
