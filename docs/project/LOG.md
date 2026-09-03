@@ -90,6 +90,10 @@ when a party has nothing to say.
 | EB-012 | Claude Project | 2026-09-02 21:45 | Corrected the reasoning behind the cold sentence · offers to research | EB-011 |
 | EB-013 | Claude Code | 2026-09-03 08:49 | Cold sentence softened for the right reason · a check Hussam can run | EB-012 |
 
+| EB-015 | Claude Project | 2026-09-03 08:56 | Sample from Transportstyrelsen · asked Hussam to verify one line | EB-013 |
+| EB-017 | Claude Project | 2026-09-03 09:00 | Hussam declined to verify · flight file complete · Apple sources | Hussam |
+| EB-016 | Claude Code | 2026-09-03 09:06 | Cold paragraph sourced · rule 7b checks link shape | EB-017 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

@@ -248,11 +248,36 @@ for (const d of docs) {
 }
 
 /* ---------- 7. المصادر الخارجية: إسناد كامل ---------- */
+// 7b — شكل الرابط. لا أستطيع فتح الصفحات: أكثر المضيفات محجوبة عن بيئة
+// التنفيذ، والتحقق البشري سقط بقرار حسام. فما بقي من الفحص المستقل هو الشكل،
+// وهو يمسك عطباً حقيقياً وقع فعلاً: رابط `SAS` جاء
+// `google.com/search?q=https://www.flysas.com/…` — استشهادٌ بصيغة مصدر.
+const WRAPPER = /^(?:www\.)?(?:google\.[a-z.]+|bing\.com|duckduckgo\.com|search\.[a-z.]+|r\.jina\.ai|webcache\.googleusercontent\.com|translate\.google\.[a-z.]+|.*\.translate\.goog)$/i;
+
+function linkProblem(raw) {
+  let u;
+  try {
+    u = new URL(raw);
+  } catch {
+    return 'ليس رابطاً صالحاً';
+  }
+  if (!/^https?:$/.test(u.protocol)) return `بروتوكول غير مقبول (${u.protocol})`;
+  if (WRAPPER.test(u.hostname)) return `محرّك بحث أو وسيط، لا المصدر (${u.hostname})`;
+  // رابط يلفّ رابطاً: العنوان الحقيقي مدفون في معاملات الاستعلام
+  for (const [, v] of u.searchParams) {
+    if (/^https?:\/\//i.test(v)) return 'يلفّ رابطاً آخر داخل معاملاته';
+  }
+  return null;
+}
+
 for (const d of docs) {
   for (const [i, src] of (d.data.sources ?? []).entries()) {
     if (!src?.publisher || !src?.url || !src?.accessed) {
       errors.push(`${d.file}: المصدر رقم ${i + 1} ناقص — يلزم publisher و url و accessed`);
+      continue;
     }
+    const bad = linkProblem(String(src.url));
+    if (bad) errors.push(`${d.file}: المصدر رقم ${i + 1} — ${bad}: ${String(src.url).slice(0, 70)}`);
   }
 }
 
