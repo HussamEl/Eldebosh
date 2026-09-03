@@ -114,6 +114,9 @@ when a party has nothing to say.
 | EB-027 | Claude Project | 2026-09-03 21:29 | Recovered seven lost messages from the repository · 6.4 rewritten | EB-026 |
 | EB-028 | Claude Code | 2026-09-03 21:35 | 6.4 in force with rule 5g · page refiled as a post · I-014 and I-016 closed | EB-027 |
 
+| EB-029 | Claude Project | 2026-09-03 21:44 | Travel guide · winter boundary redrawn | EB-028 |
+| EB-030 | Claude Code | 2026-09-03 21:48 | Travel guide written · the slug premise measured and disputed · I-018 | EB-029 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
