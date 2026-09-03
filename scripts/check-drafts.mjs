@@ -41,6 +41,9 @@ for (const file of mdx(PAGES)) {
   if (!fm) continue;
   const [, front, body] = fm;
   if (!/^published:\s*true\s*$/m.test(front)) continue;
+  // الهيكل المعلَن لا يعرض متنه أصلاً — القالب يستبدله بصفحة تقول إنه لم
+  // يُكتب. المقصود هنا صفحة تدّعي أنها تامّة ونصّها مسوّدة.
+  if (/^stage:\s*draft\s*$/m.test(front)) continue;
 
   const hits = body.split('\n').filter((l) => DRAFT.test(l));
   if (!hits.length) continue;

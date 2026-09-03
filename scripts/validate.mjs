@@ -132,6 +132,8 @@ for (const d of docs) {
   if (d.data.published !== true) continue; // المسودات لا تُفحص
   for (const id of d.data.products ?? []) checkProductRef(id, d);
   for (const pick of d.data.picks ?? []) checkProductRef(pick.product, d);
+  // الهيكل المعلَن لا يرشّح ولا يقارن — الشروط على النصّ التام وحده
+  if (d.data.stage === 'draft') continue;
   if (d.coll === 'guides' && (d.data.picks ?? []).length < 2) {
     errors.push(`${d.file}: دليل منشور بأقل من ترشيحين`);
   }
@@ -149,11 +151,15 @@ for (const d of docs) {
 }
 
 /* ---------- 5b. خط الإنتاج ---------- */
+// بقرار حسام في 2026-09-03 صار للموقع حالة ثالثة: هيكل منشور بلا نصّ.
+// `published: true` مع `stage: draft` تعني صفحةً تقول للزائر إنها لم تُكتب،
+// وهي `noindex` ولا تعرض منتجاً. أمّا `written` و`reviewed` فنصّ ناقص
+// المراجعة، ولا يُنشر.
 for (const d of docs) {
   const stage = d.data.stage ?? 'draft';
   const pub = d.data.published === true;
-  if (pub && stage !== 'published') {
-    errors.push(`${d.file}: published=true لكن stage="${stage}" — اضبط stage: published`);
+  if (pub && stage !== 'published' && stage !== 'draft') {
+    errors.push(`${d.file}: published=true مع stage="${stage}" — إمّا published (نصّ تام) أو draft (هيكل معلَن)`);
   }
   if (!pub && stage === 'published') {
     errors.push(`${d.file}: stage=published لكن published=false — تناقض`);

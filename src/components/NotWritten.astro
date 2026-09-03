@@ -1,0 +1,35 @@
+---
+/* الصفحة موجودة والنصّ لم يُكتب بعد.
+ *
+ * قرار حسام: أن يبقى هيكل الموقع كاملاً، وأن يُقال للزائر صراحةً حين يصل إلى
+ * قسم لم يُملأ — بدل أن يُخفى القسم فيبدو الموقع أصغر مما هو.
+ *
+ * ثلاثة قيود على هذه الصفحة:
+ *   ١. `noindex` دائماً. صفحة بلا محتوى لا تدخل نتائج البحث.
+ *   ٢. لا منتج ولا رابط شراء. الصفحة لا تبيع شيئاً.
+ *   ٣. الدعوة إلى الاتصال بريد ورسالة — لا نموذج ولا تخزين، فلا يتغيّر شيء
+ *      في سياسة الخصوصية.
+ */
+import { getCollection } from 'astro:content';
+import { t, type Lang } from '../i18n/ui';
+
+interface Props { lang: Lang; topic: string; }
+const { lang, topic } = Astro.props;
+const tr = t(lang);
+
+const subject = encodeURIComponent(`${tr('notwritten.subject')}: ${topic}`);
+const mail = `mailto:info@eldebosh.com?subject=${subject}`;
+const torget = (await getCollection('torget'))[0];
+const sms = `sms:${torget.data.phone}`;
+---
+
+<section class="notwritten panel">
+  <h2 class="panel-title">{tr('notwritten.title')}</h2>
+  <p>{tr('notwritten.lead')}</p>
+  <p>{tr('notwritten.ask')}</p>
+  <div class="notwritten-actions">
+    <a class="btn btn-volt" href={mail}>{tr('notwritten.mail')}</a>
+    <a class="btn btn-ghost" href={sms}>{tr('notwritten.sms')}</a>
+  </div>
+  <p class="source">{tr('notwritten.note')}</p>
+</section>

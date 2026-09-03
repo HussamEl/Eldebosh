@@ -1,11 +1,13 @@
 ---
 import Icon from './Icon.astro';
 import { PREVIEW } from '../lib/preview';
-interface Props { title: string; href: string; description?: string; tag?: string; problem?: boolean; icon?: string; draft?: boolean; }
-const { title, href, description, tag, problem = false, icon, draft = false } = Astro.props;
+import { t, type Lang } from '../i18n/ui';
+interface Props { title: string; href: string; description?: string; tag?: string; problem?: boolean; icon?: string; draft?: boolean; notWritten?: boolean; }
+const { title, href, description, tag, problem = false, icon, draft = false, notWritten = false } = Astro.props;
 /* في المعاينة وحدها. البناء المنشور لا يعرف هذه الحالة أصلاً — الصفحة غير
    المنشورة لا تُبنى — لكن المعاينة تبنيها، وكانت تعرضها كأنها حيّة. */
 const showDraft = PREVIEW && draft;
+const tr = t((Astro.params.lang as Lang) ?? 'sv');
 ---
 <article class={`card card-link${problem ? ' problem-card' : ''}`}>
   {icon && (
@@ -14,6 +16,7 @@ const showDraft = PREVIEW && draft;
   {problem && <div class="charge" aria-hidden="true"></div>}
   {tag && !problem && <span class="tag">{tag}</span>}
   {showDraft && <span class="tag tag-draft">Utkast — inte på sajten</span>}
+  {notWritten && <span class="tag tag-soon">{tr('notwritten.badge')}</span>}
   <h3><a class="stretch" href={href}>{title}</a></h3>
   {description && <p>{description}</p>}
 </article>

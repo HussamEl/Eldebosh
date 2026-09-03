@@ -107,6 +107,8 @@ when a party has nothing to say.
 
 | EB-024 | Claude Code | 2026-09-03 18:43 | Fifth cause: Pagefind index is the tool's output, not ours · gate green | Hussam |
 
+| EB-025 | Claude Code | 2026-09-03 19:27 | Skeletons published as declared placeholders by Hussam's decision · I-016 | Hussam |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

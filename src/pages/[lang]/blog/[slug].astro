@@ -1,5 +1,6 @@
 ---
 import { render } from 'astro:content';
+import NotWritten from '../../../components/NotWritten.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import ProductCard from '../../../components/ProductCard.astro';
@@ -23,10 +24,14 @@ const { entry } = Astro.props;
 const lang = Astro.params.lang as Lang;
 const tr = t(lang);
 const { Content } = await render(entry);
+/* `stage: draft` تعني: الهيكل قائم والنصّ لم يُكتب. تُعرض للزائر
+   كصفحة تقول ذلك صراحةً، ولا تدخل نتائج البحث. */
+const notWritten = entry.data.stage === 'draft';
 
 const solutions = await docs('solutions', lang);
 const parent = solutions.find((s) => s.data.problem_id === entry.data.solution);
-const products = await getProducts(entry.data.products, lang);
+// صفحة لم تُكتب لا تبيع شيئاً: لا بطاقات منتجات ولا إفصاح تجاري.
+const products = notWritten ? [] : await getProducts(entry.data.products, lang);
 const here = url.post(lang, entry.data.slug);
 const crumbs = [
   { name: tr('site.name'), url: url.home(lang) },
@@ -40,7 +45,7 @@ const crumbs = [
   title={entry.data.title}
   description={entry.data.description}
   path={here}
-  noindex={entry.data.noindex}
+  noindex={entry.data.noindex || notWritten}
   schema={[breadcrumbSchema(crumbs), articleSchema({ ...entry.data, url: here })]}
 >
   <Breadcrumbs items={crumbs} />
@@ -51,7 +56,7 @@ const crumbs = [
       <p class="source">{tr('meta.updated')} {entry.data.updated.toISOString().slice(0, 10)}</p>
       {parent && <p><a href={url.solution(lang, parent.data.slug)}>← {parent.data.question}</a></p>}
     </header>
-    <div class="prose"><Content /></div>
+    {notWritten ? <NotWritten lang={lang} topic={entry.data.title} /> : <div class="prose"><Content /></div>}
 
     <SourceList sources={entry.data.sources} lang={lang} />
     {products.map((p) => <ProductCard id={p.id} lang={lang} compact />)}

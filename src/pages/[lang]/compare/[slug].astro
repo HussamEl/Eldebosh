@@ -1,5 +1,6 @@
 ---
 import { render } from 'astro:content';
+import NotWritten from '../../../components/NotWritten.astro';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import CompareTable from '../../../components/CompareTable.astro';
@@ -23,6 +24,9 @@ const { entry } = Astro.props;
 const lang = Astro.params.lang as Lang;
 const tr = t(lang);
 const { Content } = await render(entry);
+/* `stage: draft` تعني: الهيكل قائم والنصّ لم يُكتب. تُعرض للزائر
+   كصفحة تقول ذلك صراحةً، ولا تدخل نتائج البحث. */
+const notWritten = entry.data.stage === 'draft';
 
 const solutions = await docs('solutions', lang);
 const parent = solutions.find((s) => s.data.problem_id === entry.data.solution);
@@ -39,13 +43,14 @@ const crumbs = [
   title={entry.data.title}
   description={entry.data.description}
   path={here}
-  noindex={entry.data.noindex}
+  noindex={entry.data.noindex || notWritten}
   schema={[breadcrumbSchema(crumbs), articleSchema({ ...entry.data, url: here })]}
 >
   <Breadcrumbs items={crumbs} />
 
   <div class="wrap stack page-body">
-    <AffiliateDisclosure lang={lang} />
+    {/* لا إفصاح تجاري على صفحة لا تبيع شيئاً — يربك القارئ ويضعف الإفصاح نفسه. */}
+    {!notWritten && <AffiliateDisclosure lang={lang} />}
 
     <header class="page-head">
       <div class="charge" style="--fill:50%;max-width:5rem;" aria-hidden="true"></div>
@@ -55,9 +60,9 @@ const crumbs = [
       {parent && <p><a href={url.solution(lang, parent.data.slug)}>← {parent.data.question}</a></p>}
     </header>
 
-    <CompareTable ids={entry.data.products} lang={lang} />
+    {!notWritten && <CompareTable ids={entry.data.products} lang={lang} />}
 
-    <div class="prose"><Content /></div>
+    {notWritten ? <NotWritten lang={lang} topic={entry.data.title} /> : <div class="prose"><Content /></div>}
 
     <SourceList sources={entry.data.sources} lang={lang} />
 
