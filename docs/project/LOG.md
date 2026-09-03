@@ -99,6 +99,8 @@ when a party has nothing to say.
 
 | EB-020 | Claude Code | 2026-09-03 18:16 | Flight page published on Hussam's word · I-008 closed | Hussam |
 
+| EB-021 | Claude Code | 2026-09-03 18:23 | Four of five published · the fifth blocked by its own collection — I-014 | Hussam |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
