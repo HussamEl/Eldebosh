@@ -38,6 +38,9 @@ export default defineConfig({
   },
   redirects: {
     '/': '/sv/',
+    // المقال غيّر موضوعه فغيّر مساره. لم يكن مفهرساً ولا يقصده رابط خارجي،
+    // لكن سطراً واحداً أرخص من رابط مكسور إن كان أحدنا نسخ المسار في مكان.
+    '/sv/blog/darfor-laddar-mobilen-samre-pa-vintern/': '/sv/blog/powerbank-i-kyla/',
   },
   integrations: [
     mdx(),

@@ -117,6 +117,9 @@ when a party has nothing to say.
 | EB-029 | Claude Project | 2026-09-03 21:44 | Travel guide · winter boundary redrawn | EB-028 |
 | EB-030 | Claude Code | 2026-09-03 21:48 | Travel guide written · the slug premise measured and disputed · I-018 | EB-029 |
 
+| EB-031 | Claude Project | 2026-09-03 21:54 | Slug premise conceded · Anker source · eleventh page | EB-030 |
+| EB-032 | Claude Code | 2026-09-03 22:04 | **Battery cluster complete — 11 of 11 published** | Hussam |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

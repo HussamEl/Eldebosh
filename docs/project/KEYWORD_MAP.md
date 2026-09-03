@@ -1,4 +1,4 @@
-# خريطة الكلمات المفتاحية v1.1 — 33 صفحة
+# خريطة الكلمات المفتاحية v1.2 — 33 صفحة
 
 > خارطة طريق الأشهر الثلاثة الأولى.
 > **الهياكل مولّدة فعلياً داخل المشروع** كمسودات جاهزة للكتابة.
@@ -121,7 +121,7 @@
 | `mah-och-watt-vad-betyder-siffrorna` | `batteriet-tar-slut` |
 | `powerbank-pa-flyget` | `ingen-eluttag-pa-resan` |
 | `sa-forlanger-du-batteriets-livslangd` | `batteriet-tar-slut` |
-| `darfor-laddar-mobilen-samre-pa-vintern` ⭐ | `mobilen-dor-i-kylan` |
+| `powerbank-i-kyla` ⭐ | `mobilen-dor-i-kylan` |
 | `usb-c-standarden-vad-galler-nu` | `laddkabeln-gar-sonder` |
 
 ---
@@ -143,7 +143,7 @@ mobilen-dor-i-kylan
   ├── 10000-vs-20000-mah
   ├── mah-och-watt-vad-betyder-siffrorna
   ├── powerbank-pa-flyget
-  └── darfor-laddar-mobilen-samre-pa-vintern
+  └── powerbank-i-kyla
 ```
 
 **تبديل في v1.1:** خرجت `liten-powerbank-for-fickan` من الموجة الأولى ودخلت

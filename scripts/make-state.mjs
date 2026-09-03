@@ -66,7 +66,7 @@ const wave1 = [
   'batteriet-tar-slut', 'ingen-eluttag-pa-resan', 'mobilen-dor-i-kylan',
   'basta-powerbank-2026', 'magsafe-vs-qi2-vs-tradlos', 'powerbank-for-resa',
   'magnetisk-powerbank', '10000-vs-20000-mah', 'mah-och-watt-vad-betyder-siffrorna',
-  'powerbank-pa-flyget', 'darfor-laddar-mobilen-samre-pa-vintern',
+  'powerbank-pa-flyget', 'powerbank-i-kyla',
 ];
 
 /* «مكتوبة» تعني: لها نصّ حقيقي — أي stage عند written فما فوق. والمنشور

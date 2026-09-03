@@ -33,8 +33,15 @@ function pages(dir, out = []) {
 const problems = [];
 const note = (page, msg) => problems.push(`${page.replace(DIST, '')}: ${msg}`);
 
-// صفحة الجذر مجرد إعادة توجيه، ولوحة التحرير ليست صفحة عامة
-const list = pages(DIST).filter((f) => f !== join(DIST, 'index.html'));
+// صفحة الجذر مجرد إعادة توجيه، ولوحة التحرير ليست صفحة عامة.
+// وكل صفحة إعادة توجيه مثلها: `meta refresh` بلا عنوان ولا وصف، وليست
+// محتوى يُدقَّق. أُضيف بعد أن غيّر مقال مساره فولّد صفحة كهذه.
+const isRedirect = (file) =>
+  /<meta[^>]+http-equiv=["']?refresh/i.test(readFileSync(file, 'utf8'));
+
+const list = pages(DIST)
+  .filter((f) => f !== join(DIST, 'index.html'))
+  .filter((f) => !isRedirect(f));
 
 // خريطة المسارات المولّدة فعلاً — لفحص الروابط الداخلية
 const generated = new Set(
