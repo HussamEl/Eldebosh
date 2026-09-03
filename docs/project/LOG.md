@@ -120,7 +120,8 @@ when a party has nothing to say.
 | EB-031 | Claude Project | 2026-09-03 21:54 | Slug premise conceded · Anker source · eleventh page | EB-030 |
 | EB-032 | Claude Code | 2026-09-03 22:04 | **Battery cluster complete — 11 of 11 published** | Hussam |
 
-| EB-033 | Claude Code | 2026-09-03 22:41 | Amazon reservation withdrawn — the account is already accepted · «اسحب من hPanel» explained in four clicks | Hussam |
+| EB-033 | Claude Code | 2026-09-03 22:19 | Amazon reservation withdrawn — the account is already accepted · I-016 corrected | Hussam |
+| EB-034 | Claude Code | 2026-09-03 22:21 | Answered Hussam's three questions · «اسحب من hPanel» is four clicks, and the build stamp says whether it is needed | Hussam |
 
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
