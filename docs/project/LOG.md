@@ -94,6 +94,9 @@ when a party has nothing to say.
 | EB-017 | Claude Project | 2026-09-03 09:00 | Hussam declined to verify · flight file complete · Apple sources | Hussam |
 | EB-016 | Claude Code | 2026-09-03 09:06 | Cold paragraph sourced · rule 7b checks link shape | EB-017 |
 
+| EB-018 | Claude Project | 2026-09-03 10:58 | Flight page with four official sources · regional-page rule | EB-016 |
+| EB-019 | Claude Code | 2026-09-03 11:01 | Flight page written · I-013 recorded · nine of eleven have text | EB-018 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
