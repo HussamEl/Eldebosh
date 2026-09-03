@@ -70,11 +70,24 @@ for (const c of categories) {
 }
 
 /* ---------- 2. كل منتج منشور يحتاج مصدراً وتاريخ تحقق ---------- */
+// 2b — صفحة بائع ليست مصدراً لمواصفة. كل `source_url` في المشروع اليوم رابط
+// أمازون، والمواصفات مأخوذة من عنوان الإعلان: يكفي للربط، ولا يكفي للتوثيق.
+// تنبيه اليوم لأن أربعة منتجات حيّة عليه، ويصير خطأً حين تكتمل الموجة الثانية.
+// السجل: I-019.
+const RETAILER = /^(?:www\.)?(?:amazon\.[a-z.]+|amzn\.to|ebay\.[a-z.]+|cdon\.[a-z.]+|komplett\.se|netonnet\.se|elgiganten\.se|webhallen\.com)$/i;
+
 for (const p of products) {
   const d = p.data;
   if (d.verified === true && !d.demo) {
     if (!d.source_url) errors.push(`${p.file}: verified=true بلا source_url`);
     if (!d.last_verified) errors.push(`${p.file}: verified=true بلا last_verified`);
+    if (d.source_url) {
+      let host = '';
+      try { host = new URL(String(d.source_url)).hostname; } catch { host = ''; }
+      if (host && RETAILER.test(host)) {
+        warnings.push(`${p.file}: مصدر المواصفات صفحة بائع (${host}) لا صفحة مصنّع — I-019`);
+      }
+    }
   }
   if ('price' in d) errors.push(`${p.file}: حقل price ممنوع — استخدم price_band`);
 

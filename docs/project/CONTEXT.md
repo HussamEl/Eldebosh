@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — CONTEXT
 
-> **Version:** `v1.3` · 2026-09-02 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.4` · 2026-09-03 · canonical copy: `docs/project/` in the repository
 >
 > State, decisions and the reasons behind them. **Rules live in `INSTRUCTIONS`.**
 > Source of truth for code: `github.com/HussamEl/Eldebosh` — branch `main`, public.
@@ -282,32 +282,43 @@ UGREEN · safety and insurance terms for charging other people's batteries.
 
 | # | Task | Owner |
 |---|---|---|
-| 1 | 🔴 **Review the six written pages** — the bottleneck is here now | **Hussam** |
+| 1 | 🔴 **`source_url` and `last_verified` for the seven products that already carry an `asin`** — the second wave is blocked here, not on writing | **Claude Project** |
 | 2 | 🔴 **A real experience sentence and a frequency word per product** | **Hussam** |
 | 3 | 🔴 **Nine ASINs** — without them, nine products have no buy button | **Hussam** |
-| 4 | 🟠 Airline rules and cold-weather figures | **Gemini** |
-| 5 | 🟠 Publish the legal texts — they are written and waiting | **Hussam** |
-| 6 | 🟠 Tax authority consultation (`R-02`) | **Hussam** |
-| 7 | 🟡 Documented weight per product (`I-010`) | **Hussam** or Gemini |
-| 8 | 🟡 Build-time image step | Claude Code |
-| 9 | 🟡 Search Console and analytics | Shared |
+| 4 | 🟠 Amazon's literal Swedish disclosure sentence — twenty messages old | **Hussam**, unless Claude Project finds it published outside the account |
+| 5 | 🟠 Tax authority consultation (`R-02`) | **Hussam** |
+| 6 | 🟡 Documented weight per product (`I-010`) | **Hussam** or Gemini |
+| 7 | 🟡 Build-time image step | Claude Code |
+| 8 | 🟡 Search Console and analytics | Shared |
 
 **Done since `v1.0`:** the editor is pinned (`R-04`) · `metod` rewritten and
-published · four interface strings corrected · six cluster pages written.
+published · four interface strings corrected · **the eleven cluster pages
+written and published** · the six legal and standing pages published · the
+skeletons published as declared placeholders (`I-016`).
 
 **The nine missing:** Baseus MagPro · Cooper MagStand · EasyAcc bordsfläkt ·
 HUAWEI öppna hörlurar · LENCENT Reseadapter · Vikbart mobilstativ ·
 simarro magnetringar · UGREEN snabbladdare · UGREEN USB-C 240W.
 
 **The battery cluster** is the first wave: eleven pages around a single problem —
-the phone dying mid-day. Completing it activates the first category and creates
-enough surface to reach the three sales Amazon requires. **Eight of the eleven
-now have real text: two are published, six are written and waiting on review.**
-The three that remain are
-blocked on `I-008`, `I-010` and Gemini's research — so the constraint is no
-longer writing. It is review, and review is one person reading Swedish as a
-second language. That is why `npm run preview:file` exists: six pages in one
-file on a phone, read one, publish one.
+the phone dying mid-day. **All eleven are written and published**, and the
+category is active.
+
+The constraint has now moved three times, and naming where it sits keeps the
+next wave from being planned against the last one. It was writing. Then it was
+review — one person reading Swedish as a second language, which is why
+`npm run preview:file` exists: the whole wave in one file on a phone, read one,
+publish one. **It is now the product data.** Seven products carry an `asin` but
+no verified source, a pick must come from a `verified` product, and a guide is
+not published with fewer than two picks. So the second wave begins in the
+product files, not in prose.
+
+**On the three sales.** The Associates account already exists and the tag is
+live on amazon.se. What three qualifying sales unlock is the Product
+Advertising API, and with it the only lawful route to Amazon's images and
+prices (rule 6.3). Nothing about this site is under review by Amazon, and no
+page count is being judged. Any claim to the contrary needs a source before it
+is acted on.
 
 **One definition, so the count stops drifting:** *written* means the page has
 real text — `stage` at `written` or above. A published page is written too. The

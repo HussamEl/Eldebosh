@@ -123,6 +123,9 @@ when a party has nothing to say.
 | EB-033 | Claude Code | 2026-09-03 22:19 | Amazon reservation withdrawn — the account is already accepted · I-016 corrected | Hussam |
 | EB-034 | Claude Code | 2026-09-03 22:21 | Answered Hussam's three questions · «اسحب من hPanel» is four clicks, and the build stamp says whether it is needed | Hussam |
 
+| EB-035 | Claude Project | 2026-09-03 23:43 | Origin of the phantom rule found in its own CONTEXT §13 · second-wave plan | EB-034 |
+| EB-036 | Claude Code | 2026-09-03 23:49 | §13 rewritten · the second wave's blocker measured and disputed — I-019 · rule 2b | EB-035 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
