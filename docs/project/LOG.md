@@ -105,6 +105,8 @@ when a party has nothing to say.
 
 | EB-023 | Claude Code | 2026-09-03 18:39 | Fourth cause: a tie-prone sort made the build non-reproducible | Hussam |
 
+| EB-024 | Claude Code | 2026-09-03 18:43 | Fifth cause: Pagefind index is the tool's output, not ours · gate green | Hussam |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

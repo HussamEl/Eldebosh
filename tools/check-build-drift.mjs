@@ -38,10 +38,25 @@ if (!changed.length) {
   process.exit(0);
 }
 
+/* Pagefinds kompilerade index är inte vår utdata — det är verktygets.
+ * Filnamnen hashas ur innehållet av en plattformsspecifik binär, så samma
+ * källa ger olika namn på den här maskinen och på GitHubs runner. Att jämföra
+ * dem byte för byte är att jämföra verktyget, inte sajten. Allt annat under
+ * site/ jämförs som förut — inklusive varje HTML-sida, som är det drift-
+ * vakten finns för.
+ * Uteslutningen betalas med en existenskontroll längre ner: index och meta
+ * måste finnas, annars är sökningen trasig och det ska stoppa bygget. */
+const isPagefindIndex = (f) =>
+  /^site\/pagefind\/(index|fragment)\//.test(f) ||
+  /\.pf_meta$/.test(f) ||
+  f === 'site/pagefind/pagefind-entry.json';
+
 const drifted = [];
 let stampOnly = 0;
+let skippedIndex = 0;
 
 for (const file of changed) {
+  if (isPagefindIndex(file)) { skippedIndex++; continue; }
   let committed = '';
   try {
     committed = git(['show', `HEAD:${file}`]);
@@ -56,6 +71,16 @@ for (const file of changed) {
 }
 
 if (stampOnly) console.log(`${stampOnly} fil(er) skiljer sig bara i byggstämpel eller nyckelordning — ok.`);
+if (skippedIndex) console.log(`${skippedIndex} fil(er) i Pagefinds index hoppas över — verktygets utdata, inte vår.`);
+
+/* Priset för uteslutningen: indexet måste faktiskt finnas. */
+for (const [dir, ext] of [['site/pagefind/index', '.pf_index'], ['site/pagefind', '.pf_meta']]) {
+  const found = fs.existsSync(dir) && fs.readdirSync(dir).some((f) => f.endsWith(ext));
+  if (!found) {
+    console.error(`\n✗ Pagefind saknar ${ext} under ${dir}/ — sökningen är trasig.`);
+    process.exit(1);
+  }
+}
 
 if (drifted.length) {
   console.error(`\nsite/ skiljer sig från ett rent bygge i ${drifted.length} fil(er):`);
