@@ -91,8 +91,9 @@ when a party has nothing to say.
 
 | # | From | Time (Karlstad) | Subject | Replying to |
 |---|---|---|---|---|
-
-<!-- الرسالة الأولى بعد التصفير تُكتب هنا: EB-001 -->
+| EB-001 | Claude Code | 2026-09-04 21:24 | Looked at the four battery photos as I-019 asked · found P-03 printed 145W against 165 W in the file | new thread |
+| EB-002 | Hussam | 2026-09-04 21:33 | Checked his order: the ASIN in the file was a different model · gave the right link | EB-001 |
+| EB-003 | Claude Code | 2026-09-04 21:36 | P-03 corrected — wattage, ASIN, source and photo name · verified from our own photo · I-023 | EB-002 |
 
 <!-- COUNTER-RESET-END -->
 

@@ -1,10 +1,16 @@
 # منتج بحوزة صاحب المشروع ومستخدَم فعلاً.
-# ⚠️ ناقص قبل النشر: asin · source_url · last_verified · own_photos (صورة واحدة تكفي)
-# بعدها: verified: true و tested: false
+#
+# ⚠️ صُحِّح في 2026-09-04 — وكان خطأً مزدوجاً:
+#   القدرة كانت 165 W مأخوذةً من عنوان إعلان، والمطبوع على الجهاز 145W.
+#   والأخطر: ASIN كان B0DSPX4RQ5 — طرازٌ آخر لا الذي بحوزتنا. أي أن زرّ
+#   الشراء كان يبيع غير ما تصفه الصفحة. تحقّق حسام من سجلّ شرائه وأعطى
+#   الرابط الصحيح: B0BJQ7F16T.
+#
+# والمصدر الآن صورتُنا نحن، لا عنوان إعلان.
 id: ugreen-nexode-powerbank-25000
 code: P-03
 lang: sv
-name: "UGREEN Nexode Powerbank 25000 mAh 165 W"
+name: "UGREEN Nexode Powerbank 25000 mAh 145 W"
 brand: "UGREEN"
 category: laddning-och-strom
 subcategory: powerbanks
@@ -12,14 +18,15 @@ problems_solved:
   - ingen-eluttag-pa-resan
   - batteriet-tar-slut
 
-# مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
+# «Effekt» مقروءة من المطبوع على الجهاز في صورتنا — لا من عنوان إعلان.
+# والسعة والكابلان من صفحة المنتج.
 key_specs:
   "Kapacitet": "25 000 mAh"
-  "Effekt": "165 W"
+  "Effekt": "145 W"
   "Kablar": "2 inbyggda USB-C-kablar"
 
 pros:
-  - "165 W räcker även till en bärbar dator, inte bara telefon och surfplatta."
+  - "145 W räcker även till en bärbar dator, inte bara telefon och surfplatta."
   - "Två inbyggda kablar betyder färre lösa sladdar i väskan."
   - "25 000 mAh ger fler laddningar innan den själv behöver laddas."
 
@@ -37,19 +44,22 @@ owned_since: 2026-01-01
 tested: false          # ← true بعد إضافة صورة واحدة على الأقل في own_photos
 usage_period: "sedan januari 2026"
 own_photos:
-  - src: "/uploads/P-03-1-B0DSPX4RQ5.webp"
-    alt: "UGREEN Nexode powerbank 25000 mAh liggande, portsidan synlig"
+  - src: "/uploads/P-03-1-B0BJQ7F16T.webp"
+    alt: "UGREEN Nexode powerbank liggande, med märkningen 145W tryckt på höljet."
     caption: "Vår egen bild."
   - src: "/uploads/P-03-2.webp"
     alt: "UGREEN Nexode powerbank ansluten till en mobil router med kabel"
 hands_on_limits:
-  - "Vi har inte mätt uteffekten med mätinstrument — siffrorna nedan kommer från tillverkarens specifikation."
+  - "Vi har inte mätt uteffekten med mätinstrument. Effekten är avläst från märkningen på enheten, inte uppmätt av oss."
   - "Vi har inte jämfört laddtiden mot tillverkarens uppgift under kontrollerade former."
   - "Vi har inte använt den i sträng vinterkyla under längre tid."
   - "Vi har inte testat hur kapaciteten står sig efter flera hundra laddcykler."
 
 # === الربط بأمازون ===
-asin: "B0DSPX4RQ5"               # ← عشر خانات من رابط المنتج بعد /dp/
-source_url: "https://www.amazon.se/UGREEN-Nexode-Powerbank-25000mAh-inbyggda/dp/B0DSPX4RQ5"         # ← رابط صفحة المنتج
-last_verified: 2026-08-20
-verified: true        # ← true بعد اكتمال asin و source_url و last_verified
+asin: "B0BJQ7F16T"
+source_url: "https://www.amazon.se/dp/B0BJQ7F16T"   # للربط لا للمواصفة
+
+# مصدر المواصفة: صورتنا. «145W» مطبوعة على الجسم ومقروءة فيها. القاعدة 2b · I-019.
+spec_photo: "/uploads/P-03-1-B0BJQ7F16T.webp"
+last_verified: 2026-09-04
+verified: true

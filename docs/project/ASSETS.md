@@ -21,8 +21,8 @@
 | `P-02-2` | INIU Magnetisk Powerbank 10000 mAh | `P-02-2.webp` | 2 من 2 | 18 KB |
 | `P-21-1` | UGREEN billaddare, 3 portar | `P-21-1-B0B3D9XW8X.webp` | 1 من 2 | 60 KB |
 | `P-21-2` | UGREEN billaddare, 3 portar | `P-21-2.webp` | 2 من 2 | 47 KB |
-| `P-03-1` | UGREEN Nexode Powerbank 25000 mAh 165 W | `P-03-1-B0DSPX4RQ5.webp` | 1 من 2 | 8 KB |
-| `P-03-2` | UGREEN Nexode Powerbank 25000 mAh 165 W | `P-03-2.webp` | 2 من 2 | 20 KB |
+| `P-03-1` | UGREEN Nexode Powerbank 25000 mAh 145 W | `P-03-1-B0BJQ7F16T.webp` | 1 من 2 | 8 KB |
+| `P-03-2` | UGREEN Nexode Powerbank 25000 mAh 145 W | `P-03-2.webp` | 2 من 2 | 20 KB |
 | `P-23-1` | UGREEN USB-C-kabel 240 W med display | `P-23-1-B0F62S8P1T.webp` | 1 من 1 | 45 KB |
 | `P-20-1` | UGREEN USB-C 240W / 40 Gbps, 1 m | `P-20-1-B0GV79Z1W6-v2.webp` | 1 من 1 | 131 KB |
 | `P-04-1` | UGREEN Zapix Magnetisk Powerbank 10000 mAh | `P-04-1-B0CH33F5P2.webp` | 1 من 2 | 6 KB |
