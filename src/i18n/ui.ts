@@ -71,7 +71,11 @@ export const ui = {
     'sources.open': 'Öppna källan',
     'sources.accessed': 'Hämtad',
     'rating.based': 'kundbetyg hos',
-    'amazon.disclosure': 'Som Amazon-associerad tjänar vi pengar på kvalificerade köp.',
+    /* إفصاح أمازون. الصيغة الإنجليزية هي القياسية في البرنامج؛ والسويدية هنا
+       ترجمتها بلفظ البرنامج السويدي «Amazon-partner» بدل «Amazon-associerad»
+       الذي كان ترجمةً حرفية لا تُقال بالسويدية. تُستبدَل بالصيغة الحرفية من
+       حساب الشراكة إن اختلفت — TASKS · T4. */
+    'amazon.disclosure': 'Som Amazon-partner tjänar vi pengar på kvalificerade köp.',
     'notwritten.title': 'Den här sidan är inte skriven än',
     'notwritten.lead': 'Vi visar hela kartan, även det vi inte hunnit skriva. Rubriken finns, innehållet inte — hellre så än en text vi inte kan stå för.',
     'notwritten.ask': 'Har du en erfarenhet av det här, eller en fråga du vill ha svar på? Skriv till oss — vi läser allt, och frågorna avgör vilken sida vi skriver härnäst.',

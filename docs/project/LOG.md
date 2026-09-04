@@ -149,6 +149,9 @@ when a party has nothing to say.
 | EB-063 | Hussam | 2026-09-04 13:35 | Verified P-20 himself from the Amazon listing · delegated the four legal pages · asked for a handover | EB-062 |
 | EB-064 | Claude Code | 2026-09-04 13:52 | Four pages written and live · draft guard now fails the build · P-20 verified on Hussam's word · **HANDOVER.md** | EB-063 |
 
+| EB-065 | Hussam | 2026-09-04 14:05 | Approved the halo photos · asked why the 8K cable is not published · asked what the Amazon sentence is | EB-064 |
+| EB-066 | Claude Code | 2026-09-04 14:15 | The cable is live on the home page — what is missing is a guide · the disclosure was already live, its Swedish wording corrected | EB-065 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
