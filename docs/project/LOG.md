@@ -137,6 +137,9 @@ when a party has nothing to say.
 | EB-055 | Claude Project | 2026-09-04 11:33 | Resent what never arrived: P-21, P-22, the slow-charging page · disputed I-019 | EB-054 |
 | EB-056 | Claude Code | 2026-09-04 11:40 | «أبقِ الهيكل» in force — published and stage separated · spec_photo accepted as a second source | Hussam |
 
+| EB-057 | Hussam | 2026-09-04 12:30 | Asked why the documented photo procedure was forgotten — it is his to name and send, mine to process and push | EB-056 |
+| EB-058 | Claude Code | 2026-09-04 12:30 | Recipe measured from the sixteen uploaded photos and turned into `make-photo.mjs` · PHOTO_NAMING corrected to v1.1 | EB-057 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
