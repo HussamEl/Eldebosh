@@ -86,6 +86,9 @@ when a party has nothing to say.
 | # | From | Time (Karlstad) | Subject | Replying to |
 |---|---|---|---|---|
 | EB-001 | Claude Code | 2026-09-05 00:55 | Hero on tablet: tagline wrapped to two lines with the search bar stranded below · two-column breakpoint lowered 60em → 48em and the search field narrowed to 17rem | Hussam |
+| EB-002 | Claude Code | 2026-09-05 01:05 | The site had not changed: the fix sat on a session branch, and the live site builds from `main` alone | Hussam |
+| EB-003 | Hussam | 2026-09-05 01:08 | Push straight to `main` from now on — no parallel branch, no duplicated work | EB-002 |
+| EB-004 | Claude Code | 2026-09-05 01:10 | Merged into `main` and the session branch deleted · recorded as `D-028` | EB-003 |
 
 <!-- COUNTER-RESET-END -->
 
