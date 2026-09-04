@@ -40,8 +40,12 @@ own_photos:
   - src: "/uploads/P-02-1-B0DMT6FMT7.webp"
     alt: "INIU magnetisk powerbank sedd uppifrån, baksidan uppåt"
     caption: "Vår egen bild."
-  - src: "/uploads/P-02-2.webp"
-    alt: "INIU och en annan magnetisk powerbank hållna i handen bredvid varandra"
+  - src: "/uploads/P-02-2-v2.webp"
+    alt: "INIU magnetisk powerbank med Qi2-märkt laddring och handledsrem."
+    caption: "Vår egen bild."
+  - src: "/uploads/P-02-3.webp"
+    alt: "Baksidan av INIU-powerbanken med handledsremmen fäst."
+    caption: "Vår egen bild."
 hands_on_limits:
   - "Vi har inte mätt uteffekten med mätinstrument — siffrorna nedan kommer från tillverkarens specifikation."
   - "Vi har inte jämfört laddtiden mot tillverkarens uppgift under kontrollerade former."
@@ -52,4 +56,7 @@ hands_on_limits:
 asin: "B0DMT6FMT7"               # ← عشر خانات من رابط المنتج بعد /dp/
 source_url: "https://www.amazon.se/INIU-Magnetiskt-Powerbank-Qi2-certifierad-Snabbladdning/dp/B0DMT6FMT7"         # ← رابط صفحة المنتج
 last_verified: 2026-08-20
+# تحقّق المالك في 2026-09-04: فتح حسام صفحة أمازون وقارنها بالجهاز الذي بيده
+# وأكّد أنهما الطراز نفسه. مصدرٌ مسمّى ومؤرَّخ — القاعدة 2b · I-019.
+owner_checked: 2026-09-04
 verified: true        # ← true بعد اكتمال asin و source_url و last_verified

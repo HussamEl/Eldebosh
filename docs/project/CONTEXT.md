@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — CONTEXT
 
-> **Version:** `v1.6` · 2026-09-04 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.7` · 2026-09-05 · canonical copy: `docs/project/` in the repository
 >
 > State, decisions and the reasons behind them. **Rules live in `INSTRUCTIONS`.**
 > Source of truth for code: `github.com/HussamEl/Eldebosh` — branch `main`, public.
@@ -330,6 +330,14 @@ publish one. **It is now the product data.** Seven products carry an `asin` but
 no verified source, a pick must come from a `verified` product, and a guide is
 not published with fewer than two picks. So the second wave begins in the
 product files, not in prose.
+
+**On what counts as a source.** Since 2026-09-05 there are three, and they are
+not ranked by strength: the manufacturer's page, `spec_photo` — our own picture
+of what is printed on the device — and `owner_checked`, Hussam's dated
+confirmation that the listing he opened is the device in his hand. The third was
+added because most devices print nothing, so requiring a printed spec punished
+the owner for the manufacturer's design. It is also the one that caught a wrong
+ASIN on a live page, which no photograph could have.
 
 **On the three sales.** The Associates account already exists and the tag is
 live on amazon.se. What three qualifying sales unlock is the Product

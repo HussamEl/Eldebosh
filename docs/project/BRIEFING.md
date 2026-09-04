@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — BRIEFING
 
-> **Version:** `v1.3` · 2026-09-04 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.4` · 2026-09-05 · canonical copy: `docs/project/` in the repository
 >
 > Written to be read with no prior context. It assumes no knowledge of earlier
 > conversations.
@@ -80,8 +80,12 @@ npm run preview:file   one preview file that opens on a phone
 
 **All are enforced automatically. The build fails on a violation, by design.**
 
-**1. Nothing invented.** Every product claim traces to a documented source. And
-if you are unsure how a tool works, **verify before explaining it**.
+**1. Nothing invented.** Every product claim traces to a documented source, and
+a source is one of three named things: the manufacturer's page, our own
+photograph of what is printed on the device, or the owner's dated confirmation
+that the listing he opened is the device in his hand. A retailer's title alone
+is not a source. And if you are unsure how a tool works, **verify before
+explaining it**.
 
 **2. Experience has three states.** Tested with evidence · owned with no
 performance claim · not owned. `tested: true` requires five fields, the most
@@ -142,8 +146,7 @@ not an accident.
 | # | Task | Owner |
 |---|---|---|
 | 1 | 🔴 **The cable guide** — two verified cables exist, so it is unblocked. What it needs is `pros`, `cons`, `best_for` and the text | **Claude Project** |
-| 2 | 🔴 **A spec source for the rest** — a manufacturer page, or our own photo of what is printed on the device | **Claude Project** + **Hussam** |
-| 3 | 🔴 **Eight Amazon numbers** — without one, a product has no buy button | **Hussam** |
+| 2 | 🔴 **Eight Amazon numbers** — without one, a product has no buy button | **Hussam** |
 | 4 | 🟠 Review the two written pages — and not the cable one before the other, it refers to it | **Hussam** |
 | 5 | 🟠 Confirm Amazon's own Swedish disclosure wording — a serviceable sentence is already live | **Hussam** |
 | 6 | 🟠 Tax consultation on affiliate income | **Hussam** |

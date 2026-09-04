@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — INSTRUCTIONS
 
-> **Version:** `v1.8` · 2026-09-04 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.9` · 2026-09-05 · canonical copy: `docs/project/` in the repository
 >
 > **The governing document.** Where anything else conflicts with this, this wins.
 > Current state: `CONTEXT`. Source of truth for code: `github.com/HussamEl/Eldebosh`.
@@ -50,9 +50,8 @@ timestamp corrupts the whole log.
 The log lives at `docs/project/LOG.md` and settles any dispute.
 `npm run verify` prints the next free number and the correct time, ready to copy.
 
-**The counter was reset to `EB-001` on 2026-09-04**, and this reset is different
-from the two before it. It marks a handover: three fresh conversations open on a
-delivered project rather than on a transcript. Nothing before it is cited by its
+**The counter was reset to `EB-001` on 2026-09-05.** It marks a handover: fresh
+conversations opening on a delivered project rather than on a transcript. Nothing before it is cited by its
 old number — refer to earlier work by subject, or by its `I-###` issue, both of
 which survive a reset.
 

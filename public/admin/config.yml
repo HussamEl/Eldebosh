@@ -128,6 +128,7 @@ collections:
           - { name: accessed, label: "تاريخ الاطلاع", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
       - { name: source_url, label: "رابط المصدر (إلزامي للنشر)", widget: string, required: false }
       - { name: spec_photo, label: "صورة المواصفة — المطبوع على الجهاز", widget: image, required: false, hint: "تُكتب هنا إحدى صورك أعلاه، تلك التي يُقرأ فيها المطبوع على الجهاز أو علبته. بها يصحّ التوثيق بلا صفحة مصنّع — وإن لم تكن من صورك سقط البناء" }
+      - { name: owner_checked, label: "تحققتُ بنفسي من صفحة البائع", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, required: false, hint: "التاريخ الذي فتحتَ فيه صفحة المنتج وقارنتها بالجهاز الذي بيدك وأكّدت أنهما الطراز نفسه. يكفي وحده للتوثيق حين لا يكون على الجهاز شيء مطبوع" }
       - { name: last_verified, label: "تاريخ آخر تحقق", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, required: false }
 
   # ============ صفحات الحلول — سويدي ============

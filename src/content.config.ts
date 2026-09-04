@@ -87,6 +87,10 @@ const products = defineCollection({
        أقوى من صفحة المصنّع في موضع واحد: المصنّع يصف طرازاً، وصورتنا تصف
        الجهاز الذي بحوزتنا بعينه. القاعدة `2b` في validate.mjs. */
     spec_photo: z.string().optional(),
+    /* تحقّق المالك: فتح صفحة البائع وقارنها بالجهاز الذي بيده وأكّد أنهما
+       واحد، بتاريخه. مصدرٌ مسمّى ومسؤولٌ عنه شخص — وقد أثبت قيمته يوم كشف
+       أنّ ASIN في P-03 كان لطراز آخر. القاعدة `2b`. */
+    owner_checked: z.coerce.date().optional(),
     hands_on: z.array(z.string()).default([]),   // ملاحظات من الاستخدام الفعلي
     hands_on_limits: z.array(z.string()).default([]), // حدود التجربة — إلزامي للنزاهة
     video_url: z.string().url().optional(),

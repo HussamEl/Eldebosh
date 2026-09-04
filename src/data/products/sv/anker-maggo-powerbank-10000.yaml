@@ -42,8 +42,9 @@ own_photos:
     caption: "Vår egen bild."
   - src: "/uploads/P-01-2.webp"
     alt: "Anker MagGo powerbank stående upprätt, magnetsidan framåt"
-  - src: "/uploads/P-01-3.webp"
-    alt: "Två magnetiska powerbanks hållna i handen bredvid varandra för storleksjämförelse"
+  - src: "/uploads/P-01-3-v2.webp"
+    alt: "Anker MagGo med utfällt stativ och displayen tänd på 100 procent."
+    caption: "Vår egen bild."
 hands_on:
   - "Vi har ägt och använt den här sedan juni 2025 och den har fungerat som den ska i vår vardag."
   - "Den har följt med i väskan och används regelbundet, inte bara vid enstaka tillfällen."
@@ -58,4 +59,7 @@ hands_on_limits:
 asin: "B0CFDPQXN4"               # ← عشر خانات من رابط المنتج بعد /dp/
 source_url: "https://www.amazon.se/Anker-powerbank-10000mAh-display-stativ/dp/B0CFDPQXN4"         # ← رابط صفحة المنتج
 last_verified: 2026-08-20
+# تحقّق المالك في 2026-09-04: فتح حسام صفحة أمازون وقارنها بالجهاز الذي بيده
+# وأكّد أنهما الطراز نفسه. مصدرٌ مسمّى ومؤرَّخ — القاعدة 2b · I-019.
+owner_checked: 2026-09-04
 verified: true        # ← true بعد اكتمال asin و source_url و last_verified

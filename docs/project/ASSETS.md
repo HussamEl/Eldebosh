@@ -4,7 +4,7 @@
 > مثال: «عدّل بطاقة `P-03`» أو «الشعار `B-02` صغير جداً».
 > الصور موجودة في المستودع، وتُقرأ من مسارها بلا رفع ولا استهلاك.
 
-> يُولَّد آلياً بـ `npm run assets` · آخر تحديث: 2026-09-04
+> يُولَّد آلياً بـ `npm run assets` · آخر تحديث: 2026-09-05
 
 ---
 
@@ -16,9 +16,10 @@
 |---|---|---|---|---|
 | `P-01-1` | Anker MagGo Powerbank 10000 mAh | `P-01-1-B0CFDPQXN4.webp` | 1 من 3 | 9 KB |
 | `P-01-2` | Anker MagGo Powerbank 10000 mAh | `P-01-2.webp` | 2 من 3 | 8 KB |
-| `P-01-3` | Anker MagGo Powerbank 10000 mAh | `P-01-3.webp` | 3 من 3 | 18 KB |
-| `P-02-1` | INIU Magnetisk Powerbank 10000 mAh | `P-02-1-B0DMT6FMT7.webp` | 1 من 2 | 15 KB |
-| `P-02-2` | INIU Magnetisk Powerbank 10000 mAh | `P-02-2.webp` | 2 من 2 | 18 KB |
+| `P-01-3` | Anker MagGo Powerbank 10000 mAh | `P-01-3-v2.webp` | 3 من 3 | 20 KB |
+| `P-02-1` | INIU Magnetisk Powerbank 10000 mAh | `P-02-1-B0DMT6FMT7.webp` | 1 من 3 | 15 KB |
+| `P-02-2` | INIU Magnetisk Powerbank 10000 mAh | `P-02-2-v2.webp` | 2 من 3 | 21 KB |
+| `P-02-3` | INIU Magnetisk Powerbank 10000 mAh | `P-02-3.webp` | 3 من 3 | 31 KB |
 | `P-21-1` | UGREEN billaddare, 3 portar | `P-21-1-B0B3D9XW8X.webp` | 1 من 2 | 60 KB |
 | `P-21-2` | UGREEN billaddare, 3 portar | `P-21-2.webp` | 2 من 2 | 47 KB |
 | `P-03-1` | UGREEN Nexode Powerbank 25000 mAh 145 W | `P-03-1-B0BJQ7F16T.webp` | 1 من 2 | 8 KB |

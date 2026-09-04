@@ -53,4 +53,7 @@ hands_on_limits:
 asin: "B0CH33F5P2"               # ← عشر خانات من رابط المنتج بعد /dp/
 source_url: "https://www.amazon.se/dp/B0CH33F5P2"         # ← رابط صفحة المنتج
 last_verified: 2026-08-20
+# تحقّق المالك في 2026-09-04: فتح حسام صفحة أمازون وقارنها بالجهاز الذي بيده
+# وأكّد أنهما الطراز نفسه. مصدرٌ مسمّى ومؤرَّخ — القاعدة 2b · I-019.
+owner_checked: 2026-09-04
 verified: true        # ← true بعد اكتمال asin و source_url و last_verified
