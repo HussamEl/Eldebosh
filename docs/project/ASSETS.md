@@ -38,7 +38,9 @@
 | `P-18-2` | HUAWEI öppna hörlurar (ljusblå) | `P-18-2.webp` | 2 من 2 | 59 KB |
 | `P-16` | LENCENT Reseadapter Sverige till Storbritannien | — | **بلا صورة** | — |
 | `P-17` | Ocetea USB-C till USB-C 100W, 30 cm | — | **بلا صورة** | — |
+| `P-21` | UGREEN billaddare, 3 portar | — | **بلا صورة** | — |
 | `P-19-1` | UGREEN snabbladdare USB-C | `P-19-1.webp` | 1 من 1 | 34 KB |
+| `P-22` | UGREEN USB-C-kabel 100 W, flätad | — | **بلا صورة** | — |
 | `P-23` | UGREEN USB-C-kabel 240 W med display | — | **بلا صورة** | — |
 | `P-20-1` | UGREEN USB-C 240W / 40 Gbps, 1 m | `P-20-1.webp` | 1 من 1 | 45 KB |
 

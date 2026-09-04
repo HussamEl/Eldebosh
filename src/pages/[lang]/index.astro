@@ -96,7 +96,7 @@ const altPaths = { sv: url.home('sv'), en: url.home('en') };
         <SectionHead title={tr('home.problems')} lead={tr('home.problems.lead')} fill="22%" />
         <div class="grid grid-3">
           {problems.map((s) => (
-            <ContentCard problem icon={s.data.icon} title={s.data.question} href={url.solution(lang, s.data.slug)} description={s.data.description} draft={!s.data.published} notWritten={s.data.stage === 'draft'} />
+            <ContentCard problem icon={s.data.icon} title={s.data.question} href={url.solution(lang, s.data.slug)} description={s.data.description} draft={!s.data.published} notWritten={s.data.stage === 'draft' || s.data.stage === 'written'} />
           ))}
         </div>
       </div>
@@ -122,7 +122,7 @@ const altPaths = { sv: url.home('sv'), en: url.home('en') };
         <SectionHead title={tr('home.guides')} fill="55%" />
         <div class="grid grid-3">
           {guides.slice(0, 4).map((g) => (
-            <ContentCard title={g.data.title} href={url.guide(lang, g.data.slug)} description={g.data.description} tag={tr('nav.guides')} draft={!g.data.published} notWritten={g.data.stage === 'draft'} />
+            <ContentCard title={g.data.title} href={url.guide(lang, g.data.slug)} description={g.data.description} tag={tr('nav.guides')} draft={!g.data.published} notWritten={g.data.stage === 'draft' || g.data.stage === 'written'} />
           ))}
         </div>
       </div>
@@ -135,7 +135,7 @@ const altPaths = { sv: url.home('sv'), en: url.home('en') };
         <SectionHead title={tr('home.compare')} fill="68%" />
         <div class="grid grid-3">
           {comparisons.slice(0, 3).map((c) => (
-            <ContentCard title={c.data.title} href={url.comparison(lang, c.data.slug)} description={c.data.description} tag={tr('nav.compare')} draft={!c.data.published} notWritten={c.data.stage === 'draft'} />
+            <ContentCard title={c.data.title} href={url.comparison(lang, c.data.slug)} description={c.data.description} tag={tr('nav.compare')} draft={!c.data.published} notWritten={c.data.stage === 'draft' || c.data.stage === 'written'} />
           ))}
         </div>
       </div>
@@ -159,7 +159,7 @@ const altPaths = { sv: url.home('sv'), en: url.home('en') };
         <SectionHead title={tr('home.posts')} fill="88%" />
         <div class="grid grid-3">
           {posts.slice(0, 4).map((p) => (
-            <ContentCard title={p.data.title} href={url.post(lang, p.data.slug)} description={p.data.description} draft={!p.data.published} notWritten={p.data.stage === 'draft'} />
+            <ContentCard title={p.data.title} href={url.post(lang, p.data.slug)} description={p.data.description} draft={!p.data.published} notWritten={p.data.stage === 'draft' || p.data.stage === 'written'} />
           ))}
         </div>
       </div>

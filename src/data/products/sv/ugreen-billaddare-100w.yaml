@@ -1,0 +1,37 @@
+# المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
+# ⚠️ ناقص قبل النشر: own_photos (P-21-1 و P-21-2) · pros · cons · best_for
+# المواصفات أدناه مقروءة من صورتي حسام للجهاز نفسه — لا من عنوان إعلان.
+# عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
+id: ugreen-billaddare-100w
+code: P-21
+lang: sv
+name: "UGREEN billaddare, 3 portar"
+brand: "UGREEN"
+category: laddning-och-strom
+subcategory: billaddning
+problems_solved:
+  - mobilen-laddar-langsamt
+
+# مطبوعة على وجه الجهاز وظاهرة في صورتنا
+key_specs:
+  "Portar": "USB-C1, USB-A, USB-C2"
+  "Märkning på enheten": "100 W"
+
+pros: []
+cons: []
+best_for: ""
+price_band: mid
+
+# === الملكية والتجربة ===
+owned: true
+tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
+usage_period: ""
+own_photos: []         # ← P-21-1 و P-21-2 عند حسام، لم تصلا الملفات بعد
+hands_on: []
+hands_on_limits: []
+
+# === الربط ===
+asin: "B0B3D9XW8X"
+source_url: "https://www.amazon.se/dp/B0B3D9XW8X"   # صفحة بائع — المصدر الحقيقي هو صورتنا (I-019)
+last_verified: 2026-09-04
+verified: false        # ← تُقلب حين تصل الصورة التي تُظهر المطبوع

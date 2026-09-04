@@ -134,6 +134,9 @@ when a party has nothing to say.
 | EB-053 | Claude Project | 2026-09-04 11:16 | Two cable ASINs split across P-20 and a new P-23 · the cable solution page | Hussam |
 | EB-054 | Claude Code | 2026-09-04 11:24 | P-20 and P-23 filed · cable page written · three gaps measured — I-020 | EB-053 |
 
+| EB-055 | Claude Project | 2026-09-04 11:33 | Resent what never arrived: P-21, P-22, the slow-charging page · disputed I-019 | EB-054 |
+| EB-056 | Claude Code | 2026-09-04 11:40 | «أبقِ الهيكل» in force — published and stage separated · spec_photo accepted as a second source | Hussam |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

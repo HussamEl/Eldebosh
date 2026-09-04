@@ -1,0 +1,39 @@
+# المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
+# ⚠️ ناقص قبل النشر: own_photos (P-22-1) · pros · cons · best_for
+# ⚠️ الطول والقدرة غير مطبوعين على الكابل — لا تُقرآن من صورتنا (I-019)
+# عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
+id: ugreen-usb-c-kabel-100w
+code: P-22
+lang: sv
+name: "UGREEN USB-C-kabel 100 W, flätad"
+brand: "UGREEN"
+category: laddning-och-strom
+subcategory: kablar
+problems_solved:
+  - laddkabeln-gar-sonder
+
+# «Hölje» مقروء من صورتنا · «Effekt» و«Längd» من عنوان الإعلان وحده
+key_specs:
+  "Effekt": "100 W"
+  "Längd": "1 m"
+  "Kontakter": "USB-C till USB-C"
+  "Hölje": "Flätat"
+
+pros: []
+cons: []
+best_for: ""
+price_band: budget
+
+# === الملكية والتجربة ===
+owned: true
+tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
+usage_period: ""
+own_photos: []         # ← P-22-1 عند حسام، لم تصل الملفات بعد
+hands_on: []
+hands_on_limits: []
+
+# === الربط ===
+asin: "B08D6NCQ1Z"
+source_url: "https://www.amazon.se/dp/B08D6NCQ1Z"   # صفحة بائع — المصنّع ما زال ناقصاً (I-019)
+last_verified: 2026-09-04
+verified: false

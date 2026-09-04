@@ -26,9 +26,13 @@ const { entry } = Astro.props;
 const lang = Astro.params.lang as Lang;
 const tr = t(lang);
 const { Content } = await render(entry);
-/* `stage: draft` تعني: الهيكل قائم والنصّ لم يُكتب. تُعرض للزائر
-   كصفحة تقول ذلك صراحةً، ولا تدخل نتائج البحث. */
-const notWritten = entry.data.stage === 'draft';
+/* الحقلان مستقلان بقرار حسام في 2026-09-04 (I-020):
+     published  هل الرابط موجود على الموقع؟
+     stage      إلى أين وصل النصّ؟
+   فـ`draft` هيكل بلا نصّ، و`written` نصٌّ كُتب وينتظر المراجعة السويدية.
+   كلاهما يُعرض للزائر كصفحة تقول صراحةً إنها لم تُنشر بعد، وكلاهما خارج
+   نتائج البحث. لا يظهر النصّ إلا عند `stage: published`. */
+const notWritten = entry.data.stage === 'draft' || entry.data.stage === 'written';
 
 const [guides, comparisons, posts] = await Promise.all([
   docs('guides', lang),

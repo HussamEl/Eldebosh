@@ -70,10 +70,12 @@ for (const c of categories) {
 }
 
 /* ---------- 2. كل منتج منشور يحتاج مصدراً وتاريخ تحقق ---------- */
-// 2b — صفحة بائع ليست مصدراً لمواصفة. كل `source_url` في المشروع اليوم رابط
-// أمازون، والمواصفات مأخوذة من عنوان الإعلان: يكفي للربط، ولا يكفي للتوثيق.
-// تنبيه اليوم لأن أربعة منتجات حيّة عليه، ويصير خطأً حين تكتمل الموجة الثانية.
-// السجل: I-019.
+// 2b — صفحة بائع ليست مصدراً لمواصفة. عنوان الإعلان يكتبه البائع لا المصنّع.
+// وبقرار 2026-09-04 للمواصفة مصدران مقبولان لا واحد (I-019):
+//   (أ) صفحة المصنّع في `source_url`
+//   (ب) `spec_photo` — صورةٌ من تصويرنا تُظهر المطبوع على الجهاز أو علبته
+// و(ب) ليست تنازلاً: المصنّع يصف طرازاً، وصورتنا تصف الجهاز الذي بحوزتنا.
+// تنبيه اليوم لأن أربعة منتجات حيّة بلا أيّهما، ويصير خطأً حين تصل الصور.
 const RETAILER = /^(?:www\.)?(?:amazon\.[a-z.]+|amzn\.to|ebay\.[a-z.]+|cdon\.[a-z.]+|komplett\.se|netonnet\.se|elgiganten\.se|webhallen\.com)$/i;
 
 for (const p of products) {
@@ -81,13 +83,17 @@ for (const p of products) {
   if (d.verified === true && !d.demo) {
     if (!d.source_url) errors.push(`${p.file}: verified=true بلا source_url`);
     if (!d.last_verified) errors.push(`${p.file}: verified=true بلا last_verified`);
-    if (d.source_url) {
+    if (d.source_url && !d.spec_photo) {
       let host = '';
       try { host = new URL(String(d.source_url)).hostname; } catch { host = ''; }
       if (host && RETAILER.test(host)) {
-        warnings.push(`${p.file}: مصدر المواصفات صفحة بائع (${host}) لا صفحة مصنّع — I-019`);
+        warnings.push(`${p.file}: مصدر المواصفات صفحة بائع (${host}) — يلزم رابط مصنّع أو spec_photo — I-019`);
       }
     }
+  }
+  // صورة المواصفة لا تكون إلا واحدة من صورنا — وإلا فهي ادعاء بلا ملف
+  if (d.spec_photo && !(d.own_photos ?? []).some((ph) => ph.src === d.spec_photo)) {
+    errors.push(`${p.file}: spec_photo "${d.spec_photo}" ليست من own_photos — مصدر المواصفة يجب أن يكون صورة نملكها فعلاً`);
   }
   if ('price' in d) errors.push(`${p.file}: حقل price ممنوع — استخدم price_band`);
 
@@ -165,14 +171,18 @@ for (const d of docs) {
 
 /* ---------- 5b. خط الإنتاج ---------- */
 // بقرار حسام في 2026-09-03 صار للموقع حالة ثالثة: هيكل منشور بلا نصّ.
-// `published: true` مع `stage: draft` تعني صفحةً تقول للزائر إنها لم تُكتب،
-// وهي `noindex` ولا تعرض منتجاً. أمّا `written` و`reviewed` فنصّ ناقص
-// المراجعة، ولا يُنشر.
+// وبقراره في 2026-09-04 (I-020) انفصل الحقلان نهائياً:
+//   published  هل الرابط موجود على الموقع؟
+//   stage      إلى أين وصل النصّ؟
+// فـ`draft` و`written` كلاهما يُنشر كهيكل معلَن: القالب يستبدل المتن بصفحة
+// تقول إنها لم تُنشر بعد، وهي `noindex` وخارج `sitemap` ولا تعرض منتجاً.
+// النصّ نفسه لا يظهر إلا عند `stage: published`. أمّا `reviewed` فحالة عبور
+// قصيرة: رُوجع ولم يُنشر بعد، ونشره بها يعني نصّاً تامّاً بلا قرار نشر.
 for (const d of docs) {
   const stage = d.data.stage ?? 'draft';
   const pub = d.data.published === true;
-  if (pub && stage !== 'published' && stage !== 'draft') {
-    errors.push(`${d.file}: published=true مع stage="${stage}" — إمّا published (نصّ تام) أو draft (هيكل معلَن)`);
+  if (pub && stage === 'reviewed') {
+    errors.push(`${d.file}: published=true مع stage="reviewed" — اقلبها إلى published بعد قرار النشر، أو أبقِها written`);
   }
   if (!pub && stage === 'published') {
     errors.push(`${d.file}: stage=published لكن published=false — تناقض`);

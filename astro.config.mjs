@@ -15,7 +15,7 @@ const notWrittenSlugs = new Set();
     if (statSync(f).isDirectory()) scan(f);
     else if (/\.mdx?$/.test(e)) {
       const fm = readFileSync(f, 'utf8').match(/^---\n([\s\S]*?)\n---/);
-      if (!fm || !/^stage:\s*draft\s*$/m.test(fm[1])) continue;
+      if (!fm || !/^stage:\s*(?:draft|written)\s*$/m.test(fm[1])) continue;
       const slug = fm[1].match(/^slug:\s*"?([a-z0-9-]+)"?\s*$/m);
       if (slug) notWrittenSlugs.add(slug[1]);
     }

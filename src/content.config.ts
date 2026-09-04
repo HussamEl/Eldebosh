@@ -82,6 +82,11 @@ const products = defineCollection({
       .array(z.object({ src: z.string(), alt: z.string(), caption: z.string().optional() }))
       .max(3, 'ثلاث صور كحد أقصى لكل منتج')
       .default([]),
+    /* مصدر المواصفة حين لا تكون صفحة مصنّع: صورةٌ من تصويرنا تُظهر المطبوع
+       على الجهاز أو علبته. تحمل `src` إحدى صور `own_photos` نفسها.
+       أقوى من صفحة المصنّع في موضع واحد: المصنّع يصف طرازاً، وصورتنا تصف
+       الجهاز الذي بحوزتنا بعينه. القاعدة `2b` في validate.mjs. */
+    spec_photo: z.string().optional(),
     hands_on: z.array(z.string()).default([]),   // ملاحظات من الاستخدام الفعلي
     hands_on_limits: z.array(z.string()).default([]), // حدود التجربة — إلزامي للنزاهة
     video_url: z.string().url().optional(),
