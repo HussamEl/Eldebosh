@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — INSTRUCTIONS
 
-> **Version:** `v1.7` · 2026-09-04 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.8` · 2026-09-04 · canonical copy: `docs/project/` in the repository
 >
 > **The governing document.** Where anything else conflicts with this, this wins.
 > Current state: `CONTEXT`. Source of truth for code: `github.com/HussamEl/Eldebosh`.
@@ -319,6 +319,27 @@ interface copy, file organisation.
 
 **Format:** recommended option + one-line reason + alternatives + **what the
 decision costs**.
+
+### Never escalate mechanical noise
+
+**A question is only Hussam's if a person could answer it.** He is not a
+developer, and a choice between two git commands is not a decision — it is work
+wearing the costume of one. Decide it, do it, and mention it in one sentence
+only if it matters at all.
+
+This was written after a session asked him to choose whether to discard a dirty
+working tree containing nothing but a changed build timestamp. That was never
+his call.
+
+**Not his, ever:** git state, branch names, lockfiles, dependency versions,
+build artefacts, formatting, which check to run, how to word a commit message.
+
+**His, always:** anything that costs money, changes what a visitor sees, makes
+a promise on the site's behalf, or touches the Amazon account.
+
+**And when you do bring him something, bring the answer with it.** "Here is the
+situation, here is what I did, tell me if you disagree" beats "(a) or (b)?" —
+he can veto in one word, but he should never have to choose in your place.
 
 ---
 
