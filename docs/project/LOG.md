@@ -129,6 +129,11 @@ when a party has nothing to say.
 | EB-037 | Hussam | 2026-09-03 23:55 | Read the live stamp: 2026-09-03 23:49 — it matches the build | EB-036 |
 | EB-038 | Claude Code | 2026-09-03 23:56 | Deployment confirmed fully automatic · no pull is ever asked of Hussam again | EB-037 |
 
+| EB-039 … EB-052 | Hussam ↔ Claude Project | 2026-09-04 | **Not recorded — never relayed to Claude Code.** Numbers consumed in an exchange this log did not see; ASINs were collected and two solution pages written there. Only the `laddkabeln` text reached the repository | — |
+
+| EB-053 | Claude Project | 2026-09-04 11:16 | Two cable ASINs split across P-20 and a new P-23 · the cable solution page | Hussam |
+| EB-054 | Claude Code | 2026-09-04 11:24 | P-20 and P-23 filed · cable page written · three gaps measured — I-020 | EB-053 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

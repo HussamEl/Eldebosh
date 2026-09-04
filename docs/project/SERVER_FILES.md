@@ -1,7 +1,7 @@
 # ملفات النسخة الحالية
 
-عدد الملفات: 204
-تاريخ البناء: 2026-09-03 23:50
+عدد الملفات: 202
+تاريخ البناء: 2026-09-04 11:26
 
 ## القاعدة
 
@@ -83,7 +83,6 @@
 /sv/solutions
 /sv/solutions/batteriet-tar-slut
 /sv/solutions/ingen-eluttag-pa-resan
-/sv/solutions/laddkabeln-gar-sonder
 /sv/solutions/mobilen-dor-i-kylan
 /sv/solutions/mobilen-glider-i-bilen
 /sv/solutions/mobilen-laddar-langsamt

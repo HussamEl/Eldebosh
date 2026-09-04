@@ -4,7 +4,7 @@
 > مثال: «عدّل بطاقة `P-03`» أو «الشعار `B-02` صغير جداً».
 > الصور موجودة في المستودع، وتُقرأ من مسارها بلا رفع ولا استهلاك.
 
-> يُولَّد آلياً بـ `npm run assets` · آخر تحديث: 2026-09-03
+> يُولَّد آلياً بـ `npm run assets` · آخر تحديث: 2026-09-04
 
 ---
 
@@ -39,6 +39,7 @@
 | `P-16` | LENCENT Reseadapter Sverige till Storbritannien | — | **بلا صورة** | — |
 | `P-17` | Ocetea USB-C till USB-C 100W, 30 cm | — | **بلا صورة** | — |
 | `P-19-1` | UGREEN snabbladdare USB-C | `P-19-1.webp` | 1 من 1 | 34 KB |
+| `P-23` | UGREEN USB-C-kabel 240 W med display | — | **بلا صورة** | — |
 | `P-20-1` | UGREEN USB-C 240W / 40 Gbps, 1 m | `P-20-1.webp` | 1 من 1 | 45 KB |
 
 ## B — أصول الهوية
