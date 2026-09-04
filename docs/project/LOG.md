@@ -92,6 +92,8 @@ when a party has nothing to say.
 | EB-005 | Claude Code | 2026-09-05 01:16 | Would not publish the green sketch: `BÄST` is an unsubstantiated superlative under Marknadsföringslagen, green contradicts `D-015`, and a paper mockup is not a logo file | Hussam |
 | EB-006 | Hussam | 2026-09-05 01:20 | Build the same idea in the project's own colours, with a USB-C connector | EB-005 |
 | EB-007 | Claude Code | 2026-09-05 01:33 | Emblem drawn: circuit traces, cable, USB-C plug, power ring replacing the O · three SVG variants, blue palette, nothing wired into the site yet | EB-006 |
+| EB-008 | Hussam | 2026-09-05 01:36 | Rejected the emblem outright and told me to delete it and everything around it | EB-007 |
+| EB-009 | Claude Code | 2026-09-05 01:38 | Deleted: three SVGs, the generator, its npm scripts and the helper it needed · the existing logo family rebuilds byte-identical · `npm run verify` green | EB-008 |
 
 <!-- COUNTER-RESET-END -->
 
