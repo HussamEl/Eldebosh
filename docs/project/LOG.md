@@ -89,6 +89,9 @@ when a party has nothing to say.
 | EB-002 | Claude Code | 2026-09-05 01:05 | The site had not changed: the fix sat on a session branch, and the live site builds from `main` alone | Hussam |
 | EB-003 | Hussam | 2026-09-05 01:08 | Push straight to `main` from now on — no parallel branch, no duplicated work | EB-002 |
 | EB-004 | Claude Code | 2026-09-05 01:12 | Merged into `main`, CI green, `deploy` updated · recorded as `D-028` · the old session branch still stands on GitHub, the proxy refuses to delete it | EB-003 |
+| EB-005 | Claude Code | 2026-09-05 01:16 | Would not publish the green sketch: `BÄST` is an unsubstantiated superlative under Marknadsföringslagen, green contradicts `D-015`, and a paper mockup is not a logo file | Hussam |
+| EB-006 | Hussam | 2026-09-05 01:20 | Build the same idea in the project's own colours, with a USB-C connector | EB-005 |
+| EB-007 | Claude Code | 2026-09-05 01:33 | Emblem drawn: circuit traces, cable, USB-C plug, power ring replacing the O · three SVG variants, blue palette, nothing wired into the site yet | EB-006 |
 
 <!-- COUNTER-RESET-END -->
 

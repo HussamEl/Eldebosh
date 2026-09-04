@@ -56,6 +56,33 @@ def typeset(text, family='inter-tight', weight=800, size=100, tracking=0.0):
         x += pos.x_advance * scale + track
     return ' '.join(d), x - track
 
+def typeset_glyphs(text, family='inter-tight', weight=800, size=100, tracking=0.0):
+    """Som typeset(), men en post per tecken: {ch, d, x, adv}.
+    Behovs nar en bokstav ska bytas mot ritad grafik — ringen i stallet for O."""
+    font, hbfont, upem = _instance(family, weight)
+    buf = hb.Buffer()
+    buf.add_str(text)
+    buf.guess_segment_properties()
+    hb.shape(hbfont, buf, {'kern': True, 'liga': True})
+
+    glyph_set = font.getGlyphSet()
+    order = font.getGlyphOrder()
+    scale = size / upem
+    track = tracking * size
+
+    out, x = [], 0.0
+    for ch, info, pos in zip(text, buf.glyph_infos, buf.glyph_positions):
+        name = order[info.codepoint]
+        pen = SVGPathPen(glyph_set, ntos=lambda v: f'{v:.2f}')
+        tpen = TransformPen(pen, Transform(scale, 0, 0, -scale,
+                                           x + pos.x_offset * scale,
+                                           -pos.y_offset * scale))
+        glyph_set[name].draw(tpen)
+        adv = pos.x_advance * scale
+        out.append({'ch': ch, 'd': pen.getCommands(), 'x': x, 'adv': adv})
+        x += adv + track
+    return out, x - track
+
 def metrics(family='inter-tight', weight=800, size=100):
     font, _, upem = _instance(family, weight)
     hhea = font['hhea']
