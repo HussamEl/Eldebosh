@@ -72,7 +72,8 @@ collections:
       - { label: "حسب العلامة", field: brand }
     fields:
       - { name: id, label: "المعرّف (بالإنجليزية، بلا مسافات)", widget: string, pattern: ['^[a-z0-9-]+$', 'حروف صغيرة وأرقام وشرطات فقط'] }
-      - { name: verified, label: "★ موثق — يظهر في الموقع", widget: boolean, default: false, hint: "لن يظهر المنتج في أي صفحة قبل تفعيل هذا الخيار مع ASIN ورابط المصدر" }
+      - { name: code, label: "رمز المنتج — لا يُغيَّر أبداً", widget: string, pattern: ['^P-\d{2}$', 'الصيغة P-NN مثل P-21'], hint: "أسماء الصور مبنية عليه. تغييره يفصل المنتج عن صوره" }
+      - { name: verified, label: "★ موثق — يظهر في الموقع", widget: boolean, default: false, hint: "لن يظهر المنتج في أي صفحة قبل تفعيله. ويحتاج ASIN وتاريخ تحقق، ومصدرَ مواصفة: صفحة مصنّع في رابط المصدر، أو صورة مواصفة من تصويرك" }
       - { name: lang, label: اللغة, widget: hidden, default: sv }
       - { name: name, label: "اسم المنتج", widget: string }
       - { name: brand, label: "العلامة التجارية", widget: string }
@@ -126,6 +127,7 @@ collections:
           - { name: url, label: "الرابط", widget: string }
           - { name: accessed, label: "تاريخ الاطلاع", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
       - { name: source_url, label: "رابط المصدر (إلزامي للنشر)", widget: string, required: false }
+      - { name: spec_photo, label: "صورة المواصفة — المطبوع على الجهاز", widget: image, required: false, hint: "تُكتب هنا إحدى صورك أعلاه، تلك التي يُقرأ فيها المطبوع على الجهاز أو علبته. بها يصحّ التوثيق بلا صفحة مصنّع — وإن لم تكن من صورك سقط البناء" }
       - { name: last_verified, label: "تاريخ آخر تحقق", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, required: false }
 
   # ============ صفحات الحلول — سويدي ============
@@ -149,11 +151,22 @@ collections:
       - { name: problem_id, label: "معرّف المشكلة (يربط الأدلة بهذه الصفحة)", widget: string }
       - { name: question, label: "السؤال كما يطرحه المستخدم", widget: string }
       - { name: symptoms, label: "الأعراض", widget: list, field: { name: text, label: عرض, widget: string } }
+      - { name: icon, label: "الأيقونة", widget: string, default: bolt, required: false, hint: "bolt · clock · cable · car · desk — تظهر بجانب عنوان الحل" }
       - { name: category, label: "الفئة", widget: relation, collection: categories, search_fields: [id], value_field: id, display_fields: [id] }
       - { name: subcategory, label: "الفئة الفرعية", widget: string, required: false }
       - { name: products, label: "منتجات مرتبطة", widget: list, required: false, field: { name: id, label: "معرّف المنتج", widget: string } }
       - { name: featured, label: "إظهار في الصفحة الرئيسية", widget: boolean, default: false }
       - { name: hands_on, label: "الصفحة تستند إلى تجربة فعلية", widget: boolean, default: false }
+      - name: stage
+        label: "مرحلة النص"
+        widget: select
+        default: draft
+        options:
+          - { label: "هيكل — العنوان بلا نص", value: draft }
+          - { label: "مكتوب — ينتظر مراجعة سويدية", value: written }
+          - { label: "مُراجَع — جاهز ولم يُنشر", value: reviewed }
+          - { label: "منشور — النص يظهر للزائر", value: published }
+        hint: "«منشور» وحدها تُظهر النص. «هيكل» و«مكتوب» يريان الزائرَ صفحةً تقول إنها لم تُنشر بعد — ولا يمنع ذلك بقاء الرابط حياً"
       - { name: published, label: "منشور", widget: boolean, default: false }
       - { name: updated, label: "تاريخ التحديث", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
       - name: sources
@@ -200,6 +213,16 @@ collections:
           - { name: badge, label: "الوسم داخل هذا الدليل", widget: select, options: [best-overall, best-value, best-budget, best-specific, premium] }
           - { name: reason, label: "سبب الترشيح", widget: text }
       - { name: hands_on, label: "الصفحة تستند إلى تجربة فعلية", widget: boolean, default: false }
+      - name: stage
+        label: "مرحلة النص"
+        widget: select
+        default: draft
+        options:
+          - { label: "هيكل — العنوان بلا نص", value: draft }
+          - { label: "مكتوب — ينتظر مراجعة سويدية", value: written }
+          - { label: "مُراجَع — جاهز ولم يُنشر", value: reviewed }
+          - { label: "منشور — النص يظهر للزائر", value: published }
+        hint: "«منشور» وحدها تُظهر النص. «هيكل» و«مكتوب» يريان الزائرَ صفحةً تقول إنها لم تُنشر بعد — ولا يمنع ذلك بقاء الرابط حياً"
       - { name: published, label: "منشور", widget: boolean, default: false }
       - { name: updated, label: "تاريخ التحديث", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
       - name: sources
@@ -241,6 +264,16 @@ collections:
       - { name: products, label: "المنتجات المقارَنة (2–4)", widget: list, field: { name: id, label: "معرّف المنتج", widget: string } }
       - { name: verdict, label: "الخلاصة", widget: text }
       - { name: hands_on, label: "الصفحة تستند إلى تجربة فعلية", widget: boolean, default: false }
+      - name: stage
+        label: "مرحلة النص"
+        widget: select
+        default: draft
+        options:
+          - { label: "هيكل — العنوان بلا نص", value: draft }
+          - { label: "مكتوب — ينتظر مراجعة سويدية", value: written }
+          - { label: "مُراجَع — جاهز ولم يُنشر", value: reviewed }
+          - { label: "منشور — النص يظهر للزائر", value: published }
+        hint: "«منشور» وحدها تُظهر النص. «هيكل» و«مكتوب» يريان الزائرَ صفحةً تقول إنها لم تُنشر بعد — ولا يمنع ذلك بقاء الرابط حياً"
       - { name: published, label: "منشور", widget: boolean, default: false }
       - { name: updated, label: "تاريخ التحديث", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
       - name: sources
@@ -278,8 +311,19 @@ collections:
       - { name: slug, label: "المسار", widget: string, pattern: ['^[a-z0-9-]+$', 'حروف صغيرة وشرطات فقط'] }
       - { name: solution, label: "صفحة الحل الأب (إلزامي)", widget: string }
       - { name: category, label: "الفئة", widget: relation, collection: categories, search_fields: [id], value_field: id, display_fields: [id] }
+      - { name: subcategory, label: "الفئة الفرعية", widget: string, required: false }
       - { name: products, label: "منتجات مرتبطة", widget: list, required: false, field: { name: id, label: "معرّف المنتج", widget: string } }
       - { name: hands_on, label: "الصفحة تستند إلى تجربة فعلية", widget: boolean, default: false }
+      - name: stage
+        label: "مرحلة النص"
+        widget: select
+        default: draft
+        options:
+          - { label: "هيكل — العنوان بلا نص", value: draft }
+          - { label: "مكتوب — ينتظر مراجعة سويدية", value: written }
+          - { label: "مُراجَع — جاهز ولم يُنشر", value: reviewed }
+          - { label: "منشور — النص يظهر للزائر", value: published }
+        hint: "«منشور» وحدها تُظهر النص. «هيكل» و«مكتوب» يريان الزائرَ صفحةً تقول إنها لم تُنشر بعد — ولا يمنع ذلك بقاء الرابط حياً"
       - { name: published, label: "منشور", widget: boolean, default: false }
       - { name: updated, label: "تاريخ التحديث", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
       - name: sources
@@ -312,6 +356,16 @@ collections:
       - { name: slug, label: "المسار", widget: string }
       - { name: footer_group, label: "مكانها في الفوتر", widget: select, options: [legal, about, none], default: none }
       - { name: order, label: "الترتيب", widget: number, default: 99 }
+      - name: stage
+        label: "مرحلة النص"
+        widget: select
+        default: draft
+        options:
+          - { label: "هيكل — العنوان بلا نص", value: draft }
+          - { label: "مكتوب — ينتظر مراجعة سويدية", value: written }
+          - { label: "مُراجَع — جاهز ولم يُنشر", value: reviewed }
+          - { label: "منشور — النص يظهر للزائر", value: published }
+        hint: "«منشور» وحدها تُظهر النص. «هيكل» و«مكتوب» يريان الزائرَ صفحةً تقول إنها لم تُنشر بعد — ولا يمنع ذلك بقاء الرابط حياً"
       - { name: published, label: "منشور", widget: boolean, default: true }
       - { name: updated, label: "تاريخ التحديث", widget: datetime, date_format: 'YYYY-MM-DD', time_format: false }
       - { name: body, label: "النص", widget: markdown }
