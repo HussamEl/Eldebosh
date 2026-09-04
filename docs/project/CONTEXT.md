@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — CONTEXT
 
-> **Version:** `v1.5` · 2026-09-03 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.6` · 2026-09-04 · canonical copy: `docs/project/` in the repository
 >
 > State, decisions and the reasons behind them. **Rules live in `INSTRUCTIONS`.**
 > Source of truth for code: `github.com/HussamEl/Eldebosh` — branch `main`, public.
@@ -65,12 +65,13 @@ competitor can write that.
 |---|---|
 | Repository | `HussamEl/Eldebosh` · `main` · public · clean tree |
 | Source | In the repository: `src/` + `public/` |
-| Build output | `site/` — 33 generated pages |
-| **Deployment** | 🟢 **Working** — GitHub builds, the host pulls automatically |
-| Automated checks | **28/28 in Chromium** + **32 claim cases** + colours + versions + drift + 31-page audit |
+| Build output | `site/` — **70 generated pages** |
+| **Deployment** | 🟢 **Automatic and measured** — GitHub builds and checks, the host pulls. No manual step |
+| Automated checks | **14 local + 1 in CI, all green** · 28/28 in Chromium · 32 claim cases · colours · style · versions · admin fields · drift |
 | Brand | 57 files plus their generators |
-| Products | 20 files · **11 have an ASIN · 9 waiting** · 4 verified for display |
-| Content | 41 MDX pages · 11 published · **6 written, waiting on review** |
+| Products | **23 files** · 15 have an ASIN · **8 waiting** · **7 verified** |
+| Content | **32 Swedish documents** · 11 with finished text · 2 written and awaiting review · 19 declared skeletons |
+| Legal and standing pages | 6 · **all written** — and `check:drafts` now fails the build on draft text |
 | Review | `npm run preview:file` — one file, drafts included, opens on a phone |
 | WordPress | ❌ Removed — forbidden on the domain |
 
@@ -314,6 +315,12 @@ simarro magnetringar · UGREEN snabbladdare · UGREEN USB-C 240W.
 **The battery cluster** is the first wave: eleven pages around a single problem —
 the phone dying mid-day. **All eleven are written and published**, and the
 category is active.
+
+**And the second wave has its first opening:** `kablar` now holds two verified
+cables — `P-20` on Hussam's own check of the listing, and `P-23` on our own
+photograph, in which all three of its specs are legible. Two is exactly the
+threshold a guide needs, so `basta-laddkabel-usb-c` is no longer blocked on
+data.
 
 The constraint has now moved three times, and naming where it sits keeps the
 next wave from being planned against the last one. It was writing. Then it was

@@ -1,5 +1,7 @@
 # المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
 # الكابل **بلا شاشة** — لا يخلط مع P-23 الذي عليه شاشة.
+# ولاحقة `-v2` في اسم الصورة مقصودة: العنوان القديم كان يخدم صورة الكابل ذي
+# الشاشة، ومتصفّح الزائر يخزّن بالعنوان لا بالمحتوى. فاسمٌ جديد يقطع الخزن.
 # ⚠️ ناقص قبل النشر: مصدر مصنّع (I-019) · pros · cons · best_for · hands_on
 # عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
 id: ugreen-usb4-kabel-240w
@@ -30,7 +32,7 @@ owned_since: 2025-08-01
 tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
 usage_period: ""
 own_photos:
-  - src: "/uploads/P-20-1-B0GV79Z1W6.webp"
+  - src: "/uploads/P-20-1-B0GV79Z1W6-v2.webp"
     alt: "Flätad UGREEN-kabel hoprullad, med märkningen 40Gbps på kontakten."
     caption: "Vår egen bild."
 hands_on: []

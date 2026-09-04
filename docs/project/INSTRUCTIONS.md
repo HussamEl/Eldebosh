@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — INSTRUCTIONS
 
-> **Version:** `v1.6` · 2026-09-03 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.7` · 2026-09-04 · canonical copy: `docs/project/` in the repository
 >
 > **The governing document.** Where anything else conflicts with this, this wins.
 > Current state: `CONTEXT`. Source of truth for code: `github.com/HussamEl/Eldebosh`.
@@ -50,9 +50,16 @@ timestamp corrupts the whole log.
 The log lives at `docs/project/LOG.md` and settles any dispute.
 `npm run verify` prints the next free number and the correct time, ready to copy.
 
-**The counter was reset to `EB-001` on 2026-09-02.** A party joining the project
-should read a project, not a transcript — so nothing before that reset is cited
-by its old number. Refer to earlier work by subject, or by its `I-###` issue.
+**The counter was reset to `EB-001` on 2026-09-04**, and this reset is different
+from the two before it. It marks a handover: three fresh conversations open on a
+delivered project rather than on a transcript. Nothing before it is cited by its
+old number — refer to earlier work by subject, or by its `I-###` issue, both of
+which survive a reset.
+
+The rows from before the reset are kept in `LOG.md` under an archive heading. No
+row is ever deleted; the counter starts again above them, and `check-docs` reads
+only between the `COUNTER-RESET` markers so the archive cannot resurrect an old
+number.
 
 ### Every reply also closes with the party board
 

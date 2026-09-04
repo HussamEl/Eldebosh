@@ -62,11 +62,22 @@ for (const rel of DOCS) {
 // السجل يتغيّر مع كل رسالة، فلا يخضع لقاعدة رفع الإصدار — لكن رقمه الأخير
 // هو ما يحتاجه كل طرف ليعرف من أين يبدأ.
 const logPath = join(ROOT, 'docs/project/LOG.md');
+const ROW = /^\|\s*(EB-\d{3})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|/;
 let lastEntry = null;
 if (existsSync(logPath)) {
-  const rows = readFileSync(logPath, 'utf8').match(/^\|\s*(EB-\d{3})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|/gm);
+  const raw = readFileSync(logPath, 'utf8');
+
+  /* العدّاد يُصفَّر أحياناً بطلب حسام، والأرشيف يبقى في الملف نفسه: لا يُحذف
+     سطر من السجل أبداً. فلو قرأنا الملف كله لعاد آخرُ رقم من الأرشيف وصار
+     العدّاد يكمل من حيث انتهى قبل التصفير — عكس المقصود تماماً.
+     العلامة أدناه هي الحدّ: ما بعدها هو العدّاد الحيّ، وما قبلها تاريخ. */
+  const from = raw.lastIndexOf('<!-- COUNTER-RESET ');
+  const to = raw.indexOf('<!-- COUNTER-RESET-END', from + 1);
+  const live = from === -1 ? raw : raw.slice(from, to === -1 ? undefined : to);
+
+  const rows = live.match(new RegExp(ROW.source, 'gm'));
   if (rows && rows.length) {
-    const [, id, who, when] = rows[rows.length - 1].match(/^\|\s*(EB-\d{3})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|/);
+    const [, id, who, when] = rows[rows.length - 1].match(ROW);
     lastEntry = { id, who, when };
   }
 }

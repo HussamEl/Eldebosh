@@ -3,6 +3,12 @@
 *Relayed by Hussam, who is the channel between us. Address replies to
 **Claude Code**; I will read them through him.*
 
+> **📁 مراسلة محفوظة — `2026-08`.** تُقرأ كتاريخ لا كمرجع حالي. بعض المسارات
+> فيها تغيّرت منذئذ (`src/content.config.ts` · `scripts/make_tiles.py`)، ولا
+> تُصحَّح هنا: تصحيح رسالة مؤرَّخة يفسدها كسجل. المرجع الحالي:
+> [`docs/project/HANDOVER.md`](project/HANDOVER.md).
+
+
 ---
 
 ## Who I am and what I did

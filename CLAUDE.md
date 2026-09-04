@@ -54,13 +54,21 @@ npm run preview:file
 **السبب:** هذه الدورة استهلكت مرحلة التحضير كلها.
 
 ## الحالة الراهنة (اقرأ هذا أولاً)
+
+> **ونقطة الدخول الكاملة:** [`docs/project/HANDOVER.md`](docs/project/HANDOVER.md)
+> — أين وصل المشروع، وما في كل مجلد، وكيف يعمل النشر والتواصل. عشر دقائق.
 - الموقع **منشور ويعمل** على `eldebosh.com` مع SSL.
 - المستودع: `HussamEl/eldebosh` — فرع `main`. المسار المحلي: `C:\dev\eldebosh`.
-- النشر تلقائي: أي push إلى `main` يبني وينشر عبر FTP إلى Hostinger.
-- أسرار FTP الأربعة مخزّنة في GitHub Actions Secrets. **لا تكتب قيمها في أي ملف.**
+- **النشر تلقائي ولا `FTP` فيه ولا أسرار:** دفعة إلى `main` ← `GitHub Actions`
+  يبني ويفحص ← يحدّث فرع `deploy` ← `Webhook` يوقظ الاستضافة فتسحب. عُكس
+  الاتجاه لأن الاستضافة تحجب خوادم غيتهب في الاتجاه الداخل.
+  التفصيل: `docs/12-deploy-from-github.md`.
 - لوحة التحرير على `/admin/`، والدخول برمز وصول شخصي (PAT). لا تضف `base_url` إلى `config.yml`.
-- المحتوى التجريبي **محذوف**. المنشور: صفحة حل واحدة ودليل واحد. البقية مسودات (`published: false`).
-- الأفلييت: **Amazon Associates مفعّل** بالوسم `electro066-21`. أربعة منتجات موثقة بـASIN.
+- المحتوى التجريبي **محذوف**. والحالة الحيّة مولَّدة في `docs/project/STATE.md` —
+  تُقرأ منه، ولا تُكتب هنا فتتقادم.
+- الأفلييت: **Amazon Associates مفعّل** بالوسم `electro066-21` على `amazon.se`.
+  الحساب مقبول؛ وما يبقى هو عتبة ثلاث مبيعات مؤهَّلة لفتح الواجهة البرمجية،
+  وبها وحدها تُسمح صور أمازون وأسعارها.
 - صاحب المشروع **ليس مطوراً**، ويحرر من `/admin/` فقط. لا تطلب منه أوامر طرفية إلا للضرورة.
 
 ## المشروع
@@ -123,7 +131,7 @@ npm run preview:file
 Mobile UX → Core Web Vitals → وضوح المحتوى → التصفح والبحث → المقارنة والشراء.
 
 ## قيود تقنية مغلقة
-Astro SSG · Content Collections · Pagefind · Sveltia CMS · GitHub Actions → FTP إلى Hostinger.
+Astro SSG · Content Collections · Pagefind · Sveltia CMS · GitHub Actions ← تسحب Hostinger من فرع `deploy`.
 **صفر JavaScript افتراضياً.** أي سكربت يحتاج مبرراً مكتوباً في PR.
 
 ## ويندوز

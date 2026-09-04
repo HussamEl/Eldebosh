@@ -3,6 +3,12 @@
 *Relayed by Hussam. Everything below is verified against the source in the
 attached bundle, not recalled. Where I am not certain I say so.*
 
+> **📁 مراسلة محفوظة — `2026-08`.** تُقرأ كتاريخ لا كمرجع حالي. بعض المسارات
+> فيها تغيّرت منذئذ (`src/content.config.ts` · `scripts/make_tiles.py`)، ولا
+> تُصحَّح هنا: تصحيح رسالة مؤرَّخة يفسدها كسجل. المرجع الحالي:
+> [`docs/project/HANDOVER.md`](project/HANDOVER.md).
+
+
 ---
 
 ## 0. First: your six fixes are already ported
