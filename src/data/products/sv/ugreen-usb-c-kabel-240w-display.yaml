@@ -1,5 +1,6 @@
 # المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
-# ⚠️ ناقص قبل النشر: مصدر مصنّع (I-019) · pros · cons · best_for · own_photos
+# الكابل **بالشاشة** — لا يخلط مع P-20 الذي بلا شاشة.
+# ⚠️ ناقص قبل النشر: pros · cons · best_for · hands_on
 # عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
 id: ugreen-usb-c-kabel-240w-display
 code: P-23
@@ -15,7 +16,7 @@ problems_solved:
 # مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
 key_specs:
   "Effekt": "240 W"
-  "Display": "Ja, visar effekt under laddning"
+  "Display": "Ja — display på kontakten"
   "Kontakter": "USB-C till USB-C"
 
 pros: []
@@ -27,12 +28,19 @@ price_band: mid
 owned: true
 tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
 usage_period: ""
-own_photos: []
+own_photos:
+  - src: "/uploads/P-23-1-B0F62S8P1T.webp"
+    alt: "UGREEN-kabel med display på kontakten, märkt 240W, ansluten till en telefon som laddar."
+    caption: "Vår egen bild."
 hands_on: []
 hands_on_limits: []
 
 # === الربط ===
 asin: "B0F62S8P1T"
-source_url: "https://www.amazon.se/dp/B0F62S8P1T"   # صفحة بائع — المصنّع ما زال ناقصاً (I-019)
+source_url: "https://www.amazon.se/dp/B0F62S8P1T"   # للربط لا للمواصفة
 last_verified: 2026-09-04
-verified: false        # ← لا تُقلب من صفحة بائع — القاعدة 2b
+
+# مصدر المواصفة: صورتنا نحن — وهي تُغطّي الثلاث كلها. «240W» مطبوعة على
+# القابس، والشاشة ظاهرة عليه ومضاءة، والطرفان USB-C. القاعدة 2b · I-019.
+spec_photo: "/uploads/P-23-1-B0F62S8P1T.webp"
+verified: true

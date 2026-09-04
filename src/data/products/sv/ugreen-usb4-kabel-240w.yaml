@@ -1,4 +1,5 @@
 # المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
+# الكابل **بلا شاشة** — لا يخلط مع P-23 الذي عليه شاشة.
 # ⚠️ ناقص قبل النشر: مصدر مصنّع (I-019) · pros · cons · best_for · hands_on
 # عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
 id: ugreen-usb4-kabel-240w
@@ -30,10 +31,7 @@ tested: false          # اجعلها true بعد إضافة الصور والم
 usage_period: ""
 own_photos:
   - src: "/uploads/P-20-1-B0GV79Z1W6.webp"
-    alt: "UGREEN USB-C-kabel hoprullad bredvid en telefon"
-    caption: "Vår egen bild."
-  - src: "/uploads/P-20-2.webp"
-    alt: "Kabelns kontakt med märkningen 40 Gbps och UGREEN-logotypen."
+    alt: "Flätad UGREEN-kabel hoprullad, med märkningen 40Gbps på kontakten."
     caption: "Vår egen bild."
 hands_on: []
 hands_on_limits: []

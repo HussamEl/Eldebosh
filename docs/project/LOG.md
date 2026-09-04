@@ -152,6 +152,9 @@ when a party has nothing to say.
 | EB-065 | Hussam | 2026-09-04 14:05 | Approved the halo photos · asked why the 8K cable is not published · asked what the Amazon sentence is | EB-064 |
 | EB-066 | Claude Code | 2026-09-04 14:15 | The cable is live on the home page — what is missing is a guide · the disclosure was already live, its Swedish wording corrected | EB-065 |
 
+| EB-067 | Hussam | 2026-09-04 14:30 | Spotted it: the display cable is a different product and its photo sat on the wrong one | EB-066 |
+| EB-068 | Claude Code | 2026-09-04 14:33 | Photo moved to P-23 and became its spec source · **kablar now has two verified cables — the guide is unblocked** | EB-067 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

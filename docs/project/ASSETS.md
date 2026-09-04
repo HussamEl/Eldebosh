@@ -23,8 +23,8 @@
 | `P-21-2` | UGREEN billaddare, 3 portar | `P-21-2.webp` | 2 من 2 | 47 KB |
 | `P-03-1` | UGREEN Nexode Powerbank 25000 mAh 165 W | `P-03-1-B0DSPX4RQ5.webp` | 1 من 2 | 8 KB |
 | `P-03-2` | UGREEN Nexode Powerbank 25000 mAh 165 W | `P-03-2.webp` | 2 من 2 | 20 KB |
-| `P-20-1` | UGREEN USB-C 240W / 40 Gbps, 1 m | `P-20-1-B0GV79Z1W6.webp` | 1 من 2 | 45 KB |
-| `P-20-2` | UGREEN USB-C 240W / 40 Gbps, 1 m | `P-20-2.webp` | 2 من 2 | 131 KB |
+| `P-23-1` | UGREEN USB-C-kabel 240 W med display | `P-23-1-B0F62S8P1T.webp` | 1 من 1 | 45 KB |
+| `P-20-1` | UGREEN USB-C 240W / 40 Gbps, 1 m | `P-20-1-B0GV79Z1W6.webp` | 1 من 1 | 131 KB |
 | `P-04-1` | UGREEN Zapix Magnetisk Powerbank 10000 mAh | `P-04-1-B0CH33F5P2.webp` | 1 من 2 | 6 KB |
 | `P-04-2` | UGREEN Zapix Magnetisk Powerbank 10000 mAh | `P-04-2.webp` | 2 من 2 | 46 KB |
 | `P-05` | Baseus MagPro magnetisk bilhållare | — | **بلا صورة** | — |
@@ -44,7 +44,6 @@
 | `P-17` | Ocetea USB-C till USB-C 100W, 30 cm | — | **بلا صورة** | — |
 | `P-19-1` | UGREEN snabbladdare USB-C | `P-19-1.webp` | 1 من 1 | 34 KB |
 | `P-22-1` | UGREEN USB-C-kabel 100 W, flätad | `P-22-1-B08D6NCQ1Z.webp` | 1 من 1 | 93 KB |
-| `P-23` | UGREEN USB-C-kabel 240 W med display | — | **بلا صورة** | — |
 
 ## B — أصول الهوية
 
