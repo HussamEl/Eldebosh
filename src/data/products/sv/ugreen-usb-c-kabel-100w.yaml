@@ -1,5 +1,5 @@
 # المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
-# ⚠️ ناقص قبل النشر: own_photos (P-22-1) · pros · cons · best_for
+# ⚠️ ناقص قبل النشر: مصدر لـ«Effekt» و«Längd» · pros · cons · best_for
 # ⚠️ الطول والقدرة غير مطبوعين على الكابل — لا تُقرآن من صورتنا (I-019)
 # عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
 id: ugreen-usb-c-kabel-100w
@@ -28,7 +28,11 @@ price_band: budget
 owned: true
 tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
 usage_period: ""
-own_photos: []         # ← P-22-1 عند حسام، لم تصل الملفات بعد
+own_photos:
+  - src: "/uploads/P-22-1-B08D6NCQ1Z.webp"
+    alt: "Flätad USB-C-kabel från UGREEN, hoprullad på ett bord."
+    caption: "Vår egen bild."
+
 hands_on: []
 hands_on_limits: []
 
@@ -36,4 +40,7 @@ hands_on_limits: []
 asin: "B08D6NCQ1Z"
 source_url: "https://www.amazon.se/dp/B08D6NCQ1Z"   # صفحة بائع — المصنّع ما زال ناقصاً (I-019)
 last_verified: 2026-09-04
+# لا spec_photo هنا عن قصد: صورتنا تُثبت «Hölje» و«Kontakter» ولا تُثبت
+# «Effekt» ولا «Längd» — ليسا مطبوعين على الكابل. فيبقى غير موثّق حتى يأتي
+# رابط مصنّع لهما. هذا هو حدّ قاعدة الصورة، مكتوباً عند أول اصطدام به.
 verified: false

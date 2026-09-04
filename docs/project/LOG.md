@@ -140,6 +140,9 @@ when a party has nothing to say.
 | EB-057 | Hussam | 2026-09-04 12:30 | Asked why the documented photo procedure was forgotten — it is his to name and send, mine to process and push | EB-056 |
 | EB-058 | Claude Code | 2026-09-04 12:30 | Recipe measured from the sixteen uploaded photos and turned into `make-photo.mjs` · PHOTO_NAMING corrected to v1.1 | EB-057 |
 
+| EB-059 | Hussam | 2026-09-04 12:36 | Uploaded the three photos as files | EB-058 |
+| EB-060 | Claude Code | 2026-09-04 12:42 | Photos processed and linked · **P-21 is the first product verified from our own photo** · P-22 stays unverified, and says why | EB-059 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 
