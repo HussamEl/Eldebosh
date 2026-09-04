@@ -727,26 +727,50 @@ ul, ol { padding-inline-start: 1.1rem; }
   width: 100%; height: 100%; object-fit: cover;
 }
 
-.tile-photos[data-n="2"] .tile-photo {
-  opacity: 0;
-  animation: tile-fade-2 9s infinite;
-  animation-delay: calc(var(--i) * 4.5s);
+/* التبديل — أُعيد بناؤه في 2026-09-04 بعد أن رأى حسام «إطاراً فارغاً».
+   والعطب كان في البنية لا في التوقيت: كانت كل صورة تُشغَّل بتأخير، والصورة
+   الأولى تتلاشى إلى صفر قبل أن يبدأ تأخير الثانية أصلاً — فتمرّ أجزاء من
+   الثانية والبطاقة فيها خلفية عارية.
+
+   الإصلاح بنيوي: **الصورة الأولى قاعدة ثابتة لا تتحرّك أبداً.** والثانية
+   والثالثة تعلوانها وتذهبان. فما دام تحتهما صورة حاضرة دائماً، لا يمكن أن
+   يظهر فراغ مهما اختلّ التوقيت — لا بالحساب، بل باستحالة الحالة.
+
+   والإيقاع هُدّئ أيضاً: مكوث خمس ثوانٍ بدل أربع، وتلاشٍ في ثانية وخُمس بدل
+   نصف ثانية، فيقرأ العين انتقالاً لا وميضاً. */
+
+.tile-photos .tile-photo:first-child { opacity: 1; z-index: 0; }
+
+/* صورتان — دورة اثنتي عشرة ثانية */
+.tile-photos[data-n="2"] .tile-photo:nth-child(2) {
+  opacity: 0; z-index: 1;
+  animation: tile-over-a 12s ease-in-out infinite;
 }
-@keyframes tile-fade-2 {
-  0%, 44% { opacity: 1; }
-  50%, 94% { opacity: 0; }
-  100% { opacity: 1; }
+@keyframes tile-over-a {
+  0%, 40%   { opacity: 0; }
+  50%, 88%  { opacity: 1; }
+  98%, 100% { opacity: 0; }
 }
 
-.tile-photos[data-n="3"] .tile-photo {
-  opacity: 0;
-  animation: tile-fade-3 13.5s infinite;
-  animation-delay: calc(var(--i) * 4.5s);
+/* ثلاث صور — دورة ثماني عشرة ثانية.
+   الثالثة تعلو الثانية وتنصرف قبلها، فتتكشّف الثانية ثم الأولى بالترتيب. */
+.tile-photos[data-n="3"] .tile-photo:nth-child(2) {
+  opacity: 0; z-index: 1;
+  animation: tile-over-b 18s ease-in-out infinite;
 }
-@keyframes tile-fade-3 {
-  0%, 29% { opacity: 1; }
-  35%, 95% { opacity: 0; }
-  100% { opacity: 1; }
+@keyframes tile-over-b {
+  0%, 25%   { opacity: 0; }
+  32%, 89%  { opacity: 1; }
+  95%, 100% { opacity: 0; }
+}
+.tile-photos[data-n="3"] .tile-photo:nth-child(3) {
+  opacity: 0; z-index: 2;
+  animation: tile-over-c 18s ease-in-out infinite;
+}
+@keyframes tile-over-c {
+  0%, 55%   { opacity: 0; }
+  62%, 82%  { opacity: 1; }
+  88%, 100% { opacity: 0; }
 }
 
 /* التمرير بالمؤشر يوقف التبديل ليتأمل الزائر */
@@ -763,6 +787,14 @@ ul, ol { padding-inline-start: 1.1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .tile-photos .tile-photo { animation: none; opacity: 0; }
+  .tile-photos .tile-photo:first-child { opacity: 1; }
+}
+
+/* والشاشة الضيقة بلا تبديل أصلاً: على الهاتف تمرّ البطاقات تحت الإبهام،
+   وصورة تتبدّل تحت الإصبع حركةٌ لم يطلبها القارئ. الأولى وحدها، وشارة
+   العدد تبقى فتقول إن هناك أكثر. */
+@media (max-width: 47.9375rem) {
   .tile-photos .tile-photo { animation: none; opacity: 0; }
   .tile-photos .tile-photo:first-child { opacity: 1; }
 }

@@ -143,6 +143,9 @@ when a party has nothing to say.
 | EB-059 | Hussam | 2026-09-04 12:36 | Uploaded the three photos as files | EB-058 |
 | EB-060 | Claude Code | 2026-09-04 12:42 | Photos processed and linked · **P-21 is the first product verified from our own photo** · P-22 stays unverified, and says why | EB-059 |
 
+| EB-061 | Hussam | 2026-09-04 13:00 | The 8K cable photo · the fade shows an empty frame · asked for a full review and a tidy-up | EB-060 |
+| EB-062 | Claude Code | 2026-09-04 13:25 | Fade rebuilt so a gap is impossible · one photo pipeline instead of two · admin guard · plan rewritten from measurement · **I-021: four live pages say they are drafts** | EB-061 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

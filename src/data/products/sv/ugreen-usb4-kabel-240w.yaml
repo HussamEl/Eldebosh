@@ -29,14 +29,21 @@ owned_since: 2025-08-01
 tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
 usage_period: ""
 own_photos:
-  - src: "/uploads/P-20-1.webp"
+  - src: "/uploads/P-20-1-B0GV79Z1W6.webp"
     alt: "UGREEN USB-C-kabel hoprullad bredvid en telefon"
+    caption: "Vår egen bild."
+  - src: "/uploads/P-20-2.webp"
+    alt: "Kabelns kontakt med märkningen 40 Gbps och UGREEN-logotypen."
     caption: "Vår egen bild."
 hands_on: []
 hands_on_limits: []
 
 # === الربط ===
 asin: "B0GV79Z1W6"
-source_url: "https://www.amazon.se/dp/B0GV79Z1W6"   # صفحة بائع — المصنّع ما زال ناقصاً (I-019)
+source_url: "https://www.amazon.se/dp/B0GV79Z1W6"   # للربط لا للمواصفة
+
+# لا spec_photo: صورتنا تُثبت «Dataöverföring: 40 Gbps» مطبوعةً على القابس،
+# ولا تُثبت «Effekt» ولا «Video» ولا «Längd». والمواصفة الجزئية لا تُوثّق ملفاً
+# كاملاً — القاعدة 2b · I-019.
 last_verified: 2026-09-04
 verified: false        # ← اجعلها true بعد اكتمال asin و source_url و last_verified

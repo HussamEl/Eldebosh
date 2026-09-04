@@ -3,15 +3,24 @@
 الفكرة: المنتج يظهر كاملاً، والفراغ حوله يُملأ بضبابية من الصورة ذاتها
 ممزوجة بلون الهوية، وحواف الصورة تتلاشى فيها فلا يظهر أي إطار.
 
-    python3 scripts/make_tiles.py
+    صورة واحدة:  python3 scripts/make_tiles.py <الصورة> P-21-1 [ASIN]
+    دفعة كاملة:  python3 scripts/make_tiles.py            (من /tmp/src-orig)
+
+في 2026-09-04 كتبتُ سكربتاً ثانياً للصور يقصّ من المركز — ولم أكن قد قرأت
+هذا. فخرجت أربع بطاقات بمظهر لا يشبه العشرين الأخرى: قصٌّ حادّ بدل منتجٍ
+كاملٍ في ضبابيةٍ ملوّنة. المشكلة لم تكن في الوصفة بل في وجود وصفتين.
+فحُذف الثاني، وصار هذا يقبل ملفاً واحداً بالسطر أعلاه.
 """
 
 from PIL import Image, ImageFilter, ImageDraw, ImageEnhance
 import os
+import re
+import sys
 import glob
 
 SRC = "/tmp/src-orig"
 OUT = "public/uploads"
+MAX_KB = 300                    # السقف في docs/project/PHOTO_NAMING.md §4
 SIZE = 720
 BRAND_SOFT = (240, 247, 254)   # --brand-soft
 BRAND_TINT = (211, 231, 250)   # --brand-tint
@@ -71,14 +80,50 @@ def tile(path: str, code: str) -> None:
 
     out = Image.composite(layer, bg, mask)
 
-    out.save(os.path.join(OUT, code + ".webp"), quality=86, method=6)
-    print("  %-8s ✓" % code)
+    # الجودة تنزل بالتدريج حتى يقع الملف تحت السقف
+    target = os.path.join(OUT, code + ".webp")
+    for q in (86, 78, 70, 62):
+        out.save(target, quality=q, method=6)
+        if os.path.getsize(target) <= MAX_KB * 1024:
+            break
+    kb = os.path.getsize(target) // 1024
+    print("  %-24s ✓  %d KB" % (code, kb))
+    return target
+
+
+def check_name(code: str) -> None:
+    if not re.fullmatch(r"P-\d{2}-[123]", code):
+        sys.exit('\nاسم غير صالح "%s" — الصيغة P-NN-K حيث K واحد من 1 2 3\n' % code)
 
 
 if __name__ == "__main__":
-    files = sorted(glob.glob(os.path.join(SRC, "*")))
-    print("\nخبز بطاقات المنتجات\n" + "-" * 32)
-    for f in files:
-        tile(f, os.path.splitext(os.path.basename(f))[0])
-    print("-" * 32)
-    print("%d بطاقة\n" % len(files))
+    args = sys.argv[1:]
+
+    if args:
+        # صورة واحدة: <الصورة> <الرمز> [ASIN]
+        src, code = args[0], args[1] if len(args) > 1 else ""
+        asin = args[2] if len(args) > 2 else ""
+        if not code:
+            sys.exit("\nالاستعمال:  python3 scripts/make_tiles.py <الصورة> P-21-1 [ASIN]\n")
+        check_name(code)
+        if asin:
+            if not re.fullmatch(r"[A-Z0-9]{10}", asin):
+                sys.exit('\nASIN غير صالح "%s" — عشر خانات، حروف كبيرة وأرقام\n' % asin)
+            if not code.endswith("-1"):
+                sys.exit('\n"%s" ليست الصورة الأولى — لاحقة ASIN للأولى وحدها\n' % code)
+            # اسم واحد لا اثنان: الصورة الأولى لمنتج له رقم تحمل الرقم في اسمها
+            code = code + "-" + asin
+        print("")
+        path = tile(src, code)
+        print("""
+الخطوة التالية:
+  own_photos في ملف المنتج ← src: "%s" مع alt سويدي
+  npm run assets   ثم   npm run verify
+""" % path.replace("public", ""))
+    else:
+        files = sorted(glob.glob(os.path.join(SRC, "*")))
+        print("\nخبز بطاقات المنتجات\n" + "-" * 32)
+        for f in files:
+            tile(f, os.path.splitext(os.path.basename(f))[0])
+        print("-" * 32)
+        print("%d بطاقة\n" % len(files))

@@ -59,5 +59,8 @@ public/admin/              لوحة التحرير المرئية
 Pagefind بعد البناء. النطاق المفهرس: `<main data-pagefind-body>` فقط؛ الرأس والفوتر وفتات الخبز والإفصاح مستثناة.
 
 ## النشر
-`main` push → GitHub Actions → `npm ci` → `npm run build` (يتضمن الفحص) → FTP إلى Hostinger.
-الأسرار المطلوبة: `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`, `FTP_REMOTE_DIR`.
+`main` push → GitHub Actions → `npm ci` → `npm run verify` → تحديث فرع `deploy` →
+`Webhook` يوقظ الاستضافة → تسحب إلى `public_html`.
+
+**لا أسرار ولا `FTP`.** المسار كله عبر غيتهب، والاستضافة هي التي تخرج وتأخذ.
+التفصيل في [`docs/12-deploy-from-github.md`](../12-deploy-from-github.md).

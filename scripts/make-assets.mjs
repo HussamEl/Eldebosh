@@ -121,4 +121,27 @@ const lines = [
 writeFileSync(join(ROOT, 'docs/project/ASSETS.md'), lines.join('\n'), 'utf8');
 const withPhoto = products.filter((p) => !p.missing).length;
 const without = products.filter((p) => p.missing).length;
-console.log(`\n✓ فهرس الأصول: ${withPhoto} صورة · ${without} منتج بلا صورة · ${brandFiles.length} أصل هوية\n  ASSETS.md\n`);
+console.log(`\n✓ فهرس الأصول: ${withPhoto} صورة · ${without} منتج بلا صورة · ${brandFiles.length} أصل هوية\n  ASSETS.md`);
+
+/* ---------- صور يتيمة ----------
+   ملفٌ في `uploads` لا يشير إليه أحد لا يظهر لزائر ولا يُحذف من تلقائه.
+   كانت ثماني نسخ متطابقة راكدة فيه حتى 2026-09-04 — ثلث ميغابايت تُرفع
+   إلى الاستضافة في كل نشر بلا سبب. التقرير هنا لا يحذف: الحذف قرار. */
+const upDir = join(ROOT, 'public/uploads');
+const referenced = new Set();
+for (const p of all) {
+  for (const ph of p.own_photos ?? []) if (ph?.src) referenced.add(ph.src.split('/').pop());
+  if (p.spec_photo) referenced.add(String(p.spec_photo).split('/').pop());
+  if (p.image) referenced.add(String(p.image).split('/').pop());
+  if (p.video_thumb) referenced.add(String(p.video_thumb).split('/').pop());
+}
+const orphans = readdirSync(upDir)
+  .filter((f) => /\.(webp|jpe?g|png|avif)$/i.test(f))
+  .filter((f) => !referenced.has(f));
+
+if (orphans.length) {
+  console.log(`\n  ⚠ ${orphans.length} صورة في uploads لا يشير إليها منتج:`);
+  for (const f of orphans) console.log(`      ${f}   ${kb(join(upDir, f))}`);
+  console.log('      احذفها أو اربطها — لا ثالث.');
+}
+console.log('');
