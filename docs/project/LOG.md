@@ -146,6 +146,9 @@ when a party has nothing to say.
 | EB-061 | Hussam | 2026-09-04 13:00 | The 8K cable photo · the fade shows an empty frame · asked for a full review and a tidy-up | EB-060 |
 | EB-062 | Claude Code | 2026-09-04 13:25 | Fade rebuilt so a gap is impossible · one photo pipeline instead of two · admin guard · plan rewritten from measurement · **I-021: four live pages say they are drafts** | EB-061 |
 
+| EB-063 | Hussam | 2026-09-04 13:35 | Verified P-20 himself from the Amazon listing · delegated the four legal pages · asked for a handover | EB-062 |
+| EB-064 | Claude Code | 2026-09-04 13:52 | Four pages written and live · draft guard now fails the build · P-20 verified on Hussam's word · **HANDOVER.md** | EB-063 |
+
 
 <!-- Append newest at the bottom. Never delete a row; correct with a new one. -->
 

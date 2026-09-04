@@ -7,7 +7,7 @@
 
 **موقع Eldebosh وهويته البصرية في مستودع واحد**
 
-[التوثيق](docs/) · [دليل الهوية](brand/GUIDELINES.md) · [سجل التغييرات](CHANGELOG.md) · [المساهمة](CONTRIBUTING.md)
+**[تسليم المشروع](docs/project/HANDOVER.md)** · [التوثيق](docs/) · [دليل الهوية](brand/GUIDELINES.md) · [سجل التغييرات](CHANGELOG.md) · [المساهمة](CONTRIBUTING.md)
 
 </div>
 
