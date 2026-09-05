@@ -229,9 +229,8 @@ const out = `<!doctype html>
 
     const countEl = app.querySelector('[data-gear-count]');
     const tiles = [...grid.querySelectorAll('.tile')];
-    const allBtn = bar.querySelector('[data-filter="all"]');
-    const testedBtn = bar.querySelector('[data-toggle="tested"]');
-    let testedOnly = false;
+    const buttons = [...bar.querySelectorAll('[data-filter]')];
+    let active = 'all';
 
     bar.hidden = false;
     if (countEl) countEl.hidden = false;
@@ -239,17 +238,21 @@ const out = `<!doctype html>
     const apply = () => {
       let shown = 0;
       for (const el of tiles) {
-        const on = !testedOnly || el.dataset.tested === 'true';
+        const on = active === 'all' || el.dataset.category === active;
         el.hidden = !on;
         if (on) shown++;
       }
-      if (allBtn) { allBtn.classList.toggle('is-on', !testedOnly); allBtn.setAttribute('aria-pressed', String(!testedOnly)); }
-      if (testedBtn) { testedBtn.classList.toggle('is-on', testedOnly); testedBtn.setAttribute('aria-pressed', String(testedOnly)); }
+      for (const btn of buttons) {
+        const on = btn.dataset.filter === active;
+        btn.classList.toggle('is-on', on);
+        btn.setAttribute('aria-pressed', String(on));
+      }
       if (countEl) countEl.textContent = (grid.dataset.countTemplate || '{n}').replace('{n}', shown);
     };
 
-    if (allBtn) allBtn.addEventListener('click', () => { testedOnly = false; apply(); });
-    if (testedBtn) testedBtn.addEventListener('click', () => { testedOnly = !testedOnly; apply(); });
+    for (const btn of buttons) {
+      btn.addEventListener('click', () => { active = btn.dataset.filter || 'all'; apply(); });
+    }
     apply();
   }
 

@@ -191,7 +191,8 @@ console.log('\n· filter');
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await page.goto(BASE + '/sv/', { waitUntil: 'networkidle' });
   const all = await page.evaluate(() => document.querySelectorAll('.tile:not([hidden])').length);
-  await page.locator('[data-toggle="tested"]').click();
+  // första gruppchipen — vilken som helst utom "Alla"
+  await page.locator('[data-gearbar] [data-filter]:not([data-filter="all"])').first().click();
   await page.waitForTimeout(150);
   const some = await page.evaluate(() => ({
     visible: document.querySelectorAll('.tile:not([hidden])').length,

@@ -5,6 +5,7 @@
    وصور المتجر لا يجوز نسخها يدوياً. */
 import { t, type Lang } from '../i18n/ui';
 import { affiliateHref, affiliateNetwork, type Product } from '../lib/content';
+import { gearGroup } from '../lib/gear-groups';
 
 interface Props { product: Product; lang: Lang; }
 const { product: p, lang } = Astro.props;
@@ -32,7 +33,7 @@ const chips = specs
 <article
   id={`t-${p.code ?? p.id}`}
   class="tile"
-  data-category={p.category}
+  data-category={gearGroup(p) ?? ''}
   data-band={p.price_band}
   data-tested={String(p.tested)}
   data-name={`${p.brand} ${p.name}`.toLowerCase()}

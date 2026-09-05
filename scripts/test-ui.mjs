@@ -54,35 +54,32 @@ check('الشريط يظهر بعد تشغيل السكربت', bar.hidden, fals
 const total = shown();
 check('كل المنتجات ظاهرة ابتداءً', total > 0, true);
 
-// تصفية حسب الفئة
-const catBtn = [...d.querySelectorAll('[data-filter]')].find((b) => b.dataset.filter !== 'all');
-if (catBtn) {
-  const expected = [...d.querySelectorAll('.tile')].filter((t) => t.dataset.category === catBtn.dataset.filter).length;
+// تصفية حسب المجموعة — زرّ لكل مجموعة، ثم العودة إلى الكل
+const allBtn = q('[data-filter="all"]');
+const catBtns = [...d.querySelectorAll('[data-filter]')].filter((b) => b.dataset.filter !== 'all');
+check('الشريط يحمل أزرار مجموعات', catBtns.length > 0, true);
+
+for (const catBtn of catBtns) {
+  const key = catBtn.dataset.filter;
+  const expected = [...d.querySelectorAll('.tile')].filter((t) => t.dataset.category === key).length;
   catBtn.click();
-  check(`تصفية الفئة "${catBtn.dataset.filter}"`, shown(), expected);
-  check('الزر يتلوّن', catBtn.classList.contains('is-on'), true);
-  q('[data-filter="all"]').click();
+  check(`تصفية "${key}"`, shown(), expected);
+  check(`"${key}" يتلوّن وحده`, [...d.querySelectorAll('.chip.is-on')].length, 1);
+  check(`"${key}" هو الملوَّن`, catBtn.classList.contains('is-on'), true);
+  allBtn.click();
   check('العودة إلى الكل', shown(), total);
 }
 
-// زر المجرَّب
-const tested = q('[data-toggle="tested"]');
-if (tested) {
-  const expected = [...d.querySelectorAll('.tile')].filter((t) => t.dataset.tested === 'true').length;
-  tested.click();
-  check('تصفية "نستخدمها بأنفسنا"', shown(), expected);
-  tested.click();
-  check('إلغاء التصفية', shown(), total);
-}
+check('زر "الكل" يتلوّن', allBtn.classList.contains('is-on'), true);
 
-// زر "الكل" يعيد العرض الكامل حتى بعد تفعيل المجرَّب
-if (tested) {
-  tested.click();
-  q('[data-filter="all"]').click();
-  check('زر "الكل" يعيد كل المنتجات', shown(), total);
-  check('زر "الكل" يتلوّن', q('[data-filter="all"]').classList.contains('is-on'), true);
-  check('زر المجرَّب يفقد اللون', tested.classList.contains('is-on'), false);
+// الرقم المكتوب على كل زر يساوي ما يعرضه فعلاً
+for (const catBtn of catBtns) {
+  const key = catBtn.dataset.filter;
+  const printed = Number((catBtn.querySelector('.chip-n')?.textContent ?? '').trim());
+  const real = [...d.querySelectorAll('.tile')].filter((t) => t.dataset.category === key).length;
+  check(`عدّاد الزر "${key}"`, printed, real);
 }
+check('عدّاد "الكل"', Number((allBtn.querySelector('.chip-n')?.textContent ?? '').trim()), total);
 
 // البحث الفوري
 const search = q('[data-gear-search]');

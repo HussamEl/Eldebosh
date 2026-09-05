@@ -1,6 +1,6 @@
 /*
  * Eldebosh — delad UI-logik / shared UI behaviour.
- *   1. Filterchips ovanför produktrutnätet ("Alla" / "Finns att prova").
+ *   1. Filterchips ovanför produktrutnätet ("Alla" + en chip per grupp).
  *   2. Bildvisaren (lightbox) på produktkorten.
  *
  * Bildvisaren fungerar utan JS via :target. Med JS tar vi över för att slippa
@@ -29,11 +29,11 @@
 
     const countEl = document.querySelector('[data-gear-count]');
     const tiles = Array.from(grid.querySelectorAll('.tile'));
-    const allBtn = bar.querySelector('[data-filter="all"]');
-    const testedBtn = bar.querySelector('[data-toggle="tested"]');
+    const buttons = Array.from(bar.querySelectorAll('[data-filter]'));
     const template = grid.dataset.countTemplate || '{n}';
 
-    let testedOnly = false;
+    // "all" eller ett grupp-id; korten bär samma id i data-category.
+    let active = 'all';
 
     bar.hidden = false;
     if (countEl) countEl.hidden = false;
@@ -41,17 +41,14 @@
     const apply = () => {
       let shown = 0;
       for (const el of tiles) {
-        const on = !testedOnly || el.dataset.tested === 'true';
+        const on = active === 'all' || el.dataset.category === active;
         el.hidden = !on;
         if (on) shown++;
       }
-      if (allBtn) {
-        allBtn.classList.toggle('is-on', !testedOnly);
-        allBtn.setAttribute('aria-pressed', String(!testedOnly));
-      }
-      if (testedBtn) {
-        testedBtn.classList.toggle('is-on', testedOnly);
-        testedBtn.setAttribute('aria-pressed', String(testedOnly));
+      for (const btn of buttons) {
+        const on = btn.dataset.filter === active;
+        btn.classList.toggle('is-on', on);
+        btn.setAttribute('aria-pressed', String(on));
       }
       if (countEl) {
         countEl.textContent = template.replace('{n}', shown);
@@ -59,8 +56,12 @@
       }
     };
 
-    if (allBtn) allBtn.addEventListener('click', () => { testedOnly = false; apply(); });
-    if (testedBtn) testedBtn.addEventListener('click', () => { testedOnly = !testedOnly; apply(); });
+    for (const btn of buttons) {
+      btn.addEventListener('click', () => {
+        active = btn.dataset.filter || 'all';
+        apply();
+      });
+    }
 
     apply();
   };

@@ -6,6 +6,7 @@ import { LANGS, t, type Lang } from '../../i18n/ui';
 import { url, docs, activeCategories, verifiedProducts } from '../../lib/content';
 import ProductTile from '../../components/ProductTile.astro';
 import GearFilter from '../../components/GearFilter.astro';
+import { gearGroupCounts } from '../../lib/gear-groups';
 import TorgetContact from '../../components/TorgetContact.astro';
 import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 
@@ -26,7 +27,7 @@ const [solutions, guides, comparisons, posts, cats, gear] = await Promise.all([
 ]);
 
 const problems = solutions.filter((s) => s.data.featured).slice(0, 6);
-const testedCount = gear.filter((p) => p.tested).length;
+const gearGroups = gearGroupCounts(gear);
 
 const altPaths = { sv: url.home('sv'), en: url.home('en') };
 ---
@@ -62,7 +63,7 @@ const altPaths = { sv: url.home('sv'), en: url.home('en') };
         </div>
 
         {gear.length > 3 && (
-          <GearFilter lang={lang} testedCount={testedCount} total={gear.length} />
+          <GearFilter lang={lang} groups={gearGroups} total={gear.length} />
         )}
 
         <div

@@ -1,10 +1,12 @@
 ---
-/* الجزيرة التفاعلية الوحيدة — تصفية المنتجات.
-   بلا سكربت: كل المنتجات تظهر والشريط مخفي. */
+/* الجزيرة التفاعلية الوحيدة — تصفية المنتجات حسب المجموعة.
+   بلا سكربت: كل المنتجات تظهر والشريط مخفي.
+   الأزرار مجموعات لا فئات بيانات — انظر `src/lib/gear-groups.ts` و`D-030`. */
 import { t, type Lang } from '../i18n/ui';
+import type { GearGroupId } from '../lib/gear-groups';
 
-interface Props { lang: Lang; testedCount: number; total: number; }
-const { lang, testedCount, total } = Astro.props;
+interface Props { lang: Lang; groups: readonly { id: GearGroupId; count: number }[]; total: number; }
+const { lang, groups, total } = Astro.props;
 const tr = t(lang);
 ---
 
@@ -13,12 +15,11 @@ const tr = t(lang);
     <button type="button" class="chip is-on" data-filter="all" aria-pressed="true">
       {tr('filter.all')} <span class="chip-n">{total}</span>
     </button>
-    {testedCount > 0 && (
-      <button type="button" class="chip chip-tested" data-toggle="tested" aria-pressed="false">
-        <span class="tile-dot" aria-hidden="true"></span>
-        {tr('torget.badge')} <span class="chip-n">{testedCount}</span>
+    {groups.map((g) => (
+      <button type="button" class="chip" data-filter={g.id} aria-pressed="false">
+        {tr(`filter.group.${g.id}`)} <span class="chip-n">{g.count}</span>
       </button>
-    )}
+    ))}
   </div>
 </div>
 

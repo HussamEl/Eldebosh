@@ -648,9 +648,6 @@ ul, ol { padding-inline-start: 1.1rem; }
 .chip.is-on { background: var(--brand); border-color: var(--brand); color: var(--paper); }
 .chip.is-on .chip-n { color: rgb(255 255 255 / 0.7); }
 .chip-n { font-size: 0.68rem; color: var(--muted); font-variant-numeric: tabular-nums; }
-.chip-tested.is-on { background: var(--volt); border-color: var(--volt); color: var(--ink); }
-.chip-tested.is-on .chip-n { color: rgb(16 22 29 / 0.55); }
-.chip-tested.is-on .tile-dot { background: var(--brand-deep); box-shadow: none; }
 
 .gear-count {
   font-size: var(--step--1); color: var(--muted);
