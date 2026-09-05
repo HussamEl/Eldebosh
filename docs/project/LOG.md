@@ -87,7 +87,7 @@ when a party has nothing to say.
 | # | From | Time (Karlstad) | Subject | Replying to |
 |---|---|---|---|---|
 
-<!-- الرسالة الأولى بعد التصفير تُكتب هنا: EB-001 -->
+| EB-001 | Claude Code | 2026-09-05 14:02 | شريط التصفية في الرئيسية صار يصفّي بالفئة — `Alla` · `Kablar` · `Laddare` · `Powerbanks` بدل زر `Finns att prova` · `D-030` · دُفع إلى `main` والفحص أخضر | Hussam |
 
 <!-- COUNTER-RESET-END -->
 
