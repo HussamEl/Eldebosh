@@ -28,7 +28,6 @@ const LOGO_PNGS = [
   ['eldebosh-logo-mono-navy.svg', [2400]],
   ['eldebosh-logo-mono-white.svg', [2400]],
   ['eldebosh-logo-mono-black.svg', [2400]],
-  ['eldebosh-logo-green-alt.svg', [2400]],
   ['eldebosh-wordmark.svg', [1600]],
 ];
 const ICON_SIZES = [1024, 512, 256, 192, 180, 128, 64, 48, 32, 16];

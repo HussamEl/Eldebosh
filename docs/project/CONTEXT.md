@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — CONTEXT
 
-> **Version:** `v1.7` · 2026-09-05 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.8` · 2026-09-05 · canonical copy: `docs/project/` in the repository
 >
 > State, decisions and the reasons behind them. **Rules live in `INSTRUCTIONS`.**
 > Source of truth for code: `github.com/HussamEl/Eldebosh` — branch `main`, public.
@@ -61,19 +61,27 @@ competitor can write that.
 
 ## 4. Current state
 
+**No count is written on this page.** Every figure the project has lives in
+`docs/project/STATE.md`, which `npm run state` regenerates from the repository.
+A number typed here would be wrong within hours, and a reader could not tell
+which of the two to believe. **Paste `STATE.md` alongside this document.**
+
+What does not change with the counts:
+
 | Item | State |
 |---|---|
-| Repository | `HussamEl/Eldebosh` · `main` · public · clean tree |
+| Repository | `HussamEl/Eldebosh` · `main` · public |
 | Source | In the repository: `src/` + `public/` |
-| Build output | `site/` — **70 generated pages** |
+| Build output | `site/` — generated, committed on purpose, never hand-edited |
 | **Deployment** | 🟢 **Automatic and measured** — GitHub builds and checks, the host pulls. No manual step |
-| Automated checks | **14 local + 1 in CI, all green** · 28/28 in Chromium · 32 claim cases · colours · style · versions · admin fields · drift |
-| Brand | 57 files plus their generators |
-| Products | **23 files** · 15 have an ASIN · **8 waiting** · **7 verified** |
-| Content | **32 Swedish documents** · 11 with finished text · 2 written and awaiting review · 19 declared skeletons |
-| Legal and standing pages | 6 · **all written** — and `check:drafts` now fails the build on draft text |
+| Automated checks | Fourteen local, one more in CI. `npm run verify` is the only standard |
+| Brand | Blue, closed (`D-015`); every asset regenerates from `brand/src/` |
+| Products | One YAML file each. A product is data, not a page |
+| Content | MDX. `published` is the URL; `stage` is how far the text has come |
+| Legal and standing pages | Six, all written — `check:drafts` fails the build on draft text |
 | Review | `npm run preview:file` — one file, drafts included, opens on a phone |
 | WordPress | ❌ Removed — forbidden on the domain |
+| Amazon API | ❌ Closed until three qualifying sales. No images, no prices |
 
 ---
 

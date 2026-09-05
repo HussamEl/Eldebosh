@@ -134,7 +134,7 @@ S-01 هذا ما أراه في القائمة
 | الحالة والقرارات وأسبابها | `PROJECT_CONTEXT` |
 | الصور والأصول | `ASSETS.md` + `ASSETS-CATALOG.pdf` |
 | بنية الكود والأوامر | `HANDOFF.md` |
-| المشاكل القائمة وأدلتها | `DEPLOY_FIX.md` · `REMOVE_WORDPRESS.md` |
+| المشاكل القائمة وأدلتها | `ISSUES.md` |
 | خريطة المحتوى | `KEYWORD_MAP.md` |
 | قواعد التصوير والتجربة | `HANDS_ON_GUIDE.md` |
 | ملفات الخادم | `SERVER_FILES.md` |

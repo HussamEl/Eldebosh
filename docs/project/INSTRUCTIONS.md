@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — INSTRUCTIONS
 
-> **Version:** `v1.9` · 2026-09-05 · canonical copy: `docs/project/` in the repository
+> **Version:** `v2.0` · 2026-09-05 · canonical copy: `docs/project/` in the repository
 >
 > **The governing document.** Where anything else conflicts with this, this wins.
 > Current state: `CONTEXT`. Source of truth for code: `github.com/HussamEl/Eldebosh`.

@@ -18,12 +18,6 @@ BLUE = dict(
     muted='#66727F',
     rule='#BCD2E3',
 )
-GREEN = dict(                     # alternativ, från den uppladdade skissen
-    name='green',
-    ink='#1E4620', ink_2='#4E8C2B', accent='#8CC63F', accent_2='#6FA82F',
-    badge_a='#255C2A', badge_b='#123018', muted='#5C6B58', rule='#C3D9AE',
-)
-
 CAP = 78.0                        # versalhöjd för ordmärket
 SIZE = CAP / (metrics()['cap'] / 100.0)
 TRACK = 0.018
@@ -212,7 +206,6 @@ files = {
     'eldebosh-logo-mono-navy.svg':         horizontal(BLUE, mono='#123F66'),
     'eldebosh-logo-mono-white.svg':        horizontal(BLUE, mono='#FFFFFF'),
     'eldebosh-logo-mono-black.svg':        horizontal(BLUE, mono='#000000'),
-    'eldebosh-logo-green-alt.svg':         horizontal(GREEN, idp='g'),
     'eldebosh-icon.svg':                   icon(BLUE, 512, idp='i'),
     'eldebosh-icon-mono-white.svg':        icon(BLUE, 512, mono='#FFFFFF'),
     'eldebosh-icon-mono-navy.svg':         icon(BLUE, 512, mono='#123F66'),

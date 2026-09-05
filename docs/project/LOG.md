@@ -70,18 +70,32 @@ when a party has nothing to say.
 
 ---
 
-## السجل — بعد تصفير 2026-09-04
+## السجل — بعد تصفير 2026-09-05
 
-<!-- COUNTER-RESET 2026-09-05 -->
+<!-- COUNTER-RESET 2026-09-05-B -->
 
-> **العدّاد صُفِّر في `2026-09-05`** — الرابعة، وبطلب حسام. حذف المحادثات
-> الجديدة كلّها ليبدأ من مشروع مسلَّم لا من سجلّ محادثة.
+> **العدّاد صُفِّر في `2026-09-05` — الخامسة، وبطلب حسام.** حذف كل محادثاته مع
+> الأطراف الأربعة، ونظّف جهازه من الملفات القديمة. **فالمستودع هو الذاكرة
+> الوحيدة الباقية**، ولا شيء خارجه يُستشهد به.
 >
-> **ما قبل التصفير محفوظ أسفل هذه الصفحة ولم يُحذف منه سطر**، ولا يُستشهد
-> برقم منه. يُشار إلى العمل السابق بموضوعه أو برقم مسألته `I-###`، وكلاهما
-> ينجو من التصفير.
+> **ما قبل التصفير محفوظ أسفل الصفحة ولم يُحذف منه سطر**، ولا يُستشهد برقم
+> منه. يُشار إلى العمل السابق بموضوعه أو برقم مسألته `I-###` أو قراره `D-###`
+> — وثلاثتها تنجو من كل تصفير.
 >
 > **والفحص يقرأ بين العلامتين فقط**، فلا يخلط الأرشيف بالعدّاد الحيّ.
+
+| # | From | Time (Karlstad) | Subject | Replying to |
+|---|---|---|---|---|
+
+<!-- الرسالة الأولى بعد التصفير تُكتب هنا: EB-001 -->
+
+<!-- COUNTER-RESET-END -->
+
+---
+
+## أرشيف — ما قبل التصفير
+
+> **لا يُقرأ للعمل، ويُقرأ للتاريخ.** ولا يُستشهد برقم منه.
 
 | # | From | Time (Karlstad) | Subject | Replying to |
 |---|---|---|---|---|
@@ -94,17 +108,11 @@ when a party has nothing to say.
 | EB-007 | Claude Code | 2026-09-05 01:33 | Emblem drawn: circuit traces, cable, USB-C plug, power ring replacing the O · three SVG variants, blue palette, nothing wired into the site yet | EB-006 |
 | EB-008 | Hussam | 2026-09-05 01:36 | Rejected the emblem outright and told me to delete it and everything around it | EB-007 |
 | EB-009 | Claude Code | 2026-09-05 01:38 | Deleted: three SVGs, the generator, its npm scripts and the helper it needed · the existing logo family rebuilds byte-identical · `npm run verify` green | EB-008 |
-
-<!-- COUNTER-RESET-END -->
-
----
-
-## أرشيف — ما قبل التصفير
-
-> **لا يُقرأ للعمل، ويُقرأ للتاريخ.** ولا يُستشهد برقم منه.
-
-| # | From | Time (Karlstad) | Subject | Replying to |
-|---|---|---|---|---|
+| EB-010 | Claude Code | 2026-09-05 01:40 | Confirmed the deletion: GitHub check green on the removal commit | EB-009 |
+| EB-011 | Claude Code | 2026-09-05 13:05 | Why the work did not go to `main` at the start: the runtime opens a session branch and forbids pushing elsewhere without permission, and `HANDOVER` told me to follow it and not to ask | Hussam |
+| EB-012 | Claude Code | 2026-09-05 13:08 | The rule was documented where nobody reads it · the standing authorisation now sits in `CLAUDE.md`, which every session loads first | Hussam |
+| EB-013 | Hussam | 2026-09-05 13:20 | Deleted every past conversation with all four assistants and wiped the old files from his machine · asked for a full audit, a cleanup, a counter reset and a handover from zero | EB-012 |
+| EB-014 | Claude Code | 2026-09-05 13:45 | Repository audited and cleaned · 2,117 lines of dead documents removed, four stale issues closed against the repository's own evidence, the counter reset here, `HANDOVER` rewritten as the single entry point | EB-013 |
 | EB-001 | Claude Code | 2026-09-04 21:24 | Looked at the four battery photos as I-019 asked · found P-03 printed 145W against 165 W in the file | new thread |
 | EB-002 | Hussam | 2026-09-04 21:33 | Checked his order: the ASIN in the file was a different model · gave the right link | EB-001 |
 | EB-003 | Claude Code | 2026-09-04 21:36 | P-03 corrected — wattage, ASIN, source and photo name · verified from our own photo · I-023 | EB-002 |

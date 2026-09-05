@@ -65,4 +65,4 @@ npm run brand:all           # الأوامر الستة أعلاه بالترت�
 | مساحة مربعة | `…-stacked.svg` |
 | لون واحد | `…-mono-navy / -white / -black.svg` |
 | أيقونة | `eldebosh-icon.svg`، و`favicon.svg` تحت 64px |
-| بديل أخضر | `…-green-alt.svg` — بديل قائم بذاته، لا يُخلط مع الأزرق |
+
