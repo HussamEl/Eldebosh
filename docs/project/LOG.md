@@ -89,6 +89,7 @@ when a party has nothing to say.
 
 | EB-001 | Claude Code | 2026-09-05 14:02 | شريط التصفية في الرئيسية صار يصفّي بالفئة — `Alla` · `Kablar` · `Laddare` · `Powerbanks` بدل زر `Finns att prova` · `D-030` · دُفع إلى `main` والفحص أخضر | Hussam |
 | EB-002 | Claude Code | 2026-09-05 14:13 | الأزرار ظهرت على الموقع ولم تعمل — `.htaccess` كان يخزّن `/js/eldebosh-ui.js` سنةً بوسم `immutable` وهو مسار ثابت لا مبصوم · `I-025` · البصمة صارت في الرابط وحارسٌ في `audit` يمنع تكراره | Hussam |
+| EB-003 | Hussam | 2026-09-05 14:18 | تأكيد على الموقع الحيّ: الأزرار تصفّي — `I-025` مُغلقة بشهادة المالك لا بالفحص وحده | EB-002 |
 
 <!-- COUNTER-RESET-END -->
 
