@@ -156,7 +156,7 @@ Astro SSG · Content Collections · Pagefind · Sveltia CMS · GitHub Actions �
 npm run check     # فحص القواعد الملزمة
 npm run build     # الفحص + البناء + فهرسة البحث
 npm run test:ui   # اختبار سلوكي للجزيرة التفاعلية في DOM حقيقي
-npm run verify    # الاثنان معاً
+npm run verify    # كل ما سبق ومعه فحوص الوثائق والروابط والألوان
 ```
 
 **بعد أي تعديل على JavaScript أو على CSS يخص الإخفاء: شغّل `npm run verify`.**

@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — BRIEFING
 
-> **Version:** `v1.5` · 2026-09-05 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.6` · 2026-09-05 · canonical copy: `docs/project/` in the repository
 >
 > Written to be read with no prior context. It assumes no knowledge of earlier
 > conversations.
@@ -132,7 +132,7 @@ disagree and nobody knows which is true. That happened, and this is the fix.
 |---|---|
 | Site | Two languages, `sv` is the content language |
 | **Deployment** | 🟢 Automatic — GitHub builds and checks, the host pulls. No manual step |
-| Automated checks | Fourteen local, one more in CI. `npm run verify` is the only standard |
+| Automated checks | A local gate plus a drift guard in CI. `npm run verify` is the only standard |
 | Products | One YAML file each · a product is data, never its own page |
 | Content | MDX · `published` is the URL, `stage` is how far the text has come |
 | Legal and standing pages | Six, all written · the build fails if one carries draft text |

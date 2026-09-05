@@ -1,6 +1,6 @@
 # ELDEBOSH.COM — CONTEXT
 
-> **Version:** `v1.8` · 2026-09-05 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.9` · 2026-09-05 · canonical copy: `docs/project/` in the repository
 >
 > State, decisions and the reasons behind them. **Rules live in `INSTRUCTIONS`.**
 > Source of truth for code: `github.com/HussamEl/Eldebosh` — branch `main`, public.
@@ -74,7 +74,7 @@ What does not change with the counts:
 | Source | In the repository: `src/` + `public/` |
 | Build output | `site/` — generated, committed on purpose, never hand-edited |
 | **Deployment** | 🟢 **Automatic and measured** — GitHub builds and checks, the host pulls. No manual step |
-| Automated checks | Fourteen local, one more in CI. `npm run verify` is the only standard |
+| Automated checks | A local gate plus a drift guard in CI. `npm run verify` is the only standard |
 | Brand | Blue, closed (`D-015`); every asset regenerates from `brand/src/` |
 | Products | One YAML file each. A product is data, not a page |
 | Content | MDX. `published` is the URL; `stage` is how far the text has come |
