@@ -5,9 +5,14 @@ import Footer from '../components/Footer.astro';
 import { t, type Lang } from '../i18n/ui';
 import { abs, hreflangs } from '../lib/seo';
 import { now } from '../lib/clock.mjs';
+import { hashedAsset } from '../lib/asset-hash';
 
 /* بصمة البناء — تظهر في مصدر الصفحة، فتكشف فوراً إن كان الخادم يعرض نسخة قديمة. */
 const BUILD_ID = now();
+
+/* بصمة محتوى الجزيرة التفاعلية — بلا هذه يبقى السكربت القديم في متصفح
+   الزائر سنةً كاملة بحكم `.htaccess`، فتصل صفحة جديدة بسلوك قديم (`I-025`). */
+const UI_SCRIPT = hashedAsset('/js/eldebosh-ui.js');
 
 interface Props {
   lang: Lang;
@@ -61,6 +66,6 @@ const fullTitle = title === tr('site.name') ? `${title} — ${tr('site.tagline')
       <slot />
     </main>
     <Footer lang={lang} />
-    <script src="/js/eldebosh-ui.js" defer></script>
+    <script src={UI_SCRIPT} defer></script>
   </body>
 </html>

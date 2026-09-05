@@ -22,7 +22,7 @@ if (!existsSync(PAGE)) {
 const html = readFileSync(PAGE, 'utf8')
   // السكربت خارجي ولا تجلبه بيئة الاختبار — يُحقن مضمّناً
   .replace(
-    /<script src="\/js\/eldebosh-ui\.js"[^>]*><\/script>/,
+    /<script src="\/js\/eldebosh-ui\.js(\?[^"]*)?"[^>]*><\/script>/,
     `<script>${readFileSync(join(ROOT, 'public/js/eldebosh-ui.js'), 'utf8')}</script>`
   );
 
