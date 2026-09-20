@@ -118,7 +118,15 @@ const lines = [
   '',
 ];
 
-writeFileSync(join(ROOT, 'docs/project/ASSETS.md'), lines.join('\n'), 'utf8');
+/* التاريخ يقول متى تغيّر الفهرس، لا متى شُغّل الأمر — القاعدة نفسها في
+ * `make-state.mjs`: تاريخٌ يتحرّك بلا سبب يُقرأ على أنه يعني شيئاً وهو لا يعني. */
+{
+  const OUT = join(ROOT, 'docs/project/ASSETS.md');
+  const out = lines.join('\n');
+  const strip = (t) => t.replace(/\d{4}-\d{2}-\d{2}/g, '§');
+  const prev = existsSync(OUT) ? readFileSync(OUT, 'utf8') : null;
+  if (prev === null || strip(prev) !== strip(out)) writeFileSync(OUT, out, 'utf8');
+}
 const withPhoto = products.filter((p) => !p.missing).length;
 const without = products.filter((p) => p.missing).length;
 console.log(`\n✓ فهرس الأصول: ${withPhoto} صورة · ${without} منتج بلا صورة · ${brandFiles.length} أصل هوية\n  ASSETS.md`);

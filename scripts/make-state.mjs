@@ -241,7 +241,27 @@ ${
 ${drafts_legal.length ? `**٤.** أكمل ${drafts_legal.length} نصاً قانونياً.` : '**٤.** النصوص القانونية مكتملة ✓'}
 `;
 
-writeFileSync(join(ROOT, 'docs/project/STATE.md'), out, 'utf8');
+/* الوقت يقول متى تغيّرت الحالة، لا متى شُغّل الأمر.
+ *
+ * وسببان لذلك:
+ *   ١. بدونه يتغيّر الملف مع كل `verify` ولو لم يتغيّر رقم واحد، فيصير
+ *      ضجيجاً يُتراجَع عنه يدوياً في كل جلسة (`HANDOVER` ٤ب).
+ *   ٢. والأهم منذ صار أي مساعد يقرأ هذا الملف من غيتهب مباشرة: كان يقرأ
+ *      «آخر تحديث» فيجده قديماً بأسبوعين — والأرقام تحته صحيحة اليوم —
+ *      فيشكّ فيها أو يعلن أنها متقادمة. والوقت الذي لا يعني شيئاً أسوأ من
+ *      غيابه، لأنه يُقرأ على أنه يعني شيئاً.
+ */
+const OUT = join(ROOT, 'docs/project/STATE.md');
+const strip = (t) => t.replace(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/g, '§');
+const prev = existsSync(OUT) ? readFileSync(OUT, 'utf8') : null;
+
+if (prev !== null && strip(prev) === strip(out)) {
+  console.log(`\n✓ STATE.md — لا تغيّر في الحالة، والتاريخ باقٍ على يوم آخر تغيّر فعلي`);
+  console.log(`  منتجات ${P.total} · موثقة ${P.verified}\n`);
+  process.exit(0);
+}
+
+writeFileSync(OUT, out, 'utf8');
 console.log(`\n✓ STATE.md`);
 console.log(`  منتجات ${P.total} · منشور ${published}/${published + drafts}`);
 console.log(

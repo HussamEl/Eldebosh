@@ -33,6 +33,10 @@
 **وملف البدء لأي محادثة جديدة** يولَّد بـ`npm run start:file` ← `ELDEBOSH-START.md`.
 **لا يُحرَّر بيد** — كل رقم فيه مقروء من المستودع (`D-031`).
 
+**والأطراف غير `Claude Code` لا تُعطى ملفات تُلصق** — تقرأ `INSTRUCTIONS.md` و`STATE.md`
+من `raw.githubusercontent.com` بنفسها. والكتلة التي تُلصق مرة واحدة في
+`docs/project/PROJECT_BOX.md`، **ولا تُضخَّم**: كل سطر فيها يُقرأ في كل رسالة (`D-032`).
+
 **عند إغلاقها:** حدّث ما تغيّر من الستة.
 
 **خط الإنتاج:** `draft` ← `written` ← `reviewed` ← `published`. الفحص يرفض التناقض بين `stage` و`published`.
