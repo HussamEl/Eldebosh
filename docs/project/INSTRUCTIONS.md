@@ -1,6 +1,10 @@
 # ELDEBOSH.COM — INSTRUCTIONS
 
-> **Version:** `v2.0` · 2026-09-05 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.0` · 2026-09-20 · canonical copy: `docs/project/` in the repository
+>
+> **الإصدار صُفِّر إلى `v1.0` في `2026-09-20` بطلب حسام** مع تصفير عدّاد الرسائل.
+> ليس تراجعاً ولا حذفاً: المحتوى هو نفسه، والرقم وحده عاد إلى أوله ليبدأ العدّ
+> من نقطة التسليم هذه. وما قبلها محفوظ في تاريخ `git`. `D-031`.
 >
 > **The governing document.** Where anything else conflicts with this, this wins.
 > Current state: `CONTEXT`. Source of truth for code: `github.com/HussamEl/Eldebosh`.
@@ -14,7 +18,7 @@
 | **Hussam** | Decisions · photography · Swedish review | Is not a developer |
 | **Claude Code** | The repository · push access · a real browser · execution in code | Decide on Hussam's behalf |
 | **Claude Project** | Specifications · content · SEO · editorial decisions | **Push to the repository** |
-| **Gemini** | External research · second opinion · verifying claims | Execute in code |
+| **An additional party** | A reserved seat: external research or a second opinion, when one is engaged | Execute in code |
 
 **Hussam is the channel between the parties.** Nobody executes blindly: propose
 a better approach with a one-line reason, and flag a contradiction — in the
@@ -39,7 +43,7 @@ EB-004 · Claude Project · 2026-09-02 21:10 · replying to EB-003
 | Field | Rule |
 |---|---|
 | `EB-###` | **One counter for everyone.** Not one per party. Three digits, no gaps |
-| Name | `Claude Code` · `Claude Project` · `Gemini` · `Hussam` |
+| Name | `Claude Code` · `Claude Project` · `Hussam` — or an additional party's own name, once it has replied |
 | Time | **Karlstad local time** — the clock Hussam reads, not the server's |
 | `replying to` | The message being answered, or `new thread` |
 
@@ -71,7 +75,7 @@ thing in every reply, without exception:
 |---|---|---|
 | ✍️ | **كلاودي كود** | كتب هذا الرد · EB-001 |
 | ⏳ | **كلاودي بروجيكت** | ينتظر ردّاً |
-| 💤 | **جيميناي** | لم يُستدعَ |
+| 💤 | **طرف إضافي** | لا أحد بعد — المقعد محجوز بلا اسم |
 | 🔴 | **حسام** | مطلوب: <إجراء واحد> |
 ```
 

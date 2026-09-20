@@ -1,6 +1,10 @@
 # ELDEBOSH.COM — CONTEXT
 
-> **Version:** `v1.9` · 2026-09-05 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.0` · 2026-09-20 · canonical copy: `docs/project/` in the repository
+>
+> **الإصدار صُفِّر إلى `v1.0` في `2026-09-20` بطلب حسام** مع تصفير عدّاد الرسائل.
+> ليس تراجعاً ولا حذفاً: المحتوى هو نفسه، والرقم وحده عاد إلى أوله ليبدأ العدّ
+> من نقطة التسليم هذه. وما قبلها محفوظ في تاريخ `git`. `D-031`.
 >
 > State, decisions and the reasons behind them. **Rules live in `INSTRUCTIONS`.**
 > Source of truth for code: `github.com/HussamEl/Eldebosh` — branch `main`, public.
@@ -307,7 +311,7 @@ UGREEN · safety and insurance terms for charging other people's batteries.
 | 3 | 🔴 **Nine ASINs** — without them, nine products have no buy button | **Hussam** |
 | 4 | 🟠 Amazon's literal Swedish disclosure sentence — twenty messages old | **Hussam**, unless Claude Project finds it published outside the account |
 | 5 | 🟠 Tax authority consultation (`R-02`) | **Hussam** |
-| 6 | 🟡 Documented weight per product (`I-010`) | **Hussam** or Gemini |
+| 6 | 🟡 Documented weight per product (`I-010`) | **Hussam**, or an additional party |
 | 7 | 🟡 Build-time image step | Claude Code |
 | 8 | 🟡 Search Console and analytics | Shared |
 

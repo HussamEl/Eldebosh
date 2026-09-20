@@ -4,6 +4,7 @@
  * بدل الاعتماد على الانضباط اليدوي.
  */
 import { readdir, readFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import YAML from 'yaml';
@@ -66,6 +67,91 @@ const RESERVED = new Set(['solutions', 'guides', 'compare', 'blog', 'info', 'sok
 for (const c of categories) {
   for (const [lang, slug] of Object.entries(c.data.slugs ?? {})) {
     if (RESERVED.has(slug)) errors.push(`${c.file}: slug "${slug}" (${lang}) محجوز ويسبب تصادم مسارات`);
+  }
+}
+
+/* ---------- 1b. المنتج ينتمي إلى فئة وفئة فرعية موجودتين فعلاً ----------
+ *
+ * أُضيف في 2026-09-20 قبل أن يقع العطب لا بعده، لأن بابه فُتح على مصراعيه:
+ * صار كل منتج يُضاف بجملة تُملى على مساعد («أضفه تحت كذا»)، والحرف الناقص
+ * في اسم الفئة الفرعية لم يكن يشتكي منه شيء.
+ *
+ * وما كان يحدث بلا هذا الفحص: `powerbank` بدل `powerbanks` تمرّ خضراء،
+ * فيختفي المنتج من كل أزرار التصفية ومن صفحة فئته، ويظهر في الشبكة وحدها.
+ * لا رسالة، ولا سطر أحمر — منتج حيّ لا طريق إليه.
+ */
+{
+  const catIds = new Set(categories.map((c) => c.data.id));
+  const subIds = new Map();
+  for (const c of categories) {
+    subIds.set(c.data.id, new Set((c.data.subcategories ?? []).map((s) => s.id)));
+  }
+  const near = (want, pool) =>
+    [...pool].find((x) => x.startsWith(String(want).slice(0, 4))) ?? [...pool][0];
+
+  for (const p of products) {
+    const d = p.data;
+    if (!catIds.has(d.category)) {
+      errors.push(
+        `${p.file}: فئة غير موجودة "${d.category}" — المتاح: ${[...catIds].join(' · ')}`,
+      );
+      continue; // بلا فئة صحيحة لا معنى لفحص الفرعية
+    }
+    const subs = subIds.get(d.category) ?? new Set();
+    if (d.subcategory && !subs.has(d.subcategory)) {
+      errors.push(
+        `${p.file}: فئة فرعية غير موجودة "${d.subcategory}" تحت "${d.category}"` +
+          ` — هل تقصد "${near(d.subcategory, subs)}"؟ المتاح: ${[...subs].join(' · ')}`,
+      );
+    }
+  }
+}
+
+/* ---------- 1c. الرمز والمعرّف لا يتكرران ----------
+ *
+ * أسماء الصور مبنية على `code`. فمنتجان يحملان `P-24` يتقاسمان صورهما:
+ * الثاني يرفع صورته فوق صورة الأول، والقارئ يرى منتجاً تحت اسم منتج آخر —
+ * وهو ما يمنعه `CLAUDE.md` صراحةً («الصورة ادعاء بصري»).
+ */
+{
+  const seenCode = new Map();
+  const seenId = new Map();
+  for (const p of products) {
+    if (p.data.code) {
+      const k = `${p.data.lang}:${p.data.code}`;
+      if (seenCode.has(k)) {
+        errors.push(`${p.file}: الرمز "${p.data.code}" مستعمل في ${seenCode.get(k)} — الرمز يُسنَد مرة واحدة`);
+      } else seenCode.set(k, p.file);
+    }
+    const k = `${p.data.lang}:${p.data.id}`;
+    if (seenId.has(k)) {
+      errors.push(`${p.file}: المعرّف "${p.data.id}" مستعمل في ${seenId.get(k)}`);
+    } else seenId.set(k, p.file);
+  }
+}
+
+/* ---------- 1d. كل صورة مذكورة لها ملف على القرص ----------
+ *
+ * `own_photos[].src` حقل نصّي حر. ووجّهه إلى صورة لم تُرفع قطّ فالبناء أخضر
+ * والصورة مكسورة على الموقع الحيّ. وهذا احتمالٌ قائم في كل إضافة منتج:
+ * النصّ يصل في المحادثة، والصورة تحتاج رفعاً منفصلاً إلى `public/uploads/`.
+ */
+{
+  const UP = join(ROOT, 'public');
+  for (const p of products) {
+    for (const ph of p.data.own_photos ?? []) {
+      if (!ph?.src) continue;
+      if (/^https?:/i.test(ph.src)) {
+        errors.push(`${p.file}: صورة من نطاق خارجي "${ph.src}" — صورنا فقط، من public/uploads/`);
+        continue;
+      }
+      if (!existsSync(join(UP, ph.src.replace(/^\//, '')))) {
+        errors.push(`${p.file}: الصورة "${ph.src}" مذكورة ولا ملف لها — ارفعها إلى public/uploads/ أولاً`);
+      }
+    }
+    if (p.data.image && !/^https?:/i.test(p.data.image) && !existsSync(join(UP, p.data.image.replace(/^\//, '')))) {
+      errors.push(`${p.file}: الصورة "${p.data.image}" مذكورة ولا ملف لها`);
+    }
   }
 }
 

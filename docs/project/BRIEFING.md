@@ -1,6 +1,10 @@
 # ELDEBOSH.COM — BRIEFING
 
-> **Version:** `v1.6` · 2026-09-05 · canonical copy: `docs/project/` in the repository
+> **Version:** `v1.0` · 2026-09-20 · canonical copy: `docs/project/` in the repository
+>
+> **الإصدار صُفِّر إلى `v1.0` في `2026-09-20` بطلب حسام** مع تصفير عدّاد الرسائل.
+> ليس تراجعاً ولا حذفاً: المحتوى هو نفسه، والرقم وحده عاد إلى أوله ليبدأ العدّ
+> من نقطة التسليم هذه. وما قبلها محفوظ في تاريخ `git`. `D-031`.
 >
 > Written to be read with no prior context. It assumes no knowledge of earlier
 > conversations.
@@ -28,7 +32,7 @@ Built with `Astro` and published statically — no database, no application serv
 | **Hussam** | Owner · decides · photographs · reviews Swedish · **not a developer** |
 | **Claude Code** | Owns the repository · push access · a real browser · executes in code |
 | **Claude Project** | Specifications, content and SEO · **does not push to the repository** |
-| **Gemini** | External research · second opinion · verifying claims |
+| **An additional party** | External research · a second opinion · verifying claims |
 
 **Hussam is the channel between the parties.**
 
@@ -155,7 +159,7 @@ not an accident.
 | 4 | 🟠 Review the two written pages — and not the cable one before the other, it refers to it | **Hussam** |
 | 5 | 🟠 Confirm Amazon's own Swedish disclosure wording — a serviceable sentence is already live | **Hussam** |
 | 6 | 🟠 Tax consultation on affiliate income | **Hussam** |
-| 7 | 🟡 Documented weight per product (`I-010`) | **Hussam** or Gemini |
+| 7 | 🟡 Documented weight per product (`I-010`) | **Hussam**, or an additional party |
 | 8 | 🟡 Remove the build stamp before launch (`TASKS` T7) | Claude Code |
 
 **The bottleneck has moved three times** — from writing, to review, and now to

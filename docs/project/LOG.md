@@ -19,7 +19,7 @@ EB-004 · Claude Code · 2026-09-02 21:10 · replying to EB-003
 | Field | Rule |
 |---|---|
 | `EB-###` | **One counter for everyone.** Three digits, sequential, no gaps |
-| Name | `Claude Code` · `Claude Project` · `Gemini` · `Hussam` |
+| Name | `Claude Code` · `Claude Project` · `Hussam` — or an additional party's own name, once it has replied |
 | Time | `YYYY-MM-DD HH:MM` in **Karlstad local time** — Hussam's clock, not the server's |
 | `replying to` | The message being answered, or `new thread` |
 
@@ -63,33 +63,34 @@ when a party has nothing to say.
 |---|---|---|
 | Code · build · checks · deployment · identity | **Claude Code** | Claude Project |
 | Content · SEO · product decisions · legal | **Claude Project** | Claude Code |
-| External research · second opinion · verification | **Gemini** | Whoever is concerned |
+| External research · second opinion · verification | **An additional party** | Whoever is concerned |
 | Anything costing money, time or touching privacy | **Hussam** | — |
 
 **Whoever opens a thread closes it.**
 
 ---
 
-## السجل — بعد تصفير 2026-09-05
+## السجل — بعد تصفير 2026-09-20
 
-<!-- COUNTER-RESET 2026-09-05-B -->
+<!-- COUNTER-RESET 2026-09-20 -->
 
-> **العدّاد صُفِّر في `2026-09-05` — الخامسة، وبطلب حسام.** حذف كل محادثاته مع
-> الأطراف الأربعة، ونظّف جهازه من الملفات القديمة. **فالمستودع هو الذاكرة
-> الوحيدة الباقية**، ولا شيء خارجه يُستشهد به.
+> **العدّاد صُفِّر في `2026-09-20` — السادسة، وبطلب حسام** (`D-031`). ومعه صُفِّرت
+> أرقام الوثائق الحاكمة الثلاث إلى `v1.0`، لتبدأ هذه النقطة بداية نظيفة واحدة
+> بدل أن يرث كل رقم تاريخاً لا يقرؤه أحد.
 >
-> **ما قبل التصفير محفوظ أسفل الصفحة ولم يُحذف منه سطر**، ولا يُستشهد برقم
+> **ولا سطر يُحذف.** كل ما سبق نزل إلى الأرشيف أسفل الصفحة، ولا يُستشهد برقم
 > منه. يُشار إلى العمل السابق بموضوعه أو برقم مسألته `I-###` أو قراره `D-###`
 > — وثلاثتها تنجو من كل تصفير.
+>
+> **والأطراف العاملة اليوم ثلاثة:** حسام · `Claude Code` · `Claude Project`.
+> والمقعد الرابع محجوز **بلا اسم**، ولا يُكتب اسم فيه حتى يصل منه ردّ فعلاً.
 >
 > **والفحص يقرأ بين العلامتين فقط**، فلا يخلط الأرشيف بالعدّاد الحيّ.
 
 | # | From | Time (Karlstad) | Subject | Replying to |
 |---|---|---|---|---|
 
-| EB-001 | Claude Code | 2026-09-05 14:02 | شريط التصفية في الرئيسية صار يصفّي بالفئة — `Alla` · `Kablar` · `Laddare` · `Powerbanks` بدل زر `Finns att prova` · `D-030` · دُفع إلى `main` والفحص أخضر | Hussam |
-| EB-002 | Claude Code | 2026-09-05 14:13 | الأزرار ظهرت على الموقع ولم تعمل — `.htaccess` كان يخزّن `/js/eldebosh-ui.js` سنةً بوسم `immutable` وهو مسار ثابت لا مبصوم · `I-025` · البصمة صارت في الرابط وحارسٌ في `audit` يمنع تكراره | Hussam |
-| EB-003 | Hussam | 2026-09-05 14:18 | تأكيد على الموقع الحيّ: الأزرار تصفّي — `I-025` مُغلقة بشهادة المالك لا بالفحص وحده | EB-002 |
+<!-- الرسالة الأولى بعد التصفير تُكتب هنا: EB-001 -->
 
 <!-- COUNTER-RESET-END -->
 
@@ -101,6 +102,10 @@ when a party has nothing to say.
 
 | # | From | Time (Karlstad) | Subject | Replying to |
 |---|---|---|---|---|
+| EB-001 | Claude Code | 2026-09-05 14:02 | شريط التصفية في الرئيسية صار يصفّي بالفئة — `Alla` · `Kablar` · `Laddare` · `Powerbanks` بدل زر `Finns att prova` · `D-030` · دُفع إلى `main` والفحص أخضر | Hussam |
+| EB-002 | Claude Code | 2026-09-05 14:13 | الأزرار ظهرت على الموقع ولم تعمل — `.htaccess` كان يخزّن `/js/eldebosh-ui.js` سنةً بوسم `immutable` وهو مسار ثابت لا مبصوم · `I-025` · البصمة صارت في الرابط وحارسٌ في `audit` يمنع تكراره | Hussam |
+| EB-003 | Hussam | 2026-09-05 14:18 | تأكيد على الموقع الحيّ: الأزرار تصفّي — `I-025` مُغلقة بشهادة المالك لا بالفحص وحده | EB-002 |
+| — | — | — | *ما فوق: دفعة `2026-09-05`. وما تحت: أقدم منها.* | — |
 | EB-001 | Claude Code | 2026-09-05 00:55 | Hero on tablet: tagline wrapped to two lines with the search bar stranded below · two-column breakpoint lowered 60em → 48em and the search field narrowed to 17rem | Hussam |
 | EB-002 | Claude Code | 2026-09-05 01:05 | The site had not changed: the fix sat on a session branch, and the live site builds from `main` alone | Hussam |
 | EB-003 | Hussam | 2026-09-05 01:08 | Push straight to `main` from now on — no parallel branch, no duplicated work | EB-002 |
