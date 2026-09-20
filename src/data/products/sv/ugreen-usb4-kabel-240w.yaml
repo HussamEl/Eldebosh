@@ -2,7 +2,7 @@
 # الكابل **بلا شاشة** — لا يخلط مع P-23 الذي عليه شاشة.
 # ولاحقة `-v2` في اسم الصورة مقصودة: العنوان القديم كان يخدم صورة الكابل ذي
 # الشاشة، ومتصفّح الزائر يخزّن بالعنوان لا بالمحتوى. فاسمٌ جديد يقطع الخزن.
-# ⚠️ ناقص قبل النشر: مصدر مصنّع (I-019) · pros · cons · best_for · hands_on
+# ⚠️ ناقص قبل النشر: مصدر مصنّع (I-019) · hands_on
 # عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
 id: ugreen-usb4-kabel-240w
 code: P-20
@@ -21,9 +21,19 @@ key_specs:
   "Video": "8K-signal"
   "Längd": "1 m"
 
-pros: []
-cons: []
-best_for: ""
+pros:
+  - "240 W enligt märkningen — taket i USB Power Delivery 3.1, alltså samma klass som kablar till bärbara datorer."
+  - "40 Gbps (USB4) står tryckt på kontakten och syns på vår egen bild — kabeln räcker till mer än laddning."
+  - "8K-videosignal anges i produktdata."
+  - "Flätat hölje, vilket syns på vår egen bild."
+  - "1 m räcker till skrivbord och nattduksbord utan att ligga slak på golvet."
+cons:
+  - "Ingen display — kabeln visar inte vad som faktiskt går igenom."
+  - "240 W kräver att både laddare och enhet klarar nivån; kabeln höjer inget tak av sig själv."
+  - "Du betalar för dataförmågan även om du bara ska ladda."
+  - "1 m är för kort om uttaget sitter bakom soffan eller sängen."
+  - "Vi har ännu inte utvärderat den i praktiken — inga omdömen om hållbarhet, värme eller verklig laddtid kommer från oss."
+best_for: "Dig som vill ha en kabel som räcker till både laddning och dataöverföring, och hellre har marginal än en egen kabel till varje uppgift."
 price_band: mid
 
 # === الملكية والتجربة ===

@@ -1,6 +1,6 @@
 # المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
 # الكابل **بالشاشة** — لا يخلط مع P-20 الذي بلا شاشة.
-# ⚠️ ناقص قبل النشر: pros · cons · best_for · hands_on
+# ⚠️ ناقص قبل النشر: hands_on
 # عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
 id: ugreen-usb-c-kabel-240w-display
 code: P-23
@@ -19,9 +19,17 @@ key_specs:
   "Display": "Ja — display på kontakten"
   "Kontakter": "USB-C till USB-C"
 
-pros: []
-cons: []
-best_for: ""
+pros:
+  - "Display på kontakten — du ser vad som går igenom i stället för att gissa."
+  - "240 W står tryckt på kontakten och syns på vår egen bild."
+  - "USB-C i båda ändar."
+  - "Slutet på förväxlingen i kabellådan: den märkta kabeln hittar du igen."
+cons:
+  - "Längden står inte i våra uppgifter — behöver verifieras innan du köper den till en bestämd plats."
+  - "Dataöverföring anges inte — utgå inte från hög datahastighet bara för att effekten är hög. Behöver verifieras."
+  - "Vad displayen mäter, och hur exakt den är, anger vi inte — behöver verifieras."
+  - "Vi har ännu inte utvärderat den i praktiken — inga omdömen om hållbarhet eller verklig laddtid kommer från oss."
+best_for: "Dig som har flera likadana kablar hemma och vill kunna se vilken av dem som faktiskt laddar snabbt."
 price_band: mid
 
 # === الملكية والتجربة ===

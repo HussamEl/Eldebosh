@@ -75,10 +75,17 @@ const crumbs = [
 
     <SourceList sources={entry.data.sources} lang={lang} />
 
-    <div class="stack">
-      {entry.data.picks.map((pick) => (
-        <ProductCard id={pick.product} lang={lang} badge={pick.badge} reason={pick.reason} />
-      ))}
-    </div>
+    {/* الهيكل لا يبيع — `INSTRUCTIONS` ٦٫٤ · `I-026`.
+        كان هذا الموضع وحده بلا حارس بين القوالب الأربعة: الحلول والمقالات
+        تُفرّغ قائمة منتجاتها عند الهيكل، والمقارنة تحجب جدولها، وهذا كان
+        يعرض بطاقتي شراء برابط `sponsored` **بينما الإفصاح مخفيّ في السطر
+        ٥٧**. فصفحةٌ تقول «لم تُكتب بعد» كانت تبيع، وتبيع بلا إفصاح. */}
+    {!notWritten && (
+      <div class="stack">
+        {entry.data.picks.map((pick) => (
+          <ProductCard id={pick.product} lang={lang} badge={pick.badge} reason={pick.reason} />
+        ))}
+      </div>
+    )}
   </div>
 </BaseLayout>

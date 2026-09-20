@@ -1,26 +1,75 @@
 ---
-title: "Bästa USB-C-kabeln — längd, effekt och hållbarhet"
+title: "Bästa USB-C-kabeln — effekt, märkning och längd"
 description: "Alla USB-C-kablar klarar inte samma effekt. Så läser du märkningen och undviker kabeln som bromsar laddningen."
 lang: sv
 slug: basta-laddkabel-usb-c
 solution: laddkabeln-gar-sonder
 category: laddning-och-strom
 subcategory: kablar
-picks: []
-stage: draft
+picks:
+  - product: ugreen-usb4-kabel-240w
+    badge: best-overall
+    reason: "240 W och 40 Gbps i samma kabel, med längden angiven. Den enda av våra kablar som räcker till både laddning och dataöverföring."
+  - product: ugreen-usb-c-kabel-240w-display
+    badge: best-specific
+    reason: "Displayen löser ett bestämt problem: att du inte vet vilken av dina likadana kablar som är den snabba."
+sources:
+  - type: spec
+    publisher: "USB Promoter Group / USB-IF"
+    url: "https://www.usb.org/sites/default/files/2021-05/USB%20PG%20USB%20PD%203.1%20DevUpdate%20Announcement_FINAL.pdf"
+    accessed: 2026-09-20
+    published: 2021-05-26
+    claim: "USB Power Delivery 3.1 höjer taket från 100 W till 240 W över USB-C."
+  - type: spec
+    publisher: "CNX Software"
+    url: "https://www.cnx-software.com/2021/05/27/usb-type-c-specification-2-1-allows-up-to-240w-extended-power-range-epr/"
+    accessed: 2026-09-20
+    published: 2021-05-27
+    claim: "EPR-kablar ska vara elektroniskt märkta och synligt identifierade för 240 W."
+hands_on: false
+stage: written
 published: true
-updated: 2026-09-03
+updated: 2026-09-20
 ---
-> ⚠️ UTKAST — strukturen är satt, texten ska skrivas. Publicera inte förrän innehållet är verkligt och granskat.
+Vi äger båda kablarna nedan. Vi har inte testat dem, så inga omdömen om hållbarhet, värme eller laddtid kommer från oss. Det som står här är märkningen på kabeln, våra egna bilder och USB-IF:s specifikation — inget annat.
 
-## Vad kabeln måste klara
+## Tre tal, och bara tre
 
-Skriv här.
+**Effekt i watt** säger vad kabeln får släppa igenom. Det är ett tak, inte ett löfte.
 
-## Längd mot effektförlust
+**Datahastighet** säger om kabeln duger till annat än laddning. En kabel kan klara full effekt och ändå vara långsam på data — de två talen hänger inte ihop.
 
-Skriv här.
+**Längd** avgör var kabeln kan ligga. En spänd kabel dras ur snett, och en för lång hamnar under stolsben.
 
-## Hållbarhet vid kontakten
+## Vad 240 W faktiskt betyder
 
-Skriv här.
+USB Power Delivery låg tidigare på 100 W, via 20 V och 5 A. I maj 2021 kom revision 3.1, som höjer taket till 240 W över USB-C och samtidigt skärper hur effekten förhandlas fram.
+
+En kabel på den nivån ska vara elektroniskt märkt: ett litet chip i kontakten talar om för laddaren vad kabeln tål, och märkningen ska synas utanpå så att du kan läsa den utan att öppna förpackningen.
+
+Praktiskt betyder det två saker. Kabeln blir aldrig snabbare än den svagaste av laddaren och enheten. Och en omärkt kabel som ser likadan ut är inte samma kabel.
+
+## Display eller inte
+
+En display på kontakten visar vad som går igenom just nu. Den gör kabeln dyrare och löser ingenting elektriskt — men den löser ett vanligt hushållsproblem: fyra svarta kablar i en låda, och du vet inte vilken som bromsar.
+
+Behöver du aldrig veta det, betala inte för siffran.
+
+## Längden väljs efter uttaget
+
+En meter räcker till skrivbordet och nattduksbordet. Sitter uttaget bakom soffan eller under sängen är en meter fel val, oavsett hur många watt kabeln klarar.
+
+Köp längden efter platsen, inte efter specifikationen.
+
+## Så här väljer vi
+
+- **En kabel som ska räcka till allt** → 240 W och hög datahastighet i samma kabel.
+- **Flera likadana kablar hemma** → en med display, så att du slipper gissa.
+- **Bara ladda en telefon** → du behöver inte 240 W, men kontrollera vad kabeln faktiskt är märkt för.
+- **Uttaget sitter långt bort** → bestäm längden först, effekten sedan.
+
+## Vad den här guiden inte täcker
+
+Vi äger fyra kablar till utöver de två här. De saknar ännu en källa för sina specifikationer, och tills källan finns står de inte i guiden.
+
+Det är avsikten. En kabel utan källa är en gissning, och en gissning hör inte hemma i ett köpråd.
