@@ -3,6 +3,15 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.2 — 2026-09-23
+
+- Skeleton triage (T4, approved in EB-009): six skeletons unpublished because
+  we do not own the products their page type requires — `usb-c-vs-lightning`,
+  `billaddare-usb-c`, `kabelhantering-skrivbord`, `mobilhallare-bil`,
+  `magnetfaste-vs-klamfaste`, `ventilationsgaller-vs-vindruta`. Six are to be
+  written, six wait for product data until 2026-11-01. Order in
+  `docs/project/TASKS.md`.
+
 ## 1.0.1 — 2026-09-23
 
 - Collaboration protocol 1.2 (`docs/project/INSTRUCTIONS.md` v1.1): consult

@@ -1,7 +1,7 @@
 # لوحة الحالة
 
 > **مولَّدة من المستودع — لا تُحرَّر يدوياً.** `npm run state`
-> آخر تغيّر في الحالة: 2026-09-23 19:15
+> آخر تغيّر في الحالة: 2026-09-23 20:57
 
 ## سطر الحالة
 
@@ -69,4 +69,4 @@
 
 | آخر موعد | العدد | الصفحات |
 |---|---|---|
-| **2026-12-02** | 18 | `mobilen-glider-i-bilen` · `skrivbordet-ar-rorigt` · `basta-snabbladdare-usb-c` · `billaddare-usb-c` · `kabelhantering-skrivbord` · `laddare-for-flera-enheter` · `liten-powerbank-for-fickan` · `magnetisk-mobilhallare-bil` · `mobilhallare-bil` · `mobilstall-skrivbord` · `gan-laddare-vs-vanlig` · `magnetfaste-vs-klamfaste` · `tradlos-vs-kabel` · `usb-c-pd-vs-quick-charge` · `usb-c-vs-lightning` · `ventilationsgaller-vs-vindruta` · `sa-forlanger-du-batteriets-livslangd` · `usb-c-standarden-vad-galler-nu` |
+| **2026-12-02** | 12 | `mobilen-glider-i-bilen` · `skrivbordet-ar-rorigt` · `basta-snabbladdare-usb-c` · `laddare-for-flera-enheter` · `liten-powerbank-for-fickan` · `magnetisk-mobilhallare-bil` · `mobilstall-skrivbord` · `gan-laddare-vs-vanlig` · `tradlos-vs-kabel` · `usb-c-pd-vs-quick-charge` · `sa-forlanger-du-batteriets-livslangd` · `usb-c-standarden-vad-galler-nu` |
