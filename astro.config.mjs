@@ -2,12 +2,14 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync, statSync, copyFileSync, createReadStream } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-/* الصفحات المعلَنة كهياكل تُبنى وتُزار، لكنها `noindex` — فلا مكان لها في
-   `sitemap`. خريطة موقع تدعو محرّك البحث إلى صفحة تمنعه من فهرستها تناقض.
-   تُقرأ من الواجهة الأمامية مباشرة لأن الـ`sitemap` لا يرى المحتوى. */
+/* Pages published as skeletons (stage draft or written) are reachable but
+   carry noindex, so they are kept out of the sitemap: a sitemap that invites
+   a crawler to a page that forbids indexing contradicts itself. The sitemap
+   integration cannot see content, so the frontmatter is read here directly. */
 const notWrittenSlugs = new Set();
 (function scan(dir) {
   for (const e of readdirSync(dir)) {
@@ -22,13 +24,33 @@ const notWrittenSlugs = new Set();
   }
 })('./src/content');
 
-// ملاحظة: عدّل site إلى الدومين النهائي قبل النشر.
+/* The admin panel's CMS is shipped with the site from node_modules instead of
+   being loaded from a public CDN at runtime: the panel keeps working if the CDN
+   is down, the version is pinned in one place (package.json), and
+   scripts/test-admin.mjs tests the exact file that is served.
+   The filename must stay `sveltia-cms.js` — the CMS starts itself only when its
+   <script src> ends with that name. */
+const CMS_FILE = fileURLToPath(new URL('./node_modules/@sveltia/cms/dist/sveltia-cms.js', import.meta.url));
+const adminCms = {
+  name: 'eldebosh-admin-cms',
+  hooks: {
+    'astro:server:setup': ({ server }) => {
+      server.middlewares.use('/admin/sveltia-cms.js', (_req, res) => {
+        res.setHeader('content-type', 'text/javascript');
+        createReadStream(CMS_FILE).pipe(res);
+      });
+    },
+    'astro:build:done': ({ dir }) => {
+      copyFileSync(CMS_FILE, fileURLToPath(new URL('admin/sveltia-cms.js', dir)));
+    },
+  },
+};
+
 export default defineConfig({
   site: 'https://eldebosh.com',
   output: 'static',
-  // Byggresultatet heter site/ och versionshanteras — det är artefakten
-  // som laddas upp manuellt så länge FTP-deployen är trasig.
-  // المعاينة تبني إلى مجلّد آخر كي لا تلمس النسخة المنشورة أبداً
+  // The preview build (scripts/make-preview.mjs) includes drafts, so it goes
+  // to its own folder and can never overwrite the build that gets published.
   outDir: process.env.ELDEBOSH_PREVIEW === '1' ? './.preview-site' : './site',
   trailingSlash: 'always',
   i18n: {
@@ -38,8 +60,7 @@ export default defineConfig({
   },
   redirects: {
     '/': '/sv/',
-    // المقال غيّر موضوعه فغيّر مساره. لم يكن مفهرساً ولا يقصده رابط خارجي،
-    // لكن سطراً واحداً أرخص من رابط مكسور إن كان أحدنا نسخ المسار في مكان.
+    // An article changed topic and therefore its path; keep the old URL working.
     '/sv/blog/darfor-laddar-mobilen-samre-pa-vintern/': '/sv/blog/powerbank-i-kyla/',
   },
   integrations: [
@@ -48,6 +69,7 @@ export default defineConfig({
       i18n: { defaultLocale: 'sv', locales: { sv: 'sv-SE', en: 'en' } },
       filter: (page) => ![...notWrittenSlugs].some((s) => page.endsWith(`/${s}/`)),
     }),
+    adminCms,
   ],
   build: { format: 'directory' },
   compressHTML: true,

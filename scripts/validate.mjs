@@ -89,7 +89,8 @@ for (const c of categories) {
   const near = (want, pool) =>
     [...pool].find((x) => x.startsWith(String(want).slice(0, 4))) ?? [...pool][0];
 
-  for (const p of products) {
+  // Products and content pages both carry category/subcategory.
+  for (const p of [...products, ...docs.filter((x) => x.coll !== 'pages')]) {
     const d = p.data;
     if (!catIds.has(d.category)) {
       errors.push(

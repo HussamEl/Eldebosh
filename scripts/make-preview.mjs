@@ -14,6 +14,8 @@ import { fileURLToPath } from 'node:url';
 import { join, extname } from 'node:path';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
+// The site's own UI script, embedded verbatim so the preview runs the same code.
+const uiScript = readFileSync(join(ROOT, 'public/js/eldebosh-ui.js'), 'utf8').replace(/<\/script/gi, '<\\/script');
 const DIST = join(ROOT, '.preview-site');
 
 /* ---------- بناء يشمل المسوّدات، إلى مجلّد منفصل ----------
@@ -184,6 +186,7 @@ const out = `<!doctype html>
 <script id="pv-routes" type="application/json">${JSON.stringify(routes).replace(/</g, '\\u003c')}</script>
 <script id="pv-images" type="application/json">${JSON.stringify(Object.fromEntries(images)).replace(/</g, '\\u003c')}</script>
 
+<script>${uiScript}</script>
 <script>
 (() => {
   const routes = JSON.parse(document.getElementById('pv-routes').textContent);
@@ -221,39 +224,9 @@ const out = `<!doctype html>
     render(normalise(location.hash.slice(1)));
   }
 
-  // تصفية المنتجات — نفس منطق الموقع
+  // The product filter is the site's own code, inlined once below — not a copy.
   function wireFilter() {
-    const bar = app.querySelector('[data-gearbar]');
-    const grid = app.querySelector('[data-gear-grid]');
-    if (!bar || !grid) return;
-
-    const countEl = app.querySelector('[data-gear-count]');
-    const tiles = [...grid.querySelectorAll('.tile')];
-    const buttons = [...bar.querySelectorAll('[data-filter]')];
-    let active = 'all';
-
-    bar.hidden = false;
-    if (countEl) countEl.hidden = false;
-
-    const apply = () => {
-      let shown = 0;
-      for (const el of tiles) {
-        const on = active === 'all' || el.dataset.category === active;
-        el.hidden = !on;
-        if (on) shown++;
-      }
-      for (const btn of buttons) {
-        const on = btn.dataset.filter === active;
-        btn.classList.toggle('is-on', on);
-        btn.setAttribute('aria-pressed', String(on));
-      }
-      if (countEl) countEl.textContent = (grid.dataset.countTemplate || '{n}').replace('{n}', shown);
-    };
-
-    for (const btn of buttons) {
-      btn.addEventListener('click', () => { active = btn.dataset.filter || 'all'; apply(); });
-    }
-    apply();
+    if (window.EldeboshUI) window.EldeboshUI.initGearFilter(app);
   }
 
   // بحث محلي بسيط في عناوين الصفحات ونصوصها

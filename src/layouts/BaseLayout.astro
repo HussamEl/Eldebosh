@@ -4,11 +4,11 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { t, type Lang } from '../i18n/ui';
 import { abs, hreflangs } from '../lib/seo';
-import { now } from '../lib/clock.mjs';
+import { BUILD_STAMP } from '../lib/build-stamp';
 import { hashedAsset } from '../lib/asset-hash';
 
 /* بصمة البناء — تظهر في مصدر الصفحة، فتكشف فوراً إن كان الخادم يعرض نسخة قديمة. */
-const BUILD_ID = now();
+const BUILD_ID = BUILD_STAMP;
 
 /* بصمة محتوى الجزيرة التفاعلية — بلا هذه يبقى السكربت القديم في متصفح
    الزائر سنةً كاملة بحكم `.htaccess`، فتصل صفحة جديدة بسلوك قديم (`I-025`). */

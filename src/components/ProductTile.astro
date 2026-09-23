@@ -28,6 +28,16 @@ const chips = specs
   .filter(([k]) => k !== heroLabel)
   .slice(0, 2)
   .map(([k, v]) => [k, String(v).length > 18 ? String(v).slice(0, 17) + '…' : String(v)] as const);
+
+/* The tile face is a link to the photo viewer when we have photos, otherwise a
+   direct buy link when there is one, otherwise plain. Rendered as a real
+   element so Astro escapes every attribute. */
+const faceAttrs: Record<string, string> = photos.length
+  ? { href: `#${viewerId}`, 'aria-label': tr('viewer.open') }
+  : href
+    ? { href, rel: 'sponsored nofollow noopener', target: '_blank', 'data-affiliate': p.id, 'data-network': affiliateNetwork(p) }
+    : {};
+const Face = photos.length || href ? 'a' : 'div';
 ---
 
 <article
@@ -38,7 +48,7 @@ const chips = specs
   data-tested={String(p.tested)}
   data-name={`${p.brand} ${p.name}`.toLowerCase()}
 >
-  <Fragment set:html={photos.length ? `<a class="tile-face" href="#${viewerId}" aria-label="${tr('viewer.open')}">` : (href ? `<a class="tile-face" href="${href}" rel="sponsored nofollow noopener" target="_blank" data-affiliate="${p.id}" data-network="${affiliateNetwork(p)}">` : '<div class="tile-face">')} />
+  <Face class="tile-face" {...faceAttrs}>
     {photos.length > 0 ? (
       <span class="tile-photos" data-n={photos.length}>
         {photos.map((ph, i) => (
@@ -66,7 +76,7 @@ const chips = specs
     ) : (
       <span class="tile-mono" aria-hidden="true">{p.brand.slice(0, 2).toUpperCase()}</span>
     )}
-  <Fragment set:html={photos.length || href ? '</a>' : '</div>'} />
+  </Face>
 
   <div class="tile-body">
     <p class="tile-brand">

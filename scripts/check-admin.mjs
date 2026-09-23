@@ -1,18 +1,20 @@
 /**
- * هل تعرف لوحة التحرير كل حقل موجود في الملفات؟
+ * Does the admin panel's config match the content it edits?
  *
- * `Sveltia` تكتب الحقول المُعرَّفة في `public/admin/config.yml` وحدها. فأيّ
- * حقل موجود في ملف ولا تعرفه اللوحة **يُحذف عند أول حفظ من اللوحة** — بصمت،
- * وبيد حسام لا بيدنا.
+ * 1. Every field present in a content file must be defined in the panel.
+ *    The CMS writes only the fields it knows, so a field missing from
+ *    public/admin/config.yml is silently deleted the first time the owner
+ *    saves that entry from the panel.
  *
- * وهذا ليس افتراضاً: `code` في المنتجات و`stage` في الصفحات كانا ناقصين من
- * اللوحة يوم 2026-09-04. الأول تُبنى عليه أسماء الصور (`C-09`)، والثاني هو
- * الفرق بين صفحة منشورة وهيكل معلَن (`I-020`). حفظٌ واحد كان يمحوهما.
+ * 2. The `subcategory` dropdown must offer exactly the subcategories defined in
+ *    src/data/categories. The options are a static list in the config; adding a
+ *    subcategory to a category file without adding it there would make it
+ *    impossible to pick, and a removed one would stay selectable.
  *
- * فالفحص يقارن الحقول الحاضرة في الملفات نفسها — لا في مخطّط نقرؤه — بما
- * تُعرّفه اللوحة، ويسمّي الناقص.
+ * The field list is read from the files themselves, not from the schema, so
+ * the check reflects what is actually on disk.
  *
- *   node scripts/check-admin.mjs
+ *   npm run check:admin
  */
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -21,7 +23,7 @@ import YAML from 'yaml';
 
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
-/** أزواج: مجلد الملفات ← اسم المجموعة في اللوحة */
+/** content folder → admin collection name */
 const PAIRS = [
   ['src/data/products/sv', 'products_sv'],
   ['src/content/solutions/sv', 'solutions_sv'],
@@ -31,66 +33,79 @@ const PAIRS = [
   ['src/content/pages/sv', 'pages_sv'],
 ];
 
-/** حقول تُدار من الكود لا من اللوحة، فغيابها مقصود */
+/** Fields handled by code, not by the panel. */
 const EXEMPT = new Set(['body']);
 
-function walk(dir, out = []) {
+const walk = (dir, out = []) => {
   for (const e of readdirSync(dir)) {
     const p = join(dir, e);
-    if (statSync(p).isDirectory()) walk(p, out);
-    else out.push(p);
+    statSync(p).isDirectory() ? walk(p, out) : out.push(p);
   }
   return out;
-}
+};
 
-/** أسماء الحقول العليا في ملف — من الواجهة الأمامية أو من الـYAML كاملاً */
+/** Top-level keys of a YAML file or of an MDX file's frontmatter. */
 function topKeys(file) {
   const raw = readFileSync(file, 'utf8');
   const front = /\.(md|mdx)$/.test(file) ? (raw.match(/^---\n([\s\S]*?)\n---/) ?? [])[1] : raw;
   if (!front) return [];
-  let data;
-  try { data = YAML.parse(front); } catch { return []; }
-  return data && typeof data === 'object' ? Object.keys(data) : [];
+  try {
+    const data = YAML.parse(front);
+    return data && typeof data === 'object' ? Object.keys(data) : [];
+  } catch {
+    return [];
+  }
 }
 
-function panelFields(coll) {
-  const out = new Set();
-  const walkFields = (fs) => {
-    for (const f of fs ?? []) {
-      if (f?.name) out.add(f.name);
-      // الحقول المتداخلة لا تُقارن هنا: المقارنة على المستوى الأعلى وحده
-    }
-  };
-  if (coll.fields) walkFields(coll.fields);
-  for (const f of coll.files ?? []) walkFields(f.fields);
-  return out;
-}
-
+// YAML.parse resolves the config's anchors (&x / *x), so each collection sees
+// its full field list.
 const cfg = YAML.parse(readFileSync(join(ROOT, 'public/admin/config.yml'), 'utf8'));
-const byName = new Map((cfg.collections ?? []).map((c) => [c.name, c]));
+const collections = new Map((cfg.collections ?? []).map((c) => [c.name, c]));
+const topFields = (c) => [...(c.fields ?? []), ...(c.files ?? []).flatMap((f) => f.fields ?? [])];
 
-const missing = [];
+const problems = [];
 
+// 1. Fields on disk that the panel does not know
 for (const [dir, name] of PAIRS) {
-  const coll = byName.get(name);
-  if (!coll) { missing.push({ name, field: '—', note: 'المجموعة غير معرّفة في اللوحة أصلاً' }); continue; }
-  const known = panelFields(coll);
-  const seen = new Map();                       // الحقل ← أول ملف ظهر فيه
+  const coll = collections.get(name);
+  if (!coll) {
+    problems.push(`${name}: collection missing from the admin config`);
+    continue;
+  }
+  const known = new Set(topFields(coll).map((f) => f?.name));
+  const seen = new Map();
   for (const file of walk(join(ROOT, dir))) {
     for (const k of topKeys(file)) if (!seen.has(k)) seen.set(k, file.replace(ROOT, ''));
   }
   for (const [field, file] of seen) {
     if (EXEMPT.has(field) || known.has(field)) continue;
-    missing.push({ name, field, note: file });
+    problems.push(`${name}: field "${field}" exists in files (e.g. ${file}) but not in the panel — the first save would delete it`);
   }
 }
 
-if (!missing.length) {
-  console.log('\n✓ لوحة التحرير تعرف كل حقل في الملفات\n');
-  process.exit(0);
+// 2. Subcategory options = subcategories in the data
+const defined = new Set(
+  walk(join(ROOT, 'src/data/categories'))
+    .filter((f) => /\.ya?ml$/.test(f))
+    .flatMap((f) => (YAML.parse(readFileSync(f, 'utf8'))?.subcategories ?? []).map((s) => s.id)),
+);
+for (const coll of collections.values()) {
+  const field = topFields(coll).find((f) => f?.name === 'subcategory');
+  if (!field) continue;
+  if (field.widget !== 'select') {
+    problems.push(`${coll.name}: subcategory must be a select — free text lets a typo hide a page or product`);
+    continue;
+  }
+  const offered = new Set((field.options ?? []).map((o) => (typeof o === 'object' ? o.value : o)));
+  for (const id of defined) if (!offered.has(id)) problems.push(`${coll.name}: subcategory "${id}" is defined in src/data/categories but cannot be picked in the panel`);
+  for (const id of offered) if (!defined.has(id)) problems.push(`${coll.name}: subcategory "${id}" is offered in the panel but not defined in src/data/categories`);
 }
 
-console.log('\n✗ حقول موجودة في الملفات ولا تعرفها اللوحة — أول حفظ منها يمحوها:\n');
-for (const m of missing) console.log(`  ${m.name.padEnd(16)} ${m.field.padEnd(18)} ${m.note}`);
-console.log('\n  أضِفها في public/admin/config.yml\n');
+if (!problems.length) {
+  console.log('\n✓ The admin panel knows every field on disk, and its subcategory options match the data\n');
+  process.exit(0);
+}
+console.log('\n✗ Admin panel config does not match the content:\n');
+for (const p of problems) console.log('  • ' + p);
+console.log('\n  Fix public/admin/config.yml\n');
 process.exit(1);

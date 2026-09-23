@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /admin/
-Disallow: /pagefind/
-
-Sitemap: https://eldebosh.com/sitemap-index.xml

@@ -1,13 +1,13 @@
-# البوابة ثم النشر — سير عمل واحد لا اثنان.
+# Build, verify, then publish — one workflow, one build.
 #
-# كانا ملفّين مستقلّين يعملان على الدفعة نفسها، فنتج عن ذلك أمران:
-#   ١. كل دفعة تبني المشروع مرتين وتُنتج كوميتَي نشر على فرع `deploy`.
-#   ٢. والأخطر: `deploy` كان ينجح بينما `verify` يسقط — أي أن الموقع يُنشر
-#      والبوابة حمراء. وقع هذا فعلاً في الدفعتين 34/45 و33/44.
+# The site is built here from source; site/ is not committed. That is what
+# lets an edit made in the admin panel (/admin/, which commits source files
+# only) reach the live site with no manual step.
 #
-# `needs: verify` تُغلق ذلك: لا نشر إلا بعد اجتياز الفحوص كلها.
-# ولا يبني النشر شيئاً — `site/` مدفوع في المستودع، وحارس الانحراف في
-# البوابة هو ما يضمن أنه يطابق المصدر.
+#   verify   builds site/, runs every check, and hands the exact build on.
+#   publish  runs only if verify passed, and only on main. It publishes the
+#            build it was handed — it never builds again — to the `deploy`
+#            branch, which the host pulls from.
 
 name: verify
 
@@ -23,10 +23,14 @@ concurrency:
 
 jobs:
   verify:
-    name: bygg och verifiera
+    name: build and verify
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Full history: the site-version stamp is the time of the last commit
+          # that touched the site's sources (src/lib/build-stamp.ts).
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -36,7 +40,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
 
-      # bygger från källan till site/ — validate.mjs stoppar bygget vid regelbrott
+      # validate.mjs runs first inside build and stops it on any rule violation.
       - run: npm run build
 
       - run: npm run test:claims
@@ -44,17 +48,25 @@ jobs:
       - run: npm run check:colors
       - run: npm run check:docs
       - run: npm run check:admin
+      - run: npm run check:links
       - run: npm run test:ui
       - run: npm run test:browser
+      - run: npm run test:admin
       - run: npm run audit
       - run: npm run check:drafts
 
-      # site/ får inte glida ifrån källan. Byggstämpeln och Pagefinds
-      # nyckelordning ändras varje körning med flit och normaliseras bort.
-      - run: npm run check:drift
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: site/
+          # site/.htaccess sets the index page, 404 page and caching rules.
+          # Hidden files are dropped by default; losing it would break the site.
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
 
   publish:
-    name: نشر إلى فرع deploy
+    name: publish to the deploy branch
     needs: verify
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -63,12 +75,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0     # يحتاج تاريخ فرع deploy ليكون النشر تقديمياً
+          fetch-depth: 0     # the deploy branch history keeps each publish a fast-forward
 
-      # لا بناء هنا: `site/` المدفوع هو ما يُنشر، وقد أثبتت البوابة أنه يطابق
-      # المصدر. والسكربت لا يستعمل إلا وحدات Node المدمجة، فلا npm ci.
-      - name: نشر site/ على فرع deploy
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: site/
+
+      - name: Publish site/ to the deploy branch
         run: |
+          test -f site/.htaccess || { echo "site/.htaccess missing — refusing to publish"; exit 1; }
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           node scripts/publish-deploy-branch.mjs

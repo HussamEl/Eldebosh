@@ -1,23 +1,26 @@
-# beroenden
+# Dependencies
 node_modules/
 __pycache__/
 *.pyc
 
-# Astro
+# Build output — built in CI from source and published to the `deploy` branch.
+# Never committed: a committed copy goes stale the moment someone edits content
+# in the admin panel, which commits source only.
+site/
 .astro/
 dist/
 .preview-site/
 eldebosh-preview.html
 
-# hemligheter
+# Secrets
 .env
 .env.*
 !.env.example
 
-# mellanfiler från brand/src
+# Intermediate files from brand/src
 brand/src/build/
 
-# system
+# System
 .DS_Store
 Thumbs.db
 npm-debug.log*

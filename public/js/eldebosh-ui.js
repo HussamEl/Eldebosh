@@ -22,12 +22,12 @@
   /* ------------------------------------------------------------------ *
    * Filterchips
    * ------------------------------------------------------------------ */
-  const initGearFilter = () => {
-    const bar = document.querySelector('[data-gearbar]');
-    const grid = document.querySelector('[data-gear-grid]');
+  const initGearFilter = (root = document) => {
+    const bar = root.querySelector('[data-gearbar]');
+    const grid = root.querySelector('[data-gear-grid]');
     if (!bar || !grid) return;
 
-    const countEl = document.querySelector('[data-gear-count]');
+    const countEl = root.querySelector('[data-gear-count]');
     const tiles = Array.from(grid.querySelectorAll('.tile'));
     const buttons = Array.from(bar.querySelectorAll('[data-filter]'));
     const template = grid.dataset.countTemplate || '{n}';
@@ -202,6 +202,11 @@
     window.addEventListener('hashchange', fromHash);
     fromHash();
   };
+
+  // Exposed for scripts/make-preview.mjs, which renders pages into a single
+  // offline file and must re-run the filter after every in-page navigation.
+  // Sharing this one function keeps the preview from drifting from the site.
+  window.EldeboshUI = { initGearFilter };
 
   ready(() => {
     initGearFilter();

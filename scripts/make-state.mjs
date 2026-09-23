@@ -1,273 +1,124 @@
 /**
- * لوحة الحالة — تُحسب من المستودع نفسه فلا تتقادم أبداً.
+ * docs/project/STATE.md — the project dashboard, computed from the repository.
+ *
+ * This is the only source of numbers. No other document states a count: a
+ * hand-written number is right on the day it is written and wrong a week later,
+ * and then the project has two sources that disagree.
+ *
+ * The file is rewritten only when its content changes, and its date is the
+ * date of that change — so an unchanged project produces no diff, and a reader
+ * never mistakes a fresh date for fresh data.
+ *
+ * Arabic: the owner reads it, and so does every party at the start of a
+ * conversation (docs/project/PROJECT_BOX.md links to it).
  *
  *   npm run state
  */
-import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { join, extname } from 'node:path';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
 import YAML from 'yaml';
 import { now } from '../src/lib/clock.mjs';
+import { ROOT, loadProducts, loadCategories, loadDocs, nextProductCode, missingForProduct, addDays } from './lib/repo.mjs';
 
-const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const read = (p) => readFileSync(join(ROOT, p), 'utf8');
-const exists = (p) => existsSync(join(ROOT, p));
+const SKELETON_DAYS = 90; // must match rule 5g in scripts/validate.mjs
 
-/* ---------- المنتجات ---------- */
-const prodDir = join(ROOT, 'src/data/products/sv');
-const products = readdirSync(prodDir)
-  .filter((f) => /\.ya?ml$/.test(f))
-  .map((f) => YAML.parse(readFileSync(join(prodDir, f), 'utf8')))
-  .filter(Boolean);
-
+/* ---------- products ---------- */
+const products = loadProducts().sort((a, b) => String(a.code).localeCompare(String(b.code)));
 const P = {
   total: products.length,
-  verified: products.filter((p) => p.verified).length,
+  live: products.filter((p) => p.verified).length,
+  buyable: products.filter((p) => p.verified && p.asin).length,
   tested: products.filter((p) => p.tested).length,
-  owned: products.filter((p) => p.owned).length,
   photographed: products.filter((p) => p.own_photos?.length).length,
-  withAsin: products.filter((p) => p.asin).length,
 };
-P.waitingAsin = products.filter((p) => !p.asin && (p.owned || p.own_photos?.length)).length;
-const missingAsin = products.filter((p) => !p.asin && (p.owned || p.own_photos?.length)).map((p) => p.id);
+const incomplete = products
+  .map((p) => ({ p, missing: missingForProduct(p) }))
+  .filter(({ missing }) => missing.length);
 
-/* ---------- المحتوى ---------- */
-function frontmatter(raw) {
-  const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  if (!m) return null;
-  try { return YAML.parse(m[1]); } catch { return null; }
-}
-
-const collections = ['solutions', 'guides', 'comparisons', 'posts'];
-const content = {};
-let published = 0, drafts = 0;
-const stages = { draft: 0, written: 0, reviewed: 0, published: 0 };
-
-for (const c of collections) {
-  const dir = join(ROOT, 'src/content', c, 'sv');
-  if (!existsSync(dir)) { content[c] = { total: 0, published: 0 }; continue; }
-  const docs = readdirSync(dir)
-    .filter((f) => ['.md', '.mdx'].includes(extname(f)))
-    .map((f) => frontmatter(readFileSync(join(dir, f), 'utf8')))
-    .filter(Boolean);
-  for (const d of docs) stages[d.stage ?? 'draft']++;
-  const pub = docs.filter((d) => d.published === true).length;
-  content[c] = { total: docs.length, published: pub };
-  published += pub;
-  drafts += docs.length - pub;
-}
-
-/* ---------- الموجة الأولى: عنقود البطارية ---------- */
-/* الموجة الأولى — عنقود البطارية. المصدر: KEYWORD_MAP.md القسم 8.
-   ⚠️ `liten-powerbank-for-fickan` خرجت في v1.1 ودخلت مكانها
-   `magsafe-vs-qi2-vs-tradlos`. نسيان هذا التبديل هنا هو ما جعل العدّ خاطئاً
-   في وثيقتين، فالقائمة تُحدَّث مع الخريطة لا بعدها. */
-const wave1 = [
-  'batteriet-tar-slut', 'ingen-eluttag-pa-resan', 'mobilen-dor-i-kylan',
-  'basta-powerbank-2026', 'magsafe-vs-qi2-vs-tradlos', 'powerbank-for-resa',
-  'magnetisk-powerbank', '10000-vs-20000-mah', 'mah-och-watt-vad-betyder-siffrorna',
-  'powerbank-pa-flyget', 'powerbank-i-kyla',
+/* ---------- content ---------- */
+const COLLECTIONS = [
+  ['solutions', 'صفحات الحلول'],
+  ['guides', 'أدلة الشراء'],
+  ['comparisons', 'المقارنات'],
+  ['posts', 'المقالات'],
 ];
+const docs = COLLECTIONS.flatMap(([c]) => loadDocs(c).map((d) => ({ ...d, _coll: c })));
+const stage = (d) => d.stage ?? 'draft';
+const count = (s) => docs.filter((d) => stage(d) === s).length;
+const waitingReview = docs.filter((d) => ['written', 'reviewed'].includes(stage(d)));
+const skeletons = docs
+  .filter((d) => d.published === true && stage(d) === 'draft' && d.updated)
+  .map((d) => ({ slug: d.slug, due: addDays(d.updated, SKELETON_DAYS) }))
+  .sort((a, b) => a.due.localeCompare(b.due));
 
-/* «مكتوبة» تعني: لها نصّ حقيقي — أي stage عند written فما فوق. والمنشور
-   مكتوبٌ أيضاً. تعريف واحد، فلا يعود العدّ يختلف بين وثيقة وأخرى. */
-const HAS_TEXT = new Set(['written', 'reviewed', 'published']);
-const wave1State = { published: 0, text: 0, draft: 0, missing: [] };
-const wave1Seen = new Set();
-for (const c of collections) {
-  const dir = join(ROOT, 'src/content', c, 'sv');
-  if (!existsSync(dir)) continue;
-  for (const f of readdirSync(dir).filter((f) => ['.md', '.mdx'].includes(extname(f)))) {
-    const d = frontmatter(readFileSync(join(dir, f), 'utf8'));
-    if (!d || !wave1.includes(d.slug)) continue;
-    wave1Seen.add(d.slug);
-    if (d.published === true) wave1State.published++;
-    if (HAS_TEXT.has(d.stage ?? 'draft')) wave1State.text++;
-    else wave1State.draft++;
-  }
-}
-wave1State.missing = wave1.filter((s) => !wave1Seen.has(s));
-const wave1Done = wave1State.published;
-
-/* ---------- الفئات ---------- */
-const catDir = join(ROOT, 'src/data/categories');
-const cats = readdirSync(catDir)
-  .filter((f) => /\.ya?ml$/.test(f))
-  .map((f) => YAML.parse(readFileSync(join(catDir, f), 'utf8')));
+/* ---------- categories and the market stall ---------- */
+const cats = loadCategories();
 const activeCats = cats.filter((c) => c.active).length;
-
-/* ---------- التواجد في الساحة ---------- */
-let torget = { active: false, ready: false };
-if (exists('src/data/torget/torget.yaml')) {
-  const t = YAML.parse(read('src/data/torget/torget.yaml'));
-  torget = { active: !!t?.active, ready: /^\+\d{8,15}$/.test(String(t?.phone || '')) };
+let torget = 'معطّلة';
+if (existsSync(join(ROOT, 'src/data/torget/torget.yaml'))) {
+  const t = YAML.parse(readFileSync(join(ROOT, 'src/data/torget/torget.yaml'), 'utf8'));
+  if (t?.active) torget = /^\+\d{8,15}$/.test(String(t.phone ?? '')) ? 'مفعّلة' : 'مفعّلة برقم غير صالح';
 }
 
-/* ---------- النصوص القانونية ---------- */
-const legalDir = join(ROOT, 'src/content/pages/sv');
-const legal = readdirSync(legalDir)
-  .filter((f) => ['.md', '.mdx'].includes(extname(f)))
-  .map((f) => ({ f, raw: readFileSync(join(legalDir, f), 'utf8') }));
-const drafts_legal = legal.filter((x) => /UTKAST/i.test(x.raw)).map((x) => x.f.replace(/\.mdx?$/, ''));
+/* ---------- write ---------- */
+const table = (head, rows) => [`| ${head.join(' | ')} |`, `|${head.map(() => '---').join('|')}|`, ...rows.map((r) => `| ${r.join(' | ')} |`)].join('\n');
 
-/* ---------- البناء ---------- */
-const distPages = existsSync(join(ROOT, 'site'))
-  ? (function count(dir) {
-      let n = 0;
-      for (const e of readdirSync(dir)) {
-        const p = join(dir, e);
-        if (statSync(p).isDirectory()) n += count(p);
-        else if (e === 'index.html') n++;
-      }
-      return n;
-    })(join(ROOT, 'site'))
-  : 0;
+const body = `# لوحة الحالة
 
-const bar = (done, total, width = 20) => {
-  const filled = total ? Math.round((done / total) * width) : 0;
-  return '█'.repeat(filled) + '░'.repeat(width - filled);
-};
+> **مولَّدة من المستودع — لا تُحرَّر يدوياً.** \`npm run state\`
+> آخر تغيّر في الحالة: __STAMP__
 
-const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
-
-/* ---------- الكتابة ---------- */
-const out = `# لوحة الحالة
-
-> **تُحسب آلياً من المستودع — لا تُحرَّر يدوياً.**
-> \`npm run state\` · آخر تحديث: ${now()}
-
----
-
-## سطر واحد للمحادثة الجديدة
+## سطر الحالة
 
 \`\`\`
-منتجات ${P.total} (موثقة ${P.verified} · مصوَّرة ${P.photographed} · تنتظر ASIN ${P.waitingAsin}) ·
-صفحات ${published + drafts} (منشورة ${published}) · الموجة الأولى ${wave1Done}/11 ·
-فئات مفعّلة ${activeCats}/${cats.length} · الساحة ${torget.active && torget.ready ? 'مفعّلة' : 'معطّلة'}
+منتجات ${P.total} (ظاهرة ${P.live} · قابلة للشراء ${P.buyable} · مجرَّبة ${P.tested}) ·
+صفحات ${docs.length} (نصّها منشور ${count('published')} · تنتظر المراجعة ${waitingReview.length} · هيكل ${count('draft')}) ·
+فئات مفعّلة ${activeCats}/${cats.length} · الساحة ${torget}
 \`\`\`
 
----
+## المنتج التالي
+
+الرمز الحرّ التالي: **\`${nextProductCode(products)}\`** — يُسنَد مرة ولا يتغيّر.
+
+## ما ينقص كل منتج ليكتمل
+
+${incomplete.length ? table(['الرمز', 'المنتج', 'ظاهر', 'ينقصه'], incomplete.map(({ p, missing }) => [`\`${p.code}\``, p.name, p.verified ? '✓' : '—', missing.join(' · ')])) : '✓ كل المنتجات مكتملة.'}
+
+«ظاهر» يعني \`verified: true\`: المنتج على الموقع. وبلا ASIN يظهر بلا زرّ شراء.
 
 ## المنتجات
 
-| البند | العدد |
-|---|---|
-| المجموع | ${P.total} |
-| موثقة وتظهر | ${P.verified} |
-| بحوزتنا | ${P.owned} |
-| مجرَّبة بدليل | ${P.tested} |
-| مصوَّرة | ${P.photographed} |
-| لها رابط أمازون | ${P.withAsin} |
-| **تنتظر ASIN** | **${P.waitingAsin}** |
-
-${missingAsin.length ? '**تنتظر رابطاً:**\n\n```\n' + missingAsin.join('\n') + '\n```' : '✓ كل المنتجات المملوكة مربوطة.'}
-
----
+${table(['البند', 'العدد'], [
+  ['المجموع', P.total],
+  ['ظاهرة في الموقع', P.live],
+  ['ظاهرة ولها زرّ شراء', P.buyable],
+  ['مصوَّرة من تصويرنا', P.photographed],
+  ['مجرَّبة فعلياً', P.tested],
+])}
 
 ## المحتوى
 
-| النوع | المجموع | منشور |
-|---|---|---|
-| صفحات الحلول | ${content.solutions.total} | ${content.solutions.published} |
-| أدلة الشراء | ${content.guides.total} | ${content.guides.published} |
-| المقارنات | ${content.comparisons.total} | ${content.comparisons.published} |
-| المقالات | ${content.posts.total} | ${content.posts.published} |
-| **المجموع** | **${published + drafts}** | **${published}** |
+${table(['النوع', 'المجموع', 'نصّه منشور', 'مكتوب ينتظر', 'هيكل'], COLLECTIONS.map(([c, label]) => {
+  const d = docs.filter((x) => x._coll === c);
+  return [label, d.length, d.filter((x) => stage(x) === 'published').length, d.filter((x) => ['written', 'reviewed'].includes(stage(x))).length, d.filter((x) => stage(x) === 'draft').length];
+}))}
 
-**خط الإنتاج**
+${waitingReview.length ? `**تنتظر مراجعة حسام:**\n\n${waitingReview.map((d) => `- \`${d.slug}\` — ${d._coll}`).join('\n')}` : '✓ لا صفحة تنتظر المراجعة.'}
 
-| المرحلة | العدد | الوصف |
-|---|---|---|
-| \`draft\` | ${stages.draft} | هيكل فقط |
-| \`written\` | ${stages.written} | مكتوب، ينتظر مراجعة سويدية |
-| \`reviewed\` | ${stages.reviewed} | جاهز للنشر |
-| \`published\` | ${stages.published} | منشور |
+## مهلة الهياكل
 
-\`\`\`
-${bar(stages.published, stages.draft + stages.written + stages.reviewed + stages.published)}  ${stages.published} منشور من ${stages.draft + stages.written + stages.reviewed + stages.published}
-\`\`\`
+الهيكل المنشور وعدٌ مهلته ${SKELETON_DAYS} يوماً: بعدها يُكتب أو يُسحب، والبناء يسقط.
 
-**الموجة الأولى — عنقود البطارية**
-
-\`\`\`
-${bar(wave1Done, 11)}  ${wave1Done}/11 منشورة  (${pct(wave1Done, 11)}%)
-${wave1State.text}/11 لها نصّ حقيقي · ${wave1State.text - wave1State.published} تنتظر المراجعة · ${wave1State.draft} هيكل
-\`\`\`
-
-**إجمالي النشر**
-
-\`\`\`
-${bar(published, published + drafts)}  ${published}/${published + drafts}  (${pct(published, published + drafts)}%)
-\`\`\`
-
----
-
-## البنية
-
-| البند | الحالة |
-|---|---|
-| الفئات المفعّلة | ${activeCats} من ${cats.length} |
-| الصفحات المولّدة | ${distPages || '— (شغّل npm run build)'} |
-| قسم الساحة | ${torget.active ? (torget.ready ? '✅ مفعّل' : '⚠️ مفعّل برقم غير صالح') : '⬜ معطّل — ينتظر رقم هاتف'} |
-| نصوص قانونية مسوّدة | ${drafts_legal.length} |
-
-${drafts_legal.length ? '```\n' + drafts_legal.join('\n') + '\n```' : ''}
-
----
-
-## الحواجز
-
-انظر \`ISSUES.md\` للأدلة والخطوات.
-
----
-
-## ماذا تفعل اليوم
-
-${
-  P.waitingAsin > 0
-    ? `**١.** أضف ASIN لـ${P.waitingAsin} منتجات — أسرع مكسب، وكل واحد يصبح قابلاً للشراء فوراً.`
-    : '**١.** كل المنتجات مربوطة ✓'
-}
-${
-  wave1Done < 11
-    ? `**٢.** اكتب ${11 - wave1Done} صفحة من الموجة الأولى — انظر \`KEYWORD_MAP.md\`.`
-    : '**٢.** الموجة الأولى مكتملة ✓ — ابدأ الثانية.'
-}
-${
-  torget.active && torget.ready
-    ? '**٣.** قسم الساحة يعمل ✓'
-    : '**٣.** ضع رقم الهاتف في `src/data/torget/torget.yaml` وفعّل القسم.'
-}
-${drafts_legal.length ? `**٤.** أكمل ${drafts_legal.length} نصاً قانونياً.` : '**٤.** النصوص القانونية مكتملة ✓'}
+${skeletons.length ? table(['آخر موعد', 'العدد', 'الصفحات'], [...Map.groupBy(skeletons, (s) => s.due)].map(([due, list]) => [`**${due}**`, list.length, list.map((s) => `\`${s.slug}\``).join(' · ')])) : '✓ لا هياكل منشورة.'}
 `;
 
-/* الوقت يقول متى تغيّرت الحالة، لا متى شُغّل الأمر.
- *
- * وسببان لذلك:
- *   ١. بدونه يتغيّر الملف مع كل `verify` ولو لم يتغيّر رقم واحد، فيصير
- *      ضجيجاً يُتراجَع عنه يدوياً في كل جلسة (`HANDOVER` ٤ب).
- *   ٢. والأهم منذ صار أي مساعد يقرأ هذا الملف من غيتهب مباشرة: كان يقرأ
- *      «آخر تحديث» فيجده قديماً بأسبوعين — والأرقام تحته صحيحة اليوم —
- *      فيشكّ فيها أو يعلن أنها متقادمة. والوقت الذي لا يعني شيئاً أسوأ من
- *      غيابه، لأنه يُقرأ على أنه يعني شيئاً.
- */
+/* Only rewrite when something other than the date changed. */
 const OUT = join(ROOT, 'docs/project/STATE.md');
-const strip = (t) => t.replace(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}/g, '§');
-const prev = existsSync(OUT) ? readFileSync(OUT, 'utf8') : null;
-
-if (prev !== null && strip(prev) === strip(out)) {
-  console.log(`\n✓ STATE.md — لا تغيّر في الحالة، والتاريخ باقٍ على يوم آخر تغيّر فعلي`);
-  console.log(`  منتجات ${P.total} · موثقة ${P.verified}\n`);
-  process.exit(0);
+const prev = existsSync(OUT) ? readFileSync(OUT, 'utf8') : '';
+const prevStamp = (prev.match(/آخر تغيّر في الحالة: (.+)/) ?? [])[1];
+if (prevStamp && prev === body.replace('__STAMP__', prevStamp)) {
+  console.log(`\n✓ STATE.md — unchanged since ${prevStamp}\n`);
+} else {
+  writeFileSync(OUT, body.replace('__STAMP__', now()), 'utf8');
+  console.log(`\n✓ STATE.md — products ${P.total} · live ${P.live} · pages ${docs.length}\n`);
 }
-
-writeFileSync(OUT, out, 'utf8');
-console.log(`\n✓ STATE.md`);
-console.log(`  منتجات ${P.total} · منشور ${published}/${published + drafts}`);
-console.log(
-  `  الموجة الأولى: ${wave1State.text}/11 لها نصّ ` +
-    `(${wave1State.published} منشورة · ${wave1State.text - wave1State.published} تنتظر المراجعة) · ` +
-    `${wave1State.draft} هيكل` +
-    (wave1State.missing.length ? `  ⚠ مفقود: ${wave1State.missing.join('، ')}` : '') +
-    '\n',
-);

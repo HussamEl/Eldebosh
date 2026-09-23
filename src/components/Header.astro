@@ -1,8 +1,7 @@
 ---
 import { t, type Lang } from '../i18n/ui';
 import { url, activeCategories } from '../lib/content';
-import { SHOW_BUILD_STAMP } from '../lib/build-stamp';
-import { now } from '../lib/clock.mjs';
+import { SHOW_BUILD_STAMP, BUILD_STAMP } from '../lib/build-stamp';
 
 interface Props { lang: Lang; path: string; }
 const { lang, path } = Astro.props;
@@ -26,9 +25,9 @@ const primary = [
       <img src="/brand/eldebosh-logo-header.svg" alt={tr('site.name')} width="170" height="26" decoding="async" />
     </a>
 
-    {/* طابع الرفع — مؤقّت. اقرأ src/lib/build-stamp.ts قبل حذفه. */}
+    {/* Temporary site-version stamp — see src/lib/build-stamp.ts before removing. */}
     {SHOW_BUILD_STAMP && (
-      <span class="build-stamp" data-build title="آخر بناء — يُحذف قبل الإطلاق">{now()}</span>
+      <span class="build-stamp" data-build title="Site version">{BUILD_STAMP}</span>
     )}
 
     <!-- سطح المكتب -->
