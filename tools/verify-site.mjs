@@ -12,8 +12,9 @@ import { chromium, devices } from 'playwright';
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = path.join(path.dirname(new URL(import.meta.url).pathname), '..', 'site');
+const ROOT = fileURLToPath(new URL('../site', import.meta.url));
 const TYPES = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript',
   '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp',
@@ -107,7 +108,10 @@ console.log('\n· photo viewer');
     const veil = v.querySelector('.viewer-veil').getBoundingClientRect();
     return { boxW: Math.round(box.width), veilW: Math.round(veil.width), veilH: Math.round(veil.height),
              locked: document.body.classList.contains('viewer-open'), hash: location.hash,
-             focus: document.activeElement.className, scrollY: Math.round(scrollY) };
+             focus: document.activeElement.className,
+             // While open, the page is pinned with position: fixed and shifted by
+             // top: -<scroll>, so scrollY reads 0; what the reader sees is the sum.
+             scrollY: Math.round(scrollY - (parseFloat(document.body.style.top) || 0)) };
   });
   check('the dialog fills the viewport, not the tile',
         !!open && open.veilW === 1440 && open.veilH === 900 && open.boxW > 400,
@@ -123,8 +127,11 @@ console.log('\n· photo viewer');
     open: !!document.querySelector('.viewer.is-open'),
     locked: document.body.classList.contains('viewer-open'),
     focus: document.activeElement.className,
+    scrollY: Math.round(scrollY),
   }));
   check('Escape closes and focus returns', !closed.open && !closed.locked && closed.focus === 'tile-face');
+  check('the page is where it was after closing', closed.scrollY === scrollBefore,
+        `scroll ${scrollBefore} → ${closed.scrollY}`);
 
   const photos = await page.evaluate(() => {
     const t = document.querySelector('.tile:has(.tile-photos[data-n="3"])');

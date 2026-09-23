@@ -1,184 +1,88 @@
-# CLAUDE.md — دستور مستودع eldebosh.com
+# CLAUDE.md
 
-**الإصدار `v1.0`.** ما سبقه مرحلة تحضير. القواعد أدناه نهائية ومفروضة آلياً.
+Instructions for an AI agent (Claude Code) working in this repository. Read
+this file, then `docs/project/STATE.md` and `docs/project/TASKS.md`, before
+doing anything. The project is explained in [README.md](README.md) and `docs/`.
 
-هذا الملف يُقرأ في كل جلسة. القواعد أدناه ملزمة ولا تُخترق بطلب عابر.
+## Standing permissions
 
-## البنية
+- **Push directly to `main`.** Standing permission from the owner (2026-09-05).
+  If your environment forces a session branch: work there, then merge it into
+  `main`, push `main`, and delete the branch **in the same session** — work
+  reaches the live site only from `main`. Say in your first reply where you are
+  pushing.
+- **No pull request** unless the owner explicitly asks for one.
+- Git mechanics, branches, lockfiles, dependency versions, formatting, commit
+  wording and which check to run are yours to decide. Never ask the owner
+  about them.
 
-`src/` المصدر · `public/` ما يُنسخ كما هو · `site/` **ناتج البناء — لا يُحرَّر يدوياً**
-· `scripts/` فحوص المصدر · `tools/` فحص المتصفح وحارس الانحراف · `brand/` الهوية
-ومولّداتها · `docs/` وثائق المستودع (01–09) · `docs/project/` وثائق المشروع.
+## Before every push
 
-**عند فتح أي محادثة:** اقرأ `docs/project/STATE.md` أولاً.
-
-**قبل أي commit:** `npm run verify` — يبني ويفحص كل شيء. لا تدمج قبل أن يمرّ.
-
-## نظام تشغيل المشروع — ستة أركان
-
-| الملف | ما هو | يُحدَّث |
-|---|---|---|
-| `docs/project/STATE.md` | لوحة الحالة | **آلياً** — `npm run state` |
-| `docs/project/DECISIONS.md` | سجل القرارات المغلقة | يدوياً عند قرار جديد |
-| `docs/project/ISSUES.md` | المشاكل بأدلتها | يدوياً عند ظهور أو حل |
-| `CHANGELOG.md` (الجذر) | سجل التغييرات | سطران عند كل تسليم |
-| `docs/project/RISKS.md` | سجل المخاطر | عند تغيّر خطر |
-| حقل `stage` | خط إنتاج المحتوى | مع كل صفحة |
-
-**عند فتح أي محادثة:** اقرأ `docs/project/STATE.md` أولاً — سطر واحد يغني عن شرح طويل.
-
-**وعند إضافة منتج:** [`docs/project/ADDING_A_PRODUCT.md`](docs/project/ADDING_A_PRODUCT.md)
-— الوثيقة الوحيدة التي تجمع كل ما يلزم. ولا تُعِد جمعه من خمسة ملفات.
-
-**وملف البدء لأي محادثة جديدة** يولَّد بـ`npm run start:file` ← `ELDEBOSH-START.md`.
-**لا يُحرَّر بيد** — كل رقم فيه مقروء من المستودع (`D-031`).
-
-**والأطراف غير `Claude Code` لا تُعطى ملفات تُلصق** — تقرأ `INSTRUCTIONS.md` و`STATE.md`
-من `raw.githubusercontent.com` بنفسها. والكتلة التي تُلصق مرة واحدة في
-`docs/project/PROJECT_BOX.md`، **ولا تُضخَّم**: كل سطر فيها يُقرأ في كل رسالة (`D-032`).
-
-**عند إغلاقها:** حدّث ما تغيّر من الستة.
-
-**خط الإنتاج:** `draft` ← `written` ← `reviewed` ← `published`. الفحص يرفض التناقض بين `stage` و`published`.
-
-## الصور
-**التسمية:** `P-NN-K` — رقم المنتج ثم رقم الصورة (1..3).
-**من صورة إلى ثلاث لكل منتج**، والموقع يبدّلها **بالـCSS وحده** — لا جزيرة JavaScript جديدة.
-**ممنوع عرض صورة منتج تحت اسم منتج آخر ولو للاختبار.** الصورة ادعاء بصري.
-التفاصيل في `docs/project/PHOTO_NAMING.md`.
-
-## نظام المراجع
-**لا تطلب صورة أُرسلت من قبل.** كل صورة لها رمز في `docs/project/ASSETS.md` ومسار في المستودع.
 ```
-npm run assets     يعيد توليد الفهرس
+npm run verify
 ```
-**القاعدة العامة:** إن احتجت معلومة من محادثة سابقة فهي ناقصة من الوثائق — أضفها بدل البحث عنها. التفاصيل في `docs/project/REFERENCE_SYSTEM.md`.
 
-## قاعدة العمل الأولى
-**التعديل البصري ⇒ ملف معاينة وحده.**
+It must pass. If a check fails, fix the cause — never weaken, skip or work
+around a check. After any change to the UI script or to CSS that hides
+elements, `verify` is mandatory (a flex rule beats the `hidden` attribute; a
+script can run before its elements exist).
+
+Never run `git restore .` or any command that discards uncommitted work you
+did not create.
+
+## Non-negotiable rules
+
+Full list with reasons and enforcement: [docs/RULES.md](docs/RULES.md). The
+ones that must never slip:
+
+1. **Nothing invented** — no specification, price, rating, quote or statistic
+   without a named source.
+2. **Experience only when real** — first-person experience wording requires a
+   linked product with `tested: true`. Never "Bäst i test", never a claimed
+   measurement.
+3. **No fixed prices** (`price_band` only). **No Amazon images or prices** until
+   the API opens after three qualifying sales. Never edit a retailer image.
+4. **Amazon links only from `asin`**; no affiliate link in article text;
+   disclosure above the first buy link on every commercial page.
+5. **Only the owner's own photos**, and never one product's photo under
+   another's name.
+6. **No secrets** anywhere in the repository, including docs.
+7. **Zero JavaScript by default.** No new script without the owner's approval.
+8. **`site/` is build output** — never edit or commit it.
+
+**Never change without the owner's explicit decision:** the URL structure
+(`url` in `src/lib/content.ts`), `SEGMENTS` and `RESERVED` in `src/i18n/ui.ts`,
+the schema in `src/content.config.ts`, the disclosure logic and link
+attributes. Also his: anything that costs money, changes what visitors see,
+promises something on the site's behalf, or touches the Amazon account.
+
+## Visual changes
+
+Show visual changes as a single preview file before publishing:
+
 ```
 npm run preview:file
 ```
-لا حزمة مشروع، ولا موقع مبني، ولا رفع، ولا نشر. الحزمة عند الطلب فقط.
 
-**السبب:** هذه الدورة استهلكت مرحلة التحضير كلها.
+## Working with the owner
 
-## الحالة الراهنة (اقرأ هذا أولاً)
+The owner, Hussam, is not a developer and edits content in `/admin/`. He reads
+Arabic, right to left. Reply to him in Arabic and follow
+[docs/project/INSTRUCTIONS.md](docs/project/INSTRUCTIONS.md): the `EB-###`
+opening line, the party board at the end, commands and paths on their own
+lines in code blocks, conclusions first, a recommended answer rather than a
+choice of options, no flattery. Do not ask him to run terminal commands unless
+there is no other way.
 
-> **ونقطة الدخول الكاملة:** [`docs/project/HANDOVER.md`](docs/project/HANDOVER.md)
-> — أين وصل المشروع، وما في كل مجلد، وكيف يعمل النشر والتواصل. عشر دقائق.
-- الموقع **منشور ويعمل** على `eldebosh.com` مع SSL.
-- المستودع: `HussamEl/eldebosh` — فرع `main`. المسار المحلي: `C:\dev\eldebosh`.
-- **الدفع إلى `main` مباشرة — إذنٌ قائم من صاحب المشروع، `2026-09-05`، `D-028`.**
-  وهذا هو الإذن الصريح الذي تطلبه بيئات التشغيل التي تفتح فرعاً باسم الجلسة:
-  **اعمل فيه إن فُرض عليك، ثم ادمجه إلى `main` وادفعه واحذفه في الجلسة نفسها.**
-  لا تترك العمل على فرع ولا تنتظر إذناً — العمل لا يظهر على الموقع إلا من `main`،
-  وكل ما دونه نسخة ثانية بلا مراجِع ينتظرها. ولا `Pull Request` إلا بطلبه صراحةً.
-  **وقل له في أول رد أين تدفع** إن كانت بيئتك فتحت فرعاً.
-- **النشر تلقائي ولا `FTP` فيه ولا أسرار:** دفعة إلى `main` ← `GitHub Actions`
-  يبني ويفحص ← يحدّث فرع `deploy` ← `Webhook` يوقظ الاستضافة فتسحب. عُكس
-  الاتجاه لأن الاستضافة تحجب خوادم غيتهب في الاتجاه الداخل.
-  التفصيل: `docs/12-deploy-from-github.md`.
-- لوحة التحرير على `/admin/`، والدخول برمز وصول شخصي (PAT). لا تضف `base_url` إلى `config.yml`.
-- المحتوى التجريبي **محذوف**. والحالة الحيّة مولَّدة في `docs/project/STATE.md` —
-  تُقرأ منه، ولا تُكتب هنا فتتقادم.
-- الأفلييت: **Amazon Associates مفعّل** بالوسم `electro066-21` على `amazon.se`.
-  الحساب مقبول؛ وما يبقى هو عتبة ثلاث مبيعات مؤهَّلة لفتح الواجهة البرمجية،
-  وبها وحدها تُسمح صور أمازون وأسعارها.
-- صاحب المشروع **ليس مطوراً**، ويحرر من `/admin/` فقط. لا تطلب منه أوامر طرفية إلا للضرورة.
+Numbers come from `npm run state`, never from memory or from another document.
 
-## المشروع
-موقع محتوى سويدي يوجّه القارئ من **مشكلة يومية** إلى **حل عملي** ثم إلى منتج مناسب.
-الدخل: Affiliate حصراً. السوق: السويد. اللغات: `sv` أساسية، `en` ثانوية.
-الموقع **ليس** متجراً ولا موقع أخبار تقنية.
+## When you finish
 
-## القواعد الملزمة
+Update what changed: `docs/project/TASKS.md`, `CHANGELOG.md` (a few lines per
+delivery), `docs/project/LOG.md` (the message counter). If something you
+needed was not documented, add it where it belongs.
 
-1. **لا اختلاق.** ممنوع اختراع مواصفات أو أسعار أو تقييمات أو اقتباسات أو إحصاءات. كل رقم يعود إلى مصدر.
-2. **التجربة مسموحة عند وجودها فقط — ثلاث حالات:**
-   - **`tested: true`** — المنتج بحوزتنا واستُخدم فعلاً. تُسمح صيغة التجربة وصورنا الخاصة. النظام يفرض: `owned_since` + `usage_period` + صورة واحدة من تصويرنا + `hands_on_limits`.
-   - **`owned: true` فقط** — بحوزتنا بلا استخدام كافٍ. تُسمح صورنا ووصف مادي، **بلا حكم على الأداء**.
-   - **غير مملوك** — مواصفات موثقة ومصادر منشورة فقط، مع سطر صريح بأننا لم نجرّبه.
-   - ✅ الاستشهاد بمصدر منشور مسموح دائماً: باسم الجهة ورابطها وتاريخ الاطلاع في `sources` أو `external_rating`.
-   - ❌ ممنوع دائماً: `Bäst i test` · ادعاء قياس بجهاز · نقل نص المصدر حرفياً.
-   - **الفحص الآلي يرفض** أي عبارة تجربة لا يقابلها منتج `tested: true` مربوط بالصفحة.
-3. **لا سعر ثابت.** `price_band` فقط + `last_verified`. حقل `price` ممنوع ويفشل الفحص.
-4. **`verified: false` افتراضياً.** أي منتج غير موثق لا يُعرض في أي صفحة.
-5. **روابط أمازون تُولَّد من `asin` فقط.** الوسم `electro066-21` معرَّف في `src/lib/affiliate.ts`. ممنوع لصق رابط أمازون يدوياً — الفحص يرفضه.
-5b. **لا رابط أفلييت خام في المقالات.** الروابط تعيش في ملف المنتج فقط، وتُعرض عبر `ProductCard` / `CompareTable` مع `rel="sponsored nofollow noopener"`.
-6. **إفصاح إلزامي أعلى كل صفحة تجارية** (`AffiliateDisclosure`) — لا في الفوتر فقط. متطلب Marknadsföringslagen.
-7. **كل دليل/مقارنة/مقال يربط بصفحة حل** عبر حقل `solution`. الفحص الآلي يفشل بدونه.
-8. **لا فئة في القائمة قبل 3 صفحات منشورة فيها** (`active: false` حتى ذلك).
-9. **لا أسرار في المستودع.** بيانات الاعتماد في GitHub Secrets فقط.
-9b. **الحدود الحقيقية مع أمازون — احفظ الفرق:**
-   - ✅ **مسموح:** الروابط المباشرة إلى صفحات المنتجات (هذا جوهر البرنامج)، ونص زر مثل `Köp på Amazon`، وذكر اسم المنتج ومواصفاته من مصدر.
-   - ❌ **ممنوع:** نسخ **صور** أمازون يدوياً، وعرض **أسعار** لم تأتِ من الواجهة البرمجية.
-   - الصور والأسعار تُفتح عبر `PA-API` بعد ثلاث مبيعات مؤهلة.
+## Windows
 
-9c. **شروط أمازون تُحترم حرفياً:** لا سعر ثابت في الصفحة، ولا صورة منتج منسوخة يدوياً (الصور عبر الواجهة البرمجية المعتمدة فقط بعد تفعيلها)، ونص الإفصاح الإلزامي ظاهر على كل صفحة تجارية وفي الفوتر.
-10. **صفحات المنتج المستقلة معطّلة.** المنتج كيان بيانات لا صفحة. لا تُفعّل بلا قرار صريح.
-
-## قواعد التصميم المغلقة
-- مقياس العناوين **مضغوط**: العنوان الرئيسي لا يتجاوز نحو `2rem`. العناوين الضخمة تخلق فراغاً على الشاشات العريضة.
-- **الرأس والفوتر** على `--brand-deep`. **الـHero** على `--brand-hero` الأفتح — لونان متطابقان متلاصقان يظهران ككتلة واحدة بلا معنى.
-- **لا كتلتان داكنتان متتاليتان.** شريط الثقة فاتح لأنه يسبق الفوتر مباشرة.
-- **كل صفحة داخلية تبدأ بشريط `--brand-soft` كامل العرض** يحمل فتات الخبز والعنوان. أي قالب جديد يستخدم `<header class="page-head">` وإلا فقد الهوية.
-- أسماء المتغيرات محايدة: `--brand` و`--brand-deep`. **لا تكتب اسم لون في اسم متغير.**
-- `--volt` محجوز لثلاثة مواضع فقط: شريط الشحن، نقطة التجربة، الزر الأساسي.
-- الخطوط محلية في `public/fonts/`. **ممنوع أي خط من نطاق خارجي.**
-- قسم الصفحة الرئيسية لا يظهر قبل امتلاء نصابه (3 بطاقات مشكلة، 2 دليل).
-- **الفئة الفرعية بلا محتوى منشور لا تظهر إطلاقاً.** رابط يقود إلى صفحة فارغة يقتل الثقة أسرع من غياب الرابط.
-- كل حالة فارغة تعرض **طريق عودة**، لا طريقاً مسدوداً.
-- **شريط التصفية أزرار مجموعات:** `Alla` ثم مجموعة لكل فئة فيها منتج — `Kablar` · `Laddare` · `Powerbanks` (`D-030`).
-  المجموعات معرَّفة في `src/lib/gear-groups.ts` وحده، والأعداد محسوبة لا مكتوبة. **لا زرّ لمجموعة بلا منتج، ولا زرّ للبقية بلا مجموعة** — تظهر تحت `Alla`.
-  ولا تُضف فلتراً جديداً بلا طلب صريح — كثرة الخيارات تشتّت.
-- على الجوال: القائمة **أيقونة خطوط**، وشارة اللغة بجانبها على نفس السطر.
-- بطاقات المنتجات: **الصورة أولاً** إن وُجدت في `own_photos`، وإلا أول مواصفة رقمية.
-- صور المنتجات **من تصوير صاحب المشروع فقط**، **بخلفيتها الأصلية**، مربعة 720 بكسل، `webp`.
-- **ممنوع نسخ صور المتاجر ولو بعد تعديلها.** التعديل بنية التهرّب يضاعف المخالفة — `D-021`.
-
-## التواجد في ساحة كارلستاد
-- صاحب المشروع لديه ترخيص بلدية لطاولة وخيمة في `Stora Torget`. **ليست شركة مسجلة** — نشاط يُصرَّح عنه لمصلحة الضرائب.
-- **ممنوع ذكر ساعات حضور محددة** — الوعد الوحيد هو الرد على الاتصال، لا الحضور.
-- **ممنوع ذكر مخزن أو غرفة في المنزل** إطلاقاً.
-- المنتجات التي يحملها = كل ما عليه `tested: true`. لا حقل إضافي.
-- **الموقع لا يبيع منتجات جديدة.** يجوز في الساحة بيع كابلات مفردة وأشياء مستعملة فقط، وهذا بيع منفصل خارج نطاق الموقع.
-- الفحص الآلي يرفض النشر برقم هاتف نائب.
-
-## أولويات المفاضلة التقنية
-Mobile UX → Core Web Vitals → وضوح المحتوى → التصفح والبحث → المقارنة والشراء.
-
-## قيود تقنية مغلقة
-Astro SSG · Content Collections · Pagefind · Sveltia CMS · GitHub Actions ← تسحب Hostinger من فرع `deploy`.
-**صفر JavaScript افتراضياً.** أي سكربت يحتاج مبرراً مكتوباً في PR.
-
-## ويندوز
-جهاز صاحب المشروع **Windows 11**. أي سكربت يبني مساراً من `import.meta.url` يجب أن يستخدم `fileURLToPath`، لا `.pathname` — الأخير يُنتج `/C:/...` ويكسر كل شيء.
-
-## ووردبريس
-تجربة ووردبريس على الدومين **أُلغيت**. لا يُثبَّت على `/public_html/` إطلاقاً — ملفا `index.php` و`.htaccess` يخطفان كل الطلبات ويعطّلان الموقع الثابت. إن لزم مستقبلاً، فعلى نطاق فرعي منفصل.
-
-## الرفع اليدوي
-**احذف كل محتويات المجلد العام قبل الرفع.** الرفع فوق القديم يترك صفحات لم تعد تُولَّد، فتظهر بتصميم قديم ويصل إليها الزائر. حدث هذا ثلاث مرات في مرحلة التحضير. التفاصيل في `docs/project/UPLOAD.md`.
-
-كل صفحة تحمل `<meta name="eldebosh-build">` بتاريخ البناء — للتأكد من أن الخادم يعرض النسخة الصحيحة.
-
-## قبل كل commit
-```
-npm run check     # فحص القواعد الملزمة
-npm run build     # الفحص + البناء + فهرسة البحث
-npm run test:ui   # اختبار سلوكي للجزيرة التفاعلية في DOM حقيقي
-npm run verify    # كل ما سبق ومعه فحوص الوثائق والروابط والألوان
-```
-
-**بعد أي تعديل على JavaScript أو على CSS يخص الإخفاء: شغّل `npm run verify`.**
-تعطّلت التصفية مرتين في مرحلة التحضير بأخطاء لا تظهر إلا عند التشغيل:
-1. سكربت يعمل قبل وجود العناصر في الصفحة.
-2. محدد `.class { display: flex }` يتغلب على سمة `hidden` — كل عنصر يُخفى بالسكربت يحتاج `.x[hidden] { display: none !important; }`.
-`npm run build` يفشل عمداً إذا خُرقت أي قاعدة. لا تلتفّ على الفحص — أصلح السبب.
-
-## ممنوع تعديله بلا قرار صريح من صاحب المشروع
-- بنية الروابط في `src/lib/content.ts` → `url` (تغييرها بعد النشر يكسر SEO).
-- `SEGMENTS` و `RESERVED` في `src/i18n/ui.ts`.
-- مخطط البيانات في `src/content.config.ts`.
-- منطق الإفصاح ووسوم الروابط.
+The owner's machine runs Windows 11. Build paths from `import.meta.url` with
+`fileURLToPath`, never `.pathname`.

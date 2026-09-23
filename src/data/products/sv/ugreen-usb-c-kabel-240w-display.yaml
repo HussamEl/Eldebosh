@@ -49,6 +49,6 @@ source_url: "https://www.amazon.se/dp/B0F62S8P1T"   # للربط لا للموا
 last_verified: 2026-09-04
 
 # مصدر المواصفة: صورتنا نحن — وهي تُغطّي الثلاث كلها. «240W» مطبوعة على
-# القابس، والشاشة ظاهرة عليه ومضاءة، والطرفان USB-C. القاعدة 2b · I-019.
+# القابس، والشاشة ظاهرة عليه ومضاءة، والطرفان USB-C. docs/RULES.md §2.4.
 spec_photo: "/uploads/P-23-1-B0F62S8P1T.webp"
 verified: true

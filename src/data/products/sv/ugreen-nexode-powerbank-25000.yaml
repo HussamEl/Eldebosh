@@ -59,7 +59,7 @@ hands_on_limits:
 asin: "B0BJQ7F16T"
 source_url: "https://www.amazon.se/dp/B0BJQ7F16T"   # للربط لا للمواصفة
 
-# مصدر المواصفة: صورتنا. «145W» مطبوعة على الجسم ومقروءة فيها. القاعدة 2b · I-019.
+# مصدر المواصفة: صورتنا. «145W» مطبوعة على الجسم ومقروءة فيها. docs/RULES.md §2.4.
 spec_photo: "/uploads/P-03-1-B0BJQ7F16T.webp"
 last_verified: 2026-09-04
 verified: true

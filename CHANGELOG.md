@@ -1,150 +1,53 @@
-# سجل التغييرات
+# Changelog
 
-بصيغة [Keep a Changelog](https://keepachangelog.com/) و[الإصدار الدلالي](https://semver.org/lang/ar/).
+A few lines per delivery, newest first. Earlier history (2026-09-02 to
+2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
-## [غير مُصدَر]
+## 1.0.0 — 2026-09-23
 
-### حُذف
+A full review and rebuild of how the project is built, checked, published and
+documented. Visitors see the same site, with one compliance fix.
 
-- **تنظيف كامل للوثائق — `D-029`.** عشر وثائق وصفت أعطالاً أُغلقت أو نسخاً
-  تتقادم: تسليم المساعدَين `07`–`10`، و`DEPLOY_FIX`، و`REMOVE_WORDPRESS`،
-  و`CHANGELOG-source`، ونسخة القراءة `HTML`، والبديل الأخضر للشعار.
-- **الأعداد المكتوبة بيد** من `CONTEXT.md` و`BRIEFING.md` — المصدر الوحيد
-  للأرقام صار `npm run state`.
+**Publishing**
+- The site is built in GitHub Actions instead of being committed: `site/` is
+  no longer in the repository. Edits saved in `/admin/` now reach the live
+  site with no manual step (before, they never did).
+- The exact build that passed every check is the one published to `deploy`.
+- Reproducible builds: the version stamp is the time of the last source
+  commit, so pushes that change only docs or scripts publish nothing.
 
-### أُضيف
+**Admin panel**
+- Sveltia CMS pinned (`@sveltia/cms` 0.204.0) and shipped with the site
+  instead of loaded from a CDN; tested in a real browser (`npm run test:admin`).
+- Config rewritten: dropdowns for category, subcategory, icons and product
+  references; fields in working order ending with "visible on the site";
+  photos converted to webp on upload.
+- `public/admin/.htaccess` stops browsers caching the CMS for a year.
 
-- **دليل الكابلات `basta-laddkabel-usb-c` منشور** — `T1` مُغلقة. أول ثمرة لخطّ العمل الجديد:
-  `Claude Project` قرأ المستودع من غيتهب وسلّم النصّ، وصحّح في طريقه مقدّمةً
-  خاطئة (الكابلات غير الموثقة أربعة لا اثنان). و`pros` و`cons` و`best_for`
-  لـ`P-20` و`P-23`. وقرأ حسام السويدية فنُشرت في اليوم نفسه.
-- **`docs/project/PROJECT_BOX.md`** — كتلة واحدة تُلصق مرة واحدة في خانة
-  `Instructions`، وبعدها تقرأ الأطراف `INSTRUCTIONS.md` و`STATE.md` من
-  `raw.githubusercontent.com` بنفسها. لا نسخ يدوي بعدها، ونحو ٣٤ كيلوبايت
-  تُقرأ في كل رسالة صارت نحو ٤. جُرِّب قبل الاعتماد: أعاد سطر الحالة حرفياً
-  من الرابط الخام. `D-032`.
-- **`docs/project/ADDING_A_PRODUCT.md`** — الوثيقة التي لم تكن موجودة: كيف يُضاف
-  منتج من أوله إلى آخره. كانت المعرفة موزّعة على خمسة ملفات، فمن أراد إضافة
-  منتج قرأها كلها أو أخطأ.
-- **`npm run start:file`** → `ELDEBOSH-START.md` — نقطة الدخول لأي محادثة جديدة،
-  **مولَّدة لا مكتوبة**: الأرقام من `STATE.md`، والإصدارات من الوثائق، والرمز
-  الحرّ التالي والفئات محسوبة. `D-031`.
-- **أربعة حرّاس ضد الخطأ الصامت** في `npm run check`: فئة غير موجودة · فئة فرعية
-  غير موجودة (مع اقتراح الاسم الصحيح) · رمز أو معرّف مكرر · صورة مذكورة بلا ملف
-  على القرص. جُرِّبت الأربعة بملف معطوب متعمَّد فأسقطت البناء، ثم حُذف فمرّ.
+**Photos**
+- Any uploaded photo is composed into a 720×720 tile in the house style at
+  build time (`scripts/lib/tile.mjs`); `npm run tile` does it by hand.
 
-- **حارس روابط الوثائق** (`npm run check:links`) — يفتح كل رابط `Markdown` نسبي
-  ويسقط إن لم يجد الملف. بُني بعد `I-024`: حذف عشر وثائق ترك اثنتي عشرة إشارة
-  تقود إلى لا شيء، ولم يكن في البوابة ما يراها.
+**Compliance**
+- The affiliate disclosure now sits above the first buy link on the home page
+  and on the market-stall pages (it was below the products on the home page and
+  missing on the stall pages). `npm run audit` now fails any page where a buy
+  link comes before the disclosure.
 
-### تغيّر
+**Tooling**
+- `npm run new:product` creates a product file with the next free code.
+- `scripts/lib/repo.mjs` shares loaders between scripts; `make-state` rewritten
+  (per-product "what is missing" table, next free code, skeleton deadlines).
+- Removed: the drift guard, server-cleanup script, CSV export, Python tile
+  script, archive scripts, the generated start file.
+- Windows: remaining `.pathname` path builders replaced with `fileURLToPath`.
 
-- **تاريخ `STATE.md` صار يقول متى تغيّرت الحالة** لا متى شُغّل الأمر. كان يتغيّر
-  مع كل `verify` فيصير ضجيجاً؛ وصار أخطر منذ يقرؤه مساعد من غيتهب — يجد «آخر
-  تحديث» قديماً بأسبوعين والأرقام تحته صحيحة اليوم فيشكّ فيها.
-- **الأطراف العاملة صارت ثلاثة** — حسام · `Claude Code` · `Claude Project` —
-  والمقعد الرابع محجوز بلا اسم حتى يصل منه ردّ. `D-031`.
-- **تصفير:** عدّاد الرسائل إلى `EB-001`، والوثائق الحاكمة الثلاث إلى `v1.0`.
-  ولا سطر حُذف من `LOG.md` — الصفوف نزلت إلى الأرشيف.
-- **`PHOTO_NAMING.md` كانت تكذب** — تقول `.jpg` وكل صورة في المستودع `.webp`،
-  وأكثرها يحمل `ASIN`. صُحِّحت إلى الصيغة الفعلية.
-- **`CONTRIBUTING.md` كانت تناقض `D-028`** — تقول `git switch -c fix/…` بينما
-  القرار هو الدفع إلى `main` مباشرة. وكانت تحمل أعداداً يدوية تقادمت.
-- **شريط التصفية في الصفحة الرئيسية صار يصفّي بالمجموعة** — `Alla` · `Kablar` ·
-  `Laddare` · `Powerbanks` بدل زر `Finns att prova` الذي كان يعدّ `tested: true`
-  فيوحي بأنّ ثلاثة منتجات فقط تُجرَّب، والحقيقة أنّ كل ما في الشبكة يُحمل إلى
-  الساحة. المجموعات في `src/lib/gear-groups.ts` والأعداد محسوبة — `D-030`.
-- **`HANDOVER.md` أُعيدت كتابتها** لتكون نقطة الدخول الوحيدة لمن يبدأ من صفر،
-  بعد أن صار المستودع هو الذاكرة الباقية الوحيدة للمشروع.
-- **أربع مسائل أُغلقت** بدليل من المستودع نفسه: `I-001` ووردبريس، و`I-002`
-  النشر التلقائي، و`I-005` قسم الساحة، و`I-006` النصوص القانونية. و`I-011`
-  صارت قاعدة قائمة لكل تكليف بحثي.
-- عدّاد الرسائل صُفِّر إلى `EB-001`، والصفوف السابقة إلى الأرشيف بلا حذف سطر.
-
-### أُصلح
-
-- **صفحة تقول «لم تُكتب بعد» وتبيع بلا إفصاح — `I-026`.** قالب الأدلة كان
-  يحجب الإفصاح التجاري ويُبقي بطاقتي الشراء على الهيكل — انعكاسٌ تامّ للمادة
-  ٦٫٤ التي تجعل حجبَ الإفصاح **نتيجةً** لمنع البيع لا بديلاً عنه. نجا حتى اليوم
-  لأنه لم يكن في المستودع دليلٌ بترشيحات ومرحلة `written`. وأُضيف حارس في
-  `npm run audit`: كل صفحة هيكل يجب ألّا تحمل رابط شراء.
-- **أزرار التصفية ظهرت على الموقع الحيّ ولم تعمل — `I-025`.** `.htaccess` كان
-  يعطي كل `.js` سنةً من التخزين بوسم `immutable`، وهو صادق على `_astro/*`
-  المبصومة الأسماء وكاذب على `/js/eldebosh-ui.js` الثابت المسار: وصلت الصفحة
-  الجديدة وبقي السكربت القديم في المتصفح. الآن البصمة في الرابط
-  (`src/lib/asset-hash.ts`)، و`immutable` مقصور على ما يفي به، وحارسٌ في
-  `npm run audit` يرفض أي أصل بمسار ثابت بلا بصمة.
-- **الـHero على الألواح الرأسية**: عنوان الصفحة الرئيسية كان ينكسر إلى سطرين
-  وخانة البحث تهبط وحدها بعرض كامل تحته. عتبة العمودين نزلت من `60em` إلى
-  `48em`، فصار العنوان سطراً واحداً وخانة البحث بجانبه من `768px` صعوداً،
-  وضاق حقل البحث من `19rem` إلى `17rem`.
-
-## [1.1.0] — 2026-08-29
-
-مصدر Astro دخل المستودع. المشروع صار كاملًا: مصدر ← بناء ← فحص ← نشر.
-
-### أُضيف
-
-- **مصدر Astro كاملًا**: `src/` (صفحات، مكوّنات، محتوى، بيانات، تنسيق)،
-  `public/` (لوحة التحكم، الشعار، الخطوط، `.htaccess`)، و`scripts/` (تحقق،
-  فحص CSS، اختبار jsdom، تدقيق، تقارير).
-- `site/` صار ناتج بناء حقيقيًا (`outDir`) بدل نسخة مُحرَّرة يدويًا.
-- **حارس في CI**: يرفض أي `site/` لا يطابق بناءً نظيفًا — لا يمكن أن ينحرف الناتج
-  عن المصدر بعد اليوم.
-- خط فحص موحّد: `npm run verify` يجمع فحوص المصدر وفحص المتصفح في أمر واحد.
-- كنترولان جديدان: `aria-label` الشعار، وألا ترندر أي صفحة كلمة `undefined`.
-- `docs/project/`
-  (19 وثيقة من مرحلة المصدر: القرارات، المخاطر، الحالة، الأدلة).
-
-### أُصلح
-
-- **`aria-label="Eldebosh — undefined"` على كل صفحة في اللغتين**: المفتاح
-  `nav.home` غير موجود في جدول الترجمة. أُضيف، **و**`t()` صار يرمي استثناءً عند
-  أي مفتاح ناقص بدل طباعة `undefined` بصمت.
-- ألوان لوحة التحكم عادت قديمة بعد أول بناء — أُعيد الإصلاح إلى `public/admin/`
-  حيث يجب أن يكون.
-
-### تغيّر
-
-- `_astro/site.v2.css` (اسم يدوي لكسر الكاش) ← بصمة Astro التلقائية.
-- `deploy.yml` صار تشغيلًا يدويًا فقط حتى يُحلّ عطل FTP — كان سيلوّن كل commit
-  بالأحمر.
-
----
-
-## [1.0.0] — 2026-08-28
-
-أول إصدار منظّم: الموقع والهوية في مستودع واحد، مع توثيق وفحص آلي.
-
-### أُضيف
-
-- **نظام هوية بصرية كامل** — 16 نسخة متجهية، PNG حتى 3600px، أيقونات 16→1024،
-  10 مقاسات سوشال، و3 ملفات PDF للمطبوعات (كرت بحواف قطع، ورق رسمي، ورقة شعار).
-- **خط إنتاج قابل لإعادة التشغيل** (`brand/src/`) — الكلمة مسارات متجهية مستخرجة
-  من Inter Tight عبر fontTools و HarfBuzz. المخرجات حتمية عدا طابع وقت PDF.
-- **فحص آلي** (`tools/verify-site.mjs`) — 22 كنترول في كروم حقيقي: الصفحات،
-  الباليتة، الشعار، العارض، الارتداد بدون JS، الجوال، الفلتر، وجود الملفات.
-- **CI** — workflow يشغّل الفحص على كل push و pull request.
-- **توثيق** — بنية، نظام تصميم، سجل إصلاحات، دليل هوية، نشر، خارطة طريق.
-- الشعار في ترويسة كل الصفحات، مع `favicon` و`og-default` وأيقونات الأجهزة.
-
-### تغيّر
-
-- **الباليتة** من الليموني `#C4F04E` إلى السماوي `#55C6F2`، والترويسة والفوتر
-  إلى الكحلي `#123F66`، وخلفية الصفحة إلى `#E7F2FD`.
-- `_subcategory_.DBnoV-zu.css` ← `site.v2.css` لكسر كاش السنة.
-- سكربت الفلتر المكرّر في صفحتين ← ملف مشترك `js/eldebosh-ui.js`.
-- تأثيرات المرور على البطاقات صارت داخل `@media(hover:hover)`.
-
-### أُصلح
-
-- **عارض الصور كان يُقصّ داخل البطاقة** في كل نقرة على سطح المكتب
-  (`204×729` بدل `480×776`) — `position:fixed` داخل عنصر عليه `transform`.
-- **قفزة ~305px** عند فتح العارض — كروم يتجاهل `focus({preventScroll:true})`
-  داخل حاوية قابلة للتمرير؛ الجسم يُثبَّت الآن بـ`position:fixed`.
-- **صورتان نصف شفافتين** عند المرور — تجميد التلاشي في منتصفه.
-- **اختفاء الشريط الأزرق** أسفل صور المنتجات — تنازع قاعدتين على `:after`.
-- العارض لا يُغلق بـEscape، ويلوّث تاريخ التصفح، ولا يقفل تمرير الخلفية.
-- زوايا بيضوية في الحرف E — `rx` أكبر من نصف العرض في `<rect>`.
-
-التفاصيل الكاملة والأسباب الجذرية في [`docs/03-fixes-log.md`](docs/03-fixes-log.md).
+**Documentation**
+- Every code comment rewritten in English to explain what and why, without
+  development history.
+- About 36 documents replaced by: `README.md`, `CLAUDE.md`,
+  `docs/ARCHITECTURE.md`, `docs/RULES.md`, `docs/CONTENT.md`,
+  `docs/OPERATIONS.md` (English), and `docs/project/HANDOVER.md`,
+  `INSTRUCTIONS.md`, `PROJECT_BOX.md`, `TASKS.md`, `LOG.md` (Arabic), plus the
+  generated `STATE.md` and `ASSETS.md`.
+- Message counter restarted at `EB-001`; collaboration documents at `v1.0`.

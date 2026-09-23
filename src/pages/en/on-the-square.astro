@@ -3,9 +3,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import TorgetContact from '../../components/TorgetContact.astro';
 import ProductTile from '../../components/ProductTile.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import { getCollection } from 'astro:content';
 import { t } from '../../i18n/ui';
-import { url, verifiedProducts } from '../../lib/content';
+import { url, verifiedProducts, isCommercial } from '../../lib/content';
 import { breadcrumbSchema } from '../../lib/seo';
 
 const lang = 'en' as const;
@@ -57,6 +58,7 @@ const crumbs = [{ name: tr('site.name'), url: url.home(lang) }, { name: tr('torg
           <h2>{tr('torget.gear_h')}</h2>
           <p class="lead">{tr('torget.gear_lead')}</p>
         </div>
+        {isCommercial(onTable) && <AffiliateDisclosure lang={lang} />}
         <div class="tile-grid">
           {onTable.map((p) => <ProductTile product={p} lang={lang} />)}
         </div>

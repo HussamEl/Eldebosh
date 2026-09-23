@@ -1,0 +1,11 @@
+# The admin panel's files live at fixed paths (the CMS starts itself only when
+# its script is named exactly sveltia-cms.js, so no hash can be added to the
+# name or URL). The site-wide rule caches .js for a year, which would keep an
+# old CMS in the owner's browser after an upgrade. Here the browser revalidates
+# on every visit instead; an unchanged file costs a 304, not a download.
+<IfModule mod_expires.c>
+  ExpiresActive Off
+</IfModule>
+<IfModule mod_headers.c>
+  Header set Cache-Control "no-cache"
+</IfModule>

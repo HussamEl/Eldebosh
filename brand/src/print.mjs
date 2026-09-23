@@ -2,11 +2,12 @@
  * Skriver ut tryckunderlagen till PDF i exakta millimetermått.
  * Kör `python3 print.py` först — den bygger HTML-dukarna.
  */
+import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const SRC = path.dirname(new URL(import.meta.url).pathname);
+const SRC = path.dirname(fileURLToPath(import.meta.url));
 const CANVAS = path.join(SRC, 'build', 'canvas');
 const OUT = path.join(SRC, '..', 'print');
 fs.mkdirSync(OUT, { recursive: true });

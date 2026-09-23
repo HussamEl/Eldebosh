@@ -6,11 +6,12 @@
  *
  * Kräver Chromium via Playwright. Kör `python3 assets.py` först.
  */
+import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const SRC = path.dirname(new URL(import.meta.url).pathname);
+const SRC = path.dirname(fileURLToPath(import.meta.url));
 const LOGO = path.join(SRC, '..', 'logo');
 const dirs = {
   png: path.join(SRC, '..', 'logo-png'),

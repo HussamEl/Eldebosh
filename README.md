@@ -1,90 +1,37 @@
-<div align="center">
+# eldebosh.com
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="brand/logo-png/eldebosh-logo-horizontal-inverse-1200w.png">
-  <img src="brand/logo-png/eldebosh-logo-horizontal-1200w.png" alt="Eldebosh" width="380">
-</picture>
+A Swedish content site that takes a reader from an everyday problem ("my phone
+dies before evening") to a practical solution and then to a suitable product.
+Income: Amazon affiliate links only. Market: Sweden. Languages: Swedish
+(content), English (interface). The owner owns and photographs the products
+himself and shows them at his market stall in Karlstad; the site's rules
+exist to keep that honest.
 
-**موقع Eldebosh وهويته البصرية في مستودع واحد**
+Static site: Astro 5 · Sveltia CMS at `/admin/` · Pagefind search · GitHub
+Actions builds and verifies every push to `main` and publishes to the `deploy`
+branch, which Hostinger pulls.
 
-**[تسليم المشروع](docs/project/HANDOVER.md)** · [التوثيق](docs/) · [دليل الهوية](brand/GUIDELINES.md) · [سجل التغييرات](CHANGELOG.md) · [المساهمة](CONTRIBUTING.md)
-
-</div>
-
----
-
-## ما هذا
-
-مستودع يجمع شيئين: **الموقع الجاهز للرفع** و**نظام الهوية البصرية** الذي يولّده
-سطر أوامر واحد. الموقع دليل شرائي سويدي/إنجليزي لملحقات الشحن والتقنية اليومية.
-
-| المجلد | المحتوى |
-|---|---|
-| [`src/`](src/) | مصدر Astro: الصفحات، المكوّنات، المحتوى، البيانات، التنسيق |
-| [`public/`](public/) | ما يُنسخ كما هو: لوحة التحكم، الشعار، الخطوط، `.htaccess` |
-| [`scripts/`](scripts/) | أدوات المشروع: التحقق، فحص CSS، التدقيق، التقارير |
-| [`site/`](site/) | ناتج البناء — يُولَّد بـ`npm run build` ويُرفع كما هو |
-| [`brand/`](brand/) | الهوية: مصادر متجهية، مخرجات، ومولّداتها في [`brand/src/`](brand/src/) |
-| [`tools/`](tools/) | فحص آلي للموقع في متصفح حقيقي |
-| [`docs/`](docs/) | البنية، نظام التصميم، سجل الإصلاحات، النشر، خارطة الطريق |
-
-## البدء
-
-```bash
-npm install
-npm run dev                  # خادم تطوير Astro
-npm run build                # يتحقق ثم يبني إلى site/ ثم يفهرس البحث
-npm run verify               # خط الفحص الكامل — لا تدمج قبل أن يمرّ
+```
+npm ci
+npm run dev        # http://localhost:4321/sv/
+npm run verify     # every check — must pass before any push
 ```
 
-لإعادة توليد الهوية:
+## Documentation
 
-```bash
-pip install -r brand/src/requirements.txt
-npm run brand:all            # الشعار ← الدُكوك ← PNG و PDF
-```
-
-## الأوامر
-
-| الأمر | ماذا يفعل |
+| Read | For |
 |---|---|
-| `npm run dev` | خادم تطوير Astro مع إعادة تحميل حيّة |
-| `npm run build` | `validate` ← `astro build` إلى `site/` ← فهرسة Pagefind |
-| `npm run verify` | البناء + فحص CSS + اختبار jsdom + **فحص المتصفح** + تدقيق الصفحات + التقارير |
-| `npm run test:browser` | [`tools/verify-site.mjs`](tools/verify-site.mjs) وحده: 24 كنترول في كروم |
-| `npm run serve` | يقدّم `site/` محليًا |
-| `npm run brand:logo` | يبني نسخ الشعار المتجهية |
-| `npm run brand:canvas` | يبني دُكوك السوشال والمطبوعات |
-| `npm run brand:render` | يصوّرها إلى PNG و PDF |
-| `npm run brand:all` | الثلاثة بالترتيب |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | How it is built and why: pipeline, content model, URLs, design system |
+| [docs/RULES.md](docs/RULES.md) | The binding rules — honesty, Amazon, photos, design — and what enforces each |
+| [docs/CONTENT.md](docs/CONTENT.md) | Adding products, photos and pages; how to write for the site |
+| [docs/OPERATIONS.md](docs/OPERATIONS.md) | Commands, checks, publishing, the admin panel, hosting, repairs |
+| [docs/project/STATE.md](docs/project/STATE.md) | Generated status: what exists and what is missing (`npm run state`) |
+| [docs/project/TASKS.md](docs/project/TASKS.md) | Current tasks (Arabic) |
+| [docs/project/HANDOVER.md](docs/project/HANDOVER.md) | The owner's guide (Arabic) |
+| [docs/project/INSTRUCTIONS.md](docs/project/INSTRUCTIONS.md) | How the owner, Claude Code and Claude Project work together (Arabic) |
+| [CLAUDE.md](CLAUDE.md) | Instructions for an AI agent working in this repository |
+| [CHANGELOG.md](CHANGELOG.md) | Changes per delivery |
 
-## نظرة سريعة
-
-**الموقع** — Astro 5، مخرجات ثابتة: لا Node ولا قاعدة بيانات على الخادم.
-تنسيق واحد، جافاسكربت واحد (~4 ك.ب)، خطوط ذاتية الاستضافة، وبحث Pagefind.
-لغتان من قوالب واحدة عبر `src/pages/[lang]/`. يعمل كاملًا بدون جافاسكربت —
-عارض الصور يرتد إلى `:target` في CSS.
-
-**لوحة التحكم** — Sveltia CMS على `/admin/`، تكتب مباشرة إلى `src/` في هذا
-المستودع. المحرّر يدخل برمز GitHub، يملأ الحقول، ينشر — فيصير commit.
-
-**الهوية** — حرف E من ثلاثة أعمدة، أوسطها سماوي: نفس «شريط الشحن» في تصميم
-الموقع. الكلمة مسارات متجهية مستخرجة من خط Inter Tight عبر HarfBuzz، فلا تحتاج
-تثبيت خط في أي برنامج أو مطبعة.
-
-> [!IMPORTANT]
-> **عدّل `src/` و`public/` — لا `site/`.** الأخير ناتج بناء يُمحى ويُعاد توليده عند كل
-> `npm run build`، وحارس في CI يرفض أي `site/` لا يطابق بناءً نظيفًا.
-> يُتابَع في Git لأن الرفع إلى الاستضافة يدوي حاليًا (النشر التلقائي معطّل —
-> [`docs/06-roadmap.md`](docs/06-roadmap.md) بند 1).
-
-## حالة المشروع
-
-| | |
-|---|---|
-| خط الفحص | يمرّ كاملًا ✅ — بناء + CSS + jsdom + **24/24 في المتصفح** + تدقيق 31 صفحة |
-| الصفحات | 18 سويدية · 13 إنجليزية |
-| المنتجات | 20 منتجًا · منشور 2 من 32 صفحة محتوى |
-| ملفات الهوية | 57 |
-| يحجب كل شيء | النشر التلقائي معطّل (FTP) — [`docs/06-roadmap.md`](docs/06-roadmap.md) بند 1 |
-| يمنع الإطلاق | بيانات اتصال حقيقية — البند 6 |
+Owner-facing documents are in Arabic because the owner reads Arabic; code,
+comments and technical documentation are in English. The repository is the
+project's only memory — if something is not written here, it is not known.

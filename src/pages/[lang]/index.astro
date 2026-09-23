@@ -62,6 +62,9 @@ const altPaths = { sv: url.home('sv'), en: url.home('en') };
           <p class="lead">{tr('home.gear.lead')}</p>
         </div>
 
+        {/* Above the first buy link, as Swedish marketing law requires. */}
+        <div class="mb-gap"><AffiliateDisclosure lang={lang} /></div>
+
         {gear.length > 3 && (
           <GearFilter lang={lang} groups={gearGroups} total={gear.length} />
         )}
@@ -84,9 +87,6 @@ const altPaths = { sv: url.home('sv'), en: url.home('en') };
           <TorgetContact lang={lang} compact />
         </div>
 
-        <div class="mt-gap">
-          <AffiliateDisclosure lang={lang} />
-        </div>
       </div>
     </section>
   )}

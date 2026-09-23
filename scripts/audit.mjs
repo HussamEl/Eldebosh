@@ -10,7 +10,7 @@
  *  - missing canonical, description length
  *  - internal links to pages that are not generated
  *  - more than one stylesheet, buttons without an accessible name
- *  - skeleton pages that sell
+ *  - skeleton pages that sell, buy links without the disclosure above them
  *  - fixed-path assets without a content hash in their URL
  *
  *   npm run audit
@@ -140,6 +140,19 @@ for (const file of list) {
     }
     if (d.querySelector('.compare-table, .tile-cta')) {
       note(short, 'skeleton page shows a comparison table or buy button');
+    }
+  }
+
+  // 10b. a buy link is preceded by the disclosure
+  //
+  // Swedish marketing law requires the commercial disclosure before the
+  // reader meets a buy link, not only in the footer. Checked on the built
+  // page, so a new template that forgets the component is caught.
+  {
+    const firstBuy = d.querySelector('main [rel~="sponsored"], main [data-affiliate]');
+    const disclosure = d.querySelector('.disclosure');
+    if (firstBuy && (!disclosure || !(disclosure.compareDocumentPosition(firstBuy) & 4))) {
+      note(short, 'buy link without the affiliate disclosure above it');
     }
   }
 

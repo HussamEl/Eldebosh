@@ -1,6 +1,6 @@
 /**
  * Read the project's data straight from disk, for the scripts that generate
- * reports (STATE.md, ELDEBOSH-START.md) and scaffold new products.
+ * reports (STATE.md, ASSETS.md) and scaffold new products.
  *
  * Deliberately independent of Astro: these scripts run without a build.
  */

@@ -43,6 +43,6 @@ source_url: "https://www.amazon.se/dp/B0B3D9XW8X"   # للربط لا للموا
 last_verified: 2026-09-04
 
 # مصدر المواصفة: صورتنا نحن. كل ما في key_specs مقروء فيها — أسماء المنافذ
-# الثلاثة والـ100W مطبوعة على وجه الجهاز. القاعدة 2b · I-019.
+# الثلاثة والـ100W مطبوعة على وجه الجهاز. docs/RULES.md §2.4.
 spec_photo: "/uploads/P-21-1-B0B3D9XW8X.webp"
 verified: true

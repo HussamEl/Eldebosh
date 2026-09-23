@@ -687,6 +687,7 @@ ul, ol { padding-inline-start: 1.1rem; }
 .mt-xs { margin-block-start: 0.4rem; }
 .mt-sm { margin-block-start: 0.6rem; }
 .mt-gap { margin-block-start: var(--gap); }
+.mb-gap { margin-block-end: var(--gap); }
 .stack-xs { display: grid; gap: 0.4rem; list-style: none; padding: 0; margin: 0; }
 .row-actions { margin-block-start: var(--gap); display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
 .meta { color: var(--muted); font-size: var(--step--1); }
