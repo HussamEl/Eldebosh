@@ -10,7 +10,7 @@
  * never mistakes a fresh date for fresh data.
  *
  * Arabic: the owner reads it, and so does every party at the start of a
- * conversation (docs/project/PROJECT_BOX.md links to it).
+ * conversation (docs/project/INSTRUCTIONS.md links to its raw URL).
  *
  *   npm run state
  */

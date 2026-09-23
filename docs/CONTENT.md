@@ -20,8 +20,8 @@ pipeline before anything is published.
 | | Owns | Delivers |
 |---|---|---|
 | **The owner** | The products, the photos, every decision, Swedish review | ASINs, photos, `tested` status, hands-on notes, approval to publish |
-| **Claude Project** | Swedish text, SEO, editorial work | `pros`, `cons`, `best_for`, page text, sources — as text ready to paste; it has no repository access |
-| **Claude Code** | The repository | Files, checks, publishing |
+| **Claude Code** | The repository, and writing the content | Swedish text, `pros`, `cons`, `best_for`, sources, files, checks, publishing |
+| **Gemini (reviewer)** | Independent review | Checks sources, claims and Swedish before anything is published; reads the repository through raw GitHub URLs |
 
 Only the owner may set `tested: true` or write hands-on text: it is a claim
 about something he used.
@@ -39,7 +39,7 @@ npm run new:product -- --name "UGREEN Nexode 65W" --brand UGREEN --sub snabbladd
 Options: `--asin B0XXXXXXXX`, `--owned`, `--id <file-id>`. It picks the next
 free code (`P-NN`), derives the category from the subcategory, and writes
 `src/data/products/sv/<id>.yaml` with every field in the admin panel's order,
-hidden (`verified: false`). Or: admin panel → Produkter → New.
+hidden (`verified: false`). Or: admin panel → المنتجات (products) → New.
 
 The code `P-NN` is assigned once and never changes — photo names are built
 from it. The next free code is also in `docs/project/STATE.md`.
@@ -61,7 +61,7 @@ The home-page filter buttons are display groups, not subcategories:
 |---|---|
 | `name`, `brand` | As printed on the product |
 | `key_specs` | From a documented source only |
-| `pros`, `cons`, `best_for` | Written by Claude Project; empty until then, never invented |
+| `pros`, `cons`, `best_for` | Written by Claude Code from sources, reviewed by Gemini; empty until then, never invented |
 | `price_band` | `budget` · `mid` · `premium`. Never a `price` field |
 | `problems_solved` | `problem_id`s of existing solution pages |
 | `asin` | 10 characters, capitals and digits. Without it there is no buy button and the product enters no guide |

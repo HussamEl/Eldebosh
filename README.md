@@ -28,7 +28,7 @@ npm run verify     # every check — must pass before any push
 | [docs/project/STATE.md](docs/project/STATE.md) | Generated status: what exists and what is missing (`npm run state`) |
 | [docs/project/TASKS.md](docs/project/TASKS.md) | Current tasks (Arabic) |
 | [docs/project/HANDOVER.md](docs/project/HANDOVER.md) | The owner's guide (Arabic) |
-| [docs/project/INSTRUCTIONS.md](docs/project/INSTRUCTIONS.md) | How the owner, Claude Code and Claude Project work together (Arabic) |
+| [docs/project/INSTRUCTIONS.md](docs/project/INSTRUCTIONS.md) | How the owner, Claude Code and the reviewer (Gemini) work together (Arabic) |
 | [CLAUDE.md](CLAUDE.md) | Instructions for an AI agent working in this repository |
 | [CHANGELOG.md](CHANGELOG.md) | Changes per delivery |
 

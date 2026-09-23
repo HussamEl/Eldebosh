@@ -175,7 +175,7 @@ the same change.
 |---|---|
 | `docs/project/STATE.md` | Generated status: products, pages, stages, deadlines, the next free code |
 | `docs/project/TASKS.md` | The current task list |
-| `docs/project/INSTRUCTIONS.md` | How the owner, Claude Code and Claude Project work together |
+| `docs/project/INSTRUCTIONS.md` | How the owner, Claude Code and the reviewer (Gemini) work together |
 | `docs/project/LOG.md` | The message counter (`EB-###`) |
 | `CHANGELOG.md` | What changed, per delivery |
 | git history | Everything else. The project before the v1.0 rebuild, with its decision, issue and risk logs, is commit `c54dcff` |

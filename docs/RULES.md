@@ -91,7 +91,7 @@ source is one of:
 
 | | Source | Brought by |
 |---|---|---|
-| a | `source_url` on the **maker's** page | Claude Project |
+| a | `source_url` on the **maker's** page | Claude Code, checked by the reviewer |
 | b | `spec_photo` — our photo of the specification printed on the device | the owner |
 | c | `owner_checked` — the date the owner compared the listing with the device | the owner |
 

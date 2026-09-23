@@ -1,19 +1,16 @@
 /**
  * The collaboration documents stay consistent.
  *
- * Claude Project and any additional party read docs/project/INSTRUCTIONS.md
- * from GitHub, and carry docs/project/PROJECT_BOX.md pasted into their
- * settings. The pasted copy only changes when the owner replaces it, so a
- * version number is how everyone knows which copy is current.
+ * The reviewer (Gemini) reads docs/project/INSTRUCTIONS.md from its raw GitHub
+ * URL at the start of each conversation; the version number is how everyone
+ * knows which rules are current.
  *
  *   1. Each versioned document has a version line at the top:
  *        > **Version:** `v1.0` · YYYY-MM-DD · …
  *   2. A document changed since the last commit must have a raised version,
  *      or be reset to v1.0 with a new date (checked locally before
  *      committing; in CI the tree equals HEAD).
- *   3. When PROJECT_BOX.md's version rises, the new block must reach the owner
- *      in the same reply — this prints the reminder.
- *   4. The message log (docs/project/LOG.md) numbers run EB-001, EB-002, …
+ *   3. The message log (docs/project/LOG.md) numbers run EB-001, EB-002, …
  *      without gaps; prints the next number and the time in Karlstad.
  *
  *   npm run check:docs
@@ -24,7 +21,7 @@ import { join } from 'node:path';
 import { ROOT } from './lib/repo.mjs';
 import { now } from '../src/lib/clock.mjs';
 
-const VERSIONED = ['docs/project/INSTRUCTIONS.md', 'docs/project/PROJECT_BOX.md'];
+const VERSIONED = ['docs/project/INSTRUCTIONS.md'];
 const STAMP = /^>\s*\*\*Version:\*\*\s*`(v\d+\.\d+)`\s*·\s*(\d{4}-\d{2}-\d{2})/m;
 const LOG = 'docs/project/LOG.md';
 const ROW = /^\|\s*EB-(\d{3})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|/gm;
@@ -63,12 +60,7 @@ for (const rel of VERSIONED) {
   else if (old) raised.push({ rel, old: `${old} ${oldDate}`, version: `${version} ${date}` });
 }
 
-for (const r of raised) {
-  console.log(`\n  ⚠ ${r.rel}: ${r.old} → ${r.version}`);
-  if (r.rel.endsWith('PROJECT_BOX.md')) {
-    console.log('    Send the new block to the owner in this same reply: his pasted copy is now out of date.');
-  }
-}
+for (const r of raised) console.log(`\n  ⚠ ${r.rel}: ${r.old} → ${r.version} — name the new version in the reply`);
 
 /* ---------- message counter ---------- */
 let last = null;

@@ -3,6 +3,15 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.1 — 2026-09-23
+
+- Collaboration protocol 1.2 (`docs/project/INSTRUCTIONS.md` v1.1): consult
+  before any change, with one exception for fixing a broken build or publish;
+  Claude Code writes content, Gemini reviews it independently, the owner
+  decides. Claude Project leaves the setup; `PROJECT_BOX.md` removed.
+- Every reply ends with a change summary, raw GitHub URLs of changed files and
+  three ready-to-copy replies.
+
 ## 1.0.0 — 2026-09-23
 
 A full review and rebuild of how the project is built, checked, published and

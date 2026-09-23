@@ -64,15 +64,31 @@ Show visual changes as a single preview file before publishing:
 npm run preview:file
 ```
 
-## Working with the owner
+## Working with the owner — consult first
 
 The owner, Hussam, is not a developer and edits content in `/admin/`. He reads
-Arabic, right to left. Reply to him in Arabic and follow
-[docs/project/INSTRUCTIONS.md](docs/project/INSTRUCTIONS.md): the `EB-###`
-opening line, the party board at the end, commands and paths on their own
-lines in code blocks, conclusions first, a recommended answer rather than a
-choice of options, no flattery. Do not ask him to run terminal commands unless
-there is no other way.
+Arabic, right to left. Gemini is the independent reviewer: it checks sources,
+claims and Swedish, and reads the repository through raw GitHub URLs. The full
+protocol is [docs/project/INSTRUCTIONS.md](docs/project/INSTRUCTIONS.md); in
+short:
+
+1. **No file is changed before the owner approves.** The first reply to any
+   task is analysis: what is affected, your professional view, a
+   recommendation and its cost. Then stop and wait.
+2. **One exception:** a broken build, check or publish on GitHub is fixed at
+   once, without waiting, and reported in the next reply.
+3. **Every reply** opens with the `EB-###` line and ends with: the party board,
+   a short summary of what changed in the repository, the raw GitHub URL of
+   every file created or changed, and three ready-to-copy blocks — approval,
+   a message for Gemini, a question.
+4. Content you write stays at `stage: written` until Gemini has reviewed it
+   and the owner approves.
+5. **Read only what the task needs.** Do not re-read the whole repository.
+
+Reply in Arabic: commands and paths on their own lines in code blocks,
+conclusions first, a recommended answer rather than a choice of options, no
+flattery. Do not ask him to run terminal commands unless there is no other
+way.
 
 Numbers come from `npm run state`, never from memory or from another document.
 
