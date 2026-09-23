@@ -1,63 +1,57 @@
-# ملف إعدادات الخادم — موقع ثابت.
+# Server configuration for the static site (Apache/LiteSpeed on Hostinger).
 #
-# مهم: هذا الملف يستبدل أي ملف .htaccess قديم من ووردبريس.
-# ووردبريس كان يحوّل كل طلب إلى index.php، وهذا يعطّل الموقع الثابت.
-# لا توجد هنا أي قاعدة تحويل — الخادم يخدم الملفات كما هي.
+# This file replaces any .htaccess left from an earlier WordPress install:
+# WordPress routes every request to index.php, which breaks a static site.
+# There are no rewrite rules here — the server serves files as they are.
 
 DirectoryIndex index.html
 
-# ---------- صفحة الخطأ ----------
+# ---------- error page ----------
 ErrorDocument 404 /sv/
 
-# ---------- ضغط النقل ----------
+# ---------- compression ----------
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
   AddOutputFilterByType DEFLATE application/javascript application/json
   AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
 
-# ---------- التخزين المؤقت ----------
+# ---------- caching ----------
 <IfModule mod_expires.c>
   ExpiresActive On
 
-  # ملفات باسم مبصوم — لا تتغير أبداً.
-  #
-  # ⚠️ `immutable` وعدٌ بأن هذا الرابط بالذات لن يتغيّر محتواه أبداً. وهو صادق
-  # لملفات `_astro/*` لأن البصمة في الاسم، وللخطوط لأنها لا تتغيّر. وكان
-  # كاذباً حين شمل كل `.js`: مسار `/js/eldebosh-ui.js` ثابت ومحتواه يتغيّر،
-  # فبقي السكربت القديم في متصفح الزائر سنةً بينما وصلته صفحة جديدة —
-  # الأزرار ظهرت ولم تعمل (`I-025`).
-  #
-  # فالوعد الآن مقصور على ما يفي به، والجزيرة التفاعلية تحمل بصمتها في
-  # الرابط (`src/lib/asset-hash.ts`) فتستفيد من التخزين نفسه بلا كذب.
+  # `immutable` promises the browser that this exact URL will never change.
+  # True for _astro/* (the content hash is in the file name) and for fonts.
+  # Not for a fixed-path script such as /js/eldebosh-ui.js, which carries its
+  # hash in the URL instead (src/lib/asset-hash.ts) and so gets no promise.
   <FilesMatch "\.(css|woff2)$">
     ExpiresDefault "access plus 1 year"
     Header set Cache-Control "public, immutable"
   </FilesMatch>
 
-  # سكربتات بمسار ثابت — البصمة في الرابط لا في الاسم، فيُراجَع الرابط
+  # scripts at a fixed path — the hash is in the URL, not the name
   <FilesMatch "\.js$">
     ExpiresDefault "access plus 1 year"
     Header set Cache-Control "public, max-age=31536000"
   </FilesMatch>
 
-  # صور
+  # images
   <FilesMatch "\.(webp|png|jpg|jpeg|svg|ico)$">
     ExpiresDefault "access plus 30 days"
   </FilesMatch>
 
-  # صفحات — تُراجَع مع كل زيارة
+  # pages — revalidated on every visit, so a deploy is seen at once
   <FilesMatch "\.html$">
     ExpiresDefault "access plus 0 seconds"
     Header set Cache-Control "public, max-age=0, must-revalidate"
   </FilesMatch>
 </IfModule>
 
-# ---------- حماية أساسية ----------
+# ---------- basic hardening ----------
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# منع عرض محتويات المجلدات
+# no directory listings
 Options -Indexes
