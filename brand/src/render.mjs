@@ -43,7 +43,7 @@ const shotSvg = async (svg, w, h, out) => {
   await page.close();
 };
 
-// 1. sociala dukar
+// 1. social canvases
 const manifest = JSON.parse(fs.readFileSync(path.join(dirs.canvas, 'manifest.json'), 'utf8'));
 for (const [name, [w, h]] of Object.entries(manifest)) {
   const page = await browser.newPage({ viewport: { width: w, height: h } });
@@ -54,7 +54,7 @@ for (const [name, [w, h]] of Object.entries(manifest)) {
   console.log('social/' + name, `${w}x${h}`);
 }
 
-// 2. logotyper som transparent PNG
+// 2. logos as transparent PNG
 for (const [file, widths] of LOGO_PNGS) {
   const svg = fs.readFileSync(path.join(LOGO, file), 'utf8');
   const [, vw, vh] = svg.match(/viewBox="0 0 ([\d.]+) ([\d.]+)"/);
@@ -66,7 +66,7 @@ for (const [file, widths] of LOGO_PNGS) {
   }
 }
 
-// 3. ikoner — den förenklade faviconen under 64px, den fulla ikonen över
+// 3. icons — the simplified favicon below 64 px, the full icon above
 const icon = fs.readFileSync(path.join(LOGO, 'eldebosh-icon.svg'), 'utf8');
 const favicon = fs.readFileSync(path.join(LOGO, 'favicon.svg'), 'utf8');
 for (const s of ICON_SIZES) {

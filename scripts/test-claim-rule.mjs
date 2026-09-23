@@ -1,39 +1,43 @@
 /**
- * حالات اختبار قاعدة ادعاء التجربة.
+ * Test cases for the experience-claim rules (scripts/lib/claim-rule.mjs,
+ * src/lib/overclaim.mjs).
  *
- * الجمل الأربع الأولى كتبها `Claude Project` — وهو من يكتب النصوص التي تحكم
- * عليها القاعدة، فحالاته هي المرجع لا اقتراح. البقية من نص الموقع المنشور.
+ * The first cases were written by the content writer, whose texts the rule
+ * judges; the rest come from published pages. Each case is a sentence and the
+ * expected verdict: `fail` must be caught, `pass` must be allowed.
  *
- *   node scripts/test-claim-rule.mjs
+ *   npm run test:claims
  */
 import { findUnbackedClaim, findOwnedOnlyUseClaim, findBannedPhrase } from './lib/claim-rule.mjs';
 import { findOverclaimedCount } from '../src/lib/overclaim.mjs';
 
 const cases = [
-  // ---- يجب أن تفشل: ادعاء تجربة بلا سند ----
+  // ---- must be caught: a claim of experience with nothing behind it ----
   ['fail', 'Vi påstår aldrig något vi inte kan belägga, men den här powerbanken har vi testat i tre veckor.'],
   ['fail', 'Vi har inte mätt effekten, men vi har testat laddtiden med tidtagarur.'],
   ['fail', 'Ingen annan sajt har testat den lika länge som vi.'],
   ['fail', 'Vi har testat den i tre veckor.'],
   ['fail', 'I vårt test av tre powerbanks vann den här.'],
   ['fail', 'We tested it for a month.'],
+  // present tense in an implied comparison
+  ['fail', 'Ingen testar laddare så noggrant som vi.'],
 
-  // ---- يجب أن تمرّ: نفيٌ للادعاء، لا ادعاء ----
+  // ---- must pass: a denial is not a claim ----
   ['pass', 'Vi har aldrig testat den här modellen.'],
   ['pass', 'Vi påstår aldrig att vi har testat en produkt vi inte har använt.'],
   ['pass', 'Vi har inte mätt effekt, laddtider eller verkligt uttag med instrument.'],
   ['pass', 'Vi hittar inte på testresultat eller egna mätvärden.'],
   ['pass', 'Sidan bygger på dokumenterade specifikationer från tillverkaren.'],
-  // إثبات ثم نفي بعد «men» — يجب أن تمرّ، وإلا فالحارس مفرط
+  // a statement, then a denial after "men": must pass, or the rule is too strict
   ['pass', 'Vi äger och använder modellerna nedan, men vi har inte använt dem genom en hel svensk vinter i sträng kyla.'],
   ['pass', 'Det som står ovan är hur litiumbatterier fungerar, inte ett resultat vi har mätt.'],
 
-  // ---- النفي لا يعبر حدّ الجملة ----
+  // ---- a denial does not reach into the next sentence ----
   ['fail', 'Vi mäter inte med instrument. Vi har testat den i kyla.'],
   ['pass', 'Vi har testat ingenting än. Allt bygger på källor.'],
 ];
 
-/* ---- العبارة الممنوعة: تُمنع إلا في نفيها ---- */
+/* ---- the banned phrase: caught, except when denied ---- */
 const banned = [
   ['fail', 'Den här powerbanken är bäst i test.'],
   ['fail', 'Bäst i test av specifikationer'],
@@ -42,7 +46,7 @@ const banned = [
   ['pass', 'Vi jämför specifikationer och anger källa.'],
 ];
 
-/* ---- سلسلة «مملوك غير مُختبَر» لا تدّعي استخدامه ---- */
+/* ---- the "owned, not tested" strings claim no use ---- */
 const ownedOnly = [
   ['fail', 'Vi äger och använder den här produkten.'],
   ['fail', 'We own and use this product.'],
@@ -51,17 +55,17 @@ const ownedOnly = [
   ['pass', 'Vi äger inte den här produkten. Bedömningen bygger på dokumenterade källor.'],
 ];
 
-/* ---- الادعاء الجماعي: الكذب في العدد لا في الفعل ---- */
+/* ---- group claims: the lie is in the count, not the verb ---- */
 const counted = [
-  // أربعة منتجات، اثنان مُختبَران
+  // four products, two tested
   ['fail', 'Vi äger och använder alla fyra modellerna nedan.', { total: 4, tested: 2 }],
   ['fail', 'Bästa powerbanken — fyra modeller vi använder själva', { total: 4, tested: 2 }],
   ['fail', 'Vi kör alla tre dagligen.', { total: 3, tested: 1 }],
-  // الصياغة الصادقة: ملكية للكل، استخدام لبعضهم
+  // the honest wording: ownership of all, use of some
   ['pass', 'Vi äger alla fyra modellerna nedan.', { total: 4, tested: 2 }],
   ['pass', 'Två av dem har vi använt tillräckligt länge för att skriva om erfarenheten.', { total: 4, tested: 2 }],
   ['pass', 'Vi äger alla tre modellerna nedan. Två av dem har vi använt länge.', { total: 3, tested: 2 }],
-  // المجموعة مُختبَرة بالكامل — الادعاء صادق
+  // the whole group is tested — the claim is true
   ['pass', 'Vi äger och använder alla fyra modellerna nedan.', { total: 4, tested: 4 }],
 ];
 
@@ -106,7 +110,7 @@ for (const [want, sentence] of cases) {
 const total = cases.length + counted.length + ownedOnly.length + banned.length;
 console.log(
   failed
-    ? `\n✗ ${failed} من ${total} حالة لم تتصرّف كما يجب\n`
-    : `\n✓ ${total}/${total} حالة\n`,
+    ? `\n✗ ${failed} of ${total} cases did not behave as expected\n`
+    : `\n✓ ${total}/${total} cases\n`,
 );
 process.exit(failed ? 1 : 0);

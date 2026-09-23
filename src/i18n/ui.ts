@@ -2,13 +2,13 @@ export const LANGS = ['sv', 'en'] as const;
 export type Lang = (typeof LANGS)[number];
 export const DEFAULT_LANG: Lang = 'sv';
 
-/** أجزاء المسارات لكل لغة — تغييرها بعد النشر يكسر الروابط. لا تُعدّل بلا سبب. */
+/** URL segments per language. Changing one after publishing breaks links and rankings. */
 export const SEGMENTS = {
   sv: { solutions: 'solutions', guides: 'guides', compare: 'compare', blog: 'blog', info: 'info', search: 'sok' },
   en: { solutions: 'solutions', guides: 'guides', compare: 'compare', blog: 'blog', info: 'info', search: 'search' },
 } as const;
 
-/** المسارات المحجوزة — لا يجوز أن يحمل أي slug فئة أحد هذه الأسماء. */
+/** Reserved paths: no category slug may use one. Keep in sync with scripts/validate.mjs. */
 export const RESERVED = new Set([
   'solutions', 'guides', 'compare', 'blog', 'info', 'sok', 'search', 'admin', 'sv', 'en', 'pagefind',
 ]);
@@ -70,10 +70,10 @@ export const ui = {
     'sources.open': 'Öppna källan',
     'sources.accessed': 'Hämtad',
     'rating.based': 'kundbetyg hos',
-    /* إفصاح أمازون. الصيغة الإنجليزية هي القياسية في البرنامج؛ والسويدية هنا
-       ترجمتها بلفظ البرنامج السويدي «Amazon-partner» بدل «Amazon-associerad»
-       الذي كان ترجمةً حرفية لا تُقال بالسويدية. تُستبدَل بالصيغة الحرفية من
-       حساب الشراكة إن اختلفت — TASKS · T4. */
+    /* Amazon disclosure. The English is the programme's standard wording; the
+       Swedish renders it with the programme's Swedish term "Amazon-partner".
+       Replace it with the exact wording from the Associates account if that
+       differs (docs/project/TASKS.md). */
     'amazon.disclosure': 'Som Amazon-partner tjänar vi pengar på kvalificerade köp.',
     'notwritten.title': 'Den här sidan är inte skriven än',
     'notwritten.lead': 'Vi visar hela kartan, även det vi inte hunnit skriva. Rubriken finns, innehållet inte — hellre så än en text vi inte kan stå för.',

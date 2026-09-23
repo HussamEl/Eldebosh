@@ -1,12 +1,16 @@
 /*
- * Eldebosh — delad UI-logik / shared UI behaviour.
- *   1. Filterchips ovanför produktrutnätet ("Alla" + en chip per grupp).
- *   2. Bildvisaren (lightbox) på produktkorten.
+ * Eldebosh — the site's only JavaScript.
+ *   1. Filter buttons above the product grid ("Alla" + one per group).
+ *   2. The photo viewer on product tiles.
  *
- * Bildvisaren fungerar utan JS via :target. Med JS tar vi över för att slippa
- * hash-hopp i historiken, för att kunna stänga med Escape och för att flytta
- * dialogen ut ur kortet (ett kort med transform blir annars containing block
- * för position:fixed och klipper dialogen).
+ * Both work without JavaScript: the filter bar stays hidden and every product
+ * shows; the viewer opens via :target. With JavaScript the viewer avoids
+ * history entries, closes on Escape, traps focus, and moves each dialog out
+ * of its tile (a tile with a transform would otherwise become the containing
+ * block for position: fixed and clip the dialog).
+ *
+ * Served at a fixed path with a content hash in its URL (src/lib/asset-hash.ts).
+ * Tested by npm run test:ui (jsdom) and npm run test:browser (Chromium).
  */
 (() => {
   'use strict';
@@ -20,7 +24,7 @@
   };
 
   /* ------------------------------------------------------------------ *
-   * Filterchips
+   * Filter
    * ------------------------------------------------------------------ */
   const initGearFilter = (root = document) => {
     const bar = root.querySelector('[data-gearbar]');
@@ -32,7 +36,7 @@
     const buttons = Array.from(bar.querySelectorAll('[data-filter]'));
     const template = grid.dataset.countTemplate || '{n}';
 
-    // "all" eller ett grupp-id; korten bär samma id i data-category.
+    // "all" or a group id; tiles carry the same id in data-category.
     let active = 'all';
 
     bar.hidden = false;
@@ -67,7 +71,7 @@
   };
 
   /* ------------------------------------------------------------------ *
-   * Bildvisare
+   * Photo viewer
    * ------------------------------------------------------------------ */
   const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
@@ -80,8 +84,8 @@
     let lockedScrollY = 0;
 
     for (const viewer of viewers) {
-      // Ut ur kortet: .tile har overflow:hidden och transform vid hover,
-      // vilket annars klipper den fixerade dialogen inuti kortet.
+      // Out of the tile: .tile has overflow: hidden and a hover transform,
+      // either of which would clip the fixed dialog.
       if (viewer.parentElement !== document.body) document.body.appendChild(viewer);
 
       viewer.setAttribute('role', 'dialog');
@@ -99,7 +103,7 @@
       openViewer.classList.remove('is-open');
       openViewer = null;
 
-      // فك القفل ثم إعادة الصفحة إلى موضعها بالضبط
+      // release the lock and put the page back exactly where it was
       document.body.classList.remove('viewer-open');
       document.body.style.top = '';
       window.scrollTo({ top: lockedScrollY, left: 0, behavior: 'instant' });
@@ -119,10 +123,10 @@
       openViewer = viewer;
       lastTrigger = trigger || null;
 
-      // Lazy-bilder i en dold dialog laddas först när den visas — be om dem nu.
+      // lazy images in a hidden dialog load only once shown — request them now
       for (const img of viewer.querySelectorAll('img[loading="lazy"]')) img.loading = 'eager';
 
-      // تثبيت الصفحة عند موضعها الحالي — لا يكفي overflow:hidden وحده
+      // hold the page at its offset — overflow: hidden alone is not enough
       lockedScrollY = window.scrollY;
       document.body.style.top = `-${lockedScrollY}px`;
 
@@ -192,7 +196,7 @@
       }
     });
 
-    // Direktlänk: /sv/#v-P-01 ska öppna dialogen i samma läge som ett klick.
+    // a direct link such as /sv/#v-P-01 opens the dialog as a click would
     const fromHash = () => {
       if (!location.hash.startsWith('#v-')) return;
       const viewer = document.getElementById(location.hash.slice(1));

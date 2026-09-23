@@ -1,14 +1,15 @@
 ---
-/* الصفحة موجودة والنصّ لم يُكتب بعد.
+/* The page exists; its text is not written yet.
  *
- * قرار حسام: أن يبقى هيكل الموقع كاملاً، وأن يُقال للزائر صراحةً حين يصل إلى
- * قسم لم يُملأ — بدل أن يُخفى القسم فيبدو الموقع أصغر مما هو.
+ * The owner's decision: keep the site's full structure visible, and tell the
+ * visitor plainly when a section is not written, rather than hide it.
  *
- * ثلاثة قيود على هذه الصفحة:
- *   ١. `noindex` دائماً. صفحة بلا محتوى لا تدخل نتائج البحث.
- *   ٢. لا منتج ولا رابط شراء. الصفحة لا تبيع شيئاً.
- *   ٣. الدعوة إلى الاتصال بريد ورسالة — لا نموذج ولا تخزين، فلا يتغيّر شيء
- *      في سياسة الخصوصية.
+ * Three constraints:
+ *   1. Always noindex: a page without content stays out of search results.
+ *   2. No product and no buy link: it sells nothing.
+ *   3. The invitation to write to us is e-mail and SMS links — no form, nothing
+ *      stored — so the privacy policy is unaffected.
+ * And a skeleton older than 90 days fails the build (scripts/validate.mjs).
  */
 import { getCollection } from 'astro:content';
 import { t, type Lang } from '../i18n/ui';

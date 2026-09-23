@@ -24,12 +24,12 @@ const { entry } = Astro.props;
 const lang = Astro.params.lang as Lang;
 const tr = t(lang);
 const { Content } = await render(entry);
-/* الحقلان مستقلان بقرار حسام في 2026-09-04 (I-020):
-     published  هل الرابط موجود على الموقع؟
-     stage      إلى أين وصل النصّ؟
-   فـ`draft` هيكل بلا نصّ، و`written` نصٌّ كُتب وينتظر المراجعة السويدية.
-   كلاهما يُعرض للزائر كصفحة تقول صراحةً إنها لم تُنشر بعد، وكلاهما خارج
-   نتائج البحث. لا يظهر النصّ إلا عند `stage: published`. */
+/* Two independent fields:
+     published  is the URL live?
+     stage      how far has the text got?
+   `draft` (skeleton) and `written` (awaiting review) both render as a page
+   that says it is not written yet, marked noindex. The text shows only at
+   stage `published`. */
 const notWritten = entry.data.stage === 'draft' || entry.data.stage === 'written';
 
 const solutions = await docs('solutions', lang);
@@ -53,7 +53,7 @@ const crumbs = [
   <Breadcrumbs items={crumbs} />
 
   <div class="wrap stack page-body">
-    {/* لا إفصاح تجاري على صفحة لا تبيع شيئاً — يربك القارئ ويضعف الإفصاح نفسه. */}
+    {/* No disclosure on a page that sells nothing — it would confuse readers and weaken the disclosure everywhere else. */}
     {!notWritten && <AffiliateDisclosure lang={lang} />}
 
     <header class="page-head">

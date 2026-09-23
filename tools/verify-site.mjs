@@ -1,8 +1,10 @@
 /**
- * Rökprov för den byggda sajten i ../site.
+ * Browser test of the built site in ../site.
  *
- * Startar en egen statisk server (inga beroenden utöver Playwright), kör
- * kontrollerna nedan i Chromium och avslutar med kod 1 om något faller.
+ * Starts its own static server (no dependency beyond Playwright), runs the
+ * checks below in Chromium, and exits with code 1 if any fails. Covers what
+ * only a real browser shows: layout, focus, scroll locking, the no-JavaScript
+ * fallback, and the brand files actually served.
  *
  *   node tools/verify-site.mjs [--keep-open]
  */
@@ -44,8 +46,8 @@ const PAGES = fs.readdirSync(ROOT, { recursive: true })
 
 const browser = await chromium.launch();
 
-/* 1. varje sida laddar rent -------------------------------------------- */
-console.log('\n· sidor');
+/* 1. every page loads cleanly ----------------------------------------- */
+console.log('\n· pages');
 {
   const page = await browser.newPage();
   const problems = [];
@@ -53,12 +55,12 @@ console.log('\n· sidor');
   page.on('pageerror', (e) => problems.push('js: ' + e.message));
   page.on('console', (m) => { if (m.type() === 'error') problems.push('console: ' + m.text()); });
   for (const p of PAGES) await page.goto(BASE + p, { waitUntil: 'networkidle' });
-  check(`${PAGES.length} sidor utan fel eller 404`, problems.length === 0, problems.slice(0, 4).join(' | '));
+  check(`${PAGES.length} pages load without errors or 404s`, problems.length === 0, problems.slice(0, 4).join(' | '));
   await page.close();
 }
 
-/* 2. paletten och logotypen -------------------------------------------- */
-console.log('\n· identitet');
+/* 2. palette and logo ------------------------------------------------- */
+console.log('\n· identity');
 {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await page.goto(BASE + '/sv/', { waitUntil: 'networkidle' });
@@ -67,7 +69,7 @@ console.log('\n· identitet');
     header: getComputedStyle(document.querySelector('.masthead')).backgroundColor,
     accent: getComputedStyle(document.documentElement).getPropertyValue('--volt').trim(),
   }));
-  check('paletten är den blå', theme.accent.toUpperCase() === '#55C6F2' && theme.body === 'rgb(231, 242, 253)',
+  check('the palette is the blue one', theme.accent.toUpperCase() === '#55C6F2' && theme.body === 'rgb(231, 242, 253)',
         `--volt ${theme.accent}, body ${theme.body}`);
   const logo = await page.evaluate(() => {
     const img = document.querySelector('.brand img');
@@ -76,25 +78,25 @@ console.log('\n· identitet');
     return { w: Math.round(r.width), h: Math.round(r.height), loaded: img.naturalWidth > 0,
              label: img.closest('a').getAttribute('aria-label') };
   });
-  check('logotypen i headern laddar', !!logo && logo.loaded && logo.h === 26,
+  check('the header logo loads', !!logo && logo.loaded && logo.h === 26,
         logo ? `${logo.w}x${logo.h}` : 'saknas');
-  check('logotyplänken har en läsbar aria-label',
+  check('the logo link has a readable aria-label',
         !!logo && typeof logo.label === 'string' && logo.label.length > 3 && !/undefined|null/.test(logo.label),
         logo ? `"${logo.label}"` : '');
   await page.close();
 }
 
-/* 3. bildvisaren -------------------------------------------------------- */
-console.log('\n· bildvisare');
+/* 3. photo viewer ------------------------------------------------------ */
+console.log('\n· photo viewer');
 {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await page.goto(BASE + '/sv/', { waitUntil: 'networkidle' });
-  check('visarna flyttas ut ur korten',
+  check('viewers are moved out of the tiles',
         await page.evaluate(() => [...document.querySelectorAll('.viewer')].every((v) => v.parentElement === document.body)));
 
   const tile = page.locator('.tile:has(.tile-photos)').first();
-  await tile.hover();                       // hovern är aktiv vid varje riktig klick
-  // Playwright rullar själv fram elementet — mät efter det, före klicket.
+  await tile.hover();                       // a real click always hovers first
+  // Playwright scrolls the element into view itself — measure after that, before the click.
   const scrollBefore = await page.evaluate(() => Math.round(scrollY));
   await tile.locator('.tile-face').click();
   await page.waitForTimeout(300);
@@ -107,13 +109,13 @@ console.log('\n· bildvisare');
              locked: document.body.classList.contains('viewer-open'), hash: location.hash,
              focus: document.activeElement.className, scrollY: Math.round(scrollY) };
   });
-  check('dialogen fyller vyn i stället för kortet',
+  check('the dialog fills the viewport, not the tile',
         !!open && open.veilW === 1440 && open.veilH === 900 && open.boxW > 400,
         open ? `ruta ${open.boxW}px, slöja ${open.veilW}x${open.veilH}` : 'öppnades inte');
-  check('inget hash-hopp och ingen scroll vid öppning',
+  check('no hash jump and no scroll when opening',
         !!open && open.hash === '' && open.scrollY === scrollBefore,
         open ? `hash "${open.hash}", scroll ${scrollBefore} → ${open.scrollY}` : '');
-  check('bakgrunden är låst och fokus flyttat', !!open && open.locked && open.focus === 'viewer-close');
+  check('background locked and focus moved', !!open && open.locked && open.focus === 'viewer-close');
 
   await page.keyboard.press('Escape');
   await page.waitForTimeout(200);
@@ -122,7 +124,7 @@ console.log('\n· bildvisare');
     locked: document.body.classList.contains('viewer-open'),
     focus: document.activeElement.className,
   }));
-  check('Escape stänger och fokus återvänder', !closed.open && !closed.locked && closed.focus === 'tile-face');
+  check('Escape closes and focus returns', !closed.open && !closed.locked && closed.focus === 'tile-face');
 
   const photos = await page.evaluate(() => {
     const t = document.querySelector('.tile:has(.tile-photos[data-n="3"])');
@@ -134,20 +136,20 @@ console.log('\n· bildvisare');
     const t = document.querySelector('.tile:has(.tile-photos[data-n="3"])');
     return t ? [...t.querySelectorAll('.tile-photo')].map((i) => Number(getComputedStyle(i).opacity)) : null;
   });
-  check('hovern visar en bild, inte två halvtonade',
+  check('hover shows one photo, not two half-faded',
         !photos || (hovered && hovered.filter((o) => o > 0.02).length <= 1), JSON.stringify(hovered));
   await page.close();
 }
 
-/* 4. utan JavaScript ---------------------------------------------------- */
-console.log('\n· utan JavaScript');
+/* 4. without JavaScript ------------------------------------------------ */
+console.log('\n· without JavaScript');
 {
   const ctx = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
-  // Öppna via hash — det är precis vad :target-reserven gör utan JS.
+  // open via the hash — exactly what the :target fallback does without JS
   await page.goto(BASE + '/sv/#v-P-11', { waitUntil: 'load' });
-  // Hovra kortet: transformen på .tile är det som gjorde att dialogen
-  // klipptes inuti kortet i den gamla bygget. Reserven måste klara den.
+  // hover the tile: its transform would clip a fixed dialog inside it;
+  // the fallback must survive that
   await page.locator('#t-P-11').hover();
   await page.waitForTimeout(300);
   const veil = await page.evaluate(() => {
@@ -156,13 +158,13 @@ console.log('\n· utan JavaScript');
     const r = v.querySelector('.viewer-veil').getBoundingClientRect();
     return { w: Math.round(r.width), h: Math.round(r.height) };
   });
-  check(':target-reserven täcker hela vyn', !!veil && veil.w === 1440 && veil.h === 900,
+  check('the :target fallback covers the viewport', !!veil && veil.w === 1440 && veil.h === 900,
         veil ? `${veil.w}x${veil.h}` : 'öppnades inte');
   await ctx.close();
 }
 
-/* 5. mobil -------------------------------------------------------------- */
-console.log('\n· mobil');
+/* 5. mobile ------------------------------------------------------------ */
+console.log('\n· mobile');
 {
   const ctx = await browser.newContext(devices['iPhone 13']);
   const page = await ctx.newPage();
@@ -172,7 +174,7 @@ console.log('\n· mobil');
     const nav = document.querySelector('.nav-mobile').getBoundingClientRect();
     return { overlap: img.right > nav.left, logoW: Math.round(img.width) };
   });
-  check('logotypen krockar inte med mobilmenyn', !head.overlap, `${head.logoW}px bred`);
+  check('the logo does not collide with the mobile menu', !head.overlap, `${head.logoW}px wide`);
   await page.locator('.tile-face').first().tap();
   await page.waitForTimeout(300);
   const fits = await page.evaluate(() => {
@@ -181,46 +183,46 @@ console.log('\n· mobil');
     const b = v.querySelector('.viewer-box').getBoundingClientRect();
     return b.width <= innerWidth && b.left >= 0;
   });
-  check('dialogen får plats på mobilen', fits === true);
+  check('the dialog fits on a phone', fits === true);
   await ctx.close();
 }
 
-/* 6. filterknapparna ---------------------------------------------------- */
+/* 6. filter buttons ---------------------------------------------------- */
 console.log('\n· filter');
 {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await page.goto(BASE + '/sv/', { waitUntil: 'networkidle' });
   const all = await page.evaluate(() => document.querySelectorAll('.tile:not([hidden])').length);
-  // första gruppchipen — vilken som helst utom "Alla"
+  // the first group button — any except "Alla"
   await page.locator('[data-gearbar] [data-filter]:not([data-filter="all"])').first().click();
   await page.waitForTimeout(150);
   const some = await page.evaluate(() => ({
     visible: document.querySelectorAll('.tile:not([hidden])').length,
     label: document.querySelector('[data-gear-count]').textContent.trim(),
   }));
-  check('filtret döljer korten och räknar om', some.visible < all && some.label.startsWith(String(some.visible)),
+  check('the filter hides tiles and recounts', some.visible < all && some.label.startsWith(String(some.visible)),
         `${all} → ${some.visible} (${some.label})`);
   await page.close();
 }
 
-/* 7. inga läckta platshållare ------------------------------------------- */
-console.log('\n· utdata');
+/* 7. no leaked placeholders -------------------------------------------- */
+console.log('\n· output');
 {
   const leaks = [];
   for (const p of PAGES) {
     const html = fs.readFileSync(path.join(ROOT, p.slice(1), 'index.html'), 'utf8');
-    // en saknad i18n-nyckel eller ett tomt fält renderas som strängen
-    // "undefined" rakt ut i sidan — det hände med logotypens aria-label
+    // a missing translation key or empty field renders as the literal
+    // string "undefined" in the page
     if (/>\s*undefined\s*</.test(html) || /="[^"]*\bundefined\b[^"]*"/.test(html)) leaks.push(p);
   }
-  check('ingen sida renderar "undefined"', leaks.length === 0, leaks.slice(0, 5).join(' '));
+  check('no page renders "undefined"', leaks.length === 0, leaks.slice(0, 5).join(' '));
 }
 
-/* 8. identitetsfilerna är rätt konstverk, inte bara närvarande ---------- */
-console.log('\n· identitetsfiler');
+/* 8. brand files are the right artwork, not merely present ------------- */
+console.log('\n· brand files');
 {
-  // Att filen finns räcker inte: public/favicon.svg och logo.svg låg kvar som
-  // den gamla ordmärkesgrafiken, omfärgad men fortfarande fel bild.
+  // A file existing is not enough: a recoloured copy of an old logo would
+  // pass that check. Each shipped file must equal its master in brand/.
   const pairs = [
     ['favicon.svg', '../brand/logo/favicon.svg'],
     ['logo.svg', '../brand/logo/eldebosh-logo-horizontal.svg'],
@@ -232,12 +234,12 @@ console.log('\n· identitetsfiler');
     const b = path.join(ROOT, master);
     const same = fs.existsSync(a) && fs.existsSync(b) &&
       fs.readFileSync(a, 'utf8').trim() === fs.readFileSync(b, 'utf8').trim();
-    check(`${shipped} är identisk med källan i brand/`, same);
+    check(`${shipped} equals its master in brand/`, same);
   }
 }
 
-/* 9. filer som måste finnas -------------------------------------------- */
-console.log('\n· filer');
+/* 9. files that must exist ------------------------------------------- */
+console.log('\n· files');
 for (const f of ['favicon.svg', 'logo.svg', 'og-default.png', 'apple-touch-icon.png',
                  'icon-192.png', 'icon-512.png', 'brand/eldebosh-logo-header.svg',
                  'js/eldebosh-ui.js', '.htaccess']) {
@@ -248,5 +250,5 @@ await browser.close();
 server.close();
 
 const failed = results.filter((r) => !r.ok);
-console.log(`\n${results.length - failed.length}/${results.length} kontroller gick igenom`);
+console.log(`\n${results.length - failed.length}/${results.length} checks passed`);
 process.exit(failed.length ? 1 : 0);

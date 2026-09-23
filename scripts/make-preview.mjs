@@ -1,12 +1,13 @@
 /**
- * يولّد ملف HTML واحداً يتصفّح كالموقع تماماً — بلا إنترنت وبلا خادم.
+ * Build a single HTML file that browses like the site — offline, no server.
  *
- * كل صفحات الموقع مضمّنة داخله، والروابط تعمل: الضغط ينقلك بين الصفحات،
- * وزر الرجوع في الجوال يعمل أيضاً.
+ * For reviewing visual changes and drafts on a phone before anything is
+ * published: every page is embedded, links navigate between them, and the
+ * phone's back button works. Images are stored once in a shared map.
+ * Drafts are included, and a bar at the bottom jumps to pages waiting for
+ * review.
  *
- * الصور تُخزَّن مرة واحدة في خريطة مشتركة بدل تكرارها في كل صفحة.
- *
- *   npm run preview:file        (بعد npm run build)
+ *   npm run preview:file     → eldebosh-preview.html (git-ignored)
  */
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -18,26 +19,25 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const uiScript = readFileSync(join(ROOT, 'public/js/eldebosh-ui.js'), 'utf8').replace(/<\/script/gi, '<\\/script');
 const DIST = join(ROOT, '.preview-site');
 
-/* ---------- بناء يشمل المسوّدات، إلى مجلّد منفصل ----------
-   المراجعة كانت مستحيلة: `published: false` تعني أن الصفحة لا تُبنى، فلا
-   تدخل المعاينة، فلا يقرأها حسام إلا في `git`. البناء هنا يُشغَّل بعلَم
-   `ELDEBOSH_PREVIEW=1` الذي يفتح المسوّدات ويحوّل المخرجات إلى
-   `.preview-site` — فلا تلمس هذه العملية النسخة المنشورة إطلاقاً. */
+/* ---------- a build that includes drafts, in its own folder ----------
+   Unpublished pages are not built normally, so they could not be reviewed.
+   ELDEBOSH_PREVIEW=1 includes them (src/lib/preview.ts) and sends the output
+   to .preview-site, so this never touches the build that gets published. */
 const build = spawnSync(process.execPath, [join(ROOT, 'node_modules/astro/astro.js'), 'build'], {
   cwd: ROOT,
   env: { ...process.env, ELDEBOSH_PREVIEW: '1' },
   stdio: ['ignore', 'ignore', 'inherit'],
 });
 if (build.status !== 0) {
-  console.error('✗ فشل بناء المعاينة.');
+  console.error('✗ The preview build failed.');
   process.exit(1);
 }
 if (!existsSync(DIST)) {
-  console.error('✗ لم يُنتج بناء المعاينة مجلّداً.');
+  console.error('✗ The preview build produced no output folder.');
   process.exit(1);
 }
 
-/* ---------- أي الصفحات مسوّدة، وأيها جاهزة للمراجعة؟ ---------- */
+/* ---------- which pages are drafts, and which wait for review ---------- */
 const stages = new Map();
 (function scan(dir) {
   for (const e of readdirSync(dir)) {
@@ -54,7 +54,7 @@ const stages = new Map();
   }
 })(join(ROOT, 'src/content'));
 
-/* ---------- جمع كل الصفحات ---------- */
+/* ---------- collect pages ---------- */
 function walk(dir, out = []) {
   for (const e of readdirSync(dir)) {
     const p = join(dir, e);
@@ -70,7 +70,7 @@ function walk(dir, out = []) {
 
 const files = walk(DIST).filter((f) => f !== join(DIST, 'index.html'));
 
-/* ---------- الصور: مرة واحدة في خريطة مشتركة ---------- */
+/* ---------- images, stored once ---------- */
 const MIME = { '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.woff2': 'font/woff2' };
 const images = new Map();
 
@@ -82,11 +82,11 @@ function collectImage(rel) {
   return true;
 }
 
-/* ---------- الأنماط والخطوط ---------- */
+/* ---------- styles and fonts ---------- */
 const cssName = readdirSync(join(DIST, '_astro')).find((f) => f.endsWith('.css'));
 let css = readFileSync(join(DIST, '_astro', cssName), 'utf8');
 
-// الحروف السويدية داخل المجموعة الأساسية — الموسّعة غير لازمة
+// Swedish letters are in the basic Latin subset; the extended one is not needed.
 css = css.replace(/@font-face\s*\{[^}]*latin-ext[^}]*\}/g, '');
 css = css.replace(/url\(([^)]*?\.woff2)\)/g, (m, p) => {
   const clean = p.replace(/['"]/g, '');
@@ -95,7 +95,7 @@ css = css.replace(/url\(([^)]*?\.woff2)\)/g, (m, p) => {
   return `url(data:font/woff2;base64,${readFileSync(file).toString('base64')})`;
 });
 
-/* ---------- استخراج الصفحات ---------- */
+/* ---------- extract pages ---------- */
 const routes = {};
 
 for (const file of files) {
@@ -107,12 +107,12 @@ for (const file of files) {
 
   inner = inner.replace(/<script[\s\S]*?<\/script>/g, '');
 
-  // الصور تُستبدل بمرجع إلى الخريطة
+  // images become references into the shared map
   inner = inner.replace(/src="(\/[^"]+\.(?:webp|png|jpg|svg))"/g, (m, p) =>
     collectImage(p) ? `data-img="${p}" src=""` : m
   );
 
-  // الروابط الداخلية تصبح مسارات مجزّأة يفهمها الموجّه
+  // internal links become hash routes for the in-file router
   inner = inner.replace(/href="(\/[^"#]*)"/g, (m, p) => {
     if (/\.(css|js|png|jpg|webp|svg|xml|txt|ico|woff2?)$/i.test(p)) return 'href="#"';
     return `href="#${p}"`;
@@ -121,7 +121,7 @@ for (const file of files) {
   const titleMatch = html.match(/<title>([^<]*)<\/title>/);
   const slug = path.replace(/\/$/, '').split('/').pop();
   const stage = stages.get(slug) ?? null;
-  // `written` نصّ مكتمل ينتظر مراجعة حسام. `draft` هيكل فارغ لم يُكتب بعد.
+  // `written` is complete text awaiting the owner's review; `draft` is an empty skeleton.
   const ready = stage === 'written' || stage === 'reviewed';
   if (stage) {
     inner =
@@ -135,14 +135,14 @@ for (const file of files) {
 
 const home = routes['/sv/'] ? '/sv/' : Object.keys(routes)[0];
 
-/* ترتيب المراجعة — نفس ترتيب النشر المُلزم في CONTEXT §13 */
+/* Review order = publishing order: a page is published before the pages that link to it. */
 const REVIEW_ORDER = ['solutions', 'guides', 'compare', 'blog'];
 const reviewRank = (path) => {
   const i = REVIEW_ORDER.findIndex((seg) => path.includes(`/${seg}/`));
   return i === -1 ? REVIEW_ORDER.length : i;
 };
 
-/* ---------- التجميع ---------- */
+/* ---------- assemble ---------- */
 const out = `<!doctype html>
 <html lang="sv">
 <head>
@@ -151,7 +151,7 @@ const out = `<!doctype html>
 <title>Eldebosh</title>
 <style>${css}</style>
 <style>
-  /* المعاينة المحلية: لا شيء مرئي يُضاف — الموقع كما هو */
+  /* Nothing visible is added: the site as it is. */
   #app { min-height: 100dvh; }
   .pv-missing { padding: 4rem 1.25rem; text-align: center; font: 500 15px/1.6 system-ui, sans-serif; color: #67768a; }
   .pv-draft {
@@ -177,8 +177,8 @@ const out = `<!doctype html>
 <div id="app"></div>
 <nav class="pv-bar" aria-label="Klara för granskning"><b>Granska:</b>${Object.entries(routes)
   .filter(([p, r]) => r.ready && p.startsWith('/sv/'))
-  // ترتيب المراجعة هو ترتيب النشر: حلول ثم أدلة ومقارنات ثم مقالات،
-  // فلا يُنشر رابط قبل الصفحة التي يقود إليها.
+  // Solutions, then guides and comparisons, then articles — no page is
+  // published before the page it links to.
   .sort(([a], [b]) => reviewRank(a) - reviewRank(b) || a.localeCompare(b))
   .map(([p, r]) => `<a href="#${p}">${r.title.replace(/ \| Eldebosh.*/, '').replace(/ [—-] .*/, '')}</a>`)
   .join('')}</nav>
@@ -204,13 +204,13 @@ const out = `<!doctype html>
   function render(path) {
     const route = routes[path] || routes[normalise(path)];
     if (!route) {
-      app.innerHTML = '<p class="pv-missing">الصفحة غير موجودة في المعاينة:<br>' + path + '</p>';
+      app.innerHTML = '<p class="pv-missing">Sidan finns inte i förhandsvisningen:<br>' + path + '</p>';
       return;
     }
     app.innerHTML = route.html;
     document.title = route.title;
 
-    // ربط الصور من الخريطة المشتركة
+    // resolve images from the shared map
     for (const img of app.querySelectorAll('[data-img]')) {
       const uri = images[img.dataset.img];
       if (uri) img.src = uri;
@@ -229,7 +229,7 @@ const out = `<!doctype html>
     if (window.EldeboshUI) window.EldeboshUI.initGearFilter(app);
   }
 
-  // بحث محلي بسيط في عناوين الصفحات ونصوصها
+  // simple local search over page titles and text
   document.addEventListener('submit', (e) => {
     e.preventDefault();
     const input = e.target.querySelector('input[type=search]');
@@ -266,7 +266,7 @@ const out = `<!doctype html>
 writeFileSync(join(ROOT, 'eldebosh-preview.html'), out, 'utf8');
 const ready = Object.entries(routes).filter(([p, r]) => r.ready && p.startsWith('/sv/')).length;
 console.log(
-  `\n✓ ${(out.length / 1024).toFixed(0)} KB · ${Object.keys(routes).length} صفحة · ${images.size} صورة\n` +
-    `  ${ready} صفحة جاهزة للمراجعة — شريط سفلي يقفز إليها مباشرة\n` +
-    `  eldebosh-preview.html — يُفتح على الجوال بلا إنترنت\n`,
+  `\n✓ ${(out.length / 1024).toFixed(0)} KB · ${Object.keys(routes).length} pages · ${images.size} images\n` +
+    `  ${ready} page(s) ready for review — the bottom bar jumps to them\n` +
+    `  eldebosh-preview.html — opens on a phone, offline\n`,
 );

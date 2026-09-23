@@ -4,8 +4,8 @@ import { PREVIEW } from '../lib/preview';
 import { t, type Lang } from '../i18n/ui';
 interface Props { title: string; href: string; description?: string; tag?: string; problem?: boolean; icon?: string; draft?: boolean; notWritten?: boolean; }
 const { title, href, description, tag, problem = false, icon, draft = false, notWritten = false } = Astro.props;
-/* في المعاينة وحدها. البناء المنشور لا يعرف هذه الحالة أصلاً — الصفحة غير
-   المنشورة لا تُبنى — لكن المعاينة تبنيها، وكانت تعرضها كأنها حيّة. */
+/* Preview only: the published build never contains unpublished pages, but the
+   preview does, and must not present them as live. */
 const showDraft = PREVIEW && draft;
 const tr = t((Astro.params.lang as Lang) ?? 'sv');
 ---

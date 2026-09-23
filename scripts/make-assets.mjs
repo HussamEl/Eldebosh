@@ -1,155 +1,88 @@
 /**
- * يولّد فهرس الأصول: رمز مرجعي لكل صورة في المشروع.
+ * docs/project/ASSETS.md — an index of every photo and brand asset, by code.
  *
- * الغرض: بدل إعادة رفع الصور في كل محادثة، يكتب صاحب المشروع الرمز فقط
- * فتُقرأ الصورة من المستودع مباشرة.
+ * Lets the owner and any assistant refer to a photo by its code ("P-03-1 is
+ * tilted") instead of sending the image again: the file is in the repository.
+ * Also reports uploads that no product references.
+ *
+ * Rewritten only when its content changes (see make-state.mjs for why).
  *
  *   npm run assets
  */
 import { readFileSync, writeFileSync, readdirSync, existsSync, statSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
-import YAML from 'yaml';
 import { today } from '../src/lib/clock.mjs';
+import { ROOT, loadProducts } from './lib/repo.mjs';
 
-const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const rel = (p) => p.replace(ROOT, '').replace(/\\/g, '/');
-const kb = (p) => (statSync(p).size / 1024).toFixed(0) + ' KB';
+const kb = (p) => `${(statSync(p).size / 1024).toFixed(0)} KB`;
 
-/* ---------- صور المنتجات ---------- */
-const prodDir = join(ROOT, 'src/data/products/sv');
-const all = readdirSync(prodDir)
-  .filter((f) => /\.ya?ml$/.test(f))
-  .map((f) => YAML.parse(readFileSync(join(prodDir, f), 'utf8')))
-  .filter(Boolean);
-
-// نفس ترتيب الجدول: الموثقة أولاً ثم الفئة ثم العلامة
-all.sort((a, b) =>
-  Number(Boolean(b.verified)) - Number(Boolean(a.verified)) ||
-  String(a.category).localeCompare(String(b.category)) ||
-  String(a.brand).localeCompare(String(b.brand))
-);
-
-const products = [];
-all.forEach((d, idx) => {
-  const code = d.code ?? `P-${String(idx + 1).padStart(2, '0')}`;
-  const photos = (d.own_photos ?? []).slice(0, 3);
+/* ---------- product photos ---------- */
+const all = loadProducts().sort((a, b) => String(a.code).localeCompare(String(b.code)));
+const rows = [];
+for (const p of all) {
+  const photos = (p.own_photos ?? []).slice(0, 3);
+  if (!photos.length) {
+    rows.push(`| \`${p.code}\` | ${p.name} | — | **بلا صورة** | — |`);
+    continue;
+  }
   photos.forEach((ph, k) => {
     const file = join(ROOT, 'public', ph.src.replace(/^\//, ''));
     if (!existsSync(file)) return;
-    products.push({
-      code: `${code}-${k + 1}`, product: code, name: d.name,
-      src: ph.src, alt: ph.alt, file, slot: k + 1, total: photos.length,
-    });
+    rows.push(`| \`${p.code}-${k + 1}\` | ${p.name} | \`${ph.src.split('/').pop()}\` | ${k + 1} من ${photos.length} | ${kb(file)} |`);
   });
-  if (photos.length === 0) products.push({ code, product: code, name: d.name, src: '', missing: true });
-});
+}
 
-/* ---------- أصول الهوية ---------- */
-const brandFiles = ['favicon.svg', 'logo.svg', 'og-default.png', 'qr-card.png', 'qr-eldebosh.png']
-  .map((f) => ({ name: f, file: join(ROOT, 'public', f) }))
+/* ---------- brand assets ---------- */
+const brand = ['favicon.svg', 'logo.svg', 'og-default.png', 'qr-card.png', 'qr-eldebosh.png']
+  .map((name) => ({ name, file: join(ROOT, 'public', name) }))
   .filter((x) => existsSync(x.file));
 
-/* ---------- الكتابة ---------- */
-const code = (p, i) => `${p}-${String(i + 1).padStart(2, '0')}`;
-
-const lines = [
-  '# فهرس الأصول — الرموز المرجعية',
+const body = [
+  '# فهرس الصور — بالرموز',
   '',
-  '> **بدل إرسال صورة، اكتب رمزها.**',
-  '> مثال: «عدّل بطاقة `P-03`» أو «الشعار `B-02` صغير جداً».',
-  '> الصور موجودة في المستودع، وتُقرأ من مسارها بلا رفع ولا استهلاك.',
-  '',
-  `> يُولَّد آلياً بـ \`npm run assets\` · آخر تحديث: ${today()}`,
-  '',
-  '---',
+  '> **مولَّد من المستودع — لا يُحرَّر يدوياً.** `npm run assets` · آخر تغيّر: __STAMP__',
+  '>',
+  '> اذكر الصورة برمزها بدل إرسالها ثانية: «`P-03-1` مائلة». الملف في المستودع.',
   '',
   '## P — صور المنتجات',
   '',
-  '**التسمية:** `P-NN-K` — رقم المنتج ثم رقم الصورة. **من صورة إلى ثلاث لكل منتج.**',
+  '`P-NN-K`: رقم المنتج ثم رقم الصورة، من صورة إلى ثلاث.',
   '',
   '| الرمز | المنتج | الملف | الصورة | الحجم |',
   '|---|---|---|---|---|',
-  ...products.map((p) =>
-    p.missing
-      ? `| \`${p.code}\` | ${p.name} | — | **بلا صورة** | — |`
-      : `| \`${p.code}\` | ${p.name} | \`${p.src.split('/').pop()}\` | ${p.slot} من ${p.total} | ${kb(p.file)} |`
-  ),
+  ...rows,
   '',
   '## B — أصول الهوية',
   '',
-  '| الرمز | العنصر | المسار | الحجم |',
-  '|---|---|---|---|',
-  ...brandFiles.map((b, i) => `| \`${code('B', i)}\` | ${b.name} | \`/${b.name}\` | ${kb(b.file)} |`),
+  '| الرمز | الملف | الحجم |',
+  '|---|---|---|',
+  ...brand.map((b, i) => `| \`B-${String(i + 1).padStart(2, '0')}\` | \`/${b.name}\` | ${kb(b.file)} |`),
   '',
-  '## S — لقطات الشاشة',
-  '',
-  'المكان المخصص للقطات التي يرسلها صاحب المشروع.',
-  '',
-  '**القاعدة:** كل لقطة تُحفظ في `assets/screens/` باسم رمزها، وتُضاف هنا بسطر واحد.',
-  '',
-  '| الرمز | ما تُظهره | التاريخ | الحالة |',
-  '|---|---|---|---|',
-  '| — | لا يوجد بعد | — | — |',
-  '',
-  '---',
-  '',
-  '## كيف يعمل هذا',
-  '',
-  '**١.** ترسل الحزمة مرة واحدة في بداية المحادثة.',
-  '',
-  '**٢.** بعدها تكتب الرمز بدل إرفاق الصورة:',
-  '',
-  '```',
-  'P-03-1 الصورة مائلة قليلاً',
-  'P-07 أضفت له صورتين',
-  'B-02 الشعار صغير على الجوال',
-  '```',
-  '',
-  '**٣.** تُقرأ الصورة من مسارها في المستودع.',
-  '',
-  '## للقطات الجديدة',
-  '',
-  'إن أردت إرسال لقطة شاشة جديدة:',
-  '',
-  '**احفظها في** `assets/screens/S-01.png` **وأضف سطراً في جدول `S`** ثم أرسل الحزمة.',
-  '',
-  'أو أرسلها مباشرة في المحادثة — **مرة واحدة فقط** — واطلب حفظها بالرمز.',
-  '',
-];
+].join('\n');
 
-/* التاريخ يقول متى تغيّر الفهرس، لا متى شُغّل الأمر — القاعدة نفسها في
- * `make-state.mjs`: تاريخٌ يتحرّك بلا سبب يُقرأ على أنه يعني شيئاً وهو لا يعني. */
-{
-  const OUT = join(ROOT, 'docs/project/ASSETS.md');
-  const out = lines.join('\n');
-  const strip = (t) => t.replace(/\d{4}-\d{2}-\d{2}/g, '§');
-  const prev = existsSync(OUT) ? readFileSync(OUT, 'utf8') : null;
-  if (prev === null || strip(prev) !== strip(out)) writeFileSync(OUT, out, 'utf8');
+const OUT = join(ROOT, 'docs/project/ASSETS.md');
+const prev = existsSync(OUT) ? readFileSync(OUT, 'utf8') : '';
+const prevStamp = (prev.match(/آخر تغيّر: (\S+)/) ?? [])[1];
+if (!(prevStamp && prev === body.replace('__STAMP__', prevStamp))) {
+  writeFileSync(OUT, body.replace('__STAMP__', today()), 'utf8');
 }
-const withPhoto = products.filter((p) => !p.missing).length;
-const without = products.filter((p) => p.missing).length;
-console.log(`\n✓ فهرس الأصول: ${withPhoto} صورة · ${without} منتج بلا صورة · ${brandFiles.length} أصل هوية\n  ASSETS.md`);
+const photos = rows.filter((r) => !r.includes('بلا صورة')).length;
+console.log(`\n✓ ASSETS.md — ${photos} photos · ${rows.length - photos} products without a photo · ${brand.length} brand assets`);
 
-/* ---------- صور يتيمة ----------
-   ملفٌ في `uploads` لا يشير إليه أحد لا يظهر لزائر ولا يُحذف من تلقائه.
-   كانت ثماني نسخ متطابقة راكدة فيه حتى 2026-09-04 — ثلث ميغابايت تُرفع
-   إلى الاستضافة في كل نشر بلا سبب. التقرير هنا لا يحذف: الحذف قرار. */
-const upDir = join(ROOT, 'public/uploads');
+/* ---------- orphaned uploads ----------
+   A file in public/uploads that nothing references is published on every
+   deploy and seen by nobody. Reported, not deleted: deleting is a decision. */
 const referenced = new Set();
 for (const p of all) {
   for (const ph of p.own_photos ?? []) if (ph?.src) referenced.add(ph.src.split('/').pop());
-  if (p.spec_photo) referenced.add(String(p.spec_photo).split('/').pop());
-  if (p.image) referenced.add(String(p.image).split('/').pop());
-  if (p.video_thumb) referenced.add(String(p.video_thumb).split('/').pop());
+  for (const k of ['spec_photo', 'image', 'video_thumb']) if (p[k]) referenced.add(String(p[k]).split('/').pop());
 }
-const orphans = readdirSync(upDir)
+const orphans = readdirSync(join(ROOT, 'public/uploads'))
   .filter((f) => /\.(webp|jpe?g|png|avif)$/i.test(f))
   .filter((f) => !referenced.has(f));
-
 if (orphans.length) {
-  console.log(`\n  ⚠ ${orphans.length} صورة في uploads لا يشير إليها منتج:`);
-  for (const f of orphans) console.log(`      ${f}   ${kb(join(upDir, f))}`);
-  console.log('      احذفها أو اربطها — لا ثالث.');
+  console.log(`\n  ⚠ ${orphans.length} upload(s) no product references:`);
+  for (const f of orphans) console.log(`      ${f}   ${kb(join(ROOT, 'public/uploads', f))}`);
+  console.log('      Delete them or reference them.');
 }
 console.log('');

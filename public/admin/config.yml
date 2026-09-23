@@ -30,18 +30,19 @@ slug:
   clean_accents: true
   sanitize_replacement: "-"
 
-# Uploaded photos are converted to WebP and fitted within 720×720 — the size
-# every product photo on the site already has.
+# Uploaded photos are converted to WebP and kept at up to 1600 px, so the
+# build has detail to work with: it composes every product photo into the
+# site's 720×720 tile (scripts/lib/tile.mjs). Upload the photo as taken.
 media_libraries:
   default:
     config:
-      max_file_size: 10485760
+      max_file_size: 20971520
       transformations:
         raster_image:
           format: webp
-          quality: 82
-          width: 720
-          height: 720
+          quality: 85
+          width: 1600
+          height: 1600
 
 collections:
   # ============ Torget (the market stall) ============
@@ -115,7 +116,7 @@ collections:
         widget: list
         required: false
         max: 3
-        hint: "من صورة إلى ثلاث. تسمية الملف: P-NN-1.webp ثم -2 ثم -3. ممنوع أي صورة من متجر أو من أمازون."
+        hint: "من صورة إلى ثلاث، كما التقطتها بالجوال — الموقع يصنع منها المربع بنفسه. سمِّ الملف P-NN-1 ثم -2 ثم -3. ممنوع أي صورة من متجر أو من أمازون."
         summary: "{{fields.alt}}"
         fields:
           - { name: src, label: "الصورة", widget: image }

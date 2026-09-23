@@ -1,9 +1,8 @@
 /**
- * ساعة كارلستاد.
+ * Karlstad time.
  *
- * الخوادم تعمل بـ`UTC`، وحسام يقرأ ساعته. طابع زمني بفارق ساعتين يجعل السجل
- * كذباً صغيراً متكرراً — وقد كلّفنا هذا تصحيحاً منه مرة. المولِّدات كلها
- * تمرّ من هنا، فلا يبقى مكان يطبع ساعة الخادم.
+ * Servers and CI run in UTC; the owner reads Swedish time. Every generated
+ * timestamp goes through here, so nothing prints server time.
  */
 const TZ = 'Europe/Stockholm';
 
@@ -16,13 +15,13 @@ function parts(date = new Date()) {
   return Object.fromEntries(f.formatToParts(date).map((p) => [p.type, p.value]));
 }
 
-/** `YYYY-MM-DD` بتوقيت كارلستاد. */
+/** `YYYY-MM-DD`, Karlstad time. */
 export function today(date) {
   const p = parts(date);
   return `${p.year}-${p.month}-${p.day}`;
 }
 
-/** `YYYY-MM-DD HH:MM` بتوقيت كارلستاد. */
+/** `YYYY-MM-DD HH:MM`, Karlstad time. */
 export function now(date) {
   const p = parts(date);
   return `${p.year}-${p.month}-${p.day} ${p.hour}:${p.minute}`;

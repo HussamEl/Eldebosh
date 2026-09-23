@@ -2,9 +2,10 @@
 import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-import { readdirSync, readFileSync, statSync, copyFileSync, createReadStream } from 'node:fs';
+import { readdirSync, readFileSync, writeFileSync, statSync, copyFileSync, createReadStream, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { composeTile, isTile } from './scripts/lib/tile.mjs';
 
 /* Pages published as skeletons (stage draft or written) are reachable but
    carry noindex, so they are kept out of the sitemap: a sitemap that invites
@@ -46,6 +47,28 @@ const adminCms = {
   },
 };
 
+/* Every product photo is served as a 720×720 tile in the site's house style
+   (scripts/lib/tile.mjs). Photos already composed are left alone; any other
+   upload — typically one added in the admin panel — is composed in the build
+   output. The source file in public/uploads is never modified. */
+const productTiles = {
+  name: 'eldebosh-product-tiles',
+  hooks: {
+    'astro:build:done': async ({ dir, logger }) => {
+      const uploads = fileURLToPath(new URL('uploads/', dir));
+      if (!existsSync(uploads)) return;
+      for (const name of readdirSync(uploads)) {
+        const ext = name.split('.').pop().toLowerCase();
+        if (!['webp', 'jpg', 'jpeg', 'png'].includes(ext)) continue;
+        const file = join(uploads, name);
+        if (await isTile(file)) continue;
+        writeFileSync(file, await composeTile(readFileSync(file), ext === 'jpg' ? 'jpeg' : ext));
+        logger.info(`composed product tile: uploads/${name}`);
+      }
+    },
+  },
+};
+
 export default defineConfig({
   site: 'https://eldebosh.com',
   output: 'static',
@@ -70,6 +93,7 @@ export default defineConfig({
       filter: (page) => ![...notWrittenSlugs].some((s) => page.endsWith(`/${s}/`)),
     }),
     adminCms,
+    productTiles,
   ],
   build: { format: 'directory' },
   compressHTML: true,

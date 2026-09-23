@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Bygger hela Eldeboshs logotypfamilj som ren SVG.
-Bokstäverna är banor (inga <text>), så filerna ser likadana ut överallt."""
+"""Build the whole Eldebosh logo family as plain SVG.
+Letters are paths (no <text>), so the files look the same everywhere.
+The palette below is also read by scripts/check-colors.mjs."""
 import os
 from typeset import typeset, metrics
 
 OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'logo')
 os.makedirs(OUT, exist_ok=True)
 
-# ---------------------------------------------------------------- palett
+# ---------------------------------------------------------------- palette
 BLUE = dict(
     name='blue',
     ink='#123F66',        # navy — huvudfärg
@@ -24,10 +25,10 @@ TRACK = 0.018
 TAG_SIZE = 15.5
 TAG_TRACK = 0.30
 
-# ---------------------------------------------------------------- delar
+# ---------------------------------------------------------------- parts
 def badge(x, y, s, p, flat=None, idp='', sheen=True):
-    """Kvadratisk bricka med ett 'E' byggt av rundade staplar.
-    Mittarmen är laddningsaccenten — samma motiv som sajtens .charge."""
+    """Square tile with an 'E' built from rounded bars.
+    The middle arm is the charge accent — the same motif as the site's .charge."""
     k = s / 120.0
     def u(v):
         return round(v * k, 2)
@@ -44,7 +45,7 @@ def badge(x, y, s, p, flat=None, idp='', sheen=True):
         out.append(f'<rect x="{x + u(1.25)}" y="{y + u(1.25)}" width="{s - u(2.5)}" height="{s - u(2.5)}" '
                    f'rx="{u(31.8)}" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="{u(2.5)}"/>')
     def bar(bx, by, bw, bh, fill):
-        # rx = halva kortsidan; annars klipper SVG hörnen till ellipser
+        # rx = half the short side; SVG would otherwise clip the corners into ellipses
         r = min(bw, bh) / 2
         return (f'<rect x="{x + u(bx)}" y="{y + u(by)}" width="{u(bw)}" height="{u(bh)}" '
                 f'rx="{u(r)}" fill="{fill}"/>')
@@ -55,7 +56,7 @@ def badge(x, y, s, p, flat=None, idp='', sheen=True):
     return '\n  '.join(out)
 
 def wordmark(x, baseline, p, mono=None, scale=1.0):
-    """ELDE + BOSH, tvåfärgat som i sajtens header."""
+    """ELDE + BOSH in two colours, as in the site header."""
     d1, w1 = typeset('ELDE', size=SIZE * scale, tracking=TRACK)
     d2, w2 = typeset('BOSH', size=SIZE * scale, tracking=TRACK)
     gap = SIZE * scale * TRACK
@@ -105,7 +106,7 @@ def svg(w, h, body, title, bg=None, extra=''):
 
 # ---------------------------------------------------------------- lockups
 def _tag_row(cx, y, width, p, mono, on_dark, scale=1.0):
-    """— BÄST OCH SMART — centrerad, med linjer som fyller ut till given bredd."""
+    """— BÄST OCH SMART — centred, with rules filling out to the given width."""
     tag_d, tag_w = typeset('BÄST OCH SMART', weight=620,
                            size=TAG_SIZE * scale, tracking=TAG_TRACK)
     tag_col = mono or ('rgba(255,255,255,.66)' if on_dark else p['muted'])
@@ -136,7 +137,7 @@ def _words(p, mono, on_dark, scale=1.0):
     return (d1, w1, d2, w2, g, ink, ink2)
 
 def horizontal(p, mono=None, bg=None, on_dark=False, idp=''):
-    """[bricka]  ELDEBOSH / — BÄST OCH SMART —"""
+    """[tile]  ELDEBOSH / — BÄST OCH SMART —"""
     pad, bs, gap = 26.0, 112.0, 42.0
     tx = pad + bs + gap
     d1, w1, d2, w2, g, ink, ink2 = _words(p, mono, on_dark)
@@ -197,7 +198,7 @@ def icon(p, size=512, mono=None, idp='', sheen=True):
     body = badge(0, 0, size, p, flat=mono, idp=idp, sheen=sheen)
     return svg(size, size, body, 'Eldebosh', extra=('' if mono else defs(p, idp) + '\n  '))
 
-# ---------------------------------------------------------------- filer
+# ---------------------------------------------------------------- files
 files = {
     'eldebosh-logo-horizontal.svg':        horizontal(BLUE, idp='h'),
     'eldebosh-logo-horizontal-inverse.svg': horizontal(BLUE, on_dark=True, idp='hi'),
@@ -218,7 +219,7 @@ for name, data in files.items():
 
 # ---------------------------------------------------------------- header
 def compact(p, on_dark=True, idp='c', mono=None):
-    """Kompakt variant utan tagline — för sajtens header och små ytor."""
+    """Compact variant without the tagline — for the site header and small spaces."""
     bs = 108.0
     gap = 30.0
     d1, w1, d2, w2, g, ink, ink2 = _words(p, mono, on_dark)

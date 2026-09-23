@@ -12,7 +12,7 @@ const OUT = path.join(SRC, '..', 'print');
 fs.mkdirSync(OUT, { recursive: true });
 
 const JOBS = [
-  ['business-card', { width: '91mm', height: '61mm' }],   // 85x55 + 3 mm utfall
+  ['business-card', { width: '91mm', height: '61mm' }],   // 85x55 + 3 mm bleed
   ['letterhead-a4', { format: 'A4' }],
   ['logo-sheet-a4', { format: 'A4' }],
 ];

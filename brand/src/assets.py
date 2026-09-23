@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Bygger HTML-dukar i exakt pixelstorlek för sociala medier och tryck.
-Renderas till PNG/PDF av render.mjs."""
+"""Build pixel-exact HTML canvases for social media and print.
+Rendered to PNG/PDF by render.mjs."""
 import os, json
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SVG = os.path.join(HERE, '..', 'logo')
-FONTS = os.path.abspath(os.path.join(HERE, '..', '..', 'site', 'fonts'))
+FONTS = os.path.abspath(os.path.join(HERE, '..', '..', 'public', 'fonts'))
 OUT = os.path.join(HERE, 'build', 'canvas')
 os.makedirs(OUT, exist_ok=True)
 
@@ -45,9 +45,9 @@ def page(w, h, inner, cls='navy'):
 
 CANVAS = {}
 
-# ---- profilbild / avatar (kvadrat, tål cirkelbeskärning) -------------------
+# ---- profile picture / avatar (square, survives a circular crop) ---------
 def _avatar_E(size):
-    """E:et centrerat i duken, med accenten kvar — samma geometri som brickan."""
+    """The E centred on the canvas, accent kept — same geometry as the tile mark."""
     k = size / 120.0
     def u(v): return round(v * k, 2)
     ox, oy = (120 - 58) / 2 - 29, (120 - 62) / 2 - 29   # centrera E:ets 58x62-block
@@ -72,7 +72,7 @@ CANVAS['avatar-light-1000.png'] = (1000, 1000, page(1000, 1000, f"""
     {logo('eldebosh-icon.svg', width=560)}
   </div>""", cls='light'))
 
-# ---- Open Graph / delningsbild --------------------------------------------
+# ---- Open Graph / share image ---------------------------------------------
 CANVAS['og-default.png'] = (1200, 630, page(1200, 630, f'''
   <div class="grid-lines"></div>
   <div class="glow" style="width:760px;height:760px;right:-190px;top:-250px"></div>
@@ -86,7 +86,7 @@ CANVAS['og-default.png'] = (1200, 630, page(1200, 630, f'''
     </div>
   </div>'''))
 
-# ---- LinkedIn-omslag -------------------------------------------------------
+# ---- LinkedIn cover -------------------------------------------------------
 CANVAS['linkedin-cover-1584x396.png'] = (1584, 396, page(1584, 396, f'''
   <div class="grid-lines"></div>
   <div class="glow" style="width:620px;height:620px;right:60px;top:-230px"></div>
@@ -100,7 +100,7 @@ CANVAS['linkedin-cover-1584x396.png'] = (1584, 396, page(1584, 396, f'''
     </div>
   </div>'''))
 
-# ---- X / Twitter-header ----------------------------------------------------
+# ---- X / Twitter header ----------------------------------------------------
 CANVAS['x-header-1500x500.png'] = (1500, 500, page(1500, 500, f'''
   <div class="grid-lines"></div>
   <div class="glow" style="width:700px;height:700px;left:52%;top:-300px"></div>
@@ -109,7 +109,7 @@ CANVAS['x-header-1500x500.png'] = (1500, 500, page(1500, 500, f'''
     <div class="sub" style="font-size:24px;margin-top:34px;letter-spacing:.01em">Börja med problemet, inte produktnamnet.</div>
   </div>'''))
 
-# ---- Facebook-omslag -------------------------------------------------------
+# ---- Facebook cover -------------------------------------------------------
 CANVAS['facebook-cover-1640x624.png'] = (1640, 624, page(1640, 624, f'''
   <div class="grid-lines"></div>
   <div class="glow" style="width:820px;height:820px;right:-160px;top:-280px"></div>
@@ -119,7 +119,7 @@ CANVAS['facebook-cover-1640x624.png'] = (1640, 624, page(1640, 624, f'''
     <div class="url" style="font-size:26px;margin-top:26px">eldebosh.com</div>
   </div>'''))
 
-# ---- YouTube-banner (säker yta i mitten) -----------------------------------
+# ---- YouTube banner (safe area in the middle) ------------------------------
 CANVAS['youtube-banner-2560x1440.png'] = (2560, 1440, page(2560, 1440, f'''
   <div class="grid-lines"></div>
   <div class="glow" style="width:1200px;height:1200px;left:50%;top:-420px;transform:translateX(-50%)"></div>
@@ -128,7 +128,7 @@ CANVAS['youtube-banner-2560x1440.png'] = (2560, 1440, page(2560, 1440, f'''
     <div class="sub" style="font-size:34px;margin-top:44px">Laddning · Hållare · Smarta tillbehör</div>
   </div>'''))
 
-# ---- Instagram: inlägg -----------------------------------------------------
+# ---- Instagram: post -------------------------------------------------------
 CANVAS['instagram-post-1080.png'] = (1080, 1080, page(1080, 1080, f'''
   <div class="grid-lines"></div>
   <div class="glow" style="width:900px;height:900px;left:-220px;bottom:-380px"></div>
@@ -157,7 +157,7 @@ CANVAS['instagram-story-1080x1920.png'] = (1080, 1920, page(1080, 1920, f'''
     <div class="url" style="font-size:32px">eldebosh.com</div>
   </div>'''))
 
-# ---- Ljus variant för annonser --------------------------------------------
+# ---- light variant for ads --------------------------------------------------
 CANVAS['instagram-post-light-1080.png'] = (1080, 1080, page(1080, 1080, f'''
   <div style="padding:96px;height:100%;display:flex;flex-direction:column;justify-content:space-between">
     {logo('eldebosh-icon.svg', width=112)}

@@ -1,37 +1,41 @@
 /**
- * قاعدة ادعاء التجربة — معزولة في وحدة لأن لها حالات اختبار.
+ * Detect claims of experience that nothing backs.
  *
- * الموقع كله قائم على تمييز ثلاث حالات: جرّبناه، نملكه ولم نقيّمه، ولم نلمسه.
- * الجملة التي تدّعي تجربة لم تجرِ تهدم ذلك. لكن القاعدة التي تعاقب نفي الادعاء
- * تهدمه أيضاً — لأنها تعاقب أصدق ما يمكن أن يُكتب.
+ * The site rests on telling three states apart: tested, owned but not
+ * evaluated, and never handled. A sentence claiming a test that did not happen
+ * breaks that. But a rule that also punished a denial ("we have never tested
+ * this model") would punish the most honest thing a page can say.
  *
- * ثلاث آليات، مرتّبة:
- *   ١. المقارنة الضمنية: «لم يختبرها أحد غيرنا بهذا الطول» تدّعي علينا بلا
- *      فعل مثبت. النفي فيها يقع على الغير، فلا يعفيها شيء.
- *   ٢. الادعاء الصريح.
- *   ٣. إعفاء النفي — وهو ضيّق عمداً: النفي يعفي فقط إن كان في الجزء نفسه من
- *      الجملة. «لم نقس القدرة، لكننا اختبرنا زمن الشحن» ادعاء، لا نفي.
+ * Three mechanisms, in order:
+ *   1. Implied comparison: "nobody has tested it as long as we have" claims a
+ *      test for us without stating one. The negation falls on others, so
+ *      nothing exempts it.
+ *   2. Explicit claim.
+ *   3. Denial exemption — deliberately narrow: a denial exempts only within its
+ *      own clause. "We did not measure the capacity, but we tested the charging
+ *      time" is a claim, not a denial.
  *
- * الاختبارات: node scripts/test-claim-rule.mjs
+ * Test cases: npm run test:claims (scripts/test-claim-rule.mjs)
  */
 
-/** جملة تدّعي تجربةً صراحةً. */
+/** A sentence that explicitly claims a test. */
 const CLAIM =
   /\b(vi har (?:\w+ )?testat|vi testat|vi provade|vårt test av|i vårt test|efter (?:att ha )?testat|we tested|our test(?:s|ing)? of|hands[- ]on test)\b/i;
 
-/** مقارنة تدّعي التجربة ضمناً: فعل اختبار + ذيل مقارنة يعود إلينا. */
-const COMPARATIVE = /\btest(?:at|ade|ат)?\b[^.!?]*\b(?:som|än)\s+vi\b|\b(?:than|as)\s+we\s+(?:have\s+)?tested\b/i;
+/** An implied claim: a test verb followed by a comparison that points at us. */
+const COMPARATIVE = /\btest(?:at|ade|ar)?\b[^.!?]*\b(?:som|än)\s+vi\b|\b(?:than|as)\s+we\s+(?:have\s+)?tested\b/i;
 
-/** أدوات النفي. */
+/** Negation words. */
 const DENIAL = /\b(aldrig|inte|ingen|ingenting|inget|inga|utan att|never|not|nothing|without)\b/i;
 
 /**
- * فواصل تقطع سلطة النفي: الفاصلة والشرطة، وأدوات الاستدراك.
- * ما بعد «لكن» جملة جديدة، ونفيُ ما قبلها لا يمتدّ إليها.
+ * Clause breaks, which end a negation's reach: commas, dashes and contrast
+ * words. What follows "but" is a new clause; a negation before it does not
+ * carry over.
  */
 const BREAK = /[,;:—–]|\b(men|utan att|but|however)\b/gi;
 
-/** الجملة الأخيرة المنتهية عند `index`، بلا الجمل التي قبلها. */
+/** The sentence ending at `index`, without the sentences before it. */
 function sentenceAt(text, index) {
   const start = Math.max(
     text.lastIndexOf('.', index - 1),
@@ -42,13 +46,13 @@ function sentenceAt(text, index) {
   return { start: start + 1, text: text.slice(start + 1) };
 }
 
-/** هل يحكم نفيٌ هذا الادعاء فعلاً؟ */
+/** Does a negation actually govern this match? */
 function isDenied(sentence, matchStart, matchText) {
-  // النفي داخل الادعاء نفسه: «لم نختبر هذا الطراز أبداً»
+  // Negation inside the match itself: "never tested this model".
   if (DENIAL.test(matchText)) return true;
 
-  // النفي يحكم جزءه من الجملة، قبل الفعل أو بعده. الفواصل هي الحدّ:
-  // «اختبرناها، لكن ليس في البرد» ادعاءٌ مقيَّد، لا نفي.
+  // A negation governs its own clause, before or after the verb. Clause breaks
+  // are the boundary: "we tested it, but not in the cold" is a qualified claim.
   const before = sentence.slice(0, matchStart);
   let cut = 0;
   BREAK.lastIndex = 0;
@@ -81,11 +85,9 @@ export function findUnbackedClaim(body) {
 }
 
 /**
- * السلسلتان المعروضتان تحت منتج غير مُختبَر لا يجوز أن تدّعيا استخدامه.
- *
- * حُذف ادعاء الاستخدام من بيانات المنتجين غير المُختبَرين، وبقي يُرسَم من ملف
- * الترجمة — أي من المكان الذي يراه الزائر فعلاً. هذه القاعدة تربط السلسلة
- * بشرط عرضها: مفتاحٌ لا يظهر إلا عند `tested: false` لا يقول «نستخدمها».
+ * The interface strings shown under an untested product must not claim use.
+ * They are displayed only when tested is false, so any claim of use in them
+ * is false wherever it appears.
  */
 const USE = /\b(använder|använt|använda|use|uses|used|using)\b/i;
 
@@ -102,10 +104,9 @@ export function findOwnedOnlyUseClaim(text) {
 }
 
 /**
- * عبارة «Bäst i test» — ممنوعة بالمادة 6.2، إلا حين ننفي أننا نكتبها.
- *
- * صفحة المنهج تعِد القارئ بأننا **لا** نكتبها أبداً. قاعدةٌ تمنع ذكرها حتى في
- * الوعد بتركها تمنع الشفافية نفسها. النفي هنا يُعفي كما يُعفي في الادعاء.
+ * "Bäst i test" is banned — except where we state that we never write it.
+ * The method page promises readers exactly that; a rule that forbade naming
+ * the phrase even in that promise would forbid the transparency itself.
  */
 const BANNED = /\bb[äa]st i test\b/i;
 

@@ -1,10 +1,12 @@
 /**
- * اختبار سلوكي للجزيرة التفاعلية — يشغّل صفحة الموقع في DOM حقيقي.
+ * Behaviour test of the site's one interactive script, in a real DOM (jsdom).
  *
- * السبب: لا يوجد متصفح في بيئة كتابة الكود، وقد تعطّل التصفية مرتين
- * لأسباب لا تظهر إلا عند التشغيل الفعلي. هذا الاختبار يمنع تكرار ذلك.
+ * The product filter and the photo viewer have broken before in ways only
+ * visible when the script runs: a script running before its elements existed,
+ * and a `display: flex` rule beating the `hidden` attribute. This runs the
+ * built home page with the real script and checks what a visitor would see.
  *
- *   npm run test:ui        (بعد npm run build)
+ *   npm run test:ui        (after npm run build)
  */
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -15,12 +17,12 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const PAGE = join(ROOT, 'site/sv/index.html');
 
 if (!existsSync(PAGE)) {
-  console.error('✗ لا يوجد ملف مبني. شغّل npm run build أولاً.');
+  console.error('✗ No build found. Run npm run build first.');
   process.exit(1);
 }
 
 const html = readFileSync(PAGE, 'utf8')
-  // السكربت خارجي ولا تجلبه بيئة الاختبار — يُحقن مضمّناً
+  // jsdom does not fetch external scripts, so the real script is inlined
   .replace(
     /<script src="\/js\/eldebosh-ui\.js(\?[^"]*)?"[^>]*><\/script>/,
     `<script>${readFileSync(join(ROOT, 'public/js/eldebosh-ui.js'), 'utf8')}</script>`
@@ -36,52 +38,52 @@ const shown = () => [...d.querySelectorAll('.tile')].filter((t) => !t.hidden).le
 const fails = [];
 const check = (label, actual, expected) => {
   const ok = actual === expected;
-  console.log(`  ${ok ? '✓' : '✗'} ${label}: ${actual}${ok ? '' : ` (المتوقع ${expected})`}`);
+  console.log(`  ${ok ? '✓' : '✗'} ${label}: ${actual}${ok ? '' : ` (expected ${expected})`}`);
   if (!ok) fails.push(label);
 };
 
 const bar = q('[data-gearbar]');
 if (!bar) {
-  console.log('\n  — لا توجد جزيرة تفاعلية على الصفحة. الموقع صفر JavaScript.\n');
+  console.log('\n  — No interactive filter on the page: nothing to test.\n');
   process.exit(0);
 }
 
-console.log('\nاختبار جزيرة التصفية');
+console.log('\nProduct filter');
 console.log('─'.repeat(40));
 
-check('الشريط يظهر بعد تشغيل السكربت', bar.hidden, false);
+check('bar shows once the script runs', bar.hidden, false);
 
 const total = shown();
-check('كل المنتجات ظاهرة ابتداءً', total > 0, true);
+check('all products visible at first', total > 0, true);
 
-// تصفية حسب المجموعة — زرّ لكل مجموعة، ثم العودة إلى الكل
+// each group button filters, then "all" restores
 const allBtn = q('[data-filter="all"]');
 const catBtns = [...d.querySelectorAll('[data-filter]')].filter((b) => b.dataset.filter !== 'all');
-check('الشريط يحمل أزرار مجموعات', catBtns.length > 0, true);
+check('bar has group buttons', catBtns.length > 0, true);
 
 for (const catBtn of catBtns) {
   const key = catBtn.dataset.filter;
   const expected = [...d.querySelectorAll('.tile')].filter((t) => t.dataset.category === key).length;
   catBtn.click();
-  check(`تصفية "${key}"`, shown(), expected);
-  check(`"${key}" يتلوّن وحده`, [...d.querySelectorAll('.chip.is-on')].length, 1);
-  check(`"${key}" هو الملوَّن`, catBtn.classList.contains('is-on'), true);
+  check(`filter "${key}"`, shown(), expected);
+  check(`only "${key}" is highlighted`, [...d.querySelectorAll('.chip.is-on')].length, 1);
+  check(`"${key}" is the highlighted one`, catBtn.classList.contains('is-on'), true);
   allBtn.click();
-  check('العودة إلى الكل', shown(), total);
+  check('back to all', shown(), total);
 }
 
-check('زر "الكل" يتلوّن', allBtn.classList.contains('is-on'), true);
+check('"all" is highlighted', allBtn.classList.contains('is-on'), true);
 
-// الرقم المكتوب على كل زر يساوي ما يعرضه فعلاً
+// the number printed on each button equals what it shows
 for (const catBtn of catBtns) {
   const key = catBtn.dataset.filter;
   const printed = Number((catBtn.querySelector('.chip-n')?.textContent ?? '').trim());
   const real = [...d.querySelectorAll('.tile')].filter((t) => t.dataset.category === key).length;
-  check(`عدّاد الزر "${key}"`, printed, real);
+  check(`count on "${key}"`, printed, real);
 }
-check('عدّاد "الكل"', Number((allBtn.querySelector('.chip-n')?.textContent ?? '').trim()), total);
+check('count on "all"', Number((allBtn.querySelector('.chip-n')?.textContent ?? '').trim()), total);
 
-// البحث الفوري
+// live search (if present)
 const search = q('[data-gear-search]');
 if (search) {
   const term = (d.querySelector('.tile')?.dataset.name ?? '').split(' ')[0];
@@ -90,39 +92,39 @@ if (search) {
     search.value = term;
     search.dispatchEvent(new dom.window.Event('input', { bubbles: true }));
     await new Promise((r) => setTimeout(r, 250));
-    check(`البحث عن "${term}"`, shown(), expected);
+    check(`search "${term}"`, shown(), expected);
   }
 }
 
-// العدّاد
+// result counter
 const counter = q('[data-gear-count]');
-check('العدّاد يعرض رقماً', /\d/.test(counter?.textContent ?? ''), true);
+check('counter shows a number', /\d/.test(counter?.textContent ?? ''), true);
 
-// ---------- عارض الصور ----------
-console.log('\nاختبار عارض الصور');
+// ---------- photo viewer ----------
+console.log('\nPhoto viewer');
 console.log('─'.repeat(40));
 
 const viewers = [...d.querySelectorAll('.viewer')];
-check('العوارض خرجت من البطاقات', viewers.every((v) => v.parentElement === d.body), true);
-check('كل عارض حوار قابل للوصول', viewers.every((v) => v.getAttribute('role') === 'dialog'), true);
+check('viewers moved out of the tiles', viewers.every((v) => v.parentElement === d.body), true);
+check('every viewer is an accessible dialog', viewers.every((v) => v.getAttribute('role') === 'dialog'), true);
 
 const opener = q('a.tile-face[href^="#v-"]');
 if (opener) {
   opener.dispatchEvent(new dom.window.MouseEvent('click', { bubbles: true, cancelable: true, button: 0 }));
   const opened = d.querySelector('.viewer.is-open');
-  check('النقر يفتح العارض', !!opened, true);
-  check('تمرير الصفحة يتوقف', d.body.classList.contains('viewer-open'), true);
-  check('الصفحة مثبّتة عند إزاحتها', /^-?\d+px$/.test(d.body.style.top || '0px'), true);
+  check('click opens the viewer', !!opened, true);
+  check('page scroll is locked', d.body.classList.contains('viewer-open'), true);
+  check('page is held at its offset', /^-?\d+px$/.test(d.body.style.top || '0px'), true);
 
   d.dispatchEvent(new dom.window.KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-  check('Escape يغلق العارض', !d.querySelector('.viewer.is-open'), true);
-  check('التمرير يعود', !d.body.classList.contains('viewer-open'), true);
-  check('التثبيت يُرفع', d.body.style.top === '', true);
+  check('Escape closes the viewer', !d.querySelector('.viewer.is-open'), true);
+  check('scroll is restored', !d.body.classList.contains('viewer-open'), true);
+  check('offset is released', d.body.style.top === '', true);
 }
 
 console.log('─'.repeat(40));
 if (fails.length) {
-  console.error(`✗ فشل ${fails.length} اختبار\n`);
+  console.error(`✗ ${fails.length} check(s) failed\n`);
   process.exit(1);
 }
-console.log('✓ الجزيرة التفاعلية تعمل\n');
+console.log('✓ The interactive script works\n');

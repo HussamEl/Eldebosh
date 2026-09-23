@@ -3,17 +3,26 @@ import { glob } from 'astro/loaders';
 
 const LANGS = ['sv', 'en'] as const;
 
-/* ---------- قواعد مشتركة ---------- */
+/**
+ * Content schema. Astro validates every file against it at build time.
+ *
+ * The binding content rules that a schema cannot express (sources, claims of
+ * experience, skeleton deadlines…) are in scripts/validate.mjs, which runs
+ * before the build. The admin panel's fields (public/admin/config.yml) must
+ * match these; scripts/check-admin.mjs enforces it.
+ */
 
-/** مصدر خارجي مستشهد به. الاستشهاد مسموح؛ الاختلاق ممنوع.
- *  كل عنصر يجب أن يحمل اسم الجهة ورابطها وتاريخ الاطلاع. */
+/* ---------- shared ---------- */
+
+/** A cited external source. Citing is allowed; inventing is not. Every source
+ *  names its publisher, its URL and the date we read it. */
 const externalSource = z.object({
   type: z.enum(['test', 'rating', 'price', 'spec', 'regulation']),
   publisher: z.string(),          // Råd & Rön · Testfakta · Prisjakt · Kjell …
   url: z.string().url(),
   accessed: z.coerce.date(),
   published: z.coerce.date().optional(),
-  claim: z.string(),              // ما يقوله المصدر — بصياغتنا، لا نسخاً
+  claim: z.string(),              // what the source says — in our words, never copied
 });
 
 const baseDoc = z.object({
@@ -25,27 +34,27 @@ const baseDoc = z.object({
   subcategory: z.string().optional(),
   updated: z.coerce.date(),
   published: z.boolean().default(false),
-  /* خط الإنتاج: draft ← written ← reviewed ← published
-     draft    الهيكل فقط
-     written  النص مكتوب، ينتظر مراجعة سويدية
-     reviewed تمت المراجعة، جاهز للنشر
-     published منشور — يجب أن يوافق published: true */
+  /* How far the text has got — independent of `published` (is the URL live):
+     draft      skeleton, heading only
+     written    text complete, waiting for the owner's Swedish review
+     reviewed   reviewed, not yet published
+     published  text shown to visitors — requires published: true */
   stage: z.enum(['draft', 'written', 'reviewed', 'published']).default('draft'),
   noindex: z.boolean().default(false),
   hero_image: z.string().optional(),
   hero_image_alt: z.string().optional(),
   sources: z.array(externalSource).default([]),
-  /** true فقط إذا كانت الصفحة تستند إلى منتج بحوزتنا استُخدم فعلياً. */
+  /** True only if the page rests on a product we own and have actually used. */
   hands_on: z.boolean().default(false),
 });
 
-/* ---------- المنتجات — كيان بيانات، لا صفحات ---------- */
+/* ---------- products — data only; there are no product pages ---------- */
 
 const products = defineCollection({
   loader: glob({ pattern: '**/*.{yml,yaml}', base: './src/data/products' }),
   schema: z.object({
     id: z.string().regex(/^[a-z0-9-]+$/),
-    /* رمز مرجعي ثابت — يُسنَد مرة ولا يتغيّر. أسماء الصور مبنية عليه. */
+    /* Permanent reference code, assigned once. Photo filenames are built from it. */
     code: z.string().regex(/^P-\d{2}$/).optional(),
     lang: z.enum(LANGS),
     name: z.string(),
@@ -57,7 +66,7 @@ const products = defineCollection({
     pros: z.array(z.string()).default([]),
     cons: z.array(z.string()).default([]),
     best_for: z.string().optional().or(z.literal('')),
-    // لا يوجد حقل سعر ثابت — القاعدة 2.3
+    // no price field: prices only via the Amazon API, which is not active
     price_band: z.enum(['budget', 'mid', 'premium']),
     image: z.string().optional(),
     image_alt: z.string().optional(),
@@ -70,29 +79,29 @@ const products = defineCollection({
       .optional(),
     asin: z.string().optional().or(z.literal('')),
 
-    /* ===== الملكية والتجربة الفعلية =====
-       owned = المنتج بحوزتنا فعلاً · tested = استُخدم فعلياً ويجوز الكتابة بصيغة التجربة.
-       tested=true يفرض: صورة واحدة على الأقل من تصويرنا + تاريخ الاقتناء + مدة الاستخدام. */
+    /* ===== ownership and real use =====
+       owned: we have it · tested: we have used it and may write from experience.
+       tested requires our own photo, owned_since, usage_period and
+       hands_on_limits (scripts/validate.mjs). */
     owned: z.boolean().default(false),
     tested: z.boolean().default(false),
     owned_since: z.coerce.date().optional(),
     usage_period: z.string().optional().or(z.literal('')),      // "6 månader" · "en vinter"
-    /* من صورة إلى ثلاث. الأولى هي الأساسية، والبقية تتبدّل معها تلقائياً. */
+    /* One to three of our own photos. The first is the main one; the site cross-fades the rest. */
     own_photos: z
       .array(z.object({ src: z.string(), alt: z.string(), caption: z.string().optional() }))
-      .max(3, 'ثلاث صور كحد أقصى لكل منتج')
+      .max(3, 'at most three photos per product')
       .default([]),
-    /* مصدر المواصفة حين لا تكون صفحة مصنّع: صورةٌ من تصويرنا تُظهر المطبوع
-       على الجهاز أو علبته. تحمل `src` إحدى صور `own_photos` نفسها.
-       أقوى من صفحة المصنّع في موضع واحد: المصنّع يصف طرازاً، وصورتنا تصف
-       الجهاز الذي بحوزتنا بعينه. القاعدة `2b` في validate.mjs. */
+    /* A specification source when there is no maker's page: one of own_photos
+       showing the specification printed on the device or its box. It
+       describes the very unit we own, not just a model. */
     spec_photo: z.string().optional(),
-    /* تحقّق المالك: فتح صفحة البائع وقارنها بالجهاز الذي بيده وأكّد أنهما
-       واحد، بتاريخه. مصدرٌ مسمّى ومسؤولٌ عنه شخص — وقد أثبت قيمته يوم كشف
-       أنّ ASIN في P-03 كان لطراز آخر. القاعدة `2b`. */
+    /* The date the owner compared the retailer listing with the device in his
+       hand and confirmed they are the same model. A named, dated source — it
+       once caught an ASIN that pointed at a different model. */
     owner_checked: z.coerce.date().optional(),
-    hands_on: z.array(z.string()).default([]),   // ملاحظات من الاستخدام الفعلي
-    hands_on_limits: z.array(z.string()).default([]), // حدود التجربة — إلزامي للنزاهة
+    hands_on: z.array(z.string()).default([]),   // notes from real use
+    hands_on_limits: z.array(z.string()).default([]), // what our use does not show — required with tested
     video_url: z.string().url().optional(),
     video_thumb: z.string().optional(),
 
@@ -113,7 +122,7 @@ const products = defineCollection({
   }),
 });
 
-/* ---------- الفئات ---------- */
+/* ---------- categories ---------- */
 
 const categories = defineCollection({
   loader: glob({ pattern: '**/*.{yml,yaml}', base: './src/data/categories' }),
@@ -138,7 +147,7 @@ const categories = defineCollection({
   }),
 });
 
-/* ---------- صفحات الحلول — المحور الأساسي ---------- */
+/* ---------- solution pages — the core of the site: a problem and its fix ---------- */
 
 const solutions = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/solutions' }),
@@ -152,12 +161,12 @@ const solutions = defineCollection({
   }),
 });
 
-/* ---------- أدلة الشراء ---------- */
+/* ---------- buying guides ---------- */
 
 const guides = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/guides' }),
   schema: baseDoc.extend({
-    solution: z.string(), // إلزامي — كل دليل يعود إلى صفحة حل
+    solution: z.string(), // required: every guide leads back to a solution page
     picks: z
       .array(
         z.object({
@@ -170,7 +179,7 @@ const guides = defineCollection({
   }),
 });
 
-/* ---------- المقارنات ---------- */
+/* ---------- comparisons ---------- */
 
 const comparisons = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/comparisons' }),
@@ -181,7 +190,7 @@ const comparisons = defineCollection({
   }),
 });
 
-/* ---------- المقالات ---------- */
+/* ---------- articles ---------- */
 
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
@@ -191,7 +200,7 @@ const posts = defineCollection({
   }),
 });
 
-/* ---------- الصفحات الثابتة والقانونية ---------- */
+/* ---------- fixed and legal pages ---------- */
 
 const pages = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/pages' }),
@@ -207,7 +216,7 @@ const pages = defineCollection({
   }),
 });
 
-/* ---------- بيانات التواجد في الساحة ---------- */
+/* ---------- market stall (Stora Torget, Karlstad) ---------- */
 
 const torget = defineCollection({
   loader: glob({ pattern: '*.{yml,yaml}', base: './src/data/torget' }),

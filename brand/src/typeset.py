@@ -1,6 +1,6 @@
-"""Sätter text som SVG-banor ur den variabla Inter Tight-filen som redan
-ligger i sajten. Ger bokstäverna som <path>, så logotypen fungerar överallt
-(tryck, e-post, tredjepartsverktyg) utan att fonten behöver finnas."""
+"""Set text as SVG paths from the variable Inter Tight font the site already
+ships (public/fonts). Letters become <path> elements, so the logo renders the
+same everywhere (print, e-mail, third-party tools) without the font installed."""
 import os, tempfile
 from fontTools.ttLib import TTFont
 from fontTools.varLib.instancer import instantiateVariableFont
@@ -9,7 +9,7 @@ from fontTools.pens.transformPen import TransformPen
 from fontTools.misc.transform import Transform
 import uharfbuzz as hb
 
-FONTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'site', 'fonts')
+FONTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'public', 'fonts')
 _cache = {}
 
 def _instance(family, weight):
@@ -29,7 +29,7 @@ def _instance(family, weight):
     return _cache[key]
 
 def typeset(text, family='inter-tight', weight=800, size=100, tracking=0.0):
-    """tracking anges i em (som CSS letter-spacing). Returnerar (path_d, bredd)."""
+    """tracking is in em, like CSS letter-spacing. Returns (path_d, width)."""
     font, hbfont, upem = _instance(family, weight)
     buf = hb.Buffer()
     buf.add_str(text)
@@ -45,7 +45,7 @@ def typeset(text, family='inter-tight', weight=800, size=100, tracking=0.0):
     for info, pos in zip(buf.glyph_infos, buf.glyph_positions):
         name = order[info.codepoint]
         pen = SVGPathPen(glyph_set, ntos=lambda v: f'{v:.2f}')
-        # y speglas: fontens y pekar uppåt, SVG:s nedåt
+        # flip y: font units point up, SVG points down
         tpen = TransformPen(pen, Transform(scale, 0, 0, -scale,
                                            x + pos.x_offset * scale,
                                            -pos.y_offset * scale))

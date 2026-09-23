@@ -1,4 +1,4 @@
-# Bygger ordmärket ur den variabla Inter Tight-filen i site/fonts.
+# For brand/src: sets the wordmark from the variable Inter Tight font in public/fonts.
 fonttools>=4.55
-brotli>=1.1          # woff2-avkodning
-uharfbuzz>=0.45      # kerning och textformning
+brotli>=1.1          # woff2 decoding
+uharfbuzz>=0.45      # kerning and shaping

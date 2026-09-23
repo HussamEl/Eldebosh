@@ -26,12 +26,12 @@ const { entry } = Astro.props;
 const lang = Astro.params.lang as Lang;
 const tr = t(lang);
 const { Content } = await render(entry);
-/* الحقلان مستقلان بقرار حسام في 2026-09-04 (I-020):
-     published  هل الرابط موجود على الموقع؟
-     stage      إلى أين وصل النصّ؟
-   فـ`draft` هيكل بلا نصّ، و`written` نصٌّ كُتب وينتظر المراجعة السويدية.
-   كلاهما يُعرض للزائر كصفحة تقول صراحةً إنها لم تُنشر بعد، وكلاهما خارج
-   نتائج البحث. لا يظهر النصّ إلا عند `stage: published`. */
+/* Two independent fields:
+     published  is the URL live?
+     stage      how far has the text got?
+   `draft` (skeleton) and `written` (awaiting review) both render as a page
+   that says it is not written yet, marked noindex. The text shows only at
+   stage `published`. */
 const notWritten = entry.data.stage === 'draft' || entry.data.stage === 'written';
 
 const [guides, comparisons, posts] = await Promise.all([
@@ -45,7 +45,7 @@ const rel = {
   posts: posts.filter((p) => p.data.solution === entry.data.problem_id),
 };
 
-// صفحة لم تُكتب لا تبيع شيئاً: لا بطاقات منتجات ولا إفصاح تجاري.
+// An unwritten page sells nothing: no product cards, and so no disclosure.
 const products = notWritten ? [] : await getProducts(entry.data.products, lang);
 const here = url.solution(lang, entry.data.slug);
 const crumbs = [

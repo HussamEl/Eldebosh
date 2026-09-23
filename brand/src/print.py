@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Tryckfärdiga underlag: visitkort (med utfall), brevpapper A4 och ett
-logotypark till tryckeriet. Renderas till PDF av print.mjs."""
+"""Print-ready artwork: business card (with bleed), A4 letterhead and a logo
+sheet for the printer. Rendered to PDF by print.mjs."""
 import os
 from assets import logo, FONTS
 
@@ -22,7 +22,7 @@ body{{font-family:"Inter",sans-serif;color:#123F66}}
 h1,h2,h3{{font-family:"Inter Tight";font-weight:700;letter-spacing:-.02em}}
 </style>'''
 
-# ---------------- visitkort 85x55 mm + 3 mm utfall = 91x61 mm --------------
+# ---------------- business card 85x55 mm + 3 mm bleed = 91x61 mm ----------
 CARD = f'''<!doctype html><meta charset="utf-8">{CSS}
 <div class="page" style="width:91mm;height:61mm;background:#fff">
   <div style="position:absolute;left:3mm;top:3mm;width:85mm;height:55mm;padding:7mm 8mm;display:flex;flex-direction:column;justify-content:space-between">
@@ -44,7 +44,7 @@ CARD = f'''<!doctype html><meta charset="utf-8">{CSS}
   </div>
 </div>'''
 
-# ---------------- brevpapper A4 --------------------------------------------
+# ---------------- A4 letterhead --------------------------------------------
 LETTER = f'''<!doctype html><meta charset="utf-8">{CSS}
 <div class="page" style="width:210mm;height:297mm;padding:18mm 20mm;display:flex;flex-direction:column">
   <header style="display:flex;align-items:flex-start;justify-content:space-between">
@@ -63,7 +63,7 @@ LETTER = f'''<!doctype html><meta charset="utf-8">{CSS}
   </footer>
 </div>'''
 
-# ---------------- logotypark till tryckeriet -------------------------------
+# ---------------- logo sheet for the printer -------------------------------
 def swatch(hexv, name, note, dark=False):
     return f'''<div style="border:.2mm solid #D7E3EE;border-radius:2mm;overflow:hidden">
       <div style="height:18mm;background:{hexv}"></div>

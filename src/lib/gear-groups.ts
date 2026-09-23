@@ -1,11 +1,13 @@
 /**
- * مجموعات شريط التصفية في الصفحة الرئيسية.
+ * The filter buttons above the product grid on the home page.
  *
- * ليست فئات البيانات ولا الفئات الفرعية: زر «Laddare» يجمع `snabbladdare`
- * و`billaddning` لأن الزائر الذي يبحث عن شاحن لا يفرّق بينهما، وفي كلٍّ منهما
- * منتج واحد — زران بمنتج واحد لكلٍّ عبثٌ بصري. القرار `D-030`.
+ * These are display groups, not data categories: "Laddare" (chargers) covers
+ * both `snabbladdare` and `billaddning`, because a visitor looking for a
+ * charger does not distinguish them, and one button per single product is
+ * clutter. Products in no group appear under "Alla" (all) only — deliberately
+ * no catch-all button.
  *
- * وما لا مجموعة له يظهر تحت «الكل» وحدها. لا زرّ رابع — كثرة الخيارات تشتّت.
+ * Labels live in src/i18n/ui.ts as `filter.group.<id>`.
  */
 
 export const GEAR_GROUPS = [
@@ -16,7 +18,7 @@ export const GEAR_GROUPS = [
 
 export type GearGroupId = (typeof GEAR_GROUPS)[number]['id'];
 
-/** مجموعة المنتج في الشريط، أو `null` إن لم يكن له زرّ. */
+/** The product's filter group, or null if it has no button. */
 export function gearGroup(product: { subcategory?: string }): GearGroupId | null {
   const sub = product.subcategory;
   if (!sub) return null;
@@ -24,7 +26,7 @@ export function gearGroup(product: { subcategory?: string }): GearGroupId | null
   return hit ? hit.id : null;
 }
 
-/** المجموعات التي فيها منتج فعلاً، بعددها — لا رقم يُكتب بيد. */
+/** Groups that contain at least one product, with their counts. */
 export function gearGroupCounts(products: readonly { subcategory?: string }[]) {
   return GEAR_GROUPS.map((g) => ({
     id: g.id,

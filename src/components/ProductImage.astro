@@ -1,6 +1,6 @@
 ---
-/* صورة المنتج. عند غياب صورة موثقة يُعرض عنصر نائب من هوية الموقع
-   بدل صورة مختلقة أو مسروقة من متجر. */
+/* Product image. Without one of our own photos, a brand placeholder is shown —
+   never a retailer's photo. */
 import Icon from './Icon.astro';
 interface Props { src?: string; alt?: string; icon?: string; }
 const { src, alt, icon = 'battery' } = Astro.props;

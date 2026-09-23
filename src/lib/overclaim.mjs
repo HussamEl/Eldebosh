@@ -1,17 +1,18 @@
 /**
- * ادعاء جماعي على مجموعة غير مُختبَرة بالكامل.
+ * A claim of use over a group that is not entirely tested.
  *
- * «نملك ونستخدم الأربعة كلها» على صفحة اثنان من منتجاتها `tested: false` ادعاءُ
- * استخدام كاذب. وقاعدة ادعاء التجربة لا تمسكه: لا فعل اختبار فيه — الكذب في
- * **العدد** لا في الفعل. فهذه قاعدة تقارن الكمّ بالبيانات لا بالكلمات.
+ * "We own and use all four" on a page where two of the four products have
+ * tested: false is a false claim of use. The experience-claim rule does not
+ * catch it: there is no test verb, the lie is in the count. So this rule
+ * compares the quantity in the sentence with the data.
  *
- * الاختبارات: node scripts/test-claim-rule.mjs
+ * Test cases: npm run test:claims
  */
 
-/** كمّ يشمل المجموعة كلها. */
+/** A quantifier covering the whole group. */
 const ALL = '(?:alla|båda|samtliga|två|tre|fyra|fem|sex|\\d+)';
 
-/** فعل استخدام بضمير المتكلّم. */
+/** A first-person verb of use. */
 const USE = '(?:använder|använt|testat|testade|kör)';
 
 const COLLECTIVE = new RegExp(
@@ -20,7 +21,7 @@ const COLLECTIVE = new RegExp(
 );
 
 /**
- * @param {string} text نصّ الصفحة، ويشمل العنوان.
+ * @param {string} text the page text, including its title
  * @param {{total: number, tested: number}} counts
  * @returns {{text: string, total: number, tested: number} | null}
  */

@@ -11,7 +11,7 @@ export async function getStaticPaths() {
   const paths = [];
   for (const lang of LANGS) {
     for (const c of await activeCategories(lang)) {
-      if (RESERVED.has(c.slug)) continue; // حماية من تصادم المسارات
+      if (RESERVED.has(c.slug)) continue; // never shadow a fixed route
       paths.push({ params: { lang, category: c.slug }, props: { cat: c } });
     }
   }

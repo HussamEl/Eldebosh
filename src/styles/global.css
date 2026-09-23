@@ -1,7 +1,13 @@
 /* =========================================================
-   Eldebosh — نظام التصميم
-   الاتجاه: فاتح، عالي التباين، مضغوط. الأخضر الداكن لهجة لا خلفية.
-   الليموني محجوز لعنصرين فقط: شريط الشحن ونقطة التجربة.
+   Eldebosh — design system. All styles live in this one file.
+
+   Light, high-contrast and compact. Blue brand; --volt (sky blue) is
+   reserved for three uses only: the charge bar, the "tested" dot and the
+   primary button. Header and footer sit on --brand-deep, the hero on the
+   lighter --brand-hero, and no two dark blocks are ever adjacent.
+
+   Guarded by npm run check:css (integrity, unused classes, undefined
+   tokens) and npm run check:colors (no colour outside the tokens).
    ========================================================= */
 
 @font-face {
@@ -38,25 +44,25 @@
 }
 
 :root {
-  /* الحبر والأسطح */
+  /* ink and surfaces */
   --ink: #10161d;
   --ink-2: #3f4c59;
   --muted: #66727f;
   --paper: #ffffff;
-  --page: #e7f2fd;        /* خلفية الصفحة خلف المحتوى */
+  --page: #e7f2fd;        /* page background behind content */
   --mist: #f2f7fc;
   --mist-2: #e4eef7;
   --line: #d7e3ee;
   --line-2: #bcd2e3;
 
-  /* الهوية — مطابقة لأصول الشعار */
-  --brand: #1273d1;       /* الأزرق الأساسي */
-  --brand-deep: #123f66;  /* الرأس والفوتر */
-  --brand-hero: #14456e;  /* شريط الـHero */
-  --brand-soft: #f0f7fe;  /* الأسطح الفاتحة */
-  --brand-tint: #d3e7fa;  /* نغمة الحدود */
-  --volt: #55c6f2;        /* اللون الإشاري — سماوي، مطابق للشعار */
-  --volt-deep: #2fb2e6;   /* السماوي عند التمرير */
+  /* brand — matches the logo assets */
+  --brand: #1273d1;       /* primary blue */
+  --brand-deep: #123f66;  /* header and footer */
+  --brand-hero: #14456e;  /* hero band */
+  --brand-soft: #f0f7fe;  /* light surfaces; also the tile background (scripts/lib/tile.mjs) */
+  --brand-tint: #d3e7fa;  /* border tone; also the tile tint (scripts/lib/tile.mjs) */
+  --volt: #55c6f2;        /* signal colour — sky blue, from the logo */
+  --volt-deep: #2fb2e6;   /* signal colour on hover */
   --warn: #8a4b1f;
 
   --font-body: 'Inter Var', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -74,7 +80,7 @@
   --section: clamp(2.5rem, 1.7rem + 3.2vw, 4.5rem);
   --wrap: 78rem;
   --wrap-text: 44rem;
-  /* حد القراءة للنص التحريري الطويل فقط. النصوص التمهيدية القصيرة لا تُقيَّد. */
+  /* reading width, for long editorial text only; short intros are not capped */
   --measure: 68ch;
   --measure-lead: 100ch;
   --r-sm: 8px;
@@ -120,17 +126,17 @@ a:hover { text-decoration-color: currentColor; }
 
 img { max-width: 100%; height: auto; display: block; }
 
-/* أهداف لمس مريحة على الجوال */
+/* comfortable touch targets on phones */
 @media (pointer: coarse) {
   .nav a, .nav summary, .chip, .tile-cta { min-height: 44px; }
   .chip { padding-inline: 0.9rem; }
 }
 
-/* توحيد الانتقالات */
+/* one easing curve everywhere */
 a, button, .tile, .card, .chip { transition-timing-function: cubic-bezier(0.2, 0, 0.2, 1); }
 ul, ol { padding-inline-start: 1.1rem; }
 
-/* ---------- التخطيط ---------- */
+/* ---------- layout ---------- */
 
 .wrap { width: min(100% - 2rem, var(--wrap)); margin-inline: auto; }
 @media (min-width: 60em) { .wrap { width: min(100% - 4rem, var(--wrap)); } }
@@ -147,7 +153,7 @@ ul, ol { padding-inline-start: 1.1rem; }
 }
 .skip:focus { inset-inline-start: 0; }
 
-/* ---------- شريط الشحن ---------- */
+/* ---------- charge bar ---------- */
 
 .charge {
   --fill: 38%;
@@ -165,7 +171,7 @@ ul, ol { padding-inline-start: 1.1rem; }
   text-transform: uppercase; color: var(--muted);
 }
 
-/* ---------- الرأس: شريط رفيع لاصق ---------- */
+/* ---------- header: thin sticky bar ---------- */
 
 .masthead {
   position: sticky; top: 0; z-index: 40;
@@ -182,15 +188,14 @@ ul, ol { padding-inline-start: 1.1rem; }
 .brand img { height: 26px; width: auto; display: block; }
 @media (max-width: 22em) { .brand img { height: 23px; } }
 
-/* طابع الرفع — مؤقّت، يُحذف قبل الإطلاق مع src/lib/build-stamp.ts.
-   `:has` تُبقي الحذف نظيفاً: يختفي الطابع فيستعيد الشعار هامشه التلقائي
-   بلا تعديل أي قاعدة أخرى. */
+/* Site-version stamp — temporary, removed before launch with src/lib/build-stamp.ts.
+   :has keeps removal clean: without the stamp the logo gets its margin back. */
 .masthead-inner:has(.build-stamp) .brand { margin-inline-end: 0.55rem; }
-/* صفحة لم تُكتب بعد — هيكل قائم ونصّ غائب، يُقال للزائر صراحةً. */
+/* A page that is not written yet says so plainly. */
 .notwritten-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-block: 0.9rem 0.4rem; }
 .tag-soon { background: var(--mist); color: var(--brand-deep); }
 
-/* شارة المعاينة: تظهر في بناء المعاينة وحده، ولا وجود لها في الموقع الحيّ. */
+/* Draft badge: exists only in the preview build, never on the live site. */
 .tag-draft { background: var(--brand-hero); color: var(--paper); border-color: var(--brand-hero); }
 
 .build-stamp {
@@ -257,7 +262,7 @@ ul, ol { padding-inline-start: 1.1rem; }
 @media (max-width: 63.99em) {
   .nav-desktop { display: none; }
   .nav-mobile { display: flex; align-items: center; gap: 0.35rem; }
-  /* زر القائمة أيقونة، وشارة اللغة بجانبه على نفس السطر */
+  /* menu is an icon button, with the language badge beside it on one line */
   .nav-mobile summary { padding: 0.42rem 0.5rem; }
   .nav-mobile summary::after { display: none; }
   .nav-mobile .lang-chip { margin-inline-start: 0; }
@@ -267,7 +272,7 @@ ul, ol { padding-inline-start: 1.1rem; }
   }
 }
 
-/* ---------- Hero فاتح ومضغوط ---------- */
+/* ---------- hero: light and compact ---------- */
 
 .hero {
   background: linear-gradient(168deg, var(--brand-hero) 0%, var(--brand-deep) 100%);
@@ -316,7 +321,7 @@ ul, ol { padding-inline-start: 1.1rem; }
 .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
 .btn-ghost:hover { background: var(--mist); }
 
-/* ---------- شبكة المنتجات ---------- */
+/* ---------- product grid ---------- */
 
 .tile-grid { display: grid; gap: 0.7rem; grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 34em) { .tile-grid { grid-template-columns: repeat(3, 1fr); gap: 0.9rem; } }
@@ -328,7 +333,7 @@ ul, ol { padding-inline-start: 1.1rem; }
   overflow: hidden; display: flex; flex-direction: column;
   transition: border-color 0.16s ease, box-shadow 0.16s ease, transform 0.16s ease;
 }
-/* تأثيرات التمرير لأجهزة المؤشر فقط — على اللمس تبقى «عالقة» بعد النقر */
+/* hover effects for pointer devices only — on touch they stick after a tap */
 @media (hover: hover) {
   .tile:hover {
     border-color: var(--line-2); transform: translateY(-2px);
@@ -338,8 +343,8 @@ ul, ol { padding-inline-start: 1.1rem; }
   .tile:hover .tile-cta { background: var(--brand); color: var(--paper); }
   .tile:hover .tile-cta.is-soon { background: var(--mist); color: var(--muted); }
   .tile:hover .tile-photos::before { background: rgb(7 20 34 / 0.08); }
-  /* التمرير أو التركيز يوقف التبديل ويعيد الصورة الأولى —
-     أوضح من تجميد إطار عشوائي في منتصف التلاشي */
+  /* hover or focus stops the cross-fade on the first photo — clearer than
+     freezing a random frame mid-fade */
   .tile:hover .tile-photos .tile-photo,
   .tile:focus-within .tile-photos .tile-photo {
     animation: none; opacity: 0; transition: opacity 0.18s ease;
@@ -348,8 +353,9 @@ ul, ol { padding-inline-start: 1.1rem; }
   .tile:focus-within .tile-photos .tile-photo:first-child { opacity: 1; }
 }
 
-/* البطاقة تحمل transform فتصبح الحاوية لأي عنصر ثابت بداخلها.
-   عند فتح العارض بلا JavaScript يجب إلغاؤه وإلا قُصّ العارض داخلها. */
+/* A transformed element becomes the containing block for fixed-position
+   descendants. With the viewer open without JavaScript (:target), the tile's
+   transform must go, or the viewer would be clipped inside the tile. */
 .tile:has(.viewer:target) { transform: none; }
 
 .tile-face {
@@ -422,7 +428,7 @@ ul, ol { padding-inline-start: 1.1rem; }
   border-inline-end: 1.6px solid currentColor; transform: rotate(45deg);
 }
 
-/* ---------- البطاقات العامة ---------- */
+/* ---------- cards ---------- */
 
 .card {
   border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--paper);
@@ -454,7 +460,7 @@ ul, ol { padding-inline-start: 1.1rem; }
   align-self: start;
 }
 
-/* ---------- الإفصاح ---------- */
+/* ---------- affiliate disclosure ---------- */
 
 .disclosure {
   background: var(--mist); border: 1px solid var(--line); border-inline-start: 3px solid var(--volt);
@@ -467,7 +473,7 @@ ul, ol { padding-inline-start: 1.1rem; }
 }
 .disclosure .amazon-line { display: block; margin-block-start: 0.3rem; }
 
-/* ---------- بطاقة المنتج الكاملة ---------- */
+/* ---------- full product card ---------- */
 
 .product { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
 .product-head { display: flex; gap: var(--gap); padding: var(--gap); align-items: start; }
@@ -500,7 +506,7 @@ ul, ol { padding-inline-start: 1.1rem; }
 }
 .product-thumb .charge { width: 40px; }
 
-/* ---------- التجربة الفعلية ---------- */
+/* ---------- real use (hands-on) ---------- */
 
 .handson {
   border: 1px solid var(--line); border-radius: var(--r); background: var(--brand-soft);
@@ -524,19 +530,19 @@ ul, ol { padding-inline-start: 1.1rem; }
   border-inline-start: 3px solid var(--line-2); padding-inline-start: 0.85rem;
 }
 .handson-owned { border-inline-start-color: var(--brand); }
-/* تاريخ الاقتناء سطر مستقل — لا يُلصق بنهاية جملة تامة. */
+/* the ownership date is its own line, not glued to the end of a sentence */
 .handson-since { display: block; margin-block-start: 0.2rem; }
 
-/* ---------- المصادر ---------- */
+/* ---------- sources ---------- */
 
 .sources-block { border: 1px solid var(--line); border-radius: var(--r); padding: var(--gap); }
-/* كانت نمطاً مضمّناً على العنصر، فأفشلت الفحص أول مرة ظهرت فيها قائمة مصادر. */
+/* a class, not an inline style: the audit refuses inline layout styles */
 .sources-note { margin-block: 0.4rem 1rem; }
 .source-list { list-style: none; padding: 0; display: grid; gap: 0.85rem; }
 .source-list > li { padding-inline-start: 0.85rem; border-inline-start: 2px solid var(--line); }
 .source-list > li > p:first-child { font-size: var(--step--1); }
 
-/* ---------- المقارنة ---------- */
+/* ---------- comparison ---------- */
 
 .compare-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); }
 .compare { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: var(--step--1); }
@@ -544,10 +550,10 @@ ul, ol { padding-inline-start: 1.1rem; }
 .compare thead th { background: var(--mist); font-weight: 660; }
 .compare tbody th { font-weight: 560; color: var(--muted); white-space: nowrap; }
 
-/* ---------- النص التحريري ---------- */
+/* ---------- editorial text ---------- */
 
 .prose { max-width: min(100%, var(--wrap-text)); }
-/* النص التمهيدي أسفل العناوين — عريض بقدر الشاشة، ينكسر عند الحاجة فقط */
+/* intro under headings — as wide as the screen, wraps only when needed */
 .lead {
   color: var(--ink-2); font-size: var(--step-0);
   max-width: min(100%, var(--measure-lead));
@@ -562,7 +568,7 @@ ul, ol { padding-inline-start: 1.1rem; }
   display: grid; gap: 0.55rem; position: relative;
   padding-block: 0.4rem clamp(1.1rem, 0.9rem + 1vw, 1.75rem);
 }
-/* خلفية ممتدة على كامل عرض الشاشة — تصل الشريط بفتات الخبز فوقه */
+/* full-bleed background, joining the band to the breadcrumb above */
 .page-head::before {
   content: ""; position: absolute; z-index: -1; inset-block: 0;
   inset-inline-start: 50%; transform: translateX(-50%);
@@ -575,7 +581,7 @@ ul, ol { padding-inline-start: 1.1rem; }
 .hero-figure img { width: 100%; border-radius: var(--r); background: var(--mist); }
 .hero-figure figcaption { font-size: var(--step--2); color: var(--muted); margin-block-start: 0.35rem; }
 
-/* ---------- شريط الثقة ---------- */
+/* ---------- trust band ---------- */
 
 .trustbar {
   background: var(--brand-soft); color: var(--ink-2);
@@ -589,7 +595,7 @@ ul, ol { padding-inline-start: 1.1rem; }
 .trustbar .btn-volt { background: var(--brand); color: var(--paper); }
 .trustbar .btn-volt:hover { background: var(--brand-deep); }
 
-/* ---------- الفوتر ---------- */
+/* ---------- footer ---------- */
 
 .footer {
   background: var(--brand-deep); color: #cbdff5;
@@ -602,7 +608,7 @@ ul, ol { padding-inline-start: 1.1rem; }
 .footer ul { list-style: none; padding: 0; display: grid; gap: 0.4rem; }
 .footer-bottom { margin-block-start: var(--gap); padding-block-start: var(--gap); border-block-start: 1px solid rgb(255 255 255 / 0.12); }
 
-/* ---------- فتات الخبز والتنبيهات ---------- */
+/* ---------- breadcrumb and notices ---------- */
 
 .crumbs {
   font-size: var(--step--2); color: var(--ink-2);
@@ -621,11 +627,11 @@ ul, ol { padding-inline-start: 1.1rem; }
   background: var(--mist);
 }
 
-/* صورة المنتج داخل البطاقة */
+/* product image inside a card */
 .tile-photo { width: 100%; height: 100%; object-fit: cover; }
 .tile-face:has(.tile-photos) { background: var(--mist-2); }
 
-/* ---------- شريط التصفية ---------- */
+/* ---------- filter bar ---------- */
 
 .visually-hidden {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -655,13 +661,13 @@ ul, ol { padding-inline-start: 1.1rem; }
 }
 .gear-count.is-empty { color: var(--warn); }
 
-/* الإخفاء يجب أن يتغلب على display في الكلاس */
+/* [hidden] must beat display set by a class, or hidden tiles stay visible */
 .tile[hidden] { display: none !important; }
 
 .tile-cta.is-soon { color: var(--muted); font-weight: 560; cursor: default; }
 .tile-cta.is-soon:hover { background: transparent; color: var(--muted); }
 
-/* ---------- أصناف التخطيط المشتركة ---------- */
+/* ---------- shared layout classes ---------- */
 
 .page-body { padding-block-end: var(--section); }
 .page-head + * { margin-block-start: clamp(1.25rem, 1rem + 1.2vw, 2rem); }
@@ -676,7 +682,7 @@ ul, ol { padding-inline-start: 1.1rem; }
 .panel-title { font-size: var(--step-1); }
 .search-mount { margin-block-start: 1.25rem; }
 
-/* ---------- مساعدات تباعد صغيرة ---------- */
+/* ---------- small spacing helpers ---------- */
 
 .mt-xs { margin-block-start: 0.4rem; }
 .mt-sm { margin-block-start: 0.6rem; }
@@ -687,7 +693,7 @@ ul, ol { padding-inline-start: 1.1rem; }
 .small { font-size: var(--step--1); }
 .specs-caption { text-align: start; padding-block-end: 0.4rem; }
 
-/* ---------- التواجد في الساحة ---------- */
+/* ---------- market stall ---------- */
 
 .torget {
   border: 1px solid var(--brand); border-radius: var(--r-lg);
@@ -712,11 +718,11 @@ ul, ol { padding-inline-start: 1.1rem; }
 
 .torget-num { font-variant-numeric: tabular-nums; margin-inline-start: 0.15rem; }
 
-/* ---------- صور المنتج ----------
-   شكل البطاقة مخبوز داخل الصورة نفسها (scripts/make_tiles.py):
-   المنتج كاملاً، والفراغ حوله ضبابية ممزوجة بلون الهوية، والحواف متلاشية.
-   لذلك لا حشو ولا ظل ولا طبقة خلفية هنا.
-   صورة واحدة: ثابتة. صورتان أو ثلاث: تبديل متقاطع. */
+/* ---------- product photos ----------
+   The tile look is baked into the photo itself (scripts/lib/tile.mjs, applied
+   at build time): the whole product on a blurred, brand-tinted surround with
+   feathered edges. So no padding, shadow or background layer here.
+   One photo: static. Two or three: cross-fade. */
 
 .tile-photos { position: relative; display: block; width: 100%; height: 100%; overflow: hidden; }
 
@@ -725,21 +731,16 @@ ul, ol { padding-inline-start: 1.1rem; }
   width: 100%; height: 100%; object-fit: cover;
 }
 
-/* التبديل — أُعيد بناؤه في 2026-09-04 بعد أن رأى حسام «إطاراً فارغاً».
-   والعطب كان في البنية لا في التوقيت: كانت كل صورة تُشغَّل بتأخير، والصورة
-   الأولى تتلاشى إلى صفر قبل أن يبدأ تأخير الثانية أصلاً — فتمرّ أجزاء من
-   الثانية والبطاقة فيها خلفية عارية.
-
-   الإصلاح بنيوي: **الصورة الأولى قاعدة ثابتة لا تتحرّك أبداً.** والثانية
-   والثالثة تعلوانها وتذهبان. فما دام تحتهما صورة حاضرة دائماً، لا يمكن أن
-   يظهر فراغ مهما اختلّ التوقيت — لا بالحساب، بل باستحالة الحالة.
-
-   والإيقاع هُدّئ أيضاً: مكوث خمس ثوانٍ بدل أربع، وتلاشٍ في ثانية وخُمس بدل
-   نصف ثانية، فيقرأ العين انتقالاً لا وميضاً. */
+/* Cross-fade. The first photo is a fixed base layer that never animates; the
+   second and third fade in above it and out again. With a photo always
+   underneath, an empty frame cannot appear however the timing drifts — which
+   it did when every photo animated on its own delay.
+   Rhythm: about five seconds on each photo, a 1.2 s fade — a transition, not
+   a flicker. */
 
 .tile-photos .tile-photo:first-child { opacity: 1; z-index: 0; }
 
-/* صورتان — دورة اثنتي عشرة ثانية */
+/* two photos — 12 s cycle */
 .tile-photos[data-n="2"] .tile-photo:nth-child(2) {
   opacity: 0; z-index: 1;
   animation: tile-over-a 12s ease-in-out infinite;
@@ -750,8 +751,8 @@ ul, ol { padding-inline-start: 1.1rem; }
   98%, 100% { opacity: 0; }
 }
 
-/* ثلاث صور — دورة ثماني عشرة ثانية.
-   الثالثة تعلو الثانية وتنصرف قبلها، فتتكشّف الثانية ثم الأولى بالترتيب. */
+/* three photos — 18 s cycle. The third sits above the second and leaves
+   first, revealing the second, then the first. */
 .tile-photos[data-n="3"] .tile-photo:nth-child(2) {
   opacity: 0; z-index: 1;
   animation: tile-over-b 18s ease-in-out infinite;
@@ -771,9 +772,9 @@ ul, ol { padding-inline-start: 1.1rem; }
   88%, 100% { opacity: 0; }
 }
 
-/* التمرير بالمؤشر يوقف التبديل ليتأمل الزائر */
+/* hovering pauses the cross-fade */
 
-/* مؤشر عدد الصور */
+/* photo-count badge */
 .tile-photos[data-n="2"]::after,
 .tile-photos[data-n="3"]::after {
   content: attr(data-n);
@@ -789,16 +790,18 @@ ul, ol { padding-inline-start: 1.1rem; }
   .tile-photos .tile-photo:first-child { opacity: 1; }
 }
 
-/* والشاشة الضيقة بلا تبديل أصلاً: على الهاتف تمرّ البطاقات تحت الإبهام،
-   وصورة تتبدّل تحت الإصبع حركةٌ لم يطلبها القارئ. الأولى وحدها، وشارة
-   العدد تبقى فتقول إن هناك أكثر. */
+/* No cross-fade on narrow screens: tiles scroll under the thumb, and a photo
+   changing under the finger is motion nobody asked for. The first photo only;
+   the count badge still says there are more. */
 @media (max-width: 47.9375rem) {
   .tile-photos .tile-photo { animation: none; opacity: 0; }
   .tile-photos .tile-photo:first-child { opacity: 1; }
 }
 
-/* ---------- عارض الصور — بلا JavaScript ----------
-   يعتمد على :target: النقر على الصورة يفتح العارض، والخلفية أو × تغلقه. */
+/* ---------- photo viewer — works without JavaScript ----------
+   Uses :target: clicking a photo opens it; the backdrop or × closes it.
+   With JavaScript, public/js/eldebosh-ui.js takes over (no history entries,
+   Escape to close, focus trap). */
 
 .viewer {
   position: fixed; inset: 0; z-index: 60;
@@ -808,11 +811,9 @@ ul, ol { padding-inline-start: 1.1rem; }
 .viewer:target { display: flex; }
 .viewer.is-open { display: flex; }
 
-/* منع تمرير الصفحة خلف العارض */
-/* قفل التمرير خلف العارض.
-   overflow:hidden وحده لا يكفي: كروم يتجاهل preventScroll حين يقع التركيز
-   داخل صندوق قابل للتمرير، وiOS Safari يتجاهل overflow على body أصلاً.
-   التثبيت عند الإزاحة المحفوظة هو ما يمنع القفزة فعلياً. */
+/* Scroll lock behind the viewer. overflow: hidden alone is not enough: Chrome
+   ignores preventScroll when focus lands in a scrollable box, and iOS Safari
+   ignores overflow on body. Fixing body at the saved offset is what works. */
 body.viewer-open {
   position: fixed; inset-inline: 0; width: 100%; overflow: hidden;
 }
@@ -859,8 +860,8 @@ body.viewer-open {
 
 .viewer-buy { width: 100%; }
 
-/* تلميح أن الصورة تُفتح. الطبقة على .tile-photos لا على .tile-face
-   لأن الأخير يستخدم ::after لشريط الشحن. */
+/* a hint that the photo opens; on .tile-photos because .tile-face uses
+   ::after for the charge bar */
 .tile-face[href^="#"] { cursor: zoom-in; }
 .tile-photos::before {
   content: ""; position: absolute; inset: 0; z-index: 1;

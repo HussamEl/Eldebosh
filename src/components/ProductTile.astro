@@ -1,8 +1,8 @@
 ---
-/* بطاقة منتج مصغّرة — للشبكة أعلى الصفحة الرئيسية.
-   مصممة لتعمل بلا صورة: الرقم الأهم في المواصفات يصبح هو العنصر البصري.
-   السبب: صور أمازون تحتاج الواجهة البرمجية (تُفتح بعد أول مبيعات)،
-   وصور المتجر لا يجوز نسخها يدوياً. */
+/* Compact product tile for the home page grid and the market-stall page.
+   Works without a photo: the most important number in the specs becomes the
+   visual. Amazon images are only allowed through its API (after three
+   qualifying sales), and retailer photos may never be copied. */
 import { t, type Lang } from '../i18n/ui';
 import { affiliateHref, affiliateNetwork, type Product } from '../lib/content';
 import { gearGroup } from '../lib/gear-groups';
@@ -13,7 +13,7 @@ const tr = t(lang);
 const href = affiliateHref(p);
 const viewerId = `v-${p.code ?? p.id}`;
 
-/* الرقم البطل: أول مواصفة تبدأ برقم. النص غير الرقمي لا يصلح كعنصر بصري. */
+/* The hero number: the first spec that starts with a digit. */
 const specs = Object.entries(p.key_specs);
 const numeric = specs.find(([, v]) => /^\s*\d/.test(String(v)));
 const m = numeric ? String(numeric[1]).match(/^\s*([\d\s.,]+)\s*(.*)$/) : null;
@@ -22,7 +22,7 @@ const heroValue = m ? m[1].trim() : null;
 const heroUnit = m ? m[2].trim().slice(0, 8) : '';
 const heroLabel = numeric ? numeric[0] : '';
 
-/* الرقائق: بقية المواصفات، مع تقصير القيم الطويلة */
+/* Chips: the next specs, long values shortened. */
 const photos = p.own_photos.slice(0, 3);
 const chips = specs
   .filter(([k]) => k !== heroLabel)

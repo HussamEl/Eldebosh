@@ -7,11 +7,11 @@ import { abs, hreflangs } from '../lib/seo';
 import { BUILD_STAMP } from '../lib/build-stamp';
 import { hashedAsset } from '../lib/asset-hash';
 
-/* بصمة البناء — تظهر في مصدر الصفحة، فتكشف فوراً إن كان الخادم يعرض نسخة قديمة. */
+/* Site version, in the page source: shows at once whether the server has the latest build. */
 const BUILD_ID = BUILD_STAMP;
 
-/* بصمة محتوى الجزيرة التفاعلية — بلا هذه يبقى السكربت القديم في متصفح
-   الزائر سنةً كاملة بحكم `.htaccess`، فتصل صفحة جديدة بسلوك قديم (`I-025`). */
+/* The UI script's URL carries its content hash, so a changed script is never
+   served from a year-long browser cache (src/lib/asset-hash.ts). */
 const UI_SCRIPT = hashedAsset('/js/eldebosh-ui.js');
 
 interface Props {

@@ -1,7 +1,13 @@
 /**
- * فحص القواعد الملزمة قبل كل بناء.
- * يفشل البناء إذا خُرقت قاعدة. هذا يطبّق قواعد CLAUDE.md آلياً
- * بدل الاعتماد على الانضباط اليدوي.
+ * The binding content rules, enforced before every build.
+ *
+ * `npm run build` runs this first and stops on any error, so a rule violation
+ * can never reach the live site. docs/RULES.md explains each rule and why it
+ * exists; this file is where they are enforced.
+ *
+ * Errors fail the build. Warnings are printed and do not.
+ *
+ *   npm run check
  */
 import { readdir, readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
@@ -29,16 +35,16 @@ async function walk(dir) {
 
 function frontmatter(raw, file) {
   const m = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  if (!m) { errors.push(`${file}: لا يوجد frontmatter`); return { data: null, body: raw }; }
+  if (!m) { errors.push(`${file}: no frontmatter`); return { data: null, body: raw }; }
   try {
     return { data: YAML.parse(m[1]), body: raw.slice(m[0].length) };
   } catch (err) {
-    errors.push(`${file}: frontmatter غير صالح — ${err.message}`);
+    errors.push(`${file}: invalid frontmatter — ${err.message}`);
     return { data: null, body: '' };
   }
 }
 
-/* ---------- تحميل ---------- */
+/* ---------- load ---------- */
 
 const productFiles = (await walk(join(ROOT, 'src/data/products'))).filter((f) => /\.ya?ml$/.test(f));
 const products = [];
@@ -61,240 +67,215 @@ for (const f of (await walk(join(ROOT, 'src/data/categories'))).filter((f) => /\
   categories.push({ file: f, data: YAML.parse(await readFile(f, 'utf8')) });
 }
 
+/* ---------- category slugs must not collide with fixed routes ----------
+   Category pages live at /<lang>/<slug>/, beside the fixed sections. A category
+   named like a section would shadow it. Keep in sync with RESERVED in
+   src/i18n/ui.ts. */
 const RESERVED = new Set(['solutions', 'guides', 'compare', 'blog', 'info', 'sok', 'search', 'admin', 'sv', 'en', 'pagefind']);
-
-/* ---------- 1. تصادم مسارات الفئات ---------- */
 for (const c of categories) {
   for (const [lang, slug] of Object.entries(c.data.slugs ?? {})) {
-    if (RESERVED.has(slug)) errors.push(`${c.file}: slug "${slug}" (${lang}) محجوز ويسبب تصادم مسارات`);
+    if (RESERVED.has(slug)) errors.push(`${c.file}: slug "${slug}" (${lang}) is reserved and would collide with a fixed route`);
   }
 }
 
-/* ---------- 1b. المنتج ينتمي إلى فئة وفئة فرعية موجودتين فعلاً ----------
- *
- * أُضيف في 2026-09-20 قبل أن يقع العطب لا بعده، لأن بابه فُتح على مصراعيه:
- * صار كل منتج يُضاف بجملة تُملى على مساعد («أضفه تحت كذا»)، والحرف الناقص
- * في اسم الفئة الفرعية لم يكن يشتكي منه شيء.
- *
- * وما كان يحدث بلا هذا الفحص: `powerbank` بدل `powerbanks` تمرّ خضراء،
- * فيختفي المنتج من كل أزرار التصفية ومن صفحة فئته، ويظهر في الشبكة وحدها.
- * لا رسالة، ولا سطر أحمر — منتج حيّ لا طريق إليه.
- */
+/* ---------- categories and subcategories must exist ----------
+   A misspelt subcategory (`powerbank` for `powerbanks`) would otherwise pass:
+   the item would vanish from every filter and category page while staying
+   live, with nothing reporting it. The admin panel offers a dropdown; this
+   catches files edited by hand or by an assistant. */
 {
   const catIds = new Set(categories.map((c) => c.data.id));
-  const subIds = new Map();
-  for (const c of categories) {
-    subIds.set(c.data.id, new Set((c.data.subcategories ?? []).map((s) => s.id)));
-  }
-  const near = (want, pool) =>
-    [...pool].find((x) => x.startsWith(String(want).slice(0, 4))) ?? [...pool][0];
+  const subIds = new Map(categories.map((c) => [c.data.id, new Set((c.data.subcategories ?? []).map((s) => s.id))]));
+  const near = (want, pool) => [...pool].find((x) => x.startsWith(String(want).slice(0, 4))) ?? [...pool][0];
 
-  // Products and content pages both carry category/subcategory.
   for (const p of [...products, ...docs.filter((x) => x.coll !== 'pages')]) {
     const d = p.data;
     if (!catIds.has(d.category)) {
-      errors.push(
-        `${p.file}: فئة غير موجودة "${d.category}" — المتاح: ${[...catIds].join(' · ')}`,
-      );
-      continue; // بلا فئة صحيحة لا معنى لفحص الفرعية
+      errors.push(`${p.file}: unknown category "${d.category}" — available: ${[...catIds].join(' · ')}`);
+      continue;
     }
     const subs = subIds.get(d.category) ?? new Set();
     if (d.subcategory && !subs.has(d.subcategory)) {
       errors.push(
-        `${p.file}: فئة فرعية غير موجودة "${d.subcategory}" تحت "${d.category}"` +
-          ` — هل تقصد "${near(d.subcategory, subs)}"؟ المتاح: ${[...subs].join(' · ')}`,
+        `${p.file}: unknown subcategory "${d.subcategory}" under "${d.category}"` +
+          ` — did you mean "${near(d.subcategory, subs)}"? available: ${[...subs].join(' · ')}`,
       );
     }
   }
 }
 
-/* ---------- 1c. الرمز والمعرّف لا يتكرران ----------
- *
- * أسماء الصور مبنية على `code`. فمنتجان يحملان `P-24` يتقاسمان صورهما:
- * الثاني يرفع صورته فوق صورة الأول، والقارئ يرى منتجاً تحت اسم منتج آخر —
- * وهو ما يمنعه `CLAUDE.md` صراحةً («الصورة ادعاء بصري»).
- */
+/* ---------- product code and id are unique ----------
+   Photo filenames are built from the code. Two products sharing a code would
+   share photos, showing one product under another's name. */
 {
   const seenCode = new Map();
   const seenId = new Map();
   for (const p of products) {
     if (p.data.code) {
       const k = `${p.data.lang}:${p.data.code}`;
-      if (seenCode.has(k)) {
-        errors.push(`${p.file}: الرمز "${p.data.code}" مستعمل في ${seenCode.get(k)} — الرمز يُسنَد مرة واحدة`);
-      } else seenCode.set(k, p.file);
+      if (seenCode.has(k)) errors.push(`${p.file}: code "${p.data.code}" is already used by ${seenCode.get(k)} — codes are assigned once`);
+      else seenCode.set(k, p.file);
     }
     const k = `${p.data.lang}:${p.data.id}`;
-    if (seenId.has(k)) {
-      errors.push(`${p.file}: المعرّف "${p.data.id}" مستعمل في ${seenId.get(k)}`);
-    } else seenId.set(k, p.file);
+    if (seenId.has(k)) errors.push(`${p.file}: id "${p.data.id}" is already used by ${seenId.get(k)}`);
+    else seenId.set(k, p.file);
   }
 }
 
-/* ---------- 1d. كل صورة مذكورة لها ملف على القرص ----------
- *
- * `own_photos[].src` حقل نصّي حر. ووجّهه إلى صورة لم تُرفع قطّ فالبناء أخضر
- * والصورة مكسورة على الموقع الحيّ. وهذا احتمالٌ قائم في كل إضافة منتج:
- * النصّ يصل في المحادثة، والصورة تحتاج رفعاً منفصلاً إلى `public/uploads/`.
- */
+/* ---------- every referenced photo exists, and is ours ----------
+   A photo path is free text. One that points at a file never uploaded passes
+   the build and shows a broken image on the live site. */
 {
-  const UP = join(ROOT, 'public');
+  const PUBLIC = join(ROOT, 'public');
   for (const p of products) {
     for (const ph of p.data.own_photos ?? []) {
       if (!ph?.src) continue;
       if (/^https?:/i.test(ph.src)) {
-        errors.push(`${p.file}: صورة من نطاق خارجي "${ph.src}" — صورنا فقط، من public/uploads/`);
+        errors.push(`${p.file}: photo "${ph.src}" is on another domain — only our own photos, from public/uploads/`);
         continue;
       }
-      if (!existsSync(join(UP, ph.src.replace(/^\//, '')))) {
-        errors.push(`${p.file}: الصورة "${ph.src}" مذكورة ولا ملف لها — ارفعها إلى public/uploads/ أولاً`);
+      if (!existsSync(join(PUBLIC, ph.src.replace(/^\//, '')))) {
+        errors.push(`${p.file}: photo "${ph.src}" has no file — upload it to public/uploads/ first`);
       }
     }
-    if (p.data.image && !/^https?:/i.test(p.data.image) && !existsSync(join(UP, p.data.image.replace(/^\//, '')))) {
-      errors.push(`${p.file}: الصورة "${p.data.image}" مذكورة ولا ملف لها`);
+    if (p.data.image && !/^https?:/i.test(p.data.image) && !existsSync(join(PUBLIC, p.data.image.replace(/^\//, '')))) {
+      errors.push(`${p.file}: image "${p.data.image}" has no file`);
     }
   }
 }
 
-/* ---------- 2. كل منتج منشور يحتاج مصدراً وتاريخ تحقق ---------- */
-// 2b — عنوان الإعلان يكتبه البائع لا المصنّع، فلا يُوثَّق منه وحده.
-// وللمواصفة ثلاثة مصادر مقبولة (I-019):
-//   (أ) صفحة المصنّع في `source_url`
-//   (ب) `spec_photo` — صورةٌ من تصويرنا تُظهر المطبوع على الجهاز
-//   (ج) `owner_checked` — حسام فتح صفحة البائع وقارنها بالجهاز الذي بيده
-//
-// و(ج) أُضيف في 2026-09-04 بطلبه، وهو محقّ: كان الشرط أن تحمل صورتُه مواصفةً
-// مطبوعة — وأكثر الأجهزة لا تطبع شيئاً. فالشرط كان يعاقب المالك على تصميم
-// المصنّع. والأهم أنّ تحقّقه **أقوى مما مُنع به**: هو الذي كشف أنّ ASIN في
-// P-03 كان لطراز آخر، وهو عطبٌ لم تكن أي صورة لتكشفه.
-//
-// والفرق بين الثلاثة مسجَّل ولا يُطمس: (أ) و(ب) يمكن لغيرنا التحقق منهما،
-// و(ج) شهادةُ مالكٍ مؤرَّخة باسمه. ولذلك يُكتب التاريخ ويُقرأ.
+/* ---------- products: sources, links, tested ----------
+   A visible product (verified: true) needs a source for its specifications
+   and a verification date. A listing title on a retailer page is written by
+   the seller, not the maker, so a retailer page alone only warns. It is
+   enough together with either:
+     spec_photo     our own photo of the specification printed on the device
+     owner_checked  the date the owner compared the listing with the device
+   The last one is the owner's dated statement, not something others can
+   check — which is why the date is recorded. */
 const RETAILER = /^(?:www\.)?(?:amazon\.[a-z.]+|amzn\.to|ebay\.[a-z.]+|cdon\.[a-z.]+|komplett\.se|netonnet\.se|elgiganten\.se|webhallen\.com)$/i;
 
 for (const p of products) {
   const d = p.data;
-  if (d.verified === true && !d.demo) {
-    if (!d.source_url) errors.push(`${p.file}: verified=true بلا source_url`);
-    if (!d.last_verified) errors.push(`${p.file}: verified=true بلا last_verified`);
+  if (d.verified === true) {
+    if (!d.source_url) errors.push(`${p.file}: verified without source_url`);
+    if (!d.last_verified) errors.push(`${p.file}: verified without last_verified`);
     if (d.source_url && !d.spec_photo && !d.owner_checked) {
       let host = '';
       try { host = new URL(String(d.source_url)).hostname; } catch { host = ''; }
       if (host && RETAILER.test(host)) {
-        warnings.push(`${p.file}: مصدر المواصفات صفحة بائع (${host}) — يلزم رابط مصنّع أو spec_photo أو owner_checked — I-019`);
+        warnings.push(`${p.file}: specification source is a retailer page (${host}) — add a maker's page, spec_photo or owner_checked`);
       }
     }
   }
-  // صورة المواصفة لا تكون إلا واحدة من صورنا — وإلا فهي ادعاء بلا ملف
+  // The specification photo must be one of our photos, or it is a claim without a file.
   if (d.spec_photo && !(d.own_photos ?? []).some((ph) => ph.src === d.spec_photo)) {
-    errors.push(`${p.file}: spec_photo "${d.spec_photo}" ليست من own_photos — مصدر المواصفة يجب أن يكون صورة نملكها فعلاً`);
+    errors.push(`${p.file}: spec_photo "${d.spec_photo}" is not one of own_photos`);
   }
-  if ('price' in d) errors.push(`${p.file}: حقل price ممنوع — استخدم price_band`);
+  // Prices are only allowed from the Amazon API, which is not active.
+  if ('price' in d) errors.push(`${p.file}: price is not allowed — use price_band`);
 
-  // ASIN بصيغة صحيحة، وإلا الرابط المولّد سيكسر
+  // The buy link is built from the ASIN; a malformed one breaks it.
   if (d.asin && !/^[A-Z0-9]{10}$/.test(d.asin)) {
-    errors.push(`${p.file}: ASIN غير صالح "${d.asin}" — عشر خانات، حروف كبيرة وأرقام`);
+    errors.push(`${p.file}: invalid ASIN "${d.asin}" — 10 characters, capital letters and digits`);
   }
-  // منتج موثق بلا وسيلة ربط = بطاقة بلا زر
-  if (d.verified === true && !d.demo && !d.asin && !d.affiliate?.url) {
-    warnings.push(`${p.file}: منتج موثق بلا asin ولا رابط أفلييت — لن يظهر زر الشراء`);
+  if (d.verified === true && !d.asin && !d.affiliate?.url) {
+    warnings.push(`${p.file}: visible product without ASIN — it shows no buy button`);
   }
-  // تعارض: رابط أمازون ملصوق يدوياً بدل ASIN
+  // Amazon links are generated from the ASIN with our tag; a pasted one is refused.
   if (d.affiliate?.url && /amazon\./i.test(d.affiliate.url)) {
-    errors.push(`${p.file}: رابط أمازون ملصوق يدوياً — استخدم حقل asin ليبنيه النظام بالوسم الصحيح`);
+    errors.push(`${p.file}: hand-pasted Amazon link — use the asin field so the link carries the correct tag`);
   }
-  if (d.demo) warnings.push(`${p.file}: محتوى DEMO — يجب حذفه قبل الإطلاق`);
 
-  // التجربة الفعلية تحتاج دليلاً، لا إعلاناً
+  // A claim of use needs evidence, not a flag.
   if (d.tested === true) {
-    if (d.owned !== true) errors.push(`${p.file}: tested=true بينما owned=false — لا يجوز ادعاء استخدام منتج لا نملكه`);
-    if (!d.owned_since) errors.push(`${p.file}: tested=true بلا owned_since`);
-    if (!d.usage_period) errors.push(`${p.file}: tested=true بلا usage_period (مدة الاستخدام)`);
+    if (d.owned !== true) errors.push(`${p.file}: tested without owned — we cannot claim use of a product we do not own`);
+    if (!d.owned_since) errors.push(`${p.file}: tested without owned_since`);
+    if (!d.usage_period) errors.push(`${p.file}: tested without usage_period`);
     if (!Array.isArray(d.own_photos) || d.own_photos.length === 0) {
-      errors.push(`${p.file}: tested=true بلا صورة واحدة من تصويرنا (own_photos)`);
+      errors.push(`${p.file}: tested without one of our own photos (own_photos)`);
     }
     if (!Array.isArray(d.hands_on_limits) || d.hands_on_limits.length === 0) {
-      errors.push(`${p.file}: tested=true بلا hands_on_limits — يجب ذكر ما لا تُظهره تجربتنا`);
+      errors.push(`${p.file}: tested without hands_on_limits — state what our use does not show`);
     }
   }
 }
 
-/* ---------- 3. كل صفحة تجارية تربط بصفحة حل ---------- */
+/* ---------- every commercial page belongs to a solution page ----------
+   The site leads from a problem to a solution to a product. A guide,
+   comparison or article without a parent solution is a sales page with no
+   problem behind it. Fixed pages (legal, about, contact) are exempt. */
 const solutionIds = new Set(docs.filter((d) => d.coll === 'solutions').map((d) => `${d.data.lang}:${d.data.problem_id}`));
 for (const d of docs) {
-  if (d.coll === 'solutions') continue;
-  // الصفحات الثابتة (سياسة، اتصال، عنّا) ليست صفحات تجارية ولا تعود إلى حل
-  if (d.coll === 'pages') continue;
-  if (!d.data.solution) { errors.push(`${d.file}: حقل solution مفقود — كل صفحة يجب أن تعود إلى صفحة حل`); continue; }
+  if (d.coll === 'solutions' || d.coll === 'pages') continue;
+  if (!d.data.solution) { errors.push(`${d.file}: missing solution — every page leads back to a solution page`); continue; }
   if (!solutionIds.has(`${d.data.lang}:${d.data.solution}`)) {
-    errors.push(`${d.file}: solution="${d.data.solution}" لا توجد له صفحة حل بلغة ${d.data.lang}`);
+    errors.push(`${d.file}: solution "${d.data.solution}" has no solution page in ${d.data.lang}`);
   }
 }
 
-/* ---------- 4. كل معرّف منتج مذكور موجود وموثق ---------- */
+/* ---------- referenced products exist and are visible ---------- */
 const byId = new Map();
 for (const p of products) byId.set(`${p.data.lang}:${p.data.id}`, p.data);
 const svById = new Map(products.filter((p) => p.data.lang === 'sv').map((p) => [p.data.id, p.data]));
 
 function checkProductRef(id, d) {
   const hit = byId.get(`${d.data.lang}:${id}`) ?? svById.get(id);
-  if (!hit) { errors.push(`${d.file}: يشير إلى منتج غير موجود "${id}"`); return; }
-  if (!hit.verified) errors.push(`${d.file}: يشير إلى منتج غير موثق "${id}" (verified=false)`);
+  if (!hit) { errors.push(`${d.file}: refers to unknown product "${id}"`); return; }
+  if (!hit.verified) errors.push(`${d.file}: refers to product "${id}", which is not visible (verified: false)`);
 }
 for (const d of docs) {
-  if (d.data.published !== true) continue; // المسودات لا تُفحص
+  if (d.data.published !== true) continue;
   for (const id of d.data.products ?? []) checkProductRef(id, d);
   for (const pick of d.data.picks ?? []) checkProductRef(pick.product, d);
-  // الهيكل المعلَن لا يرشّح ولا يقارن — الشروط على النصّ التام وحده
+  // A skeleton recommends and compares nothing; the counts apply to written text.
   if (d.data.stage === 'draft') continue;
   if (d.coll === 'guides' && (d.data.picks ?? []).length < 2) {
-    errors.push(`${d.file}: دليل منشور بأقل من ترشيحين`);
+    errors.push(`${d.file}: published guide with fewer than two picks`);
   }
   if (d.coll === 'comparisons') {
     const n = (d.data.products ?? []).length;
-    if (n < 2 || n > 4) errors.push(`${d.file}: مقارنة منشورة بعدد منتجات ${n} (المطلوب 2–4)`);
+    if (n < 2 || n > 4) errors.push(`${d.file}: published comparison with ${n} products (2–4 required)`);
   }
 }
 
-/* ---------- 5. لا روابط أفلييت خام داخل نص المقال ---------- */
+/* ---------- no raw affiliate links in page text ----------
+   Buy links live in product files and are rendered with rel="sponsored" and
+   the disclosure. A link typed into an article bypasses both. */
 const RAW = /\((https?:\/\/[^)]*?(?:tag=|aff(?:iliate)?|[?&]ref=|adtraction|awin|tradedoubler|amzn\.to)[^)]*)\)/i;
 for (const d of docs) {
   const m = d.body.match(RAW);
-  if (m) errors.push(`${d.file}: رابط أفلييت خام داخل النص (${m[1].slice(0, 60)}…) — الروابط تعيش في ملف المنتج فقط`);
+  if (m) errors.push(`${d.file}: raw affiliate link in the text (${m[1].slice(0, 60)}…) — links live in product files`);
 }
 
-/* ---------- 5b. خط الإنتاج ---------- */
-// بقرار حسام في 2026-09-03 صار للموقع حالة ثالثة: هيكل منشور بلا نصّ.
-// وبقراره في 2026-09-04 (I-020) انفصل الحقلان نهائياً:
-//   published  هل الرابط موجود على الموقع؟
-//   stage      إلى أين وصل النصّ؟
-// فـ`draft` و`written` كلاهما يُنشر كهيكل معلَن: القالب يستبدل المتن بصفحة
-// تقول إنها لم تُنشر بعد، وهي `noindex` وخارج `sitemap` ولا تعرض منتجاً.
-// النصّ نفسه لا يظهر إلا عند `stage: published`. أمّا `reviewed` فحالة عبور
-// قصيرة: رُوجع ولم يُنشر بعد، ونشره بها يعني نصّاً تامّاً بلا قرار نشر.
+/* ---------- `published` and `stage` agree ----------
+   Two independent fields:
+     published  is the URL live?
+     stage      how far has the text got? draft → written → reviewed → published
+   draft and written may be live as announced skeletons: the page says it is
+   not written yet, is noindex, and shows no products. Only stage `published`
+   shows the text. `reviewed` is a short hand-over state and is never live. */
 for (const d of docs) {
   const stage = d.data.stage ?? 'draft';
   const pub = d.data.published === true;
   if (pub && stage === 'reviewed') {
-    errors.push(`${d.file}: published=true مع stage="reviewed" — اقلبها إلى published بعد قرار النشر، أو أبقِها written`);
+    errors.push(`${d.file}: published with stage "reviewed" — set stage to published once the owner approves, or keep it written`);
   }
   if (!pub && stage === 'published') {
-    errors.push(`${d.file}: stage=published لكن published=false — تناقض`);
+    errors.push(`${d.file}: stage published but published is false`);
   }
 }
 
 const testedIds = new Set(products.filter((p) => p.data.tested === true).map((p) => p.data.id));
 
-/* ---------- 5c. نصّ التجربة لا يتكرر بين منتجين ---------- */
-// جملة تجربة متطابقة حرفياً في منتجين تقول للقارئ إن أحداً لم يكتبها عن تجربة.
-// وهذا نفسه ما نأخذه على المنافسين. تنبيه اليوم، وخطأ يوم تصل جمل حسام الحقيقية.
+/* ---------- hands-on text is not copied between products ----------
+   An identical line of experience in two products tells the reader nobody
+   wrote it from experience. Dates and numbers are masked first, so a template
+   with different dates still counts as the same line. Warning only: the owner
+   rewrites these himself. */
 {
-  // التاريخ وحده لا يجعل الجملتين مختلفتين: «منذ يونيو ٢٠٢٥» و«منذ يناير ٢٠٢٦»
-  // قالبٌ واحد. تُقنَّع الشهور والأرقام قبل المقارنة.
   const MONTHS = /\b(januari|februari|mars|april|maj|juni|juli|augusti|september|oktober|november|december)\b/g;
-  const shape = (line) =>
-    line.trim().toLowerCase().replace(/\s+/g, ' ').replace(MONTHS, '§').replace(/\d+/g, '#');
-
+  const shape = (line) => line.trim().toLowerCase().replace(/\s+/g, ' ').replace(MONTHS, '§').replace(/\d+/g, '#');
   const seen = new Map();
   for (const p of products) {
     for (const line of p.data.hands_on ?? []) {
@@ -304,15 +285,13 @@ const testedIds = new Set(products.filter((p) => p.data.tested === true).map((p)
   }
   for (const [line, owners] of seen) {
     if (owners.length < 2) continue;
-    warnings.push(
-      `نصّ تجربة مكرر حرفياً في ${owners.length} منتجات (${owners.join('، ')}): "${line.slice(0, 60)}…" — التجربة تُكتب مرة واحدة عن منتج واحد`
-    );
+    warnings.push(`same hands-on text in ${owners.length} products (${owners.join(', ')}): "${line.slice(0, 60)}…" — experience is written once, about one product`);
   }
 }
 
-/* ---------- 5d. عبارة «Bäst i test» ممنوعة في كل مكان ---------- */
-// المادة 6.2 تمنعها صراحةً — ادعاء اختبار مقارن أمام قانون التسويق السويدي.
-// وتفحص ملفات الترجمة أيضاً: أول ظهور لها كان في تسمية شارة، لا في مقال.
+/* ---------- "Bäst i test" is banned everywhere ----------
+   It claims a comparative test we did not run, which Swedish marketing law
+   treats as misleading. Interface strings are scanned too. */
 {
   const uiFile = join(ROOT, 'src/i18n/ui.ts');
   const scan = [
@@ -322,41 +301,40 @@ const testedIds = new Set(products.filter((p) => p.data.tested === true).map((p)
   ];
   for (const [file, text] of scan) {
     const hit = findBannedPhrase(text);
-    if (hit) errors.push(`${file}: عبارة "${hit}" ممنوعة — المادة 6.2`);
+    if (hit) errors.push(`${file}: "${hit}" is banned`);
   }
 }
 
-/* ---------- 5f. سلسلة «مملوك غير مُختبَر» لا تدّعي استخدامه ---------- */
-// هذان المفتاحان لا يُعرضان إلا تحت منتج tested=false. أي ادعاء استخدام فيهما
-// كذبٌ بحكم موضعه، مهما كان صادقاً في مكان آخر.
+/* ---------- the "owned, not tested" strings claim no use ----------
+   These two strings are shown only under products with tested: false, so any
+   claim of use in them is false by position. */
 {
   const text = await readFile(join(ROOT, 'src/i18n/ui.ts'), 'utf8').catch(() => '');
   for (const key of ['handson.owned_only', 'handson.not_tested']) {
     for (const m of text.matchAll(new RegExp(`'${key}':\\s*'((?:[^'\\\\]|\\\\.)*)'`, 'g'))) {
       const hit = findOwnedOnlyUseClaim(m[1]);
-      if (hit) errors.push(`src/i18n/ui.ts: "${key}" يدّعي استخدام منتج غير مُختبَر ("${hit}")`);
+      if (hit) errors.push(`src/i18n/ui.ts: "${key}" claims use of an untested product ("${hit}")`);
     }
   }
 }
 
-/* ---------- 5e. لا ادعاء جماعي على مجموعة غير مُختبَرة ---------- */
+/* ---------- no claim of use over a group we did not all test ----------
+   "We use all four" on a page where two of the four are tested. */
 for (const d of docs) {
   const ids = [...(d.data.products ?? []), ...(d.data.picks ?? []).map((x) => x?.product)].filter(Boolean);
   if (!ids.length) continue;
-  const total = ids.length;
   const tested = ids.filter((id) => testedIds.has(id)).length;
-  const hit = findOverclaimedCount(`${d.data.title ?? ''}\n${d.body}`, { total, tested });
+  const hit = findOverclaimedCount(`${d.data.title ?? ''}\n${d.body}`, { total: ids.length, tested });
   if (hit) {
-    errors.push(
-      `${d.file}: ادعاء استخدام على المجموعة كلها ("${hit.text}") بينما ${hit.tested} من ${hit.total} فقط tested=true`
-    );
+    errors.push(`${d.file}: claims use of the whole group ("${hit.text}") but only ${hit.tested} of ${hit.total} are tested`);
   }
 }
 
-/* ---------- 5g. الهيكل وعدٌ عليه تاريخ ---------- */
-// المادة 6.4: هيكل وقف تسعين يوماً بلا كتابة لم يعد صادقاً — يُكتب أو يُسحب.
-// وهذه الجملة وحدها من نصّ المادة قابلة للفرض، فتُفرض. القياس من `updated`،
-// وهو يوم نشر الهيكل، وتغييره لشراء وقت إضافي يخالف المادة نفسها.
+/* ---------- a skeleton is a promise with a date ----------
+   A skeleton left unwritten for 90 days is no longer honest: it is written or
+   unpublished. Measured from `updated`, the day it was published; changing
+   that date to buy time defeats the rule. docs/project/STATE.md shows the
+   deadlines. */
 {
   const DAYS = 90;
   const today = new Date();
@@ -366,17 +344,16 @@ for (const d of docs) {
     if (!since || Number.isNaN(+since)) continue;
     const age = Math.floor((today - since) / 86400000);
     if (age > DAYS) {
-      errors.push(
-        `${d.file}: هيكل منشور منذ ${age} يوماً (الحدّ ${DAYS}) — يُكتب أو يُسحب، ولا يُمدَّد بتغيير التاريخ`
-      );
+      errors.push(`${d.file}: skeleton published ${age} days ago (limit ${DAYS}) — write it or unpublish it; do not move the date`);
     } else if (age > DAYS - 14) {
-      warnings.push(`${d.file}: هيكل عمره ${age} يوماً — يبقى له ${DAYS - age}`);
+      warnings.push(`${d.file}: skeleton is ${age} days old — ${DAYS - age} days left`);
     }
   }
 }
 
-/* ---------- 6. لا ادعاء تجربة في النص ---------- */
-// المنطق وحالاته في scripts/lib/claim-rule.mjs — node scripts/test-claim-rule.mjs
+/* ---------- no claim of experience without a tested product ----------
+   The phrase rules and their test cases: scripts/lib/claim-rule.mjs and
+   scripts/test-claim-rule.mjs. */
 function pageHasTestedProduct(d) {
   const ids = [...(d.data.products ?? []), ...(d.data.picks ?? []).map((x) => x?.product)].filter(Boolean);
   return ids.some((id) => testedIds.has(id));
@@ -384,19 +361,18 @@ function pageHasTestedProduct(d) {
 for (const d of docs) {
   const hit = findUnbackedClaim(d.body);
   if (!hit) continue;
-  if (d.data.hands_on === true && pageHasTestedProduct(d)) continue; // مسموح: تجربة حقيقية موثقة
+  if (d.data.hands_on === true && pageHasTestedProduct(d)) continue;
   errors.push(
     hit.kind === 'comparative'
-      ? `${d.file}: مقارنة تدّعي تجربةً ضمناً ("${hit.text}") — النفي فيها يقع على غيرنا والادعاء علينا`
-      : `${d.file}: ادعاء تجربة ("${hit.text}") بلا سند. اضبط hands_on: true واربط الصفحة بمنتج tested=true، أو أعد الصياغة إلى استشهاد بمصدر`
+      ? `${d.file}: comparison implies we tested ("${hit.text}") — the negation lands on others, the claim on us`
+      : `${d.file}: claim of experience ("${hit.text}") without backing — set hands_on: true and link a tested product, or cite a source instead`,
   );
 }
 
-/* ---------- 7. المصادر الخارجية: إسناد كامل ---------- */
-// 7b — شكل الرابط. لا أستطيع فتح الصفحات: أكثر المضيفات محجوبة عن بيئة
-// التنفيذ، والتحقق البشري سقط بقرار حسام. فما بقي من الفحص المستقل هو الشكل،
-// وهو يمسك عطباً حقيقياً وقع فعلاً: رابط `SAS` جاء
-// `google.com/search?q=https://www.flysas.com/…` — استشهادٌ بصيغة مصدر.
+/* ---------- external sources are complete and point at the source ----------
+   Pages cannot be fetched from CI, so the check is on form: a search engine,
+   proxy or translator URL, or a URL that wraps another URL, is not the source
+   itself. */
 const WRAPPER = /^(?:www\.)?(?:google\.[a-z.]+|bing\.com|duckduckgo\.com|search\.[a-z.]+|r\.jina\.ai|webcache\.googleusercontent\.com|translate\.google\.[a-z.]+|.*\.translate\.goog)$/i;
 
 function linkProblem(raw) {
@@ -404,13 +380,12 @@ function linkProblem(raw) {
   try {
     u = new URL(raw);
   } catch {
-    return 'ليس رابطاً صالحاً';
+    return 'not a valid URL';
   }
-  if (!/^https?:$/.test(u.protocol)) return `بروتوكول غير مقبول (${u.protocol})`;
-  if (WRAPPER.test(u.hostname)) return `محرّك بحث أو وسيط، لا المصدر (${u.hostname})`;
-  // رابط يلفّ رابطاً: العنوان الحقيقي مدفون في معاملات الاستعلام
+  if (!/^https?:$/.test(u.protocol)) return `unsupported protocol (${u.protocol})`;
+  if (WRAPPER.test(u.hostname)) return `a search engine or proxy, not the source (${u.hostname})`;
   for (const [, v] of u.searchParams) {
-    if (/^https?:\/\//i.test(v)) return 'يلفّ رابطاً آخر داخل معاملاته';
+    if (/^https?:\/\//i.test(v)) return 'wraps another URL in its query';
   }
   return null;
 }
@@ -418,45 +393,47 @@ function linkProblem(raw) {
 for (const d of docs) {
   for (const [i, src] of (d.data.sources ?? []).entries()) {
     if (!src?.publisher || !src?.url || !src?.accessed) {
-      errors.push(`${d.file}: المصدر رقم ${i + 1} ناقص — يلزم publisher و url و accessed`);
+      errors.push(`${d.file}: source ${i + 1} is incomplete — publisher, url and accessed are required`);
       continue;
     }
     const bad = linkProblem(String(src.url));
-    if (bad) errors.push(`${d.file}: المصدر رقم ${i + 1} — ${bad}: ${String(src.url).slice(0, 70)}`);
+    if (bad) errors.push(`${d.file}: source ${i + 1} — ${bad}: ${String(src.url).slice(0, 70)}`);
   }
 }
 
-/* ---------- 8. طول الوصف ---------- */
+/* ---------- description length (search result snippet) ---------- */
 for (const d of docs) {
   const len = (d.data.description ?? '').length;
   if (len < 50 || len > 165) {
-    const msg = `${d.file}: description بطول ${len} حرفاً (المطلوب 50–165)`;
+    const msg = `${d.file}: description is ${len} characters (50–165 required)`;
     if (d.data.published === true) errors.push(msg); else warnings.push(msg);
   }
 }
 
-/* ---------- 9. بيانات الساحة ---------- */
+/* ---------- market stall: a real phone number ----------
+   The stall section shows call and SMS buttons; a placeholder number would
+   publish a dead contact. */
 try {
   const tor = YAML.parse(await readFile(join(ROOT, 'src/data/torget/torget.yaml'), 'utf8'));
   if (tor?.active) {
     if (!tor.phone || /0{6,}/.test(String(tor.phone))) {
-      errors.push('src/data/torget/torget.yaml: رقم هاتف نائب — ضع الرقم الحقيقي أو اجعل active: false');
+      errors.push('src/data/torget/torget.yaml: placeholder phone number — set the real number or active: false');
     }
     if (!/^\+\d{8,15}$/.test(String(tor.phone || ''))) {
-      errors.push('src/data/torget/torget.yaml: الهاتف يجب أن يكون بصيغة دولية تبدأ بـ+');
+      errors.push('src/data/torget/torget.yaml: phone must be in international format, starting with +');
     }
   }
-} catch { /* الملف اختياري */ }
+} catch { /* the file is optional */ }
 
-/* ---------- النتيجة ---------- */
+/* ---------- result ---------- */
 const line = '─'.repeat(52);
-console.log(`\n${line}\nفحص القواعد الملزمة\n${line}`);
-console.log(`منتجات: ${products.length} · مستندات: ${docs.length} · فئات: ${categories.length}`);
-for (const w of warnings) console.log(`  تنبيه: ${w}`);
+console.log(`\n${line}\nBinding rules\n${line}`);
+console.log(`products: ${products.length} · pages: ${docs.length} · categories: ${categories.length}`);
+for (const w of warnings) console.log(`  warning: ${w}`);
 if (errors.length) {
-  console.error(`\n✗ فشل الفحص — ${errors.length} خطأ:`);
+  console.error(`\n✗ ${errors.length} rule violation(s):`);
   for (const e of errors) console.error(`  • ${e}`);
   console.error('');
   process.exit(1);
 }
-console.log(`\n✓ اجتاز الفحص${warnings.length ? ` (${warnings.length} تنبيه)` : ''}\n`);
+console.log(`\n✓ All rules pass${warnings.length ? ` (${warnings.length} warning${warnings.length > 1 ? 's' : ''})` : ''}\n`);

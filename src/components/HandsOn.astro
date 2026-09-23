@@ -1,6 +1,6 @@
 ---
-/* شارة التجربة الفعلية + الأدلة.
-   تظهر فقط عندما tested=true. المنتج غير المجرَّب يعرض الشارة المعاكسة صراحةً. */
+/* Evidence of real use: shown only when tested is true. An untested product
+   says so explicitly instead. */
 import { t, type Lang } from '../i18n/ui';
 
 interface Photo { src: string; alt: string; caption?: string; }
@@ -19,14 +19,13 @@ interface Props {
 const { lang, tested, owned = false, ownedSince, usagePeriod, photos = [], notes = [], limits = [], videoUrl, videoThumb } = Astro.props;
 const tr = t(lang);
 
-/* تُبنى الأسطر هنا لا في القالب: `Astro` يبتلع الفراغ حول التعبيرات المتجاورة،
-   وكان الناتج المنشور «använd isedan juni 2025 · sedan2025-06» — كلمتان
-   ملتصقتان، والتاريخ نفسه مرتين. النصّ الواحد لا يترك للقالب مسافةً يخطئ فيها. */
+/* Lines are built as whole strings here, not in the template: Astro drops the
+   whitespace between adjacent expressions, which glued words together. */
 const ym = ownedSince ? ownedSince.toISOString().slice(0, 7) : null;
 
-/* `usage_period` تحمل اليوم تاريخاً يكرّر `owned_since` («sedan juni 2025»)،
-   فلا تسبقها كلمة ولا يتبعها التاريخ نفسه بصيغة أخرى. حين تصير تواتراً
-   («dagligen») يعود `handson.used` إلى السطر: «— sedan 2025-06 · använd dagligen». */
+/* usage_period currently repeats owned_since ("sedan juni 2025"), so it gets no
+   prefix and the date is not repeated. If it becomes a frequency ("dagligen"),
+   put handson.used back: "— sedan 2025-06 · använd dagligen". */
 const period = usagePeriod || (ym ? `${tr('handson.since')} ${ym}` : null);
 const badgeLine = period ? `${tr('handson.badge')} — ${period}` : tr('handson.badge');
 const sinceLine = ym ? `${tr('handson.since')} ${ym}` : null;
