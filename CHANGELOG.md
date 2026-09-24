@@ -5,6 +5,11 @@ A few lines per delivery, newest first. Earlier history (2026-09-02 to
 
 ## 1.0.17 — 2026-09-25
 
+- Channel presentation video (EB-041), outside the repository: 1:33,
+  1920×1080, Swedish voice-over (Piper, voice sv_SE-nst, offline) with burned-in
+  captions; the site, our own product photos with codes, the market stall and
+  the affiliate disclosure. No claim beyond what the site states.
+
 - Solution `mobilen-glider-i-bilen` published after the owner's review.
 
 ## 1.0.16 — 2026-09-25
