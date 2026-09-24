@@ -1,13 +1,13 @@
 # لوحة الحالة
 
 > **مولَّدة من المستودع — لا تُحرَّر يدوياً.** `npm run state`
-> آخر تغيّر في الحالة: 2026-09-23 20:57
+> آخر تغيّر في الحالة: 2026-09-24 06:09
 
 ## سطر الحالة
 
 ```
 منتجات 23 (ظاهرة 7 · قابلة للشراء 7 · مجرَّبة 3) ·
-صفحات 32 (نصّها منشور 12 · تنتظر المراجعة 2 · هيكل 18) ·
+صفحات 32 (نصّها منشور 12 · تنتظر المراجعة 3 · هيكل 17) ·
 فئات مفعّلة 2/2 · الساحة مفعّلة
 ```
 
@@ -54,7 +54,7 @@
 | النوع | المجموع | نصّه منشور | مكتوب ينتظر | هيكل |
 |---|---|---|---|---|
 | صفحات الحلول | 7 | 3 | 2 | 2 |
-| أدلة الشراء | 12 | 4 | 0 | 8 |
+| أدلة الشراء | 12 | 4 | 1 | 7 |
 | المقارنات | 7 | 1 | 0 | 6 |
 | المقالات | 6 | 4 | 0 | 2 |
 
@@ -62,6 +62,7 @@
 
 - `laddkabeln-gar-sonder` — solutions
 - `mobilen-laddar-langsamt` — solutions
+- `liten-powerbank-for-fickan` — guides
 
 ## مهلة الهياكل
 
@@ -69,4 +70,4 @@
 
 | آخر موعد | العدد | الصفحات |
 |---|---|---|
-| **2026-12-02** | 12 | `mobilen-glider-i-bilen` · `skrivbordet-ar-rorigt` · `basta-snabbladdare-usb-c` · `laddare-for-flera-enheter` · `liten-powerbank-for-fickan` · `magnetisk-mobilhallare-bil` · `mobilstall-skrivbord` · `gan-laddare-vs-vanlig` · `tradlos-vs-kabel` · `usb-c-pd-vs-quick-charge` · `sa-forlanger-du-batteriets-livslangd` · `usb-c-standarden-vad-galler-nu` |
+| **2026-12-02** | 11 | `mobilen-glider-i-bilen` · `skrivbordet-ar-rorigt` · `basta-snabbladdare-usb-c` · `laddare-for-flera-enheter` · `magnetisk-mobilhallare-bil` · `mobilstall-skrivbord` · `gan-laddare-vs-vanlig` · `tradlos-vs-kabel` · `usb-c-pd-vs-quick-charge` · `sa-forlanger-du-batteriets-livslangd` · `usb-c-standarden-vad-galler-nu` |

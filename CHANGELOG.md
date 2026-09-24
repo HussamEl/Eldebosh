@@ -3,6 +3,15 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.3 — 2026-09-24
+
+- Weights from the makers' pages for `P-01` (250 g), `P-02` (189 g) and
+  `P-03` (513 g), with the source beside each value. `P-04` has none: the
+  maker gives no weight and the retailer gives two. The published
+  comparison `10000-vs-20000-mah` now shows the weights in its table.
+- Guide `liten-powerbank-for-fickan` written (stage `written`, two picks,
+  three maker sources); waits for Gemini's review and the owner's approval.
+
 ## 1.0.2 — 2026-09-23
 
 - Skeleton triage (T4, approved in EB-009): six skeletons unpublished because

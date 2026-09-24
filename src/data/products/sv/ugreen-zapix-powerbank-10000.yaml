@@ -12,6 +12,8 @@ problems_solved:
   - batteriet-tar-slut
 
 # مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
+# Vikt saknas med avsikt (T6): tillverkarens sida för art. 25919 anger ingen vikt, och
+# butikssidan anger två olika (222 g och 251 g). Ingen gissning.
 key_specs:
   "Kapacitet": "10 000 mAh"
   "Trådlöst": "7,5 W"
