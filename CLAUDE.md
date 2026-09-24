@@ -88,7 +88,11 @@ short:
    with the link to its source, so the owner can check it himself.
 5. **Read only what the task needs.** Do not re-read the whole repository.
 
-Reply in Arabic: commands and paths on their own lines in code blocks,
+Reply in Arabic, right-aligned and easy to read (EB-027): **never put Arabic
+inside a code block** — code blocks render left to right and scramble it; they
+hold links, paths and commands only. Ready-to-copy replies are Arabic
+blockquotes, not code blocks. Never start an Arabic line with a Latin code
+(`P-22`, a slug): put it mid-sentence or on its own line. Keep
 conclusions first, a recommended answer rather than a choice of options, no
 flattery. Do not ask him to run terminal commands unless there is no other
 way.
