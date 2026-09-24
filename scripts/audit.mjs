@@ -35,6 +35,24 @@ function pages(dir, out = []) {
 }
 
 const problems = [];
+
+/* Products not yet verified (verified: false). The home page may show one we
+   own and photographed, but only its photo and name: no buy link (RULES 2.4). */
+const unverified = new Set();
+{
+  const dir = join(ROOT, 'src/data/products');
+  (function scan(d) {
+    for (const e of readdirSync(d)) {
+      const f = join(d, e);
+      if (statSync(f).isDirectory()) scan(f);
+      else if (/\.ya?ml$/.test(e)) {
+        const y = readFileSync(f, 'utf8');
+        const id = y.match(/^id:\s*"?([a-z0-9-]+)"?\s*$/m);
+        if (id && !/^verified:\s*true\b/m.test(y)) unverified.add(id[1]);
+      }
+    }
+  })(dir);
+}
 const note = (page, msg) => problems.push(`${page.replace(DIST, '')}: ${msg}`);
 
 // Redirect pages (the root, and old article paths) are meta-refresh stubs with
@@ -141,6 +159,12 @@ for (const file of list) {
     if (d.querySelector('.compare-table, .tile-cta')) {
       note(short, 'skeleton page shows a comparison table or buy button');
     }
+  }
+
+  // 10a. a hidden product is never sold
+  for (const el of d.querySelectorAll('[data-affiliate]')) {
+    const id = el.getAttribute('data-affiliate');
+    if (unverified.has(id)) note(short, `buy link for hidden product "${id}" (verified: false)`);
   }
 
   // 10b. a buy link is preceded by the disclosure

@@ -3,6 +3,16 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.7 — 2026-09-24
+
+- Published after the owner's review on the live site (EB-019): guide
+  `liten-powerbank-for-fickan` and article `sa-forlanger-du-batteriets-livslangd`.
+  The battery cluster is complete.
+- Hidden products (`verified: false`) we own and photographed stay on the home
+  page and the market stall with photo, name and code only: no specs, price
+  band or buy link (EB-019, RULES 2.4). `audit` fails any buy link for a
+  hidden product; it caught 12 on the old build (`P-11`, `P-22`).
+
 ## 1.0.6 — 2026-09-24
 
 - Until launch, a page at stage `written` shows its text on the live site

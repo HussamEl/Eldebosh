@@ -85,8 +85,11 @@ such text, which the owner will rewrite himself (see TASKS).
 
 ### 2.4 A product is hidden until verified
 
-`verified: false` is the default, and such a product appears on no page. To
-make it visible it needs `source_url` and `last_verified`. A specification
+`verified: false` is the default, and such a product appears on no page —
+with one exception (owner's decision EB-019): a product we own and have
+photographed may appear as a tile on the home page and the market stall with
+its photo, name and code only. No specifications, no price band, no buy link.
+To make it visible it needs `source_url` and `last_verified`. A specification
 source is one of:
 
 | | Source | Brought by |
@@ -99,7 +102,8 @@ A retailer listing (Amazon and similar) is written by the seller, not the
 maker; alone it only produces a warning. `spec_photo` must be one of the
 product's own photos.
 
-*Enforced:* `validate.mjs`. A published page referring to a hidden product
+*Enforced:* `validate.mjs`; `scripts/audit.mjs` fails a built page with a buy
+link for a hidden product. A published page referring to a hidden product
 fails the build.
 
 ### 2.5 Sources are direct and complete

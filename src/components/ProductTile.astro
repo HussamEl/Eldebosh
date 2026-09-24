@@ -11,12 +11,16 @@ import { SHOW_REVIEW_CODES, photoCode } from '../lib/review-codes';
 interface Props { product: Product; lang: Lang; }
 const { product: p, lang } = Astro.props;
 const tr = t(lang);
-const href = affiliateHref(p);
+/* A product not yet verified (verified: false) is shown only because we own it
+   and photographed it: photo and name, nothing that needs a source — no
+   specs, no price band, no buy link (EB-019, RULES 2.4). */
+const listed = p.verified === true;
+const href = listed ? affiliateHref(p) : null;
 const viewerId = `v-${p.code ?? p.id}`;
 
 /* The hero number: the first spec that starts with a digit. */
 const specs = Object.entries(p.key_specs);
-const numeric = specs.find(([, v]) => /^\s*\d/.test(String(v)));
+const numeric = !listed ? undefined : specs.find(([, v]) => /^\s*\d/.test(String(v)));
 const m = numeric ? String(numeric[1]).match(/^\s*([\d\s.,]+)\s*(.*)$/) : null;
 
 const heroValue = m ? m[1].trim() : null;
@@ -25,7 +29,7 @@ const heroLabel = numeric ? numeric[0] : '';
 
 /* Chips: the next specs, long values shortened. */
 const photos = p.own_photos.slice(0, 3);
-const chips = specs
+const chips = !listed ? [] : specs
   .filter(([k]) => k !== heroLabel)
   .slice(0, 2)
   .map(([k, v]) => [k, String(v).length > 18 ? String(v).slice(0, 17) + '…' : String(v)] as const);
@@ -94,7 +98,7 @@ const Face = photos.length || href ? 'a' : 'div';
     )}
 
     <p class="tile-band">
-      {tr(`price.${p.price_band}` as any)}
+      {listed && tr(`price.${p.price_band}` as any)}
       {p.tested && <span class="tile-torget">{tr('torget.badge')}</span>}
     </p>
 
