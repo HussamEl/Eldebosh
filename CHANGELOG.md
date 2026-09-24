@@ -3,6 +3,10 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.17 — 2026-09-25
+
+- Solution `mobilen-glider-i-bilen` published after the owner's review.
+
 ## 1.0.16 — 2026-09-25
 
 - Solution `mobilen-glider-i-bilen` written (stage `written`) from

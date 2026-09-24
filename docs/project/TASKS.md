@@ -29,7 +29,7 @@
 2. `usb-c-standarden-vad-galler-nu` ✓ منشورة (EB-023)، وفيها مضمون مقارنة USB-C وLightning المسحوبة.
 3. `tradlos-vs-kabel` ✓ منشورة (EB-029).
 4. `skrivbordet-ar-rorigt` ✓ منشورة (EB-033).
-5. `mobilen-glider-i-bilen` ✓ مكتوبة وتنتظر مراجعة حسام على الموقع.
+5. `mobilen-glider-i-bilen` ✓ منشورة (EB-041).
 
 **مؤجَّلة — آخر موعد لبياناتها `2026-11-01`،** وما لم يكتمل حتى ذلك اليوم يُسحب:
 
