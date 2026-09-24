@@ -3,6 +3,13 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.18 — 2026-09-25
+
+- Video register `docs/project/VIDEOS.md` (EB-043): each video gets a fixed
+  id. `V-01` the 10 s intro, `V-02` the channel presentation, `V-03` a 54 s
+  reel with the Piper voice Alma (CC BY 4.0, credited in the description) and
+  generated music. Files stay outside the repository.
+
 ## 1.0.17 — 2026-09-25
 
 - Channel presentation video (EB-041), outside the repository: 1:33,
