@@ -1,13 +1,13 @@
 # لوحة الحالة
 
 > **مولَّدة من المستودع — لا تُحرَّر يدوياً.** `npm run state`
-> آخر تغيّر في الحالة: 2026-09-24 22:42
+> آخر تغيّر في الحالة: 2026-09-24 22:52
 
 ## سطر الحالة
 
 ```
 منتجات 23 (ظاهرة 9 · قابلة للشراء 9 · مجرَّبة 3) ·
-صفحات 32 (نصّها منشور 16 · تنتظر المراجعة 2 · هيكل 14) ·
+صفحات 32 (نصّها منشور 16 · تنتظر المراجعة 3 · هيكل 13) ·
 فئات مفعّلة 2/2 · الساحة مفعّلة
 ```
 
@@ -51,7 +51,7 @@
 
 | النوع | المجموع | نصّه منشور | مكتوب ينتظر | هيكل |
 |---|---|---|---|---|
-| صفحات الحلول | 7 | 3 | 2 | 2 |
+| صفحات الحلول | 7 | 3 | 3 | 1 |
 | أدلة الشراء | 12 | 5 | 0 | 7 |
 | المقارنات | 7 | 2 | 0 | 5 |
 | المقالات | 6 | 6 | 0 | 0 |
@@ -60,6 +60,7 @@
 
 - `laddkabeln-gar-sonder` — solutions
 - `mobilen-laddar-langsamt` — solutions
+- `skrivbordet-ar-rorigt` — solutions
 
 ## مهلة الهياكل
 
@@ -67,4 +68,4 @@
 
 | آخر موعد | العدد | الصفحات |
 |---|---|---|
-| **2026-12-02** | 8 | `mobilen-glider-i-bilen` · `skrivbordet-ar-rorigt` · `basta-snabbladdare-usb-c` · `laddare-for-flera-enheter` · `magnetisk-mobilhallare-bil` · `mobilstall-skrivbord` · `gan-laddare-vs-vanlig` · `usb-c-pd-vs-quick-charge` |
+| **2026-12-02** | 7 | `mobilen-glider-i-bilen` · `basta-snabbladdare-usb-c` · `laddare-for-flera-enheter` · `magnetisk-mobilhallare-bil` · `mobilstall-skrivbord` · `gan-laddare-vs-vanlig` · `usb-c-pd-vs-quick-charge` |

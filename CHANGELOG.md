@@ -3,6 +3,12 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.12 — 2026-09-24
+
+- Solution `skrivbordet-ar-rorigt` written (stage `written`): practical advice
+  marked as such, and Elsäkerhetsverket's advice on cable tangles, chained
+  power strips and idle chargers.
+
 ## 1.0.11 — 2026-09-24
 
 - `P-22` visible with its buy button (EB-029).
