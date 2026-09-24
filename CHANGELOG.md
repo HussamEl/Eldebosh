@@ -3,6 +3,10 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.13 — 2026-09-24
+
+- Solution `skrivbordet-ar-rorigt` published after the owner's review.
+
 ## 1.0.12 — 2026-09-24
 
 - Solution `skrivbordet-ar-rorigt` written (stage `written`): practical advice
