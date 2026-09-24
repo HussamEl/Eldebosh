@@ -3,6 +3,13 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.14 — 2026-09-24
+
+- "Se oss live" button in the market-stall panel (home page and
+  `/sv/pa-torget/`), EB-035: a plain link to the channel's `/live` address,
+  which YouTube resolves to the current stream or the channel. No embed, no
+  script, no cookies. Channel id in `src/lib/live.ts`.
+
 ## 1.0.13 — 2026-09-24
 
 - Solution `skrivbordet-ar-rorigt` published after the owner's review.

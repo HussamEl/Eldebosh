@@ -4,6 +4,7 @@
    presence. No JavaScript: plain tel:, sms: and map links. */
 import { getCollection } from 'astro:content';
 import { t, type Lang } from '../i18n/ui';
+import { liveUrl } from '../lib/live';
 
 interface Props { lang: Lang; compact?: boolean; }
 const { lang, compact = false } = Astro.props;
@@ -28,6 +29,11 @@ const smsBody = encodeURIComponent(tr('torget.sms_body'));
       <a class="btn btn-ghost" href={`sms:${d.phone}?&body=${smsBody}`}>
         {tr('torget.sms')}
       </a>
+      {liveUrl && (
+        <a class="btn btn-ghost" href={liveUrl} rel="noopener" target="_blank">
+          {tr('torget.live')}
+        </a>
+      )}
       {d.map_url && (
         <a class="btn btn-ghost" href={d.map_url} rel="nofollow noopener" target="_blank">
           {tr('torget.map')}
