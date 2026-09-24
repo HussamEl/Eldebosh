@@ -1,5 +1,6 @@
 # المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
-# ⚠️ ناقص قبل النشر: asin · source_url · own_photos · hands_on · hands_on_limits
+# المواصفات من صفحة المصنّع للطراز A2667 (2026-09-24). «PPS» حُذفت: لا تذكرها صفحة المصنّع.
+# ما زال مخفياً حتى يعتمد حسام المزايا والعيوب (EB-021).
 # عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
 id: anker-735-nano-ii-65w
 code: P-11
@@ -12,15 +13,19 @@ problems_solved:
   - mobilen-laddar-langsamt
   - skrivbordet-ar-rorigt
 
-# مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
 key_specs:
-  "Effekt": "65 W"
-  "Portar": "3 (USB-C + USB-A)"
-  "Teknik": "GaN, PPS"
+  "Effekt": "65 W från en port"
+  "Portar": "2 × USB-C, 1 × USB-A"
+  "Tre enheter samtidigt": "40 + 12 + 12 W"
+  "Teknik": "GaN II"
 
-pros: []
-cons: []
-best_for: ""
+pros:
+  - "65 W från en USB-C-port räcker till en dator som laddas med 65 W eller mindre, inte bara till telefonen."
+  - "Tre portar, två USB-C och en USB-A, i en laddare på 38 × 29 × 66 mm enligt Anker."
+cons:
+  - "Effekten delas: med tre enheter inkopplade får USB-C 2 och USB-A högst 12 W var."
+  - "USB-A-porten ger högst 22,5 W även när den används ensam."
+best_for: "Dig som vill ha en enda laddare till både telefon och dator."
 price_band: mid
 
 # === الملكية والتجربة ===
@@ -42,6 +47,6 @@ hands_on_limits:
 
 # === الربط ===
 asin: "B09LLRNGSD"               # ← الصق ASIN هنا (10 خانات من رابط المنتج)
-source_url: "https://www.amazon.se/dp/B09LLRNGSD"         # ← رابط صفحة المنتج على أمازون
-last_verified: 2026-08-24
+source_url: "https://www.anker.com/products/a2667"   # المصنّع، الطراز A2667
+last_verified: 2026-09-24
 verified: false        # ← اجعلها true بعد اكتمال asin و source_url و last_verified

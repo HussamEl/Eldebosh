@@ -3,6 +3,17 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.8 — 2026-09-24
+
+- Article `usb-c-standarden-vad-galler-nu` written (stage `written`) from
+  directive (EU) 2022/2380, Apple and the USB PD 3.1 announcement; it also
+  carries what the withdrawn USB-C vs Lightning comparison was meant to say.
+- `P-11` specs from Anker's page for A2667 (ports, split with several devices,
+  GaN II); "PPS" removed as unsourced; pros, cons and best_for written. Still
+  hidden until the owner approves (TASKS Q7).
+- `P-22` untouched: the listing the owner sent for its ASIN describes a
+  90-degree 2 m cable, ours is straight (TASKS Q8).
+
 ## 1.0.7 — 2026-09-24
 
 - Published after the owner's review on the live site (EB-019): guide

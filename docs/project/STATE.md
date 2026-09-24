@@ -1,13 +1,13 @@
 # لوحة الحالة
 
 > **مولَّدة من المستودع — لا تُحرَّر يدوياً.** `npm run state`
-> آخر تغيّر في الحالة: 2026-09-24 21:35
+> آخر تغيّر في الحالة: 2026-09-24 21:57
 
 ## سطر الحالة
 
 ```
 منتجات 23 (ظاهرة 7 · قابلة للشراء 7 · مجرَّبة 3) ·
-صفحات 32 (نصّها منشور 14 · تنتظر المراجعة 2 · هيكل 16) ·
+صفحات 32 (نصّها منشور 14 · تنتظر المراجعة 3 · هيكل 15) ·
 فئات مفعّلة 2/2 · الساحة مفعّلة
 ```
 
@@ -25,7 +25,6 @@
 | `P-08` | simarro självhäftande magnetringar, 10-pack | — | صورة · ASIN · مصدر · تاريخ تحقّق · مزايا وعيوب |
 | `P-09` | UGREEN MagFlow 2-i-1 magnetiskt laddställ | — | صورة · مزايا وعيوب |
 | `P-10` | UGREEN MagSafe magnetställ för bord | — | صورة · مزايا وعيوب |
-| `P-11` | Anker 735 Nano II 65W | — | مزايا وعيوب |
 | `P-12` | Anker Nano Reseadapter | — | صورة · مزايا وعيوب |
 | `P-13` | Baseus USB-C-kabel med digital skärm 100W | — | صورة · مزايا وعيوب |
 | `P-14` | EasyAcc bordsfläkt 4000 mAh | — | ASIN · مصدر · تاريخ تحقّق · مزايا وعيوب |
@@ -56,12 +55,13 @@
 | صفحات الحلول | 7 | 3 | 2 | 2 |
 | أدلة الشراء | 12 | 5 | 0 | 7 |
 | المقارنات | 7 | 1 | 0 | 6 |
-| المقالات | 6 | 5 | 0 | 1 |
+| المقالات | 6 | 5 | 1 | 0 |
 
 **تنتظر مراجعة حسام:**
 
 - `laddkabeln-gar-sonder` — solutions
 - `mobilen-laddar-langsamt` — solutions
+- `usb-c-standarden-vad-galler-nu` — posts
 
 ## مهلة الهياكل
 
@@ -69,4 +69,4 @@
 
 | آخر موعد | العدد | الصفحات |
 |---|---|---|
-| **2026-12-02** | 10 | `mobilen-glider-i-bilen` · `skrivbordet-ar-rorigt` · `basta-snabbladdare-usb-c` · `laddare-for-flera-enheter` · `magnetisk-mobilhallare-bil` · `mobilstall-skrivbord` · `gan-laddare-vs-vanlig` · `tradlos-vs-kabel` · `usb-c-pd-vs-quick-charge` · `usb-c-standarden-vad-galler-nu` |
+| **2026-12-02** | 9 | `mobilen-glider-i-bilen` · `skrivbordet-ar-rorigt` · `basta-snabbladdare-usb-c` · `laddare-for-flera-enheter` · `magnetisk-mobilhallare-bil` · `mobilstall-skrivbord` · `gan-laddare-vs-vanlig` · `tradlos-vs-kabel` · `usb-c-pd-vs-quick-charge` |

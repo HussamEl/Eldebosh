@@ -1,25 +1,59 @@
 ---
 title: "USB-C som standard — vad gäller nu?"
-description: "Samma kontakt betyder inte samma egenskaper. Så vet du vilka skillnader som finns kvar mellan två kablar som ser likadana ut."
+description: "EU kräver USB-C i nya telefoner sedan december 2024. Men samma kontakt betyder inte samma egenskaper — så vet du vad som skiljer."
 lang: sv
 slug: usb-c-standarden-vad-galler-nu
 solution: laddkabeln-gar-sonder
 category: laddning-och-strom
 products: []
-stage: draft
+sources:
+  - type: regulation
+    publisher: "Europeiska unionen — direktiv (EU) 2022/2380"
+    url: "https://eur-lex.europa.eu/legal-content/SV/TXT/HTML/?uri=CELEX:32022L2380"
+    accessed: 2026-09-24
+    published: 2022-11-23
+    claim: "USB-C krävs i bland annat mobiltelefoner, surfplattor och hörlurar från 28 december 2024 och i bärbara datorer från 28 april 2026; över 15 W ska USB PD stödjas; apparaten ska kunna köpas utan laddare, och ett piktogram visar om laddare ingår."
+  - type: spec
+    publisher: "Apple"
+    url: "https://support.apple.com/sv-se/105099"
+    accessed: 2026-09-24
+    claim: "iPhone 15 och senare har USB-C; den medföljande kabeln klarar laddning och USB 2-hastighet; Pro-modellerna från iPhone 15 Pro klarar upp till 10 Gbit/s med en USB 3-kabel; en Lightning-apparat laddas med en kabel från USB-C till Lightning."
+  - type: spec
+    publisher: "USB Promoter Group / USB-IF"
+    url: "https://www.usb.org/sites/default/files/2021-05/USB%20PG%20USB%20PD%203.1%20DevUpdate%20Announcement_FINAL.pdf"
+    accessed: 2026-09-24
+    published: 2021-05-26
+    claim: "USB PD låg tidigare på högst 100 W, via 20 V och kablar för 5 A; revision 3.1 höjer taket till 240 W och kräver kablar gjorda för det."
+hands_on: false
+stage: written
 published: true
 updated: 2026-09-03
 ---
-> ⚠️ UTKAST — strukturen är satt, texten ska skrivas. Publicera inte förrän innehållet är verkligt och granskat.
+Sedan den 28 december 2024 ska nya mobiltelefoner och en rad andra småapparater som laddas med kabel ha en USB-C-kontakt. Det följer av EU:s direktiv om gemensam laddare. För bärbara datorer gäller kravet från den 28 april 2026.
+
+Men samma kontakt betyder inte samma egenskaper. Den här artikeln går igenom vad kraven säger och vad som fortfarande skiljer två kablar som ser likadana ut. Vi har inte mätt något själva: allt nedan kommer från direktivet, från Apple och från organisationen bakom USB-standarden, och källorna står längst ner.
+
+## Vad EU-kraven säger
+
+**Vilka apparater.** Mobiltelefoner, surfplattor, digitalkameror, hörlurar och headset, handhållna spelkonsoler, bärbara högtalare, läsplattor, tangentbord, datormöss, bärbara navigatorer och öronsnäckor. Från den 28 april 2026 även bärbara datorer.
+
+**Snabbladdning på gemensam grund.** Laddas apparaten med mer än 15 W ska den stödja USB Power Delivery, förkortat USB PD. Andra snabbladdningssystem får finnas kvar, men USB PD ska fungera fullt ut oavsett vilken laddare du använder. Produktinformationen ska då ange ”USB PD-snabbladdning”.
+
+**Laddaren kan väljas bort.** Säljs apparaten med laddare ska den också erbjudas utan. Ett piktogram på förpackningen visar om laddare ingår.
+
+**Och Lightning?** Enligt Apple har iPhone 15 och senare modeller USB-C. Har du kvar en äldre apparat med Lightning-kontakt kan du ladda den från en iPhone med USB-C via en kabel från USB-C till Lightning.
 
 ## Samma kontakt, olika kapacitet
 
-Skriv här.
+Kontakten är gemensam. Kabeln bakom den är det inte, och skillnaden syns inte utanpå.
 
-## Effekt och dataöverföring
+**Effekt.** USB PD klarade tidigare högst 100 W, via 20 V och kablar gjorda för 5 A. I maj 2021 höjdes taket till 240 W, och de högre nivåerna kräver kablar som är gjorda för dem. En kabel för lägre effekt och en för 240 W kan ha exakt samma kontakt.
 
-Skriv här.
+**Data.** Apple skriver att USB-C-kabeln som följer med iPhone klarar laddning men bara USB 2-hastighet. Pro-modellerna från iPhone 15 Pro klarar upp till 10 Gbit/s, men bara med en kabel för USB 3.
 
 ## Vad du behöver kontrollera
 
-Skriv här.
+- **”USB PD-snabbladdning”** i apparatens produktinformation, om du vill kunna snabbladda med vilken PD-laddare som helst.
+- **Watt på kabeln**, om din laddare lämnar mer än 100 W. Då behöver kabeln vara gjord för den högre nivån, annars blir den flaskhalsen.
+- **Datahastighet**, bara om du flyttar filer eller kopplar in en skärm. En laddkabel är inte alltid gjord för det, och Apples egen medföljande kabel är ett exempel.
+- **Piktogrammet på förpackningen**, om du vill veta om en laddare ingår innan du köper.
