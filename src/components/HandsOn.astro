@@ -2,6 +2,7 @@
 /* Evidence of real use: shown only when tested is true. An untested product
    says so explicitly instead. */
 import { t, type Lang } from '../i18n/ui';
+import { SHOW_REVIEW_CODES, photoCode } from '../lib/review-codes';
 
 interface Photo { src: string; alt: string; caption?: string; }
 interface Props {
@@ -44,6 +45,7 @@ const sinceLine = ym ? `${tr('handson.since')} ${ym}` : null;
           <figure>
             <img src={p.src} alt={p.alt} loading="lazy" width="320" height="240" />
             {p.caption && <figcaption>{p.caption}</figcaption>}
+            {SHOW_REVIEW_CODES && photoCode(p.src) && <span class="review-code">{photoCode(p.src)}</span>}
           </figure>
         ))}
       </div>

@@ -6,6 +6,7 @@
 import { t, type Lang } from '../i18n/ui';
 import { affiliateHref, affiliateNetwork, type Product } from '../lib/content';
 import { gearGroup } from '../lib/gear-groups';
+import { SHOW_REVIEW_CODES, photoCode } from '../lib/review-codes';
 
 interface Props { product: Product; lang: Lang; }
 const { product: p, lang } = Astro.props;
@@ -81,6 +82,7 @@ const Face = photos.length || href ? 'a' : 'div';
   <div class="tile-body">
     <p class="tile-brand">
       {p.brand}
+      {SHOW_REVIEW_CODES && p.code && <span class="review-code">{p.code}</span>}
       {p.tested && <span class="tile-dot" title={tr('trust.tested')} aria-label={tr('trust.tested')}></span>}
     </p>
     <h3 class="tile-name">{p.name}</h3>
@@ -116,6 +118,7 @@ const Face = photos.length || href ? 'a' : 'div';
             <figure>
               <img src={ph.src} alt={ph.alt} loading="lazy" width="720" height="720" decoding="async" />
               {ph.caption && <figcaption>{ph.caption}</figcaption>}
+              {SHOW_REVIEW_CODES && photoCode(ph.src) && <span class="review-code">{photoCode(ph.src)}</span>}
             </figure>
           ))}
         </div>

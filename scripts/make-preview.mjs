@@ -46,9 +46,10 @@ const stages = new Map();
     else if (e.endsWith('.mdx') || e.endsWith('.md')) {
       const fm = readFileSync(f, 'utf8').match(/^---\n([\s\S]*?)\n---/);
       if (!fm) continue;
-      if (/^published:\s*true\s*$/m.test(fm[1])) continue;
       const slug = fm[1].match(/^slug:\s*"?([a-z0-9-]+)"?\s*$/m);
       const stage = fm[1].match(/^stage:\s*(\w+)\s*$/m);
+      // A live page is marked only while its text waits for approval (stage: written).
+      if (/^published:\s*true\s*$/m.test(fm[1]) && !(stage && stage[1] === 'written')) continue;
       if (slug) stages.set(slug[1], stage ? stage[1] : 'draft');
     }
   }

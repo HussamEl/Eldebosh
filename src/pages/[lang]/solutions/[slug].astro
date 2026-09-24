@@ -11,6 +11,7 @@ import SourceList from '../../../components/SourceList.astro';
 import { LANGS, t, type Lang } from '../../../i18n/ui';
 import { url, docs, getProducts, isCommercial } from '../../../lib/content';
 import { breadcrumbSchema, articleSchema, faqSchema } from '../../../lib/seo';
+import { PREVIEW } from '../../../lib/preview';
 
 export async function getStaticPaths() {
   const paths = [];
@@ -32,7 +33,8 @@ const { Content } = await render(entry);
    `draft` (skeleton) and `written` (awaiting review) both render as a page
    that says it is not written yet, marked noindex. The text shows only at
    stage `published`. */
-const notWritten = entry.data.stage === 'draft' || entry.data.stage === 'written';
+// In the preview build a written page shows its text, so the owner can read what he approves.
+const notWritten = entry.data.stage === 'draft' || (entry.data.stage === 'written' && !PREVIEW);
 
 const [guides, comparisons, posts] = await Promise.all([
   docs('guides', lang),

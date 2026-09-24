@@ -3,6 +3,18 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.5 — 2026-09-24
+
+- Review codes on the live site until launch (EB-015): the product code
+  (`P-01`) beside the brand on tiles and cards, and the photo code (`P-01-2`)
+  under each of our photos. One switch, `SHOW_REVIEW_CODES` in
+  `src/lib/review-codes.ts`, turned off at launch with the build stamp (L3).
+- Preview build: a page at stage `written` now shows its text (with the
+  "ready for review" bar) instead of the empty skeleton. The live site is
+  unchanged.
+- Replies link to the changed pages on the live site instead of raw GitHub
+  URLs; `INSTRUCTIONS.md` v1.3.
+
 ## 1.0.4 — 2026-09-24
 
 - `P-03` corrected: it has three ports (2 × USB-C, 1 × USB-A) and no built-in

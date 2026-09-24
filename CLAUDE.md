@@ -78,9 +78,11 @@ short:
 2. **One exception:** a broken build, check or publish on GitHub is fixed at
    once, without waiting, and reported in the next reply.
 3. **Every reply** opens with the `EB-###` line and ends with: the party board,
-   a short summary of what changed in the repository, the raw GitHub URL of
-   every file created or changed, and two ready-to-copy blocks — approval and
-   a question (a third, for Gemini, only when it is active again).
+   a short summary of what changed in the repository, the live link on
+   `https://eldebosh.com` of every page whose visible content changed (the
+   owner checks on the live site as a visitor; no preview files for him), and
+   two ready-to-copy blocks — approval and a question (a third, for Gemini,
+   with raw GitHub URLs, only when Gemini is active again).
 4. Content you write stays at `stage: written` until the owner approves it.
    While Gemini is paused, every content delivery lists each factual claim
    with the link to its source, so the owner can check it himself.

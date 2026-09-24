@@ -2,6 +2,7 @@
 /* How a product appears on content pages — there are no standalone product
    pages. The buy link is built from product data, never typed into an article. */
 import { t, type Lang } from '../i18n/ui';
+import { SHOW_REVIEW_CODES, photoCode } from '../lib/review-codes';
 import { getProduct, affiliateHref, affiliateNetwork } from '../lib/content';
 import ProductImage from './ProductImage.astro';
 import HandsOn from './HandsOn.astro';
@@ -33,7 +34,7 @@ const href = p ? affiliateHref(p) : null;
         </span>
         <h3>{p.name}</h3>
         <p class="meta">
-          {p.brand} · {tr(`price.${p.price_band}` as any)}
+          {p.brand}{SHOW_REVIEW_CODES && p.code && <span class="review-code">{p.code}</span>} · {tr(`price.${p.price_band}` as any)}
         </p>
         {p.external_rating && (
           <p class="rating">
