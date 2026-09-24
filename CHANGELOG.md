@@ -3,6 +3,15 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.9 — 2026-09-24
+
+- `P-11` visible with its buy button (EB-023), specs from Anker's page.
+- `P-22` ASIN corrected to `B09N94MZG9` from the owner's order history; the
+  old one belonged to a 90-degree 2 m cable. The new listing sells two 1 m
+  cables, so the name says "2-pack"; photo renamed to match. Still hidden: no
+  maker source yet for power and length.
+- Article `usb-c-standarden-vad-galler-nu` published after the owner's review.
+
 ## 1.0.8 — 2026-09-24
 
 - Article `usb-c-standarden-vad-galler-nu` written (stage `written`) from

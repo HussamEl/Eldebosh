@@ -1,6 +1,6 @@
 # فهرس الصور — بالرموز
 
-> **مولَّد من المستودع — لا يُحرَّر يدوياً.** `npm run assets` · آخر تغيّر: 2026-09-23
+> **مولَّد من المستودع — لا يُحرَّر يدوياً.** `npm run assets` · آخر تغيّر: 2026-09-24
 >
 > اذكر الصورة برمزها بدل إرسالها ثانية: «`P-03-1` مائلة». الملف في المستودع.
 
@@ -39,7 +39,7 @@
 | `P-20-1` | UGREEN USB-C 240W / 40 Gbps, 1 m | `P-20-1-B0GV79Z1W6-v2.webp` | 1 من 1 | 131 KB |
 | `P-21-1` | UGREEN billaddare, 3 portar | `P-21-1-B0B3D9XW8X.webp` | 1 من 2 | 60 KB |
 | `P-21-2` | UGREEN billaddare, 3 portar | `P-21-2.webp` | 2 من 2 | 47 KB |
-| `P-22-1` | UGREEN USB-C-kabel 100 W, flätad | `P-22-1-B08D6NCQ1Z.webp` | 1 من 1 | 93 KB |
+| `P-22-1` | UGREEN USB-C-kabel 100 W, flätad, 1 m, 2-pack | `P-22-1-B09N94MZG9.webp` | 1 من 1 | 93 KB |
 | `P-23-1` | UGREEN USB-C-kabel 240 W med display | `P-23-1-B0F62S8P1T.webp` | 1 من 1 | 45 KB |
 
 ## B — أصول الهوية

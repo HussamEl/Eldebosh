@@ -1,11 +1,12 @@
 # المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
-# ⚠️ ناقص قبل النشر: مصدر لـ«Effekt» و«Längd» · pros · cons · best_for
+# ⚠️ ناقص قبل النشر: مصدر مصنّع لـ«Effekt» و«Längd» · pros · cons · best_for
+# الرابط يبيع عبوة من كابلين (Antal artiklar 2، «1M 2 stuks»)؛ الاسم يقول ذلك.
 # ⚠️ الطول والقدرة غير مطبوعين على الكابل — لا تُقرآن من صورتنا (docs/RULES.md §2.4)
 # عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
 id: ugreen-usb-c-kabel-100w
 code: P-22
 lang: sv
-name: "UGREEN USB-C-kabel 100 W, flätad"
+name: "UGREEN USB-C-kabel 100 W, flätad, 1 m, 2-pack"
 brand: "UGREEN"
 category: laddning-och-strom
 subcategory: kablar
@@ -29,7 +30,7 @@ owned: true
 tested: false          # اجعلها true بعد إضافة الصور والملاحظات والحدود
 usage_period: ""
 own_photos:
-  - src: "/uploads/P-22-1-B08D6NCQ1Z.webp"
+  - src: "/uploads/P-22-1-B09N94MZG9.webp"
     alt: "Flätad USB-C-kabel från UGREEN, hoprullad på ett bord."
     caption: "Vår egen bild."
 
@@ -37,8 +38,8 @@ hands_on: []
 hands_on_limits: []
 
 # === الربط ===
-asin: "B08D6NCQ1Z"
-source_url: "https://www.amazon.se/dp/B08D6NCQ1Z"   # صفحة بائع — المصنّع ما زال ناقصاً (docs/RULES.md §2.4)
+asin: "B09N94MZG9"   # من سجل مشتريات حسام (EB-023). الرقم السابق B08D6NCQ1Z كان لكابل آخر بزاوية 90° وطول 2 م
+source_url: "https://www.amazon.se/dp/B09N94MZG9"   # صفحة بائع — المصنّع ما زال ناقصاً (docs/RULES.md §2.4)
 last_verified: 2026-09-04
 # لا spec_photo هنا عن قصد: صورتنا تُثبت «Hölje» و«Kontakter» ولا تُثبت
 # «Effekt» ولا «Längd» — ليسا مطبوعين على الكابل. فيبقى غير موثّق حتى يأتي
