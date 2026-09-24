@@ -67,8 +67,8 @@ npm run preview:file
 ## Working with the owner — consult first
 
 The owner, Hussam, is not a developer and edits content in `/admin/`. He reads
-Arabic, right to left. Gemini is the independent reviewer: it checks sources,
-claims and Swedish, and reads the repository through raw GitHub URLs. The full
+Arabic, right to left. Gemini, the independent reviewer, is **paused** since
+2026-09-24 (EB-013); until the owner brings it back, he reviews alone. The full
 protocol is [docs/project/INSTRUCTIONS.md](docs/project/INSTRUCTIONS.md); in
 short:
 
@@ -79,10 +79,11 @@ short:
    once, without waiting, and reported in the next reply.
 3. **Every reply** opens with the `EB-###` line and ends with: the party board,
    a short summary of what changed in the repository, the raw GitHub URL of
-   every file created or changed, and three ready-to-copy blocks — approval,
-   a message for Gemini, a question.
-4. Content you write stays at `stage: written` until Gemini has reviewed it
-   and the owner approves.
+   every file created or changed, and two ready-to-copy blocks — approval and
+   a question (a third, for Gemini, only when it is active again).
+4. Content you write stays at `stage: written` until the owner approves it.
+   While Gemini is paused, every content delivery lists each factual claim
+   with the link to its source, so the owner can check it himself.
 5. **Read only what the task needs.** Do not re-read the whole repository.
 
 Reply in Arabic: commands and paths on their own lines in code blocks,

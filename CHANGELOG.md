@@ -3,6 +3,17 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.4 — 2026-09-24
+
+- `P-03` corrected: it has three ports (2 × USB-C, 1 × USB-A) and no built-in
+  cables, per the maker's page and the owner's own unit. The same claim is
+  removed from its pros and from the pick reason in `basta-powerbank-2026`.
+- Article `sa-forlanger-du-batteriets-livslangd` written (stage `written`),
+  from Apple's and Google's own battery pages. Its description no longer says
+  that charge count does not matter; Google's page says it does.
+- Gemini paused by the owner (EB-013): he reviews alone, and every content
+  delivery lists each claim with its source. `INSTRUCTIONS.md` v1.2.
+
 ## 1.0.3 — 2026-09-24
 
 - Weights from the makers' pages for `P-01` (250 g), `P-02` (189 g) and

@@ -1,25 +1,57 @@
 ---
 title: "Så förlänger du batteriets livslängd"
-description: "Ett batteri åldras av värme och ytterlägen, inte av antalet laddningar. Så anpassar du dina vanor efter det."
+description: "Ett batteri åldras av värme, laddcykler och tid som fulladdat. Så anpassar du dina vanor efter det, enligt tillverkarna själva."
 lang: sv
 slug: sa-forlanger-du-batteriets-livslangd
 solution: batteriet-tar-slut
 category: laddning-och-strom
 products: []
-stage: draft
+sources:
+  - type: spec
+    publisher: "Apple"
+    url: "https://www.apple.com/se/batteries/maximizing-performance/"
+    accessed: 2026-09-24
+    claim: "16–22 °C är optimalt, över 35 °C kan skada kapaciteten permanent; vissa fodral kan göra enheten för varm vid laddning; vid lång förvaring ungefär 50 % laddning, under 32 °C, påfyllning var sjätte månad."
+  - type: spec
+    publisher: "Apple"
+    url: "https://support.apple.com/sv-se/108055"
+    accessed: 2026-09-24
+    claim: "Batteriets kemiska ålder beror bland annat på temperaturhistoria och laddningsmönster. Optimerad batteriladdning fördröjer laddning över 80 % och är på som standard; iPhone 15 och senare kan begränsa laddningen till 80–100 %."
+  - type: spec
+    publisher: "Google"
+    url: "https://support.google.com/pixelphone/answer/15738128?hl=sv"
+    accessed: 2026-09-24
+    claim: "Från 100 till 50 % och tillbaka räknas som en halv cykel; batteriet ska behålla minst 80 % av kapaciteten i cirka 800 eller 1 000 cykler beroende på modell; ladda kring 25 °C, undvik över 35 °C i sex timmar eller mer; förvara med minst 50 % om telefonen ska ligga mer än 30 dagar."
+hands_on: false
+stage: written
 published: true
 updated: 2026-09-03
 ---
-> ⚠️ UTKAST — strukturen är satt, texten ska skrivas. Publicera inte förrän innehållet är verkligt och granskat.
+Batteritid och batteriets livslängd är två olika saker. Batteritiden är hur länge telefonen räcker på en laddning. Livslängden är hur länge batteriet håller innan det behöver bytas. Den här artikeln handlar om livslängden.
+
+Vi har inte mätt något själva. Allt nedan kommer från Apple och Google, som tillverkar telefonerna, och källorna står längst ner.
 
 ## Vad som sliter på batteriet
 
-Skriv här.
+Alla litiumjonbatterier åldras. Apple kallar det batteriets kemiska ålder och skriver att den inte bara beror på hur lång tid som har gått, utan bland annat på temperaturhistoria och laddningsmönster.
+
+**Värme är det tydligaste.** Apple anger 16–22 °C som den optimala zonen och varnar för temperaturer över 35 °C, som kan skada kapaciteten permanent. Google drar samma gräns: undvik mer än 35 °C under långa perioder, sex timmar eller mer.
+
+**Laddcykler räknas.** Google anger att batteriet i en Pixel ska behålla minst 80 procent av sin kapacitet i cirka 800 eller 1 000 laddcykler, beroende på modell. Batteriet slits alltså av användning, inte bara av tid.
+
+**Att ligga fulladdad länge.** Apple skriver att ett batteri som förvaras fulladdat under lång tid kan förlora kapacitet. Det är skälet till att iPhone har optimerad batteriladdning.
 
 ## Laddvanor som hjälper
 
-Skriv här.
+- **Låt telefonen lära sig din rytm.** Optimerad batteriladdning är på som standard i iPhone. När telefonen räknar med att sitta i laddaren länge, till exempel över natten, väntar den med laddningen över 80 procent. På iPhone 15 och senare kan du också sätta en laddningsgräns mellan 80 och 100 procent.
+- **Ladda svalt.** Google rekommenderar en omgivning kring 25 °C och så lite direkt solljus och andra värmekällor som möjligt.
+- **Ta av fodralet om telefonen blir varm när den laddas.** Apple skriver att vissa fodral kan göra enheten för varm under laddningen.
+- **Ska telefonen ligga oanvänd länge**, ladda den till ungefär hälften. Apple rekommenderar runt 50 procent, förvaring under 32 °C och påfyllning till 50 procent var sjätte månad. Google säger minst 50 procent om telefonen ska ligga i mer än 30 dagar.
 
 ## Myter som inte stämmer
 
-Skriv här.
+**”Varje gång du laddar går en cykel åt.”** Nej. Google räknar cyklerna som summan av urladdningarna: från 100 till 50 procent och tillbaka till 100 är en halv cykel. Att fylla på lite ofta räknas alltså inte som fler cykler än att ladda en gång från botten.
+
+**”Batteriet ska köras helt tomt ibland.”** Apples råd går åt andra hållet. Ett batteri som förvaras helt urladdat riskerar att hamna i djupurladdning och då inte gå att ladda alls.
+
+**”Kyla är bra för batteriet.”** Svalt är bra, kallt är inte samma sak. Apple anger 0 till 35 °C som det område där telefonen fungerar bäst. Vad kylan gör med telefonen under en vinterdag tar vi upp i lösningen om mobilen som dör i kylan.

@@ -19,16 +19,17 @@ problems_solved:
   - batteriet-tar-slut
 
 # «Effekt» مقروءة من المطبوع على الجهاز في صورتنا — لا من عنوان إعلان.
-# والسعة والكابلان من صفحة المنتج.
+# والسعة والمنافذ من صفحة المنتج. وسطر «2 inbyggda USB-C-kablar» كان خطأً: صُحّح في 2026-09-24
+# بعد أن تحقّق حسام من القطعة التي عنده (EB-013).
 key_specs:
   "Kapacitet": "25 000 mAh"
   "Effekt": "145 W"
-  "Kablar": "2 inbyggda USB-C-kablar"
+  "Portar": "2 × USB-C, 1 × USB-A"   # tillverkaren, art. 90597A: https://uk.ugreen.com/products/ugreen-145w-25000mah-power-bank-for-laptop-3-ports-power-bank (2026-09-23)
   "Vikt": "513 g"   # tillverkaren, art. 90597A: https://uk.ugreen.com/products/ugreen-145w-25000mah-power-bank-for-laptop-3-ports-power-bank (2026-09-23)
 
 pros:
   - "145 W räcker även till en bärbar dator, inte bara telefon och surfplatta."
-  - "Två inbyggda kablar betyder färre lösa sladdar i väskan."
+  - "Tre portar, två USB-C och en USB-A, så flera enheter kan kopplas in samtidigt."
   - "25 000 mAh ger fler laddningar innan den själv behöver laddas."
 
 cons:
