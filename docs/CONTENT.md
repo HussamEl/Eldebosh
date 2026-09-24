@@ -157,7 +157,7 @@ The path from idea to live:
 ```
 stage: draft       published: false   idea, heading only
 stage: draft       published: true    live skeleton — "not written yet", noindex, sells nothing, 90-day limit
-stage: written     published: true    text exists, still shown as a skeleton until approved
+stage: written     published: true    text exists, shown as a skeleton until approved (until launch: text under a review banner, noindex)
 stage: reviewed    published: false   approved, about to go live
 stage: published   published: true    live with its text
 ```

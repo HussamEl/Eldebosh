@@ -9,7 +9,7 @@ import SourceList from '../../../components/SourceList.astro';
 import { LANGS, t, type Lang } from '../../../i18n/ui';
 import { url, docs } from '../../../lib/content';
 import { breadcrumbSchema, articleSchema } from '../../../lib/seo';
-import { PREVIEW } from '../../../lib/preview';
+import { isNotWritten, isAwaitingReview } from '../../../lib/review-codes';
 
 export async function getStaticPaths() {
   const paths = [];
@@ -28,11 +28,12 @@ const { Content } = await render(entry);
 /* Two independent fields:
      published  is the URL live?
      stage      how far has the text got?
-   `draft` (skeleton) and `written` (awaiting review) both render as a page
-   that says it is not written yet, marked noindex. The text shows only at
-   stage `published`. */
-// In the preview build a written page shows its text, so the owner can read what he approves.
-const notWritten = entry.data.stage === 'draft' || (entry.data.stage === 'written' && !PREVIEW);
+   `draft` (skeleton) renders as a page that says it is not written yet,
+   marked noindex. `written` (awaiting review) does too after launch; until
+   then, and in the preview build, it shows its text under a "waiting for
+   review" banner, still noindex (src/lib/review-codes.ts). */
+const notWritten = isNotWritten(entry.data.stage);
+const awaitingReview = isAwaitingReview(entry.data.stage);
 
 const solutions = await docs('solutions', lang);
 const parent = solutions.find((s) => s.data.problem_id === entry.data.solution);
@@ -49,12 +50,13 @@ const crumbs = [
   title={entry.data.title}
   description={entry.data.description}
   path={here}
-  noindex={entry.data.noindex || notWritten}
+  noindex={entry.data.noindex || notWritten || awaitingReview}
   schema={[breadcrumbSchema(crumbs), articleSchema({ ...entry.data, url: here })]}
 >
   <Breadcrumbs items={crumbs} />
 
   <div class="wrap stack page-body">
+    {awaitingReview && <p class="review-banner" role="note">{tr('review.pending')}</p>}
     {/* No disclosure on a page that sells nothing — it would confuse readers and weaken the disclosure everywhere else. */}
     {!notWritten && <AffiliateDisclosure lang={lang} />}
 

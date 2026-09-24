@@ -3,6 +3,17 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.6 — 2026-09-24
+
+- Until launch, a page at stage `written` shows its text on the live site
+  under a yellow "waiting for review" banner, and its card on the home page
+  says so (EB-017). It stays noindex and out of the sitemap, and carries the
+  disclosure before any buy link. Switch: `SHOW_WRITTEN_FOR_REVIEW` in
+  `src/lib/review-codes.ts`, off at launch (L3). RULES 2.8 notes it.
+- Found, not changed (TASKS Q6): the home page shows six hidden products,
+  two with a buy button, although RULES 2.4 says a hidden product appears on
+  no page.
+
 ## 1.0.5 — 2026-09-24
 
 - Review codes on the live site until launch (EB-015): the product code

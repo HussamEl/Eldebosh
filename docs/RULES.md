@@ -150,6 +150,12 @@ skeletons are `draft` or `written`. `reviewed` is never live. `stage:
 published` requires `published: true`. A page whose text still contains draft
 markers cannot be published.
 
+**Until launch only** (`SHOW_WRITTEN_FOR_REVIEW` in `src/lib/review-codes.ts`,
+owner's decision EB-017): a `written` page shows its text under a "waiting for
+review" banner, so the owner can review it on the live site. It stays noindex
+and out of the sitemap, and if it sells it carries the disclosure like any
+commercial page. The switch is turned off at launch (TASKS L3).
+
 *Enforced:* `validate.mjs`, `scripts/check-drafts.mjs`.
 
 ---

@@ -2,8 +2,8 @@
 import Icon from './Icon.astro';
 import { PREVIEW } from '../lib/preview';
 import { t, type Lang } from '../i18n/ui';
-interface Props { title: string; href: string; description?: string; tag?: string; problem?: boolean; icon?: string; draft?: boolean; notWritten?: boolean; }
-const { title, href, description, tag, problem = false, icon, draft = false, notWritten = false } = Astro.props;
+interface Props { title: string; href: string; description?: string; tag?: string; problem?: boolean; icon?: string; draft?: boolean; notWritten?: boolean; pending?: boolean; }
+const { title, href, description, tag, problem = false, icon, draft = false, notWritten = false, pending = false } = Astro.props;
 /* Preview only: the published build never contains unpublished pages, but the
    preview does, and must not present them as live. */
 const showDraft = PREVIEW && draft;
@@ -17,6 +17,7 @@ const tr = t((Astro.params.lang as Lang) ?? 'sv');
   {tag && !problem && <span class="tag">{tag}</span>}
   {showDraft && <span class="tag tag-draft">Utkast — inte på sajten</span>}
   {notWritten && <span class="tag tag-soon">{tr('notwritten.badge')}</span>}
+  {pending && <span class="tag tag-pending">{tr('review.badge')}</span>}
   <h3><a class="stretch" href={href}>{title}</a></h3>
   {description && <p>{description}</p>}
 </article>

@@ -195,6 +195,15 @@ ul, ol { padding-inline-start: 1.1rem; }
 .notwritten-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-block: 0.9rem 0.4rem; }
 .tag-soon { background: var(--mist); color: var(--brand-deep); }
 
+/* Review mode (src/lib/review-codes.ts): temporary, off before launch. */
+.review-banner {
+  margin-block: 0.75rem 0; padding: 0.6rem 0.85rem;
+  background: #fff3c4; color: var(--ink); border: 1px solid #e3c35a;
+  border-inline-start: 4px solid #d4a017; border-radius: 0.5rem;
+  font-size: var(--step--1); font-weight: 500;
+}
+.tag-pending { background: #fff3c4; color: var(--ink); border-color: #e3c35a; }
+
 /* Draft badge: exists only in the preview build, never on the live site. */
 .tag-draft { background: var(--brand-hero); color: var(--paper); border-color: var(--brand-hero); }
 
