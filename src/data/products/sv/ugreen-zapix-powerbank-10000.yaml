@@ -18,6 +18,7 @@ key_specs:
   "Kapacitet": "10 000 mAh"
   "Trådlöst": "7,5 W"
   "Fäste": "Magnetiskt"
+  "Via kabel": "20 W USB-C PD"   # tillverkaren, art. 25919: https://uk.ugreen.com/products/nexode-magnetic-wireless-power-bank-10000mah-20w (2026-09-24)
 
 pros:
   - "Samma kapacitet som de dyrare modellerna till ett lägre prisläge."

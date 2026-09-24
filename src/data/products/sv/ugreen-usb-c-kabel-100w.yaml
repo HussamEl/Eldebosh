@@ -1,5 +1,5 @@
 # المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
-# ⚠️ ناقص قبل النشر: مصدر مصنّع لـ«Effekt» و«Längd» · pros · cons · best_for
+# مخفي حتى يعتمد حسام المزايا والعيوب (EB-026).
 # الرابط يبيع عبوة من كابلين (Antal artiklar 2، «1M 2 stuks»)؛ الاسم يقول ذلك.
 # ⚠️ الطول والقدرة غير مطبوعين على الكابل — لا تُقرآن من صورتنا (docs/RULES.md §2.4)
 # عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
@@ -19,10 +19,16 @@ key_specs:
   "Längd": "1 m"
   "Kontakter": "USB-C till USB-C"
   "Hölje": "Flätat"
+  "Data": "480 Mbit/s (USB 2)"
+  "Antal": "2 st"
 
-pros: []
-cons: []
-best_for: ""
+pros:
+  - "Två kablar på 1 m i förpackningen: en vid sängen och en i väskan."
+  - "Upp till 100 W enligt annonsen, nog för en dator som laddas med 100 W eller mindre."
+cons:
+  - "Data bara 480 Mbit/s (USB 2) enligt annonsen: en laddkabel, inte en kabel för filer eller skärm."
+  - "En meter räcker inte om uttaget sitter bakom soffan eller under sängen."
+best_for: "Dig som vill ha samma laddkabel på två ställen utan att flytta den."
 price_band: budget
 
 # === الملكية والتجربة ===
@@ -40,7 +46,10 @@ hands_on_limits: []
 # === الربط ===
 asin: "B09N94MZG9"   # من سجل مشتريات حسام (EB-023). الرقم السابق B08D6NCQ1Z كان لكابل آخر بزاوية 90° وطول 2 م
 source_url: "https://www.amazon.se/dp/B09N94MZG9"   # صفحة بائع — المصنّع ما زال ناقصاً (docs/RULES.md §2.4)
-last_verified: 2026-09-04
+last_verified: 2026-09-24
+# owner_checked: قارن حسام القائمة بالكابل الذي عنده (EB-025): عبوة كابلين، متر لكل منهما، غلاف منسوج.
+# والقدرة (100 W) وسرعة البيانات من القائمة وحدها — ليستا مطبوعتين على الكابل.
+owner_checked: 2026-09-24
 # لا spec_photo هنا عن قصد: صورتنا تُثبت «Hölje» و«Kontakter» ولا تُثبت
 # «Effekt» ولا «Längd» — ليسا مطبوعين على الكابل. فيبقى غير موثّق حتى يأتي
 # رابط مصنّع لهما. هذا هو حدّ قاعدة الصورة، مكتوباً عند أول اصطدام به.

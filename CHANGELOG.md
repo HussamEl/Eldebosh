@@ -3,6 +3,18 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.10 — 2026-09-24
+
+- Comparison `tradlos-vs-kabel` written (stage `written`): three magnetic
+  powerbanks, wireless against cable output from each maker's page, and
+  Apple on heat during wireless charging. Its old description claimed
+  wireless "loses energy as heat", which no source here states; replaced.
+- Cable output added from the makers: `P-01` 27 W (A1654), `P-04` 20 W USB-C
+  PD (25919).
+- `P-22`: the owner's comparison of listing and cable recorded
+  (`owner_checked`), data rate and pack size added, pros and cons written.
+  Still hidden until he approves (TASKS Q9).
+
 ## 1.0.9 — 2026-09-24
 
 - `P-11` visible with its buy button (EB-023), specs from Anker's page.

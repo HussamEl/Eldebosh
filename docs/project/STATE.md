@@ -1,13 +1,13 @@
 # لوحة الحالة
 
 > **مولَّدة من المستودع — لا تُحرَّر يدوياً.** `npm run state`
-> آخر تغيّر في الحالة: 2026-09-24 22:10
+> آخر تغيّر في الحالة: 2026-09-24 22:22
 
 ## سطر الحالة
 
 ```
 منتجات 23 (ظاهرة 8 · قابلة للشراء 8 · مجرَّبة 3) ·
-صفحات 32 (نصّها منشور 15 · تنتظر المراجعة 2 · هيكل 15) ·
+صفحات 32 (نصّها منشور 15 · تنتظر المراجعة 3 · هيكل 14) ·
 فئات مفعّلة 2/2 · الساحة مفعّلة
 ```
 
@@ -34,7 +34,6 @@
 | `P-18` | HUAWEI öppna hörlurar (ljusblå) | — | ASIN · مصدر · تاريخ تحقّق · مزايا وعيوب |
 | `P-19` | UGREEN snabbladdare USB-C | — | ASIN · مصدر · تاريخ تحقّق · مزايا وعيوب |
 | `P-21` | UGREEN billaddare, 3 portar | ✓ | مزايا وعيوب |
-| `P-22` | UGREEN USB-C-kabel 100 W, flätad, 1 m, 2-pack | — | مزايا وعيوب |
 
 «ظاهر» يعني `verified: true`: المنتج على الموقع. وبلا ASIN يظهر بلا زرّ شراء.
 
@@ -54,13 +53,14 @@
 |---|---|---|---|---|
 | صفحات الحلول | 7 | 3 | 2 | 2 |
 | أدلة الشراء | 12 | 5 | 0 | 7 |
-| المقارنات | 7 | 1 | 0 | 6 |
+| المقارنات | 7 | 1 | 1 | 5 |
 | المقالات | 6 | 6 | 0 | 0 |
 
 **تنتظر مراجعة حسام:**
 
 - `laddkabeln-gar-sonder` — solutions
 - `mobilen-laddar-langsamt` — solutions
+- `tradlos-vs-kabel` — comparisons
 
 ## مهلة الهياكل
 
@@ -68,4 +68,4 @@
 
 | آخر موعد | العدد | الصفحات |
 |---|---|---|
-| **2026-12-02** | 9 | `mobilen-glider-i-bilen` · `skrivbordet-ar-rorigt` · `basta-snabbladdare-usb-c` · `laddare-for-flera-enheter` · `magnetisk-mobilhallare-bil` · `mobilstall-skrivbord` · `gan-laddare-vs-vanlig` · `tradlos-vs-kabel` · `usb-c-pd-vs-quick-charge` |
+| **2026-12-02** | 8 | `mobilen-glider-i-bilen` · `skrivbordet-ar-rorigt` · `basta-snabbladdare-usb-c` · `laddare-for-flera-enheter` · `magnetisk-mobilhallare-bil` · `mobilstall-skrivbord` · `gan-laddare-vs-vanlig` · `usb-c-pd-vs-quick-charge` |

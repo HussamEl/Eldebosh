@@ -19,6 +19,7 @@ key_specs:
   "Display": "Smart Display"
   "Fäste": "MagSafe-kompatibel"
   "Vikt": "250 g"   # tillverkaren, modell A1654: https://www.anker.com/products/a1654-maggo-10000mah-qi2-power-bank-magsafe-compatible (2026-09-23)
+  "Via kabel": "27 W USB-C"   # tillverkaren, A1654: USB-C Output 9V⎓3A (2026-09-24), samma sida som vikten
 
 pros:
   - "Displayen visar återstående nivå i siffror i stället för fyra lampor."
