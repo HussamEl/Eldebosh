@@ -128,6 +128,51 @@ CANVAS['youtube-banner-2560x1440.png'] = (2560, 1440, page(2560, 1440, f'''
     <div class="sub" style="font-size:34px;margin-top:44px">Laddning · Hållare · Smarta tillbehör</div>
   </div>'''))
 
+# ---- YouTube channel (EB-037) -------------------------------------------------
+# No "BÄST OCH SMART" here: that tagline waits for the owner's decision (TASKS
+# Q1), so these use the header logo, which has none. Everything that must be
+# read sits inside YouTube's safe area for all devices: 1235 x 338 px, centred.
+CANVAS['youtube-channel-banner-2560x1440.png'] = (2560, 1440, page(2560, 1440, f'''
+  <div class="grid-lines"></div>
+  <div class="glow" style="width:1300px;height:1300px;left:50%;top:-520px;transform:translateX(-50%)"></div>
+  <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:1235px;height:338px;
+              display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+    {logo('eldebosh-logo-header.svg', height=96)}
+    <div class="sub" style="font-size:32px;margin-top:30px">Laddning · Hållare · Smarta tillbehör</div>
+    <div style="display:flex;gap:22px;align-items:center;margin-top:26px;font-size:28px">
+      <span class="url">eldebosh.com</span>
+      <span style="color:rgba(255,255,255,.4)">·</span>
+      <span style="color:#fff;font-weight:560">Live från Stora Torget i Karlstad</span>
+    </div>
+  </div>'''))
+
+# Thumbnail for a live stream. "Reklam" is part of the design: the stream is
+# commercial (affiliate), and Swedish marketing law wants that said up front.
+CANVAS['youtube-live-thumbnail-1280x720.png'] = (1280, 720, page(1280, 720, f'''
+  <div class="grid-lines"></div>
+  <div class="glow" style="width:900px;height:900px;right:-260px;top:-300px"></div>
+  <div style="padding:72px 84px;height:100%;display:flex;flex-direction:column;justify-content:space-between">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <span style="display:inline-flex;align-items:center;gap:14px;background:#E23B3B;color:#fff;border-radius:12px;
+                   padding:10px 22px;font-family:'Inter Tight';font-weight:760;font-size:34px;letter-spacing:.06em">
+        <i style="display:block;width:16px;height:16px;border-radius:50%;background:#fff"></i>LIVE</span>
+      <span style="border:2px solid rgba(255,255,255,.55);border-radius:10px;padding:6px 16px;font-size:24px;font-weight:600;color:#fff">Reklam</span>
+    </div>
+    <div>
+      <div class="claim" style="font-size:84px">Se produkten innan du köper</div>
+      <div class="sub" style="font-size:32px;margin-top:22px">Fråga i chatten · säg koden, t.ex. P-11</div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      {logo('eldebosh-logo-header.svg', height=56)}
+      <span class="url" style="font-size:28px">eldebosh.com</span>
+    </div>
+  </div>'''))
+
+# Watermark shown in the corner of every video: the icon alone, transparent.
+CANVAS['youtube-watermark-150.png'] = (150, 150, f'<!doctype html><meta charset="utf-8">{BASE}'
+  f'<body style="background:transparent"><div style="width:150px;height:150px;display:flex;align-items:center;justify-content:center">'
+  f'{logo("eldebosh-icon.svg", width=150)}</div></body>')
+
 # ---- Instagram: post -------------------------------------------------------
 CANVAS['instagram-post-1080.png'] = (1080, 1080, page(1080, 1080, f'''
   <div class="grid-lines"></div>

@@ -51,6 +51,29 @@
 6. **لا نسخة خضراء ولا أي بديل لوني.** الهوية زرقاء بقرار مغلق —
    وحُذف البديل الأخضر من المستودع في `2026-09-05` حتى لا يُستعمل سهواً.
 
+## قناة يوتيوب
+
+الملفات في `social/`، وكلها بلا عبارة «BÄST OCH SMART» حتى يُحسم القرار Q1:
+
+| الملف | مكانه في يوتيوب |
+|---|---|
+| `avatar-1000.png` | صورة القناة (الأيقونة في دائرة) |
+| `youtube-channel-banner-2560x1440.png` | صورة البانر. كل ما يُقرأ داخل المنطقة الآمنة في الوسط (1235×338)، فلا يُقصّ على الجوال |
+| `youtube-watermark-150.png` | العلامة المائية في زاوية الفيديوهات |
+| `youtube-live-thumbnail-1280x720.png` | الصورة المصغّرة لكل بثّ مباشر، وفيها كلمة Reklam عن قصد |
+
+الملف القديم `youtube-banner-2560x1440.png` فيه العبارة، فلا يُستعمل.
+
+وصف القناة (يُنسخ كما هو):
+
+```
+Eldebosh visar laddning, hållare och smarta tillbehör som vi själva äger – utan "bäst i test" och utan påhittade siffror.
+
+Vi sänder live från Stora Torget i Karlstad. Fråga i chatten och säg produktens kod (till exempel P-11), så visar vi den.
+
+Länkarna på eldebosh.com är reklamlänkar: handlar du via dem kan vi få provision. Det kostar dig ingenting extra.
+```
+
 ## المطبوعات
 
 - **كرت العمل**: `eldebosh-business-card.pdf` — مقاس 85×55 مم + 3 مم حواف قطع (الملف 91×61 مم)،
