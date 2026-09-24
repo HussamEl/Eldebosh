@@ -3,6 +3,11 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.11 — 2026-09-24
+
+- `P-22` visible with its buy button (EB-029).
+- Comparison `tradlos-vs-kabel` published after the owner's review.
+
 ## 1.0.10 — 2026-09-24
 
 - Comparison `tradlos-vs-kabel` written (stage `written`): three magnetic
