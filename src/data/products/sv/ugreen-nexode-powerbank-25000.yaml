@@ -25,6 +25,7 @@ key_specs:
   "Kapacitet": "25 000 mAh"
   "Effekt": "145 W"
   "Portar": "2 × USB-C, 1 × USB-A"   # tillverkaren, art. 90597A: https://uk.ugreen.com/products/ugreen-145w-25000mah-power-bank-for-laptop-3-ports-power-bank (2026-09-23)
+  "Snabbladdning": "PD 3.0, QC 3.0"   # tillverkaren, 90597A, "Support Protocol": USB-C PD3.0/QC3.0, USB-A QC3.0 (2026-09-25)
   "Vikt": "513 g"   # tillverkaren, art. 90597A: https://uk.ugreen.com/products/ugreen-145w-25000mah-power-bank-for-laptop-3-ports-power-bank (2026-09-23)
 
 pros:

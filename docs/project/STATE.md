@@ -1,13 +1,13 @@
 # لوحة الحالة
 
 > **مولَّدة من المستودع — لا تُحرَّر يدوياً.** `npm run state`
-> آخر تغيّر في الحالة: 2026-09-25 01:27
+> آخر تغيّر في الحالة: 2026-09-25 03:29
 
 ## سطر الحالة
 
 ```
 منتجات 23 (ظاهرة 9 · قابلة للشراء 9 · مجرَّبة 3) ·
-صفحات 32 (نصّها منشور 18 · تنتظر المراجعة 2 · هيكل 12) ·
+صفحات 32 (نصّها منشور 18 · تنتظر المراجعة 3 · هيكل 11) ·
 فئات مفعّلة 2/2 · الساحة مفعّلة
 ```
 
@@ -23,7 +23,7 @@
 | `P-06` | Cooper MagStand höjdjusterbart stativ | — | صورة · ASIN · مصدر · تاريخ تحقّق · مزايا وعيوب |
 | `P-07` | Vikbart magnetiskt mobilstativ | — | ASIN · مصدر · تاريخ تحقّق · اسم العلامة · مزايا وعيوب |
 | `P-08` | simarro självhäftande magnetringar, 10-pack | — | صورة · ASIN · مصدر · تاريخ تحقّق · مزايا وعيوب |
-| `P-09` | UGREEN MagFlow 2-i-1 magnetiskt laddställ | — | صورة · مزايا وعيوب |
+| `P-09` | UGREEN MagFlow 2-i-1 magnetiskt laddställ | — | صورة |
 | `P-10` | UGREEN MagSafe magnetställ för bord | — | صورة · مزايا وعيوب |
 | `P-12` | Anker Nano Reseadapter | — | صورة · مزايا وعيوب |
 | `P-13` | Baseus USB-C-kabel med digital skärm 100W | — | صورة · مزايا وعيوب |
@@ -53,13 +53,14 @@
 |---|---|---|---|---|
 | صفحات الحلول | 7 | 5 | 2 | 0 |
 | أدلة الشراء | 12 | 5 | 0 | 7 |
-| المقارنات | 7 | 2 | 0 | 5 |
+| المقارنات | 7 | 2 | 1 | 4 |
 | المقالات | 6 | 6 | 0 | 0 |
 
 **تنتظر مراجعة حسام:**
 
 - `laddkabeln-gar-sonder` — solutions
 - `mobilen-laddar-langsamt` — solutions
+- `usb-c-pd-vs-quick-charge` — comparisons
 
 ## مهلة الهياكل
 
@@ -67,4 +68,4 @@
 
 | آخر موعد | العدد | الصفحات |
 |---|---|---|
-| **2026-12-02** | 6 | `basta-snabbladdare-usb-c` · `laddare-for-flera-enheter` · `magnetisk-mobilhallare-bil` · `mobilstall-skrivbord` · `gan-laddare-vs-vanlig` · `usb-c-pd-vs-quick-charge` |
+| **2026-12-02** | 5 | `basta-snabbladdare-usb-c` · `laddare-for-flera-enheter` · `magnetisk-mobilhallare-bil` · `mobilstall-skrivbord` · `gan-laddare-vs-vanlig` |

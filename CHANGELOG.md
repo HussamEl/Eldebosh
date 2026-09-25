@@ -3,6 +3,18 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.19 — 2026-09-25
+
+- Comparison `usb-c-pd-vs-quick-charge` written (stage `written`): USB-IF on
+  PD, the EU requirement above 15 W, Apple, and each maker's stated protocols.
+- Fast-charging protocols from the makers: `P-03` PD 3.0 and QC 3.0 (90597A),
+  `P-02` USB PD 45 W (P73-E1), `P-11` PPS and PowerIQ 3.0 (A2667). "PPS" on
+  `P-11` had been removed on 2026-09-24 as unsourced; it is in the product
+  title on Anker's own page, so it is back.
+- `P-09` specs, pros and cons from UGREEN's page for 90668 (Amazon sells it as
+  "Zapix 2-i-1"). `P-10` has no maker page; its listing data waits for the
+  owner's check. Both stay hidden until he approves.
+
 ## 1.0.18 — 2026-09-25
 
 - Video register `docs/project/VIDEOS.md` (EB-043): each video gets a fixed

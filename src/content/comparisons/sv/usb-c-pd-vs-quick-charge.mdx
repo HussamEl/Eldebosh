@@ -1,27 +1,77 @@
 ---
 title: "USB-C PD eller Quick Charge — vilken gäller för dig?"
-description: "Två snabbladdningsstandarder som inte alltid fungerar ihop. Så vet du vilken din telefon faktiskt använder."
+description: "USB PD är standarden EU kräver över 15 W. Quick Charge är Qualcomms egen teknik. Så läser du vad din laddare faktiskt stöder."
 lang: sv
 slug: usb-c-pd-vs-quick-charge
 solution: mobilen-laddar-langsamt
 category: laddning-och-strom
 subcategory: snabbladdare
-products: []
-verdict: "Skriv slutsatsen här."
-stage: draft
+products:
+  - ugreen-nexode-powerbank-25000
+  - iniu-magnetisk-powerbank-10000
+  - anker-735-nano-ii-65w
+verdict: "Se efter USB PD. Det är standarden EU kräver för snabbladdning över 15 W, och den som iPhone laddar med. Quick Charge är ett tillägg, bra att ha men inte det du ska välja efter."
+sources:
+  - type: spec
+    publisher: "USB-IF"
+    url: "https://www.usb.org/usb-charger-pd"
+    accessed: 2026-09-25
+    claim: "USB Power Delivery ger mer flexibel strömförsörjning över en USB-C-kabel, upp till 240 W, och är gjord för att samexistera med vanlig USB-laddning."
+  - type: regulation
+    publisher: "Europeiska unionen — direktiv (EU) 2022/2380"
+    url: "https://eur-lex.europa.eu/legal-content/SV/TXT/HTML/?uri=CELEX:32022L2380"
+    accessed: 2026-09-25
+    claim: "Apparater som laddas med mer än 15 W ska stödja USB PD; andra laddningsprotokoll får finnas men ska låta USB PD fungera fullt ut."
+  - type: spec
+    publisher: "Apple"
+    url: "https://support.apple.com/sv-se/105099"
+    accessed: 2026-09-25
+    claim: "iPhone laddas med en USB-C-strömadapter som följer USB-C-standarden, vilket innefattar USB-strömleverans."
+  - type: spec
+    publisher: "Qualcomm"
+    url: "https://www.qualcomm.com/products/features/quick-charge"
+    accessed: 2026-09-25
+    claim: "Quick Charge är Qualcomms snabbladdningsteknik."
+  - type: spec
+    publisher: "UGREEN"
+    url: "https://uk.ugreen.com/products/ugreen-145w-25000mah-power-bank-for-laptop-3-ports-power-bank"
+    accessed: 2026-09-25
+    claim: "Nexode 25000 mAh (90597A): USB-C PD 3.0 och QC 3.0, USB-A QC 3.0."
+  - type: spec
+    publisher: "INIU"
+    url: "https://iniushop.com/products/iniu-p73-e1-wireless-charger-with-stand-qi2-15w-10000mah"
+    accessed: 2026-09-25
+    claim: "P73-E1: PD 45 W via USB-C."
+  - type: spec
+    publisher: "Anker"
+    url: "https://www.anker.com/products/a2667"
+    accessed: 2026-09-25
+    claim: "735 Charger (A2667): PPS och PowerIQ 3.0 anges; Power Delivery nämns inte vid namn på sidan."
+hands_on: false
+stage: written
 published: true
 updated: 2026-09-03
 ---
-> ⚠️ UTKAST — strukturen är satt, texten ska skrivas. Publicera inte förrän innehållet är verkligt och granskat.
+Två förkortningar står på många laddare: PD och QC. De låter som två likvärdiga alternativ, men de har olika avsändare. Vi har inte mätt något själva. Allt nedan kommer från standardernas ägare, EU och tillverkarna, och källorna står längst ner.
 
 ## Vad standarderna gör
 
-Skriv här.
+**USB PD**, USB Power Delivery, är USB-standardens eget sätt att snabbladda över USB-C. USB-IF, organisationen bakom USB, beskriver den som mer flexibel strömförsörjning över en och samma kabel, i dag upp till 240 W.
 
-## När de inte fungerar ihop
+**Quick Charge**, QC, är Qualcomms egen snabbladdningsteknik. Den kommer alltså från ett företag, inte från USB-standarden.
 
-Skriv här.
+**Varför PD väger tyngst:** EU kräver att apparater som laddas med mer än 15 W stödjer USB PD. Andra snabbladdningssätt får finnas kvar, men de ska låta PD fungera fullt ut. Och Apple skriver att iPhone laddas med USB-C-adaptrar som följer standarden, med USB-strömleverans.
+
+## Vad våra laddare anger
+
+Tabellen ovan visar vad varje tillverkare själv skriver:
+
+- **UGREEN:s stora powerbank** anger både PD 3.0 och QC 3.0 på USB-C, och QC 3.0 på USB-A.
+- **INIU** anger PD 45 W via USB-C.
+- **Ankers laddare** anger PPS och Ankers egen PowerIQ 3.0. Ordet Power Delivery står inte på produktsidan, så vi skriver det inte heller.
 
 ## Vad du ska titta efter
 
-Skriv här.
+- **USB PD**, eller texten ”USB PD-snabbladdning” i produktinformationen. Det är den gemensamma nämnaren.
+- **Samma snabbladdningssätt i båda ändar.** Laddaren och telefonen behöver ha minst ett gemensamt.
+- **QC som tillägg**, om din telefon använder det. Ett plus, inte ett krav.

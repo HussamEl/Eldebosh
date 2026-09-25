@@ -13,13 +13,18 @@ problems_solved:
 
 # مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
 key_specs:
-  "Funktion": "Laddställ för telefon och hörlurar"
-  "Trådlöst": "Ja"
-  "Kabel": "USB-C medföljer"
+  "Trådlöst": "7,5 W iPhone · 5 W AirPods"
+  "Magnet": "700 g hållkraft"
+  "Vinkel": "Justerbar kulled"
+  "I lådan": "USB-C-kabel 1 m, ingen adapter"
 
-pros: []
-cons: []
-best_for: ""
+pros:
+  - "Laddar iPhone och AirPods samtidigt, enligt tillverkaren."
+  - "Kulleden i aluminium gör vinkeln justerbar, på skrivbordet eller nattduksbordet."
+cons:
+  - "7,5 W trådlöst till iPhone: långsammare än med kabel."
+  - "Adapter ingår inte. Tillverkaren rekommenderar minst 20 W USB-C PD."
+best_for: "Dig som vill ladda telefonen och hörlurarna på samma plats."
 price_band: mid
 
 # === الملكية والتجربة ===
@@ -33,6 +38,6 @@ hands_on_limits: []
 
 # === الربط ===
 asin: "B0B9X1RY8G"               # ← الصق ASIN هنا (10 خانات من رابط المنتج)
-source_url: "https://www.amazon.se/dp/B0B9X1RY8G"         # ← رابط صفحة المنتج على أمازون
-last_verified: 2026-08-24
+source_url: "https://us.ugreen.com/products/90668"   # tillverkaren, modell 90668 (2026-09-25); Amazon kallar den "Zapix 2-i-1"
+last_verified: 2026-09-25
 verified: false        # ← اجعلها true بعد اكتمال asin و source_url و last_verified

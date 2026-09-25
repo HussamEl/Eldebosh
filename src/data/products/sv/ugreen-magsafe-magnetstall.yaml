@@ -12,9 +12,12 @@ problems_solved:
   - skrivbordet-ar-rorigt
 
 # مأخوذة حرفياً من عنوان المنتج على أمازون — لا مواصفة مستنتجة
+# Förslag ur Amazon-annonsen (modell 35348); ingen tillverkarsida hittad. Väntar på att
+# Hussam jämför annonsen med stället han äger (owner_checked) innan det visas.
 key_specs:
-  "Fäste": "Starkt magnetiskt"
-  "Placering": "Bord"
+  "Fäste": "Magnetiskt, utan laddning"
+  "Mått": "10,5 × 8,5 × 16,2 cm"
+  "Vikt": "195 g"
 
 pros: []
 cons: []

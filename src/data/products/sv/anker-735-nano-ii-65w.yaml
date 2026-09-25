@@ -1,5 +1,6 @@
 # المنتج بحوزة صاحب المشروع فعلاً (سجل مشتريات أمازون).
-# المواصفات من صفحة المصنّع للطراز A2667 (2026-09-24). «PPS» حُذفت: لا تذكرها صفحة المصنّع.
+# المواصفات من صفحة المصنّع للطراز A2667 (2026-09-24). «PPS» في عنوان المنتج على صفحة Anker نفسها
+# (أُعيدت في 2026-09-25 بعد أن حُذفت خطأً). ولا تذكر الصفحة «Power Delivery» بالاسم.
 # عند إدخال ASIN يبني النظام رابط الأفلييت تلقائياً — لا تلصق رابطاً طويلاً.
 id: anker-735-nano-ii-65w
 code: P-11
@@ -17,6 +18,7 @@ key_specs:
   "Portar": "2 × USB-C, 1 × USB-A"
   "Tre enheter samtidigt": "40 + 12 + 12 W"
   "Teknik": "GaN II"
+  "Snabbladdning": "PPS, PowerIQ 3.0"   # tillverkaren, A2667: produkttitel och bildtext på https://www.anker.com/products/a2667 (2026-09-25)
 
 pros:
   - "65 W från en USB-C-port räcker till en dator som laddas med 65 W eller mindre, inte bara till telefonen."
