@@ -3,6 +3,19 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.20 — 2026-10-22
+
+- Added three home-page routes to complete published buying guides/comparisons,
+  using existing components and no new client script.
+- Replaced the blanket daily-use claim with ownership/photo wording consistent
+  with product records, in Swedish and English.
+- Added a 30-day sales plan, six unpublished Swedish campaign drafts and a
+  blank measurement ledger. No campaign has been sent or scheduled.
+- Corrected the outdated three-sales API claim in project instructions.
+- Fixed Windows path separators in the internal-link audit without skipping
+  checks or changing generated site URLs.
+- Normalize CRLF when comparing collaboration documents to committed versions.
+
 ## 1.0.19 — 2026-09-25
 
 - Comparison `usb-c-pd-vs-quick-charge` written (stage `written`): USB-IF on

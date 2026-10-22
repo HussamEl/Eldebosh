@@ -29,6 +29,12 @@ const [solutions, guides, comparisons, posts, cats, gear] = await Promise.all([
 
 const problems = solutions.filter((s) => s.data.featured).slice(0, 6);
 const gearGroups = gearGroupCounts(gear);
+// Only send shoppers to complete, published pages in the current language.
+const buyingRoutes = lang === 'sv' ? [
+  { title: 'En powerbank som får plats i fickan', description: 'Jämför storlek, vikt och funktioner innan du väljer.', slug: 'liten-powerbank-for-fickan', collection: guides, href: url.guide(lang, 'liten-powerbank-for-fickan') },
+  { title: 'En USB-C-kabel för rätt uppgift', description: 'Skilj på laddning, dataöverföring och längd.', slug: 'basta-laddkabel-usb-c', collection: guides, href: url.guide(lang, 'basta-laddkabel-usb-c') },
+  { title: 'Trådlöst eller kabel?', description: 'Läs jämförelsen och välj utifrån hur du laddar.', slug: 'tradlos-vs-kabel', collection: comparisons, href: url.comparison(lang, 'tradlos-vs-kabel') },
+].filter(route => route.collection.some(page => page.data.slug === route.slug && page.data.stage === 'published' && page.data.published)) : [];
 
 const altPaths = { sv: url.home('sv'), en: url.home('en') };
 ---
@@ -62,6 +68,15 @@ const altPaths = { sv: url.home('sv'), en: url.home('en') };
           <h2>{tr('home.gear')}</h2>
           <p class="lead">{tr('home.gear.lead')}</p>
         </div>
+
+        {buyingRoutes.length > 0 && (
+          <nav aria-label="Hitta rätt produkt" class="mb-gap">
+            <h3>Osäker på vad du ska välja? Börja här</h3>
+            <div class="grid grid-3">
+              {buyingRoutes.map(route => <ContentCard title={route.title} href={route.href} description={route.description} />)}
+            </div>
+          </nav>
+        )}
 
         {/* Above the first buy link, as Swedish marketing law requires. */}
         <div class="mb-gap"><AffiliateDisclosure lang={lang} /></div>

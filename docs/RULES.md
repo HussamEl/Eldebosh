@@ -177,8 +177,10 @@ account, and with it the site's only income.
 | **Prices** | ❌ Only through the API |
 | Buying through our own links, or asking family or friends to | ❌ Account closure |
 
-The API opens after **three qualifying sales** — a sales threshold, not a site
-review; nothing speeds it up.
+The three initial qualifying sales trigger account application review. They
+do not grant API access. Creators API product access currently requires **ten
+qualifying sales in the trailing thirty days**; credential creation alone does
+not grant eligibility. Recheck the official requirements before changing this.
 
 **Never edit a retailer image to get around the rule.** Editing creates no
 ownership and turns a violation into deliberate circumvention.

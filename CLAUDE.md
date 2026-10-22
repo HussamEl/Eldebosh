@@ -41,7 +41,8 @@ ones that must never slip:
    linked product with `tested: true`. Never "Bäst i test", never a claimed
    measurement.
 3. **No fixed prices** (`price_band` only). **No Amazon images or prices** until
-   the API opens after three qualifying sales. Never edit a retailer image.
+   API product access is confirmed. Current requirement: ten qualifying sales
+   in the trailing thirty days, separate from account review. Never edit a retailer image.
 4. **Amazon links only from `asin`**; no affiliate link in article text;
    disclosure above the first buy link on every commercial page.
 5. **Only the owner's own photos**, and never one product's photo under

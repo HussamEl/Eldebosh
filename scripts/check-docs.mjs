@@ -28,7 +28,7 @@ const ROW = /^\|\s*EB-(\d{3})\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|/gm;
 
 const committed = (rel) => {
   try {
-    return execFileSync('git', ['show', `HEAD:${rel}`], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+    return execFileSync('git', ['show', `HEAD:${rel}`], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).replace(/\r\n/g, '\n');
   } catch {
     return null; // new file, or not a git checkout
   }
@@ -42,7 +42,8 @@ console.log(`\n${'─'.repeat(52)}\nCollaboration documents\n${'─'.repeat(52)}
 for (const rel of VERSIONED) {
   const file = join(ROOT, rel);
   if (!existsSync(file)) { problems.push(`${rel}: missing`); continue; }
-  const text = readFileSync(file, 'utf8');
+  // Git may check out CRLF on Windows; line endings are not a document edit.
+  const text = readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
   const stamp = text.match(STAMP);
   if (!stamp) {
     problems.push(`${rel}: no version line — expected  > **Version:** \`v1.0\` · YYYY-MM-DD · …`);

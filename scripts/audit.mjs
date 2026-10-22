@@ -66,7 +66,8 @@ const list = pages(DIST)
 
 // Every generated path, for checking internal links.
 const generated = new Set(
-  pages(DIST).map((f) => f.replace(DIST, '').replace(/index\.html$/, ''))
+  // URL paths always use '/', including when the build is audited on Windows.
+  pages(DIST).map((f) => f.replace(DIST, '').replaceAll('\\', '/').replace(/index\.html$/, ''))
 );
 generated.add('/');
 console.log(`\n${'─'.repeat(52)}\nAudit of ${list.length} pages\n${'─'.repeat(52)}`);
