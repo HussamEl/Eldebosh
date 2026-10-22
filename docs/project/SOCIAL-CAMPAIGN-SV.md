@@ -1,10 +1,18 @@
-# Sex färdiga inlägg — inte publicerade
+# Sex utkast till inlägg — inte publicerade
 
 Använd ägarens egna bilder eller videor av rätt produkt. Inga påhittade
 prestandatest, priser eller rabatter. Välj först konto och få ägarens
 uttryckliga tillstånd att publicera där. Texterna länkar till guider på sajten.
 
-## 1 — Fickformat, bild av powerbanks sida vid sida
+**Första inlägget: nummer 5**, med den granskade egna bilden
+`public/uploads/P-01-1-B0CFDPQXN4.webp`. Inlägg 4 väntar på granskning av
+sin målsida och ska inte publiceras ännu.
+
+## 1 — Fickformat, separata bilder av powerbanks
+
+Använd bilderna `public/uploads/P-01-1-B0CFDPQXN4.webp` och
+`public/uploads/P-02-1-B0DMT6FMT7.webp` som separata bilder i en karusell.
+Bilderna är tagna var för sig och visar inte produkterna i samma skala.
 
 Annons · Guiden innehåller affiliatelänkar till Amazon.
 
@@ -28,9 +36,9 @@ Läs guiden: https://eldebosh.com/sv/guides/basta-laddkabel-usb-c/
 
 Annons · Jämförelsen innehåller affiliatelänkar till Amazon.
 
-Vill du slippa kabeln, eller är laddningen det viktigaste? Vi jämför
-trådlöst och kabel med hjälp av tillverkarnas uppgifter och visar vad du
-behöver tänka på. Inga påstådda laboratorietest.
+Vill du ladda med eller utan kabel? Vi jämför tillverkarnas uppgifter för
+tre powerbanks och förklarar varför angiven maxeffekt inte är samma sak
+som uppmätt laddtid.
 
 Läs jämförelsen: https://eldebosh.com/sv/compare/tradlos-vs-kabel/
 
@@ -47,7 +55,10 @@ Läs: https://eldebosh.com/sv/solutions/mobilen-laddar-langsamt/
 Publicera detta inlägg först efter att ägaren granskat sidan, som för närvarande
 är skriven men väntar på granskning. Använd inlägg 1–3 under tiden.
 
-## 5 — Vikt eller funktioner, återanvänd ägarens powerbankbilder
+## 5 — Vikt eller funktioner, valt som första inlägg
+
+Bild: `public/uploads/P-01-1-B0CFDPQXN4.webp`.
+Alt-text: "Egen bild av Anker MagGo med utfällt stativ och display."
 
 Annons · Guiden innehåller affiliatelänkar till Amazon.
 

@@ -3,6 +3,16 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.21 — 2026-10-22
+
+- Clarified the cable guide and wireless comparison: rated maximum power is
+  not a measured charging time, and the cable display has not been verified.
+- Aligned product recommendations and unpublished social drafts with those
+  limits; selected an existing original photo for the first planned post.
+- Verified the previous home-page delivery live and the active project
+  mailbox in Hostinger. Social registration remains a prepared form, not a
+  created account; moved the sales plan into active tasks.
+
 ## 1.0.20 — 2026-10-22
 
 - Added three home-page routes to complete published buying guides/comparisons,
