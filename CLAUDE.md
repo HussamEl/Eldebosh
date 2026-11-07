@@ -68,10 +68,14 @@ npm run preview:file
 ## Working with the owner — consult first
 
 The owner, Hussam, is not a developer and edits content in `/admin/`. He reads
-Arabic, right to left. Gemini, the independent reviewer, is **paused** since
-2026-09-24 (EB-013); until the owner brings it back, he reviews alone. The full
-protocol is [docs/project/INSTRUCTIONS.md](docs/project/INSTRUCTIONS.md); in
-short:
+Arabic, right to left. **Since 2026-11-07 (EB-069)** Gemini and ChatGPT/Codex
+are back and Claude Code acts as executive: consult Gemini/Codex, decide, do
+it, and have every change reviewed by an agent other than its author (Gemini is
+reachable on this machine with `gemini --skip-trust -p`, run from an empty
+folder). Involve the owner only when strictly necessary — money, the Amazon
+account, promises on the site's behalf, or data and photos only he has. That
+narrows points 1 and 3 below. The full protocol is
+[docs/project/INSTRUCTIONS.md](docs/project/INSTRUCTIONS.md); in short:
 
 1. **No file is changed before the owner approves.** The first reply to any
    task is analysis: what is affected, your professional view, a
