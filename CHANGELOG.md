@@ -3,6 +3,15 @@
 A few lines per delivery, newest first. Earlier history (2026-09-02 to
 2026-09-20, with its decision, issue and risk logs) is in git at `c54dcff`.
 
+## 1.0.22 — 2026-11-07
+
+- Unpublished the five deferred skeletons whose data deadline (2026-11-01)
+  passed: `mobilstall-skrivbord`, `laddare-for-flera-enheter`,
+  `basta-snabbladdare-usb-c`, `magnetisk-mobilhallare-bil`,
+  `gan-laddare-vs-vanlig` (`published: false`, files kept, dates untouched).
+  No published skeleton is left to fail the build on 2026-12-02.
+- TASKS T4 now lists what each page needs before it can return.
+
 ## 1.0.21 — 2026-10-22
 
 - Clarified the cable guide and wireless comparison: rated maximum power is
